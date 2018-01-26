@@ -2,7 +2,7 @@
 
 ### Aim
 
-In this repository we will place our web application, which is related to provide a study environment to teachers and students. Teachers will be able to control students' progress.
+In this repository we will place our web application, which is aimed to provide a study environment to teachers and students. Teachers will be able to control students' progress.
 
 ---
 
@@ -30,13 +30,13 @@ The application will be able to show some information in graphics, like:
 ### Advanced funcionality
 
 * Restrictions in order to enter in a course
-* Recommend a course according to previous courses done by the student
+* Recommend a course based on previous courses done by the student
 
 ---
 
 ### Advanced Technology
 
-* Generate PDF with some information (students' califications, final certificates)...
+* Generate PDF with useful information (students' califications, final certificates)...
 
 ---
 
