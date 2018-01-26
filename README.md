@@ -61,4 +61,8 @@ AMICO Group:
     * Github: https://github.com/oleh97
     * Mail: o.hrinchenko@alumnos.urjc.es
 
-  
+---
+
+### Other tools
+
+**Trello board**: https://trello.com/b/8yzPSK13/amicourse
