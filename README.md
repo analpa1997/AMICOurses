@@ -44,8 +44,8 @@ The application will be able to show some information in graphics, like:
 
 AMICO Group:
 
-```
-* Antonio Alcojor Patilla
+
+* **A**ntonio Alcojor Patilla
     * Github: https://github.com/analpa1997
     * Mail: a.alcojor@alumnos.urjc.es
 * **M**iguel Esteban Illescas
@@ -60,5 +60,5 @@ AMICO Group:
 * **O**leh Hrinchenko
     * Github: https://github.com/oleh97
     * Mail: o.hrinchenko@alumnos.urjc.es
-```
+
   
