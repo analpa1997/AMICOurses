@@ -164,3 +164,20 @@ header.masthead .bg-circle-4 {
 .rounded-circle:hover {
     transform: scale(1.25, 1.25);
 }
+
+#btnMoreCourses:hover {
+    background-color: #407f75!important;
+}
+
+#btnMoreCourses:focus {
+    background-color: #407f75!important;
+}
+
+#btnMoreCourses {
+    background-color: #667f7b;
+}
+
+hr {
+    height: 5px;
+    background-color: #000000!important;
+}
