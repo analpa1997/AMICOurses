@@ -1,6 +1,7 @@
 @import url("//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css");
 body{
     background: linear-gradient(0deg, #ff6d00 0, #ee0979 100%);
+    padding: 220px 0;
 }
 .login-block {
     background: #DE6262;
