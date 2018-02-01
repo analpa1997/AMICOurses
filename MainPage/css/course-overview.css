@@ -1,0 +1,25 @@
+
+.subject {
+    text-decoration: none; 
+    color: dimgrey;
+    background-color:aliceblue 
+}
+
+.subject:hover {
+    text-decoration: none;
+    color: darkgray;
+}
+
+.subject-name {
+    font-weight: 600;
+    font-size: 1.25rem;
+   
+}
+.footer {
+    position: relative;
+    margin-top: 30%;
+}
+
+.list-title {
+    color: lightslategray;
+}
