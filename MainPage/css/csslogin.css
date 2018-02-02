@@ -1,7 +1,7 @@
 @import url("//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css");
 body{
     background: linear-gradient(0deg, #ff6d00 0, #ee0979 100%);
-    padding: 220px 0;
+    padding: 5% 0%;
 }
 .login-block {
     background: #DE6262;
@@ -12,7 +12,7 @@ body{
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     float: left;
     width: 100%;
-    padding: 50px 0;
+    padding: 5%;
 }
 
 .banner-sec {
@@ -26,7 +26,7 @@ body{
 .container {
     background: #fff;
     border-radius: 10px;
-    box-shadow: 15px 20px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 15px 20px 0px rgba(0, 0, 0, 0.1); 
 }
 
 .carousel-inner {
