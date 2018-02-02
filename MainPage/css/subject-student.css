@@ -39,3 +39,7 @@
 .info {
     color: white;
 }
+
+#innerCard {
+    padding: 0.75rem;
+}
