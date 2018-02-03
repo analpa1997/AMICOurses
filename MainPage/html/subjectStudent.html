@@ -60,12 +60,12 @@
 
                 <div class="panel-group" id="accordionP" role="tablist" aria-multiselectable="true">
                     <div class="card">
-                        <h5 class="card-header text-center"><a data-toggle="collapse" data-parent="#accordionP" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">TEACHERS</a></h5>
+                        <h5 class="card-header"><a data-toggle="collapse" data-parent="#accordionP" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">TEACHERS</a><span class="fa fa-caret-down float-right"></span></h5>
                     </div>
                     <div id="collapseOne" class="panel-collapse collapse in">
                         <div class="panel-group" id="accordion2">
                             <div class="card" id="innerCard">
-                                <h5 class="card-header text-center"><a data-toggle="collapse" data-parent="#accordion2" href="#collapseInnerOne">Teacher One</a></h5>
+                                <h5 class="card-header"><a data-toggle="collapse" data-parent="#accordion2" href="#collapseInnerOne">Teacher One</a><span class="fa fa-caret-down float-right"></span></h5>
                                 <div id="collapseInnerOne" class="panel-collapse collapse in">
                                     <div class="card-block">
                                         <div class="card">
@@ -73,7 +73,7 @@
                                             <div class="card-block">
                                                 <p class="card-text"><br>I'm Teacher One, one of ur teachers in that course. Hope u will learn enough!</p>
                                             </div>
-                                            <div class="card-footer text-muted">
+                                            <div class="card-footer text-muted text-center">
                                                 <a class="btn btn-primary"><span class="info fa fa-info"></span><span id="textButton"> Profile</span></a>
                                                 <a class="btn btn-primary"><span class="info fa fa-envelope"></span><span id="textButton"> Contact</span></a>
                                             </div>
@@ -82,7 +82,7 @@
                                 </div>
                             </div>
                             <div class="card" id="innerCard">
-                                <h5 class="card-header text-center"><a data-toggle="collapse" data-parent="#accordion2" href="#collapseInnerTwo">Teacher Two</a></h5>
+                                <h5 class="card-header"><a data-toggle="collapse" data-parent="#accordion2" href="#collapseInnerTwo">Teacher Two</a><span class="fa fa-caret-down float-right"></span></h5>
                             </div>
                             <div id="collapseInnerTwo" class="panel-collapse collapse">
                                 <div class="panel-body">
@@ -98,27 +98,42 @@
                 </div>
             </div>
             <div class="col-lg-8 col-md-8 col-sm-8">
-                <ul class="nav nav-tabs nav-fill">
-                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#home">Contents</a></li>
-                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#menu1">Evaluation</a></li>
-                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#menu2">Forums</a></li>
-                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#menu3">Mail</a></li>
+                <ul class="nav nav-pills nav-fill">
+                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#resources">Contents</a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#evaluation">Evaluation</a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#califications">Califications</a></li>
                 </ul>
 
                 <div class="tab-content">
-                    <div id="home" class="tab-pane fade in active">
-                        <h3>HOME</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <div id="resources" class="tab-pane fade in active">
+                        <ul class="modules nav nav-pills nav-fill">
+                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#studyItems1"><span class="text">Mod 1</span></a></li>
+                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#studyItems2">Mod 2</a></li>
+                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#studyItems3">Mod 3</a></li>
+                        </ul>
+
+                        <div id="studyItems1" class="tab-pane fade">
+                            <div class="mt-1">&nbsp;</div>
+                            <h3 class="text-center">This is the header for part I of the Subject</h3>
+                            <ul id="studyItemPart">
+                                <li><a href="#">Introduction: HTML</a></li>
+                            </ul>
+                            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        </div>
+                        <div id="tests" class="tab-pane fade">
+                            <h3>Menu 2</h3>
+                            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+                        </div>
+                        <div id="studyItemsPart3" class="tab-pane fade">
+                            <h3>Menu 3</h3>
+                            <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                        </div>
                     </div>
-                    <div id="menu1" class="tab-pane fade">
+                    <div id="evaluation" class="tab-pane fade">
                         <h3>Menu 1</h3>
                         <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
                     </div>
-                    <div id="menu2" class="tab-pane fade">
-                        <h3>Menu 2</h3>
-                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-                    </div>
-                    <div id="menu3" class="tab-pane fade">
+                    <div id="califications" class="tab-pane fade">
                         <h3>Menu 3</h3>
                         <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
                     </div>
@@ -126,7 +141,7 @@
             </div>
             <div class="col-lg-2 col-md-2 col-sm-2">
                 <div class="card" id="mail">
-                    <h5 class="card-header text-center"><a data-toggle="collapse" data-parent="#mail" href="#showMail">Mail</a></h5>
+                    <h5 class="card-header"><a data-toggle="collapse" data-parent="#mail" href="#showMail">Mail</a><span class="fa fa-caret-down float-right"></span></h5>
                     <div id="showMail" class="panel-collapse collapse in">
                         <div class="card-block">
                             <div class="card">
@@ -146,7 +161,7 @@
                 </div>
                 <div class="mt-2">&nbsp;</div>
                 <div class="card" id="forum">
-                    <h5 class="card-header text-center"><a data-toggle="collapse" data-parent="#forum" href="#showForums">Forum</a></h5>
+                    <h5 class="card-header"><a data-toggle="collapse" data-parent="#forum" href="#showForums">Forum</a><span class="fa fa-caret-down float-right"></span></h5>
                     <div id="showForums" class="panel-collapse collapse in">
                         <div class="card-block">
                             <div class="card">
