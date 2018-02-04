@@ -1,7 +1,7 @@
 
 body{
     background: linear-gradient(0deg, #ff6d00 0, #ee0979 100%);
-    padding: 2% 0%;
+    padding: 5% 0%;
 }
 .login-block {
     background: #DE6262;
@@ -16,6 +16,7 @@ body{
 }
 
 .banner-sec {
+    background: url(https://static.pexels.com/photos/33972/pexels-photo.jpg) no-repeat left bottom;
     background-size: cover;
     min-height: 500px;
     border-radius: 0 10px 10px 0;
@@ -59,14 +60,14 @@ body{
     color: #E36262;
 }
 
-h3 {
+h2 {
     margin-bottom: 30px;
     font-weight: 800;
     font-size: 30px;
     color: #DE6262;
 }
 
-h3:after {
+h2:after {
     content: " ";
     width: 100px;
     height: 5px;
@@ -85,34 +86,27 @@ h3:after {
 }
 
 .banner-text {
-    padding: 20px;
+    width: 70%;
+    position: absolute;
+    bottom: 40px;
+    padding-left: 20px;
 }
 
 .banner-text h2 {
-    font-weight: 800;
-    font-size: 30px;
-    color: #DE6262;
+    color: #fff;
+    font-weight: 600;
 }
 
 .banner-text h2:after {
     content: " ";
     width: 100px;
     height: 5px;
-    background-color: #FEB58A;
+    background: #FFF;
     display: block;
     margin-top: 20px;
-    margin-bottom: 40px;
     border-radius: 3px;
 }
 
 .banner-text p {
-    color:#DE6262;
-    font-weight: 600;
-    
-}
-
-#picture {
-    border-radius: 10px;
-    position: relative;
-    
+    color: #fff;
 }
