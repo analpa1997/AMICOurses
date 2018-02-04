@@ -108,19 +108,6 @@ header.masthead .bg-circle-4 {
     right: 35%
 }
 
-@media (min-width:992px) {
-    header.masthead {
-        padding-top: calc(10rem + 55px);
-        padding-bottom: 10rem
-    }
-    header.masthead .masthead-content .masthead-heading {
-        font-size: 6rem
-    }
-    header.masthead .masthead-content .masthead-subheading {
-        font-size: 4rem
-    }
-}
-
 .bg-primary {
     background-color: #ee0979!important
 }
@@ -128,13 +115,6 @@ header.masthead .bg-circle-4 {
 .btn-primary {
     background-color: #ee0979;
     border-color: #ee0979
-}
-
-.btn-primary:active,
-.btn-primary:focus,
-.btn-primary:hover {
-    background-color: #bd0760!important;
-    border-color: #bd0760!important
 }
 
 .btn-primary:focus {
@@ -162,22 +142,65 @@ header.masthead .bg-circle-4 {
 }
 
 .rounded-circle:hover {
-    transform: scale(1.25, 1.25);
+    transform: scale(1.10, 1.10);
 }
 
 #btnMoreCourses:hover {
     background-color: #407f75!important;
+    border-color: #407f75;
 }
 
 #btnMoreCourses:focus {
     background-color: #407f75!important;
+    border-color: #407f75;
 }
 
 #btnMoreCourses {
     background-color: #667f7b;
+    border-color: #667f7b;
 }
 
 hr {
     height: 5px;
     background-color: #000000!important;
+}
+
+.row {
+    margin: 0 auto;
+    width: 80%;
+}
+
+.col-lg-6 {
+    padding-bottom: 1pc;
+    border-bottom: 10px solid rgba(211,211,211,0.5); 
+}
+
+#newbtn{
+    background-color: #52B252;
+    border-color: #52B252;
+}
+
+#newbtn:hover{
+    background-color: #62D462;
+    border-color: #62D462;
+}
+
+#trendbtn:hover{
+    background-color: #C76A97;
+    border-color: #C76A97; 
+}
+
+#trendbtn{
+    background-color: #B25F87;
+    border-color: #B25F87;
+}
+
+#searchbtn{
+    background-color: #9EB7E8;
+    border-color: #9EB7E8;
+}
+
+#searchbtn:hover{
+    background-color: #8EA5D1;
+    border-color: #8EA5D1;
 }
