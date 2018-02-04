@@ -16,7 +16,8 @@
     <!-- Custom fonts for this template -->
     <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
-
+    <!-- CSS -->
+    <link href="../css/style.css" rel="stylesheet">
     <link href="../css/subject-student.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
@@ -29,28 +30,35 @@
     <div class="header fixed-top">
         <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
             <div class="container">
-                <a class="navbar-brand" href="../index.html">AMICOurses</a>
+                <a class="navbar-brand" href="./../index.html">AMICOurses</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="#"><span class ="fa fa-home"> My Subjects</span></a>
+                            <a class="nav-link" href="./student/student-course-overview.html">Subjects</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../index.html"><span class="fa fa-power-off"> Sign Out</span></a>
+                            <a class="nav-link" href="courseInformation/course.html">Course Info</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="studentProfile.html">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../index.html">Log Out</a>
                         </li>
                     </ul>
                 </div>
             </div>
+            
         </nav>
         <div class="mt-4">&nbsp;</div>
         <div class="banner">
-            <p id="headerCourse">Hypertext Markup Language Introduction</p>
+            <p class = "mt-2 mb-0" id="headerCourse">Hypertext Markup Language Introduction</p>
         </div>
-
     </div>
+    <!-- Page -->
     <div class="mt-5">&nbsp;</div>
     <div class="mt-1">&nbsp;</div>
 
@@ -376,7 +384,7 @@
                                                 
                                                 <!-- Send / Save buttons -->
                                                 <div class="form-group">
-                                                    <button type="submit" class="btn btn-primary col-md-2">Send</button>
+                                                    <a class="btn btn-primary col-md-2">Send</a>
                                                     <a class = "btn btn-primary col-md-2 offset-md-1" >Save</a>
                                                 </div> 
                                                 

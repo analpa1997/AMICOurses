@@ -31,7 +31,7 @@ h6 {
 .navbar-custom {
     padding-top: 1rem;
     padding-bottom: 1rem;
-    background-color: rgba(0, 0, 0, .7)
+    background-color: rgba(0, 0, 0, 0.9)
 }
 
 .navbar-custom .navbar-brand {
@@ -112,7 +112,7 @@ header.masthead .bg-circle-4 {
     background-color: #ee0979!important
 }
 
-.btn-primary {
+.masthead-content .btn-primary {
     background-color: #ee0979;
     border-color: #ee0979
 }
@@ -165,42 +165,77 @@ hr {
     background-color: #000000!important;
 }
 
-.row {
-    margin: 0 auto;
-    width: 80%;
-}
 
 .col-lg-6 {
     padding-bottom: 1pc;
-    border-bottom: 10px solid rgba(211,211,211,0.5); 
+    border-bottom: 10px solid rgba(211, 211, 211, 0.5);
 }
 
-#newbtn{
+#newbtn {
     background-color: #52B252;
     border-color: #52B252;
 }
 
-#newbtn:hover{
+#newbtn:hover {
     background-color: #62D462;
     border-color: #62D462;
 }
 
-#trendbtn:hover{
+#trendbtn:hover {
     background-color: #C76A97;
-    border-color: #C76A97; 
+    border-color: #C76A97;
 }
 
-#trendbtn{
+#trendbtn {
     background-color: #B25F87;
     border-color: #B25F87;
 }
 
-#searchbtn{
+#searchbtn {
     background-color: #9EB7E8;
     border-color: #9EB7E8;
 }
 
-#searchbtn:hover{
+#searchbtn:hover {
     background-color: #8EA5D1;
     border-color: #8EA5D1;
+}
+
+#searchCourses {
+    vertical-align: middle;
+}
+
+.carousel-inner > .carousel-item > img {
+    margin: auto;
+    width: 15vmax;
+    height: 15vmax;
+}
+
+.carousel {
+    height: 18vmax;
+}
+
+.carousel-indicators .active {
+    background-color: red!important;
+}
+
+.carousel-indicators > li {
+    background-color: black!important;
+}
+
+.carousel-control-next {
+    background-color: black;
+}
+
+.carousel-control-prev {
+    background-color: black;
+}
+
+.carousel-control-next > .sr-only {
+    color: black;
+}
+
+#link-course {
+    text-decoration: none;
+    color :inherit;
 }
