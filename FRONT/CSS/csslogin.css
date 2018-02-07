@@ -1,7 +1,6 @@
 
 body{
     background: linear-gradient(0deg, #ff6d00 0, #ee0979 100%);
-    padding: 2% 0%;
 }
 .login-block {
     background: #DE6262;
@@ -22,7 +21,7 @@ body{
     padding: 0;
 }
 
-.container {
+.container.login{
     background: #fff;
     border-radius: 10px;
     box-shadow: 15px 20px 0px rgba(0, 0, 0, 0.1);
