@@ -68,3 +68,19 @@
 .item-icon {
     color: rgba(255, 80, 60, 1);
 }
+
+.lateral-item, .lateral-item a {
+    color: rgba(100, 100, 100, 1);
+}
+
+.lateral-item .btn{
+    border-color: rgba(0, 0, 0, 1);
+    background-color: rgba(0, 100, 255, 0.1);
+    border-width: 2px;
+}
+
+.lateral-item .btn:hover{
+    border-color: rgba(0, 0, 0, 1);
+    color: rgba(100, 100, 100, 0.5);
+    background-color: rgba(0, 100, 255, 0.2);
+}
