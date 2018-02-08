@@ -55,3 +55,16 @@
 .tab-title{
     color: dimgrey;
 }
+
+.item-content{
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.item-content:hover {
+    text-decoration:none;
+    color: rgba(0, 0, 0, 1);
+}
+
+.item-icon {
+    color: rgba(255, 80, 60, 1);
+}
