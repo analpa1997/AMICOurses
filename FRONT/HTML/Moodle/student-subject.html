@@ -82,7 +82,7 @@
                                 <a class="nav-link level-1" data-toggle="tab" href="#teachers">Teachers</a>
                             </li>
                             
-                            <li class="nav-item" style = "display: none">
+                            <li class="nav-item hidden-link">
                                 <a class="nav-link level-1" data-toggle="tab" id = "mail-pane-opener" href="#mailPane"></a>
                             </li>
                             
@@ -197,13 +197,14 @@
                             
                             <div class = "row">
                                 <div class = "col-12 col-md-2">
-                                    <nav class = "nav flex-md-column flex-row col-24 col-md">
+                                    <nav class = "nav flex-md-column flex-row col-24 col-md" id ="mail-menu">
                                         <a class = "btn btn-outline-secondary  border col-4 col-md-7 p-md-1  ml-md-3 my-md-1">Sync</a>
                                         <a class = "btn btn-outline-primary nav-link col-4 col-md-7 ml-md-3 p-md-1 " data-toggle = "tab" href = "#newMail">New</a>
                                         <a class="nav-link active border-bottom col-4 col-md-12" data-toggle="tab" href="#received">Received</a>
                                         <a class="nav-link border-bottom col-4 col-md-12" data-toggle="tab" href="#send">Send</a>
                                         <a class="nav-link border-bottom col-4 col-md-12" data-toggle="tab" href="#saved">Saved</a>
                                         <a class="nav-link border-bottom col-4 col-md-12" data-toggle="tab" href="#deleted">Deleted</a>
+                                        <a class = "nav-link hidden-link" data-toggle ="tab" id = "received-message-1-link" href = "#first-received-message"></a>
                                     </nav>
                                 </div> 
 
@@ -212,8 +213,9 @@
                                          <!-- Received -->
                                           <div class="tab-pane active" id="received" role="tabpanel">
                                               <span class = "mt-2 col"><span class ="col-2 col-md-1">From:</span> <span class ="col-2 col-md-1 offset-md-1">Topic:</span> <span class ="col-2 col-md-1 offset-md-4">Date:</span> </span>
+                                              
                                               <!-- Message -->
-                                                <a class="col-md border btn my-1 nav nav-link " data-toggle="tab" href="#first-received-message"> 
+                                                <a class="col-md border btn my-1 nav nav-link " data-toggle="tab" id ="received-message-1"> 
                                                     <div class = "row">
                                                         <!-- From -->
                                                         <div class = "col-md-2"> Manuel</div>
@@ -444,9 +446,14 @@
                             
                             <script>
                                 $(document).ready(function() {
+                                    /* Mail tab */
                                      $('#open-mail').on('click', function(){
                                          $('#mail-pane-opener').click();
                                     });
+                                    /* Messages */
+                                    $('#received-message-1').on('click', function (){
+                                        $('#received-message-1-link').click();
+                                    })
                                 });
 
                             </script>
