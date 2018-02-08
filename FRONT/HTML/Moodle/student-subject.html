@@ -20,9 +20,12 @@
         <!-- Custom styles for this template -->
         <link href="../../CSS/navigationHeader.css" rel="stylesheet">
         <link href="../../CSS/student-subject.css" rel="stylesheet">
-        
-        <!-- -->
+
+        <!--Font Awesome-->
         <link href="../../fontawesome-free-5.0.6/web-fonts-with-css/css/fontawesome-all.min.css" rel="stylesheet">
+        
+        <!-- Jquery -->
+        <script src="../../BOOTSTRAP/vendor/jquery/jquery.min.js "></script>
 
     </head>
 
@@ -55,7 +58,7 @@
         <!-- Page -->
         <div class = "my-5"></div>
         <div class = "mt-5">&nbsp</div>
-                <nav class="breadcrumb">
+        <nav class="breadcrumb">
             <a href="../StudentCourses/student-course-overview.html" class="breadcrumb-item">Course Name</a>
             <span class="breadcrumb-item active">Subject Name</span>
         </nav>
@@ -78,6 +81,11 @@
                             <li class="nav-item">
                                 <a class="nav-link level-1" data-toggle="tab" href="#teachers">Teachers</a>
                             </li>
+                            
+                            <li class="nav-item" style = "display: none">
+                                <a class="nav-link level-1" data-toggle="tab" id = "mail-pane-opener" href="#mailPane"></a>
+                            </li>
+                            
                         </ul>
 
                         <!-- Tabs level 2 -->
@@ -97,12 +105,12 @@
                                         <a class="nav-link level-2" data-toggle="tab" href="#mod-3">Mod 3</a>
                                     </li>
                                 </ul>
-                                
+
                                 <div class="tab-content border-left border-right">
-                                <!-- Contents tab -->
+                                    <!-- Contents tab -->
                                     <div class="tab-pane active" id="mod-1" role="tabpanel">
                                         <!-- Modulo 1 -->
-                                        
+
                                         <div class = "pl-4"> <h8>Modulo 1</h8></div>
                                         <ul class = "list-group">
                                             <!-- Item -->
@@ -111,14 +119,14 @@
                                                     <span class = "item-icon fa fa-video pl-5"></span> Short video
                                                 </li>
                                             </a>
-                                            
+
                                             <!-- Item -->
                                             <a class = "item-content" href = "#">
                                                 <li class = "list-group-item">
                                                     <span class = "item-icon fa fa-file-pdf pl-5"></span> Pdf
                                                 </li>
                                             </a>
-                                            
+
                                             <!-- Item -->
                                             <a class = "item-content" href = "#">
                                                 <li class = "list-group-item">
@@ -127,8 +135,8 @@
                                             </a>
                                         </ul>
                                     </div>
-                                
-                                <!-- Contents tab -->
+
+                                    <!-- Contents tab -->
                                     <div class="tab-pane" id="mod-2" role="tabpanel">
                                         <div class = "pl-4"> <h8>Modulo 2</h8></div>
                                         <ul class = "list-group">
@@ -140,7 +148,7 @@
                                             </a>
                                         </ul>
                                     </div>
-                            <!-- Contents tab -->
+                                    <!-- Contents tab -->
                                     <div class="tab-pane" id="mod-3" role="tabpanel">
                                         <div class = "pl-4"> <h8>Modulo 3</h8></div>
                                         <ul class = "list-group">
@@ -153,12 +161,12 @@
                                         </ul>
                                     </div>
                                 </div>
-                                
+
                             </div>
                             <!-- Evalutaion tab -->
                             <div class="tab-pane" id="evaluation" role="tabpanel">
                                 EVALUATION
-                            
+
                             </div>
                             <!-- Progress tab -->
                             <div class="tab-pane" id="progress" role="tabpanel">
@@ -167,21 +175,262 @@
                             <!-- Teachers tab -->
                             <div class="tab-pane" id="teachers" role="tabpanel">
                                 <span class = "pl-3 py-1 tab-title"> Teachers:</span>
-                                    <ul class = "list-group">
-                                        <!-- Item -->
-                                        <a class = "item-content" href = "#">
-                                            <li class = "list-group-item">
-                                                <span class = "fa fa-user-circle pl-5"></span> Teacher One Profile
-                                            </li>
-                                        </a>
-                                        
-                                        <a class = "item-content" href = "#">
-                                            <li class = "list-group-item">
-                                                <span class = "fa fa-user-circle pl-5"></span> Teacher One Profile
-                                            </li>
-                                        </a>
-                                    </ul>
+                                <ul class = "list-group">
+                                    <!-- Item -->
+                                    <a class = "item-content" href = "#">
+                                        <li class = "list-group-item">
+                                            <span class = "fa fa-user-circle pl-5"></span> Teacher One Profile
+                                        </li>
+                                    </a>
+
+                                    <a class = "item-content" href = "#">
+                                        <li class = "list-group-item">
+                                            <span class = "fa fa-user-circle pl-5"></span> Teacher One Profile
+                                        </li>
+                                    </a>
+                                </ul>
                             </div>
+                            
+                                                <!-- Email pane -->
+                     <div id="mailPane" class="tab-pane fade h-100">
+                        <div class="container border h-100">
+                            
+                            <div class = "row">
+                                <div class = "col-12 col-md-2">
+                                    <nav class = "nav flex-md-column flex-row col-24 col-md">
+                                        <a class = "btn btn-outline-secondary  border col-4 col-md-7 p-md-1  ml-md-3 my-md-1">Sync</a>
+                                        <a class = "btn btn-outline-primary nav-link col-4 col-md-7 ml-md-3 p-md-1 " data-toggle = "tab" href = "#newMail">New</a>
+                                        <a class="nav-link active border-bottom col-4 col-md-12" data-toggle="tab" href="#received">Received</a>
+                                        <a class="nav-link border-bottom col-4 col-md-12" data-toggle="tab" href="#send">Send</a>
+                                        <a class="nav-link border-bottom col-4 col-md-12" data-toggle="tab" href="#saved">Saved</a>
+                                        <a class="nav-link border-bottom col-4 col-md-12" data-toggle="tab" href="#deleted">Deleted</a>
+                                    </nav>
+                                </div> 
+
+                                <div class = "col-md col-16 border-top border-left">
+                                    <div class="tab-content">
+                                         <!-- Received -->
+                                          <div class="tab-pane active" id="received" role="tabpanel">
+                                              <span class = "mt-2 col"><span class ="col-2 col-md-1">From:</span> <span class ="col-2 col-md-1 offset-md-1">Topic:</span> <span class ="col-2 col-md-1 offset-md-4">Date:</span> </span>
+                                              <!-- Message -->
+                                                <a class="col-md border btn my-1 nav nav-link " data-toggle="tab" href="#first-received-message"> 
+                                                    <div class = "row">
+                                                        <!-- From -->
+                                                        <div class = "col-md-2"> Manuel</div>
+                                                        <!-- Topic -->
+                                                        <div class="col-md-6">
+                                                                Question about div and span
+                                                        </div>
+                                                        <!-- Date -->
+                                                        <div class = "col-md">
+                                                        02/02/2018 13:31
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                              
+                                                <!-- Message -->
+                                                <a class="col-md border btn my-1 nav nav-link "> 
+                                                    <div class = "row">
+                                                        <!-- From -->
+                                                        <div class = "col-md-2"> Manuel</div>
+                                                        <!-- Topic -->
+                                                        <div class="col-md-6">
+                                                                Question about div and span
+                                                        </div>
+                                                        <!-- Date -->
+                                                        <div class = "col-md">
+                                                        02/02/2018 13:31
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                              
+                                            <!-- Message -->
+                                                <a class="col-md border btn my-1 nav nav-link " > 
+                                                    <div class = "row">
+                                                        <!-- From -->
+                                                        <div class = "col-md-2"> Manuel</div>
+                                                        <!-- Topic -->
+                                                        <div class="col-md-6">
+                                                                Question about div and span
+                                                        </div>
+                                                        <!-- Date -->
+                                                        <div class = "col-md">
+                                                        02/02/2018 13:31
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            
+                                              
+                                              
+                                            </div>
+                                        <!-- Send -->
+                                          <div class="tab-pane" id="send" role="tabpanel">
+                                              <span class = "mt-2 col"><span class ="col-2 col-md-1">From:</span> <span class ="col-2 col-md-1 offset-md-1">Topic:</span> <span class ="col-2 col-md-1 offset-md-4">Date:</span> </span>
+                                            <!-- Message -->
+                                                <a class="col-md border btn my-1 nav nav-link "> 
+                                                    <div class = "row">
+                                                        <!-- From -->
+                                                        <div class = "col-md-2"> Manuel</div>
+                                                        <!-- Topic -->
+                                                        <div class="col-md-6">
+                                                                Question about div and span
+                                                        </div>
+                                                        <!-- Date -->
+                                                        <div class = "col-md">
+                                                        02/02/2018 13:31
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                              
+                                                <!-- Message -->
+                                                <a class="col-md border btn my-1 nav nav-link "> 
+                                                    <div class = "row">
+                                                        <!-- From -->
+                                                        <div class = "col-md-2"> Manuel</div>
+                                                        <!-- Topic -->
+                                                        <div class="col-md-6">
+                                                                Question about div and span
+                                                        </div>
+                                                        <!-- Date -->
+                                                        <div class = "col-md">
+                                                        02/02/2018 13:31
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                        
+                                        </div>
+                                        <!-- Saved  -->
+                                          <div class="tab-pane" id="saved" role="tabpanel">
+                                              <span class = "mt-2 col"><span class ="col-2 col-md-1">From:</span> <span class ="col-2 col-md-1 offset-md-1">Topic:</span> <span class ="col-2 col-md-1 offset-md-4">Date:</span> </span>
+                                                <!-- Message -->
+                                                <a class="col-md border btn my-1 nav nav-link " > 
+                                                    <div class = "row">
+                                                        <!-- From -->
+                                                        <div class = "col-md-2"> Manuel</div>
+                                                        <!-- Topic -->
+                                                        <div class="col-md-6">
+                                                                Question about div and span
+                                                        </div>
+                                                        <!-- Date -->
+                                                        <div class = "col-md">
+                                                        02/02/2018 13:31
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                        </div>
+                                        <!-- Deleted -->
+                                          <div class="tab-pane" id="deleted" role="tabpanel">
+                                              <span class = "mt-2 col"><span class ="col-2 col-md-1">From:</span> <span class ="col-2 col-md-1 offset-md-1">Topic:</span> <span class ="col-2 col-md-1 offset-md-4">Date:</span> </span>
+                                                 <!-- Message -->
+                                                <a class="col-md border btn my-1 nav nav-link "> 
+                                                    <div class = "row">
+                                                        <!-- From -->
+                                                        <div class = "col-md-2"> Manuel</div>
+                                                        <!-- Topic -->
+                                                        <div class="col-md-6">
+                                                                Question about div and span
+                                                        </div>
+                                                        <!-- Date -->
+                                                        <div class = "col-md">
+                                                        02/02/2018 13:31
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                              
+                                               <!-- Message -->
+                                                <a class="col-md border btn my-1 nav nav-link "> 
+                                                    <div class = "row">
+                                                        <!-- From -->
+                                                        <div class = "col-md-2"> Manuel</div>
+                                                        <!-- Topic -->
+                                                        <div class="col-md-6">
+                                                                Question about div and span
+                                                        </div>
+                                                        <!-- Date -->
+                                                        <div class = "col-md">
+                                                        02/02/2018 13:31
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                        </div>
+                                        
+                                         <!-- New Mail -->
+                                          <div class="tab-pane" id="newMail" role="tabpanel">
+                                            <form>
+                                                <!-- TO -->
+                                                <div class = "form-group">
+                                                    <label class = "col-md-1" for="mail-list">To: </label>
+                                                    <label class = "offset-md-5 col-md-2 pl-4" for="selected-receiver">Selected: </label>                               
+                                                    <div class = "row">
+                                                            <div class = "col-md-7" >
+                                                                <select multiple class="form-control" id="exampleSelect2">
+                                                                  <option>Manuel (Teacher)</option>
+                                                                  <option>Paco (Student)</option>
+                                                                  <option>Javier (Student)</option>
+                                                                  <option>Maria (Student)</option>
+                                                                  <option>Luis (Student)</option>
+                                                                </select>
+                                                            </div>
+                                                            <a class = "btn col-md-1 col-3 h-25 pl-1 border" id= "to-selected"> Jose</a>
+                                                        </div>
+                                                </div>
+                                                <!-- Topic -->    
+                                                 <div class="mt-2 form-group row">
+                                                      <label for="topic" class="col-md-1 col-form-label">Topic:</label>
+                                                      <div class="col">
+                                                        <input class="form-control" type="text" id="topic">
+                                                      </div>
+                                                </div>  
+                                                    <!-- Message -->
+                                                <div class="form-group">
+                                                    <label for="message text">Message:</label>
+                                                    <textarea class="form-control" id="message-text" rows="3"></textarea>
+                                                </div>
+                                                    <!-- Input file -->
+                                                <div class="form-group">
+                                                    <label for="exampleInputFile">File input</label>
+                                                    <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
+                                                    <small id="fileHelp" class="form-text text-muted">If you want to send multiple files, please compress then in a .zip or .rar format</small>
+                                                </div>
+                                                
+                                                <!-- Send / Save buttons -->
+                                                <div class="form-group">
+                                                    <a class="btn btn-primary col-md-2">Send</a>
+                                                    <a class = "btn btn-primary col-md-2 offset-md-1" >Save</a>
+                                                </div> 
+                                                
+                                            </form> 
+                                        </div>
+                                      <!-- View Received Messages --> 
+                                        <div class="tab-pane" id="first-received-message" role="tabpanel">
+                                            <!-- From and date -->
+                                            <div class = "row border-bottom">
+                                                <span class = "col-md-1 col-2">From</span> <span class = "col-md-5 col-9">Jose (Teacher)</span> <span class ="col-md-1 col-2">Date: </span> <span class = "col">02/02/2018 13:31</span>
+                                            </div> 
+                                            <!--Topic -->
+                                            <div class = "row">
+                                                <span class = "col-md-1 col-2">Topic:</span> <span class = "col">Question about div and span</span>
+                                            </div>
+                                            <!-- Message -->
+                                            <h5 class = "mt-3"> Message:</h5>
+                                            <div class = "h-100 p-1 mt-1 border">
+                                               <p>As you asked the other day, the div separates elements in blocks and span separates elements within the same block</p>
+                                            </div>
+                                            <!-- File -->
+                                            <div class = "row">
+                                            </div>
+                                            <!-- Delete / restore -->
+                                             <a class = "btn btn-info mt-4" href = "#">Reply Message</a>
+                                            <a class = "btn btn-info offset-md-1 mt-4" href = "#">Delete Message</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+ 
+                         </div>
+                    </div>
+                    <!-- End Email-pane-->
+                            
                         </div>
                     </div>
                     <!-- Mail and forum tab -->
@@ -189,10 +438,19 @@
                         <!-- Mail -->
                         <div class = "border text-center lateral-item">
                             <h3 class = "border-bottom">Mail</h3>
-                            <div class = "my-3 offset-2 pr-5">
-                                <a class = "border btn nav nav-link"> Open Mail</a>
+                            <div class = "my-3 offset-2 mr-5" role = "tablist">
+                                <a class = "border btn nav nav-link" id = "open-mail"> Open Mail</a>
                             </div>
                             
+                            <script>
+                                $(document).ready(function() {
+                                     $('#open-mail').on('click', function(){
+                                         $('#mail-pane-opener').click();
+                                    });
+                                });
+
+                            </script>
+
                         </div>
                         <!-- Forum -->
                         <div class = "border mt-5 text-center lateral-item">
@@ -205,7 +463,7 @@
                             <!-- Forum Questions -->
                             <div class = "my-3 offset-2 mr-5 p-1 border">
                                 <p class = "mb-2">Questions</p>
-                                <a class = "border btn nav nav-link" data-toggle = "tab" href = "#"> Enter</a>
+                                <a class = "border btn nav nav-link" href = "#"> Enter</a>
                             </div>
                         </div>
                     </div>
@@ -215,7 +473,7 @@
         </section>
 
         <!-- Bootstrap core JavaScript -->
-        <script src="../../BOOTSTRAP/vendor/jquery/jquery.min.js "></script>
+        
         <script src="../../BOOTSTRAP/vendor/bootstrap/js/bootstrap.bundle.min.js "></script>
 
     </body>
