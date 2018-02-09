@@ -1,0 +1,90 @@
+/*Level 1 tabs */
+
+.nav-link.active.level-1 {
+    background-color: rgba(15, 100, 180, 0.4);
+    border-color: rgba(0, 0, 0, 0.2);
+    border-bottom: 0;
+    color: aliceblue;
+    font-size : 1.2em;
+}
+
+.nav-link.active.level-1:hover {
+    background-color: rgba(15, 100, 180, 0.5);
+}
+
+.nav-link.level-1 {
+    background-color: rgba(150, 150, 150, 0.1);
+    border-color: rgba(0, 0, 0, 0.2);
+    border-bottom-color: rgba(255, 255, 255, 0);
+    color: slategray;
+    font-size : 1.2em;
+}
+
+.nav-link.level-1:hover {
+    background-color: rgba(150, 150, 150, 0.2);
+    border-color: rgba(0, 0, 0, 0.2);
+    border-bottom-color: rgba(255, 255, 255, 0);
+}
+ /* level 2 tabs */
+
+.nav-link.active.level-2 {
+    background-color: rgba(15, 100, 160, 0.3);
+    border-color: rgba(0, 0, 0, 0.2);
+    border-bottom: 0;
+    color: aliceblue;
+    font-size : 1.0em;
+}
+
+.nav-link.active.level-2:hover {
+    background-color: rgba(15, 100, 180, 0.4);
+}
+
+.nav-link.level-2 {
+    background-color: rgba(150, 150, 150, 0.1);
+    border-color: rgba(0, 0, 0, 0.2);
+    border-bottom-color: rgba(255, 255, 255, 0);
+    color: slategray;
+    font-size : 1.0em;
+}
+
+.nav-link.level-2:hover {
+    background-color: rgba(150, 150, 150, 0.2);
+    border-color: rgba(0, 0, 0, 0.2);
+    border-bottom-color: rgba(255, 255, 255, 0);
+}
+.tab-title{
+    color: dimgrey;
+}
+
+.item-content{
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.item-content:hover {
+    text-decoration:none;
+    color: rgba(0, 0, 0, 1);
+}
+
+.item-icon {
+    color: rgba(255, 80, 60, 1);
+}
+
+.lateral-item, .lateral-item a {
+    color: rgba(100, 100, 100, 1);
+}
+
+.lateral-item .btn{
+    border-color: rgba(0, 0, 0, 1);
+    background-color: rgba(0, 100, 255, 0.1);
+    border-width: 2px;
+}
+
+.lateral-item .btn:hover{
+    border-color: rgba(0, 0, 0, 1);
+    color: rgba(100, 100, 100, 0.5);
+    background-color: rgba(0, 100, 255, 0.2);
+}
+
+.hidden-link {
+    display: none;
+}
