@@ -1,5 +1,6 @@
 var ctx = document.getElementById("marks-chart-canvas").getContext('2d');
 
+//AJAX CALL TO RETRIEVE THE INFO FROM THE SERVER
 var myChart = new Chart (ctx, {
     type : 'bar',
     data: {
