@@ -88,3 +88,12 @@
 .hidden-link {
     display: none;
 }
+
+.mail-menu-item{
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.mail-menu-item:hover{
+    color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(150, 150, 150, 0.1);
+}

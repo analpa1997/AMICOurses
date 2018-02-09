@@ -193,17 +193,18 @@
                             
                                                 <!-- Email pane -->
                      <div id="mailPane" class="tab-pane fade h-100">
+                         
                         <div class="container border h-100">
-                            
+                            <h4 class = "pl-3 py-1 ml-3 tab-title">Mail:</h4>
                             <div class = "row">
                                 <div class = "col-12 col-md-2">
                                     <nav class = "nav flex-md-column flex-row col-24 col-md" id ="mail-menu">
                                         <a class = "btn btn-outline-secondary  border col-4 col-md-7 p-md-1  ml-md-3 my-md-1">Sync</a>
                                         <a class = "btn btn-outline-primary nav-link col-4 col-md-7 ml-md-3 p-md-1 " data-toggle = "tab" href = "#newMail">New</a>
-                                        <a class="nav-link active border-bottom col-4 col-md-12" data-toggle="tab" href="#received">Received</a>
-                                        <a class="nav-link border-bottom col-4 col-md-12" data-toggle="tab" href="#send">Send</a>
-                                        <a class="nav-link border-bottom col-4 col-md-12" data-toggle="tab" href="#saved">Saved</a>
-                                        <a class="nav-link border-bottom col-4 col-md-12" data-toggle="tab" href="#deleted">Deleted</a>
+                                        <a class="nav-link active border-bottom col-4 col-md-12 mail-menu-item" data-toggle="tab" href="#received">Received</a>
+                                        <a class="nav-link border-bottom col-4 col-md-12 mail-menu-item" data-toggle="tab" href="#send">Send</a>
+                                        <a class="nav-link border-bottom col-4 col-md-12 mail-menu-item" data-toggle="tab" href="#saved">Saved</a>
+                                        <a class="nav-link border-bottom col-4 col-md-12 mail-menu-item" data-toggle="tab" href="#deleted">Deleted</a>
                                         <a class = "nav-link hidden-link" data-toggle ="tab" id = "received-message-1-link" href = "#first-received-message"></a>
                                     </nav>
                                 </div> 
@@ -212,6 +213,7 @@
                                     <div class="tab-content">
                                          <!-- Received -->
                                           <div class="tab-pane active" id="received" role="tabpanel">
+                                              <h5>Received</h5>
                                               <span class = "mt-2 col"><span class ="col-2 col-md-1">From:</span> <span class ="col-2 col-md-1 offset-md-1">Topic:</span> <span class ="col-2 col-md-1 offset-md-4">Date:</span> </span>
                                               
                                               <!-- Message -->
@@ -267,6 +269,7 @@
                                             </div>
                                         <!-- Send -->
                                           <div class="tab-pane" id="send" role="tabpanel">
+                                              <h5>Send</h5>
                                               <span class = "mt-2 col"><span class ="col-2 col-md-1">From:</span> <span class ="col-2 col-md-1 offset-md-1">Topic:</span> <span class ="col-2 col-md-1 offset-md-4">Date:</span> </span>
                                             <!-- Message -->
                                                 <a class="col-md border btn my-1 nav nav-link "> 
@@ -303,6 +306,7 @@
                                         </div>
                                         <!-- Saved  -->
                                           <div class="tab-pane" id="saved" role="tabpanel">
+                                              <h5>Saved</h5>
                                               <span class = "mt-2 col"><span class ="col-2 col-md-1">From:</span> <span class ="col-2 col-md-1 offset-md-1">Topic:</span> <span class ="col-2 col-md-1 offset-md-4">Date:</span> </span>
                                                 <!-- Message -->
                                                 <a class="col-md border btn my-1 nav nav-link " > 
@@ -322,6 +326,7 @@
                                         </div>
                                         <!-- Deleted -->
                                           <div class="tab-pane" id="deleted" role="tabpanel">
+                                              <h5>Deleted</h5>
                                               <span class = "mt-2 col"><span class ="col-2 col-md-1">From:</span> <span class ="col-2 col-md-1 offset-md-1">Topic:</span> <span class ="col-2 col-md-1 offset-md-4">Date:</span> </span>
                                                  <!-- Message -->
                                                 <a class="col-md border btn my-1 nav nav-link "> 
