@@ -83,6 +83,12 @@ h3:after {
     font-weight: 600;
 }
 
+.btn-login:hover {
+    background: rgba(222, 98, 96, 0.8);
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+}
+
 .banner-text {
     padding: 20px;
 }
