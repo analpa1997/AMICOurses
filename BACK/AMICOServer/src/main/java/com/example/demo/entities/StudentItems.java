@@ -18,7 +18,7 @@ public class StudentItems {
 
 	private String studentItemName;
 
-	private int studentItemContent;
+	private String studentItemPath;
 
 	public long getStudentItemID() {
 		return studentItemID;
@@ -44,12 +44,12 @@ public class StudentItems {
 		this.studentItemName = studentItemName;
 	}
 
-	public int getStudentItemContent() {
-		return studentItemContent;
+	public String getStudentItemPath() {
+		return studentItemPath;
 	}
 
-	public void setStudentItemContent(int studentItemContent) {
-		this.studentItemContent = studentItemContent;
+	public void setStudentItemPath(String studentItemPath) {
+		this.studentItemPath = studentItemPath;
 	}
 
 }

@@ -110,11 +110,11 @@ public abstract class User {
 		this.password = password;
 	}
 
-	public List getMessagesList() {
+	public List<Message> getMessagesList() {
 		return messagesList;
 	}
 
-	public void setStudentMessagesList(List studentMessagesList) {
+	public void setStudentMessagesList(List<Message> studentMessagesList) {
 		this.messagesList = studentMessagesList;
 	}
 

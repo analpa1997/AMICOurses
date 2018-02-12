@@ -1,7 +1,5 @@
 package com.example.demo.entities;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,8 +17,6 @@ public class Practices {
 	private long practiceID;
 
 	private String practiceName;
-
-	private Date PracticeDeliveryDate;
 
 	private double calification;
 
@@ -45,15 +41,7 @@ public class Practices {
 		this.practiceName = practiceName;
 	}
 
-	public Date getPracticeDeliveryDate() {
-		return PracticeDeliveryDate;
-	}
-
-	public void setPracticeDeliveryDate(Date practiceDeliveryDate) {
-		PracticeDeliveryDate = practiceDeliveryDate;
-	}
-
-	public double getCalification() {
+		public double getCalification() {
 		return calification;
 	}
 
