@@ -24,3 +24,13 @@ body{font-family:'Open Sans',serif;padding-top:54px;color:#868e96}@media (min-wi
     background-color: rgba(230, 230, 230, 0.3);    
     text-decoration: none;
 }
+
+.btn-primary {
+    background-color : rgba(225, 120, 90, 1);
+    border-color : rgba(175, 70, 40, 0.7);
+}
+
+.btn-primary:hover {
+    background-color : rgba(225, 120, 90, 0.8);
+    border-color : rgba(175, 70, 40, 1);
+}
