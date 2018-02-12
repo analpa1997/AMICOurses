@@ -11,23 +11,23 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Skills")
-public class Skills {
+public class Skill {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int skillID;
+	private long skillID;
 
 	private String skillName;
 
-	private Stack skillDescription;
+	private Stack<Skill> skillDescription;
 
-	private List course;
+	private List<Course> course;
 
-	public int getSkillID() {
+	public long getSkillID() {
 		return skillID;
 	}
 
-	public void setSkillID(int skillID) {
+	public void setSkillID(long skillID) {
 		this.skillID = skillID;
 	}
 

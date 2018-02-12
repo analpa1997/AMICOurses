@@ -13,7 +13,7 @@ public class Message {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int messageID;
+	private long messageID;
 
 	private String messageTitle;
 
@@ -22,11 +22,11 @@ public class Message {
 	@OneToOne
 	private User messageAuthor;
 
-	public int getMessageID() {
+	public long getMessageID() {
 		return messageID;
 	}
 
-	public void setMessageID(int messageID) {
+	public void setMessageID(long messageID) {
 		this.messageID = messageID;
 	}
 

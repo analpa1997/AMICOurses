@@ -15,10 +15,10 @@ public class Student extends User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int userID;
+	private long userID;
 
 	@OneToMany
-	private List courseList;
+	private List<Course> courseList;
 
 	public void createStudent() {
 	}
@@ -33,12 +33,12 @@ public class Student extends User {
 	}
 
 	@Override
-	public int getUserID() {
+	public long getUserID() {
 		return userID;
 	}
 
 	@Override
-	public void setUserID(int userID) {
+	public void setUserID(long userID) {
 		this.userID = userID;
 	}
 

@@ -16,7 +16,7 @@ public class Practices {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int practiceID;
+	private long practiceID;
 
 	private String practiceName;
 
@@ -24,14 +24,16 @@ public class Practices {
 
 	private double calification;
 
+	private String urlDelivery;
+
 	@OneToOne
 	private Subject subject;
 
-	public int getPracticeID() {
+	public long getPracticeID() {
 		return practiceID;
 	}
 
-	public void setPracticeID(int practiceID) {
+	public void setPracticeID(long practiceID) {
 		this.practiceID = practiceID;
 	}
 
@@ -65,6 +67,14 @@ public class Practices {
 
 	public void setSubject(Subject subject) {
 		this.subject = subject;
+	}
+
+	public String getUrlDelivery() {
+		return urlDelivery;
+	}
+
+	public void setUrlDelivery(String urlDelivery) {
+		this.urlDelivery = urlDelivery;
 	}
 
 }

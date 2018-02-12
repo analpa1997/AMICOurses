@@ -12,7 +12,7 @@ public class StudentItems {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int studentItemID;
+	private long studentItemID;
 
 	private int studentItemType;
 
@@ -20,11 +20,11 @@ public class StudentItems {
 
 	private int studentItemContent;
 
-	public int getStudentItemID() {
+	public long getStudentItemID() {
 		return studentItemID;
 	}
 
-	public void setStudentItemID(int studentItemID) {
+	public void setStudentItemID(long studentItemID) {
 		this.studentItemID = studentItemID;
 	}
 

@@ -1,5 +1,7 @@
 package com.example.demo.entities;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,24 +15,26 @@ public class Professor extends User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int userID;
+	private long userID;
 
 	@OneToMany
-	private int subjectsList;
+	private List<Subject> subjectsList;
 
-	public int getUserID() {
+	@Override
+	public long getUserID() {
 		return userID;
 	}
 
-	public void setUserID(int userID) {
+	@Override
+	public void setUserID(long userID) {
 		this.userID = userID;
 	}
 
-	public int getSubjectsList() {
+	public List getSubjectsList() {
 		return subjectsList;
 	}
 
-	public void setSubjectsList(int subjectsList) {
+	public void setSubjectsList(List subjectsList) {
 		this.subjectsList = subjectsList;
 	}
 

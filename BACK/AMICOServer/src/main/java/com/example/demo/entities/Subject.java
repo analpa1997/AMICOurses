@@ -14,11 +14,11 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Subjects")
-public class Subjects {
+public class Subject {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int subjectID;
+	private long subjectID;
 
 	@OneToOne
 	private Course course;
@@ -34,16 +34,16 @@ public class Subjects {
 	private Date lastExamDate;
 
 	@OneToMany
-	private List practiceList;
+	private List<Practices> practiceList;
 
 	@OneToMany
-	private List studentItemsList;
+	private List<StudentItems> studentItemsList;
 
-	public int getSubjectID() {
+	public long getSubjectID() {
 		return subjectID;
 	}
 
-	public void setSubjectID(int subjectID) {
+	public void setSubjectID(long subjectID) {
 		this.subjectID = subjectID;
 	}
 

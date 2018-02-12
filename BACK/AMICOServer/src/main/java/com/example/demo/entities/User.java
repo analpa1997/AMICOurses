@@ -15,7 +15,7 @@ public abstract class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int userID;
+	private long userID;
 
 	protected String userFirstName;
 
@@ -33,14 +33,16 @@ public abstract class User {
 
 	protected String password;
 
-	@OneToMany
-	private List studentMessagesList;
+	protected String urlProfileImage;
 
-	public int getUserID() {
+	@OneToMany
+	private List<Message> messagesList;
+
+	public long getUserID() {
 		return userID;
 	}
 
-	public void setUserID(int userID) {
+	public void setUserID(long userID) {
 		this.userID = userID;
 	}
 
@@ -108,12 +110,20 @@ public abstract class User {
 		this.password = password;
 	}
 
-	public List getStudentMessagesList() {
-		return studentMessagesList;
+	public List getMessagesList() {
+		return messagesList;
 	}
 
 	public void setStudentMessagesList(List studentMessagesList) {
-		this.studentMessagesList = studentMessagesList;
+		this.messagesList = studentMessagesList;
+	}
+
+	public String getUrlProfileImage() {
+		return urlProfileImage;
+	}
+
+	public void setUrlProfileImage(String urlProfileImage) {
+		this.urlProfileImage = urlProfileImage;
 	}
 
 }

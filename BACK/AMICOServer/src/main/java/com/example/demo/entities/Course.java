@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.security.auth.Subject;
 
 @Entity
 @Table(name = "Courses")
@@ -16,7 +17,7 @@ public class Course {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int courseID;
+	private long courseID;
 
 	private String courseName;
 
@@ -28,17 +29,19 @@ public class Course {
 
 	private String courseDescription;
 
-	@OneToMany
-	private List subjects;
+	private String urlImage;
 
 	@OneToMany
-	private List skills;
+	private List<Subject> subjects;
 
-	public int getCourseID() {
+	@OneToMany
+	private List<Skill> skills;
+
+	public long getCourseID() {
 		return courseID;
 	}
 
-	public void setCourseID(int courseID) {
+	public void setCourseID(long courseID) {
 		this.courseID = courseID;
 	}
 
@@ -95,6 +98,34 @@ public class Course {
 	}
 
 	public void setSkills(List skills) {
+		this.skills = skills;
+	}
+
+	public String getUrlImage() {
+		return urlImage;
+	}
+
+	public void setUrlImage(String urlImage) {
+		this.urlImage = urlImage;
+	}
+
+	@Override
+	public String toString() {
+		return "Course [courseID=" + courseID + ", courseName=" + courseName + ", courseLanguage=" + courseLanguage
+				+ ", startDate=" + startDate + ", endDate=" + endDate + ", courseDescription=" + courseDescription
+				+ ", urlImage=" + urlImage + ", subjects=" + subjects + ", skills=" + skills + "]";
+	}
+
+	public Course(String courseName, String courseLanguage, Date startDate, Date endDate, String courseDescription,
+			String urlImage, List subjects, List skills) {
+		super();
+		this.courseName = courseName;
+		this.courseLanguage = courseLanguage;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.courseDescription = courseDescription;
+		this.urlImage = urlImage;
+		this.subjects = subjects;
 		this.skills = skills;
 	}
 
