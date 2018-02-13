@@ -1,18 +1,15 @@
 package com.example.demo;
 
-import java.util.Date;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.entities.Course;
 
-@RestController
+@Controller
 public class CourseController {
 
-	@RequestMapping("/testCourse")
-	public Course allCourses() {
-		return new Course("HTML Introduction", "English", new Date(), new Date(), null, "http://www.google.es", null,
-				null);
+	@RequestMapping("/")
+	public String allCourses() {
+		return "HTML/index";
 	}
 }

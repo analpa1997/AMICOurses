@@ -1,0 +1,27 @@
+body {
+    background-color: rgba(180, 180, 200, 0.1);
+}
+
+#start-label {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+input {
+    background-color: rgba(255, 255, 255, 0.5);
+    color: rgba(0, 0, 0, 0.8);
+}
+
+input:hover {
+    background-color: rgba(240, 240, 255, 0.5);
+    color: rgba(0, 0, 0, 0.8);
+}
+
+.form-btn {
+    color : rgba(30, 30, 30, 0.9);
+    background-color: rgba(80, 150, 200, 0.4);
+}
+
+.form-btn:hover {
+    color : rgba(30, 30, 30, 0.7);
+    background-color: rgba(80, 150, 200, 0.6);
+}
