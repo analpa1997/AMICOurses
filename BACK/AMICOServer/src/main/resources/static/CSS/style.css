@@ -205,6 +205,12 @@ hr {
     vertical-align: middle;
 }
 
+.imgCourse{
+    margin: auto;
+    width: 20vmax;
+    height: 20vmax;
+}
+
 .carousel-inner > .carousel-item > img {
     margin: auto;
     width: 15vmax;
