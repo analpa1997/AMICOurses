@@ -46,9 +46,11 @@ public class CourseController {
 		return "HTML/index";
 	}
 
-	@RequestMapping("/searchByName")
-	public String courseByName(Model model) {
-
-	}
+	// @RequestMapping("/searchByName")
+	/*
+	 * public String courseByName(Model model) {
+	 * 
+	 * }
+	 */
 
 }
