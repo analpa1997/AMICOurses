@@ -44,9 +44,13 @@ public class IndexController {
 		
 		for (int i = 0; i < 5; i++) {
 			users.add(new User("User-" + i, "pass", "hola" + i +"@mail.com", true));
-			
-			courses.get(i%2).getInscribedUsers().add(users.get(i));
 		}
+		
+		courses.get(0).getInscribedUsers().add(users.get(0));
+		courses.get(1).getInscribedUsers().add(users.get(0));
+		courses.get(4).getInscribedUsers().add(users.get(0));
+		courses.get(6).getInscribedUsers().add(users.get(0));
+		
 		
 		userRepository.save(users);
 		courseRepository.save(courses);
@@ -68,7 +72,11 @@ public class IndexController {
 		}
 		
 		/* Test Query. It should retrieve "Introduction to AI" */
-		System.out.println(userRepository.findByUsername("User-0").get(0).getInscribedCourses().get(0).getName());
+		List<Course> queryCourses = userRepository.findByUsername("User-0").get(0).getInscribedCourses();
+		for (Course course : queryCourses) {
+			System.out.println("Course name : " + course.getName() + " course id: " + course.getCourseID());
+		}
+		
 		
 		
 		model.addAttribute("courseList", c);
