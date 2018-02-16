@@ -1,12 +1,10 @@
-package com.example.demo.repositories;
+package com.example.demo.course_package;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.demo.entities.Course;
-
 public interface CourseRepository extends JpaRepository<Course, Long> {
 
-	List<Course> findByCourseName(String name);
+	List<Course> findByName(String name);
 }

@@ -1,13 +1,13 @@
-package com.example.demo.entities;
-
-import java.util.List;
-import java.util.Stack;
+package com.example.demo.skill_package;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.example.demo.course_package.Course;
 
 @Entity
 @Table(name = "Skills")
@@ -19,10 +19,15 @@ public class Skill {
 
 	private String skillName;
 
-	private Stack<Skill> skillDescription;
+	private String skillDescription;
 
-	private List<Course> course;
+	@ManyToOne
+	private Course course;
 
+	/* Constructors */
+	public Skill () { }
+	
+	/* Methods */
 	public long getSkillID() {
 		return skillID;
 	}
@@ -39,19 +44,19 @@ public class Skill {
 		this.skillName = skillName;
 	}
 
-	public Stack getSkillDescription() {
+	public String getSkillDescription() {
 		return skillDescription;
 	}
 
-	public void setSkillDescription(Stack skillDescription) {
+	public void setSkillDescription(String skillDescription) {
 		this.skillDescription = skillDescription;
 	}
 
-	public List getCourse() {
+	public Course getCourse() {
 		return course;
 	}
 
-	public void setCourse(List course) {
+	public void setCourse(Course course) {
 		this.course = course;
 	}
 

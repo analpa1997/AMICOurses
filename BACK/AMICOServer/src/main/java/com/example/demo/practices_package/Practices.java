@@ -1,11 +1,13 @@
-package com.example.demo.entities;
+package com.example.demo.practices_package;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.security.auth.Subject;
+
+import com.example.demo.subject_package.Subject;
 
 @Entity
 @Table(name = "Practices")
@@ -20,8 +22,15 @@ public class Practices {
 	private double calification;
 
 	private String urlDelivery;
-
+	
+	@ManyToOne
 	private Subject subject;
+	
+	/* Constructors */
+	
+	public Practices () {}
+	
+	/* Methods */
 
 	public long getPracticeID() {
 		return practiceID;
