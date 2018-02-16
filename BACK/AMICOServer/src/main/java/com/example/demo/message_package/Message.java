@@ -1,5 +1,6 @@
 package com.example.demo.message_package;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -28,7 +29,7 @@ public class Message {
 	private User author;
 	
 	@OneToMany
-	private List <User> receivers;
+	private List <User> receivers = new ArrayList<>();
 
 	/* Constructors */
 	public Message () {}

@@ -41,7 +41,7 @@ public class User {
 
 	private String urlProfileImage;
 	@ManyToMany(mappedBy="inscribedUsers")
-	private List<Course> inscribedCourses;
+	private List<Course> inscribedCourses = new ArrayList<>();
 	
 	private boolean isStudent;
 	

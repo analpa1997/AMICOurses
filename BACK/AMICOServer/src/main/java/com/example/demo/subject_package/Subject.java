@@ -34,16 +34,16 @@ public class Subject {
 	private Course course;
 
 	@OneToMany
-	private List<User> users;
+	private List<User> users = new ArrayList<>();
 
 	@OneToMany(mappedBy="subject")
-	private List<Practices> practiceList;
+	private List<Practices> practiceList = new ArrayList<>();
 
 	@OneToMany(mappedBy="subject")
-	private List<StudyItem> studyItemsList;
+	private List<StudyItem> studyItemsList = new ArrayList<>();
 
 	@OneToMany(mappedBy="subject")
-	private List <Exam> exams;
+	private List <Exam> exams = new ArrayList<>();
 
 	/* Constructors */
 	public Subject () { }

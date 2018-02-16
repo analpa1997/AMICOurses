@@ -1,5 +1,6 @@
 package com.example.demo.course_package;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -38,13 +39,13 @@ public class Course {
 	private boolean isCompleted;
 
 	@ManyToMany
-	private List<User> inscribedUsers;
+	private List<User> inscribedUsers = new ArrayList<>();
 	
 	@OneToMany(mappedBy="course")
-	private List<Subject> subjects;
+	private List<Subject> subjects = new ArrayList<>();
 	
 	@OneToMany(mappedBy="course")
-	private List <Skill> skills;
+	private List <Skill> skills = new ArrayList<>();
 
 
 	/* Constructors */

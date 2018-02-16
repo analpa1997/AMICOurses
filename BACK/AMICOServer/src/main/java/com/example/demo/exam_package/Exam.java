@@ -1,5 +1,6 @@
 package com.example.demo.exam_package;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,12 +32,6 @@ public class Exam {
 	
 	@ManyToOne
 	private Subject subject;
-
-	@ManyToMany
-	List<User> inscribedUsers;
-	
-	@OneToMany(mappedBy="course")
-	List<Subject> subjects;
 
 	/* Constructors */
 	public Exam() { }
@@ -83,21 +78,6 @@ public class Exam {
 		this.subject = subject;
 	}
 
-	public List<User> getInscribedUsers() {
-		return inscribedUsers;
-	}
-
-	public void setInscribedUsers(List<User> inscribedUsers) {
-		this.inscribedUsers = inscribedUsers;
-	}
-
-	public List<Subject> getSubjects() {
-		return subjects;
-	}
-
-	public void setSubjects(List<Subject> subjects) {
-		this.subjects = subjects;
-	}
 	
 
 }
