@@ -27,35 +27,6 @@ public class IndexController {
 	/*Introduce Mock data*/
 	@PostConstruct
 	public void init() {
-		
-		List <Course> courses = new ArrayList<>();
-		
-		List <User> users = new ArrayList<>();
-		
-		for (int i = 0; i < 5; i++) {
-			courses.add(new Course("Introduction to AI", "English", null, null,
-				"If you want to learn all about AI, this is our course",
-				"https://i.blogs.es/09f8d5/650_1200/450_1000.jpg"));
-	
-			courses.add(new Course("AI: Advanced Tips", "English", null, null,
-				"If you want to learn all about AI, this is our course",
-				"http://www.globalmediait-cr.com/wp-content/uploads/2016/08/BBVA-OpenMind-El-futuro-de-la-inteligencia-artificial-y-la-cibern%C3%A9tica.jpg"));
-		}
-		
-		for (int i = 0; i < 5; i++) {
-			users.add(new User("User-" + i, "pass", "hola" + i +"@mail.com", true));
-		}
-		
-		courses.get(0).getInscribedUsers().add(users.get(0));
-		courses.get(1).getInscribedUsers().add(users.get(0));
-		courses.get(4).getInscribedUsers().add(users.get(0));
-		courses.get(6).getInscribedUsers().add(users.get(0));
-		
-		
-		userRepository.save(users);
-		courseRepository.save(courses);
-		
-		
 		/*for (int i = 0; i < 5; i++) {
 			
 		}*/
@@ -72,7 +43,7 @@ public class IndexController {
 		}
 		
 		/* Test Query. It should retrieve "Introduction to AI" */
-		List<Course> queryCourses = userRepository.findByUsername("User-0").get(0).getInscribedCourses();
+		List<Course> queryCourses = userRepository.findByUsername("User-0").getInscribedCourses();
 		for (Course course : queryCourses) {
 			System.out.println("Course name : " + course.getName() + " course id: " + course.getCourseID());
 		}
