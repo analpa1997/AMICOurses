@@ -23,7 +23,7 @@ public class DataLoaderExample implements CommandLineRunner{
 	@Override
 	public void run(String... arg0) throws Exception {
 		
-		List <Skill> skills = new ArrayList <> ();
+		//List <Skill> skills = new ArrayList <> ();
 		
 		List <Course> courses = new ArrayList<>();
 		
