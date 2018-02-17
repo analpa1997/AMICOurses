@@ -74,7 +74,22 @@
     <article>
       <div class="container">
         <div class="row">
+        	  {{#subjectList}}  
           <div class="col-lg-8 col-md-10 mx-auto">
+           <div class="p-3" align=center>
+	            <!--<a id = "link-course" href="./html/courseInformation/course.html/{{courseID}}"> -->
+	            <h2 class="display-4">{{name}}</h2>
+	            <!-- </a> -->
+	            <p class="lead">{{description}}</p>
+	                      <!-- <div class="container">
+	                          <a href="./html/courseInformation/course.html/{{courseID}}">
+	                      <img class="img-fluid rounded-circle imgCourse" src="{{urlImage}}" alt=" " >
+	                      </a>
+	                      </div> -->
+	       </div>
+          
+          
+          <!-- 
             <h2>Subject 1</h2>
             <p>Never in all their history have men been able truly to conceive of the world as one: a single sphere, a globe, having the qualities of a globe, a round earth in which all the directions eventually meet, in which there is no center because every point, or none, is center — an equal earth which all men occupy as equals. The airman's earth, if free men make it, will be truly round: a globe in practice, not in theory.</p>
 
@@ -99,8 +114,8 @@
             <h2 class="section-heading">Subject 3</h2>
 
             <p>As we got further and further away, it [the Earth] diminished in size. Finally it shrank to the size of a marble, the most beautiful you can imagine. That beautiful, warm, living object looked so fragile, so delicate, that if you touched it with a finger it would crumble and fall apart. Seeing this has to change a man.</p>
-
-            <!--<a href="#">
+           
+            <a href="#">
               <!--<img class="img-fluid" src="img/post-sample-image.jpg" alt="">
             </a>
             <span class="caption text-muted">To go places and do things that have never been done before – that’s what living is all about.</span>
