@@ -26,7 +26,7 @@ public class IndexController {
 	
 	/*Introduce Mock data*/
 	@PostConstruct
-	public void init() {
+	public void init() {	
 		/*for (int i = 0; i < 5; i++) {
 			
 		}*/
@@ -34,18 +34,15 @@ public class IndexController {
 
 	@RequestMapping("/")
 	public String allCourses(Model model) {
-		List<Course> c1 = courseRepository.findByName("AI: Advanced Tips");
-		List<Course> c2 = courseRepository.findByName("Introduction to AI");
+
+		/*Habria que paginar la busqueda*/
 		List<Course> c = new ArrayList<>();
-		for (int i = 0; i < 5; i++) {
-			c.add(c1.get(i));
-			c.add(c2.get(i));
-		}
+		c.addAll(courseRepository.findAll());
 		
 		/* Test Query. It should retrieve "Introduction to AI" */
-		List<Course> queryCourses = userRepository.findByUsername("User-0").getInscribedCourses();
+		List<Course> queryCourses = userRepository.findByUsername("student-0").getInscribedCourses();
 		for (Course course : queryCourses) {
-			System.out.println("Course name : " + course.getName() + " course id: " + course.getCourseID());
+			System.out.println("Course name : " + course.getName() + " course id: " + course.getCourseID() + " \n skills: " + course.getSkills() + " \n subjects " + course.getSubjects());
 		}
 		
 		

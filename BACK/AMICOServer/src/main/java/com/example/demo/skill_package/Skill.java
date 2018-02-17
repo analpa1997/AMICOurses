@@ -27,6 +27,16 @@ public class Skill {
 	/* Constructors */
 	public Skill () { }
 	
+	
+	
+	public Skill(String skillName, String skillDescription) {
+		super();
+		this.skillName = skillName;
+		this.skillDescription = skillDescription;
+	}
+
+
+
 	/* Methods */
 	public long getSkillID() {
 		return skillID;

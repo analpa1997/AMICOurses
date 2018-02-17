@@ -23,12 +23,31 @@ public class StudyItem {
 
 	private String path;
 	
+	private String fileName;
+	
 	@ManyToOne
 	private Subject subject;
+	
+	private int module;
+	
+	private String internalName;
 
 	/* Constructors */
 	public StudyItem () {}
 	
+	
+	
+	public StudyItem(int type, String name, int module, String fileName) {
+		super();
+		this.type = type;
+		this.name = name;
+		this.module = module;
+		this.fileName = fileName;
+		this.internalName = fileName.replaceAll(" ", "-");
+	}
+
+
+
 	/* Methods */
 
 	public long getStudyItemID() {
@@ -69,7 +88,20 @@ public class StudyItem {
 
 	public void setSubject(Subject subject) {
 		this.subject = subject;
+		this.path = "../files/" + subject.getCourse().getInternalName() + "/" + internalName;
 	}
+
+	public int getModule() {
+		return module;
+	}
+
+	public void setModule(int module) {
+		this.module = module;
+	}
+
+	public String getInternalName() {
+		return internalName;
+	} 
 	
 
 	

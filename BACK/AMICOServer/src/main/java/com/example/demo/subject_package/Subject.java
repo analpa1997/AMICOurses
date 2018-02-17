@@ -12,6 +12,7 @@ import javax.persistence.Table;
 
 import com.example.demo.course_package.Course;
 import com.example.demo.exam_package.Exam;
+import com.example.demo.message_package.Message;
 import com.example.demo.practices_package.Practices;
 import com.example.demo.studyItem_package.StudyItem;
 import com.example.demo.user_package.User;
@@ -26,15 +27,10 @@ public class Subject {
 
 	private String name;
 
-	private int creditsNumber;
-
 	private String description;
 	
 	@ManyToOne
 	private Course course;
-
-	@OneToMany
-	private List<User> users = new ArrayList<>();
 
 	@OneToMany(mappedBy="subject")
 	private List<Practices> practiceList = new ArrayList<>();
@@ -44,10 +40,19 @@ public class Subject {
 
 	@OneToMany(mappedBy="subject")
 	private List <Exam> exams = new ArrayList<>();
+	
+	@OneToMany(mappedBy="subject")
+	private List <Message> messages = new ArrayList<>();
 
 	/* Constructors */
 	public Subject () { }
 	
+	
+	public Subject(String name) {
+		this.name = name;
+	}
+
+
 	/* Methods */
 
 	public long getSubjectID() {
@@ -64,14 +69,6 @@ public class Subject {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public int getCreditsNumber() {
-		return creditsNumber;
-	}
-
-	public void setCreditsNumber(int creditsNumber) {
-		this.creditsNumber = creditsNumber;
 	}
 
 	public String getDescription() {
@@ -92,7 +89,7 @@ public class Subject {
 
 	public List<User> getTeachers() {
 		List<User> teachers = new ArrayList <> ();
-		for (User user : this.users) {
+		for (User user : this.course.getInscribedUsers()) {
 			if (!user.isStudent()) {
 				teachers.add(user);
 			}
@@ -101,11 +98,7 @@ public class Subject {
 	}
 
 	public List<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(List<User> users) {
-		this.users = users;
+		return this.course.getInscribedUsers();
 	}
 
 	public List<Practices> getPracticeList() {
@@ -131,5 +124,17 @@ public class Subject {
 	public void setExams(List<Exam> exams) {
 		this.exams = exams;
 	}
+
+
+	public List<Message> getMessages() {
+		return messages;
+	}
+
+
+	public void setMessages(List<Message> messages) {
+		this.messages = messages;
+	}
+	
+	
 
 }

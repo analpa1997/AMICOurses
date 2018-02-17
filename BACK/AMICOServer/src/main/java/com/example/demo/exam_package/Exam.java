@@ -36,6 +36,13 @@ public class Exam {
 	/* Constructors */
 	public Exam() { }
 	
+	public Exam(String name) {
+		super();
+		this.name = name;
+	}
+
+
+
 	/* Methods */
 
 	public long getExamID() {
