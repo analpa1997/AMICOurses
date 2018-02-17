@@ -21,7 +21,11 @@ public class Practices {
 
 	private double calification;
 
-	private String urlDelivery;
+	private String fileName;
+	
+	private String internalName;
+	
+	private String path;
 	
 	@ManyToOne
 	private Subject subject;
@@ -30,6 +34,14 @@ public class Practices {
 	
 	public Practices () {}
 	
+	public Practices(String practiceName, String fileName) {
+		super();
+		this.practiceName = practiceName;
+		this.internalName = fileName.replaceAll(" ", "-");
+	}
+
+
+
 	/* Methods */
 
 	public long getPracticeID() {
@@ -62,14 +74,33 @@ public class Practices {
 
 	public void setSubject(Subject subject) {
 		this.subject = subject;
+		this.path = "../files/" + subject.getCourse().getInternalName() + "/" + internalName;
 	}
 
-	public String getUrlDelivery() {
-		return urlDelivery;
+	public String getInternalName() {
+		return internalName;
 	}
 
-	public void setUrlDelivery(String urlDelivery) {
-		this.urlDelivery = urlDelivery;
+	public void setInternalName(String internalName) {
+		this.internalName = internalName;
 	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+	
+	
 
 }

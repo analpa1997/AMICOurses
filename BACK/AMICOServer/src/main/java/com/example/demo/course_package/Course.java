@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,6 +26,8 @@ public class Course {
 	private long courseID;
 
 	private String name;
+	
+	private String internalName;
 
 	private String courseLanguage;
 
@@ -32,6 +35,7 @@ public class Course {
 
 	private Date endDate;
 
+	@Column(length=Short.MAX_VALUE)
 	private String courseDescription;
 
 	private String urlImage;
@@ -55,11 +59,12 @@ public class Course {
 			String urlImage) {
 		super();
 		this.name = name;
+		this.internalName = this.name.replaceAll(" ", "-");
 		this.courseLanguage = courseLanguage;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.courseDescription = courseDescription;
-		this.urlImage = urlImage;
+		this.urlImage = "../img/courses/" + this.internalName + "/" + urlImage;
 		this.isCompleted = false;
 	}
 
@@ -151,6 +156,14 @@ public class Course {
 
 	public void setSkills(List<Skill> skills) {
 		this.skills = skills;
+	}
+
+	public String getInternalName() {
+		return internalName;
+	}
+
+	public void setInternalName(String internalName) {
+		this.internalName = internalName;
 	}
 
 
