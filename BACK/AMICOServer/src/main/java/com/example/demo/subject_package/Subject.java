@@ -43,6 +43,8 @@ public class Subject {
 	
 	@OneToMany(mappedBy="subject")
 	private List <Message> messages = new ArrayList<>();
+	
+	private String internalName;
 
 	/* Constructors */
 	public Subject () { }
@@ -50,6 +52,7 @@ public class Subject {
 	
 	public Subject(String name) {
 		this.name = name;
+		this.internalName = name.replaceAll(" ", "-");
 	}
 
 
@@ -134,6 +137,16 @@ public class Subject {
 	public void setMessages(List<Message> messages) {
 		this.messages = messages;
 	}
+
+
+	public String getInternalName() {
+		return internalName;
+	}
+
+
+	public void setInternalName(String internalName) {
+		this.internalName = internalName;
+	} 
 	
 	
 
