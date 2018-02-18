@@ -21,22 +21,67 @@ public class UserProfileController {
 		
 		User user = userRepository.findByUsername(username);
 
-		model.addAttribute("name", user.getUserFirstName());
-		model.addAttribute("lastName", user.getUserLastName());
-		model.addAttribute("userName", user.getUsername());
-		model.addAttribute("mail", user.getUserMail());
-		model.addAttribute("address", user.getUserAddress());
+		model.addAttribute("userFirstName", user.getUserFirstName());
+		model.addAttribute("userLastName", user.getUserLastName());
+		model.addAttribute("username", user.getUsername());
+		model.addAttribute("userMail", user.getUserMail());
+		model.addAttribute("userAddress", user.getUserAddress());
+		model.addAttribute("role", user.getRole());
+		model.addAttribute("isStudent", user.isStudent());
+		model.addAttribute("urlProfileImage", user.getUrlProfileImage());
+		model.addAttribute("inscribedCourses", user.getInscribedCourses());
+		model.addAttribute("completedCourses", user.getCompletedCourses());
+		
 		model.addAttribute("city", user.getCity());
 		model.addAttribute("country", user.getCountry());
 		model.addAttribute("phoneNumber", user.getPhoneNumber());
-		model.addAttribute("urlImage", user.getUrlProfileImage());
 		model.addAttribute("inscribedCourses", user.getInscribedCourses());
 		model.addAttribute("completedCourses", user.getCompletedCourses());
-		model.addAttribute("urlImage", user.getUrlProfileImage());
-		model.addAttribute("role", user.getRole());
-		model.addAttribute("isStudent", user.isStudent());
+		
 		
 
 		return "HTML/Profile/userProfile";
+	}
+	//Actualizado perfil
+	@RequestMapping("/profile/{username}/updated")
+	public String updated(Model model, User userUpdated) {
+		
+		User user = userRepository.findByUserID(userUpdated.getUserID());
+
+		user.setUserFirstName(userUpdated.getUserFirstName());
+		user.setUserLastName(userUpdated.getUserLastName());
+		user.setUsername(userUpdated.getUsername());
+		user.setUserMail(userUpdated.getUserMail());
+		user.setUserAddress(userUpdated.getUserAddress());
+		user.setCity(userUpdated.getCity());
+		user.setCountry(userUpdated.getCountry());
+		user.setPhoneNumber(userUpdated.getPhoneNumber());
+		user.setUrlProfileImage(userUpdated.getUrlProfileImage());
+		user.setRole(userUpdated.getRole());
+		
+		//No se sobreescribe, Carlos del futuro, arregla esto
+		return "HTML/Profile/userProfile";
+	}
+	@RequestMapping("/profile/{username}/update")
+	public String update(Model model, @PathVariable String username) {
+		
+		User user = userRepository.findByUsername(username);
+
+		model.addAttribute("userFirstName", user.getUserFirstName());
+		model.addAttribute("userLastName", user.getUserLastName());
+		model.addAttribute("username", user.getUsername());
+		model.addAttribute("userMail", user.getUserMail());
+		model.addAttribute("password", user.getPassword());
+		model.addAttribute("userAddress", user.getUserAddress());
+		model.addAttribute("role", user.getRole());
+		model.addAttribute("isStudent", user.isStudent());
+		model.addAttribute("urlProfileImage", user.getUrlProfileImage());
+		model.addAttribute("city", user.getCity());
+		model.addAttribute("country", user.getCountry());
+		model.addAttribute("phoneNumber", user.getPhoneNumber());
+		
+		
+
+		return "HTML/Profile/profile-update";
 	}
 }
