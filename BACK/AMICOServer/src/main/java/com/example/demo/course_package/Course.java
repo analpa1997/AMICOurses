@@ -1,8 +1,11 @@
 package com.example.demo.course_package;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,7 +29,7 @@ public class Course {
 	private long courseID;
 
 	private String name;
-	
+
 	private String internalName;
 
 	private String courseLanguage;
@@ -35,26 +38,30 @@ public class Course {
 
 	private Date endDate;
 
-	@Column(length=Short.MAX_VALUE)
+	private String startDateString;
+
+	private String endDateString;
+
+	@Column(length = Short.MAX_VALUE)
 	private String courseDescription;
 
 	private String urlImage;
-	
+
 	private boolean isCompleted;
 
 	@ManyToMany
 	private List<User> inscribedUsers = new ArrayList<>();
-	
-	@OneToMany(mappedBy="course")
-	private List<Subject> subjects = new ArrayList<>();
-	
-	@OneToMany(mappedBy="course")
-	private List <Skill> skills = new ArrayList<>();
 
+	@OneToMany(mappedBy = "course")
+	private List<Subject> subjects = new ArrayList<>();
+
+	@OneToMany(mappedBy = "course")
+	private List<Skill> skills = new ArrayList<>();
 
 	/* Constructors */
-	public Course() { }
-	
+	public Course() {
+	}
+
 	public Course(String name, String courseLanguage, Date startDate, Date endDate, String courseDescription,
 			String urlImage) {
 		super();
@@ -66,6 +73,36 @@ public class Course {
 		this.courseDescription = courseDescription;
 		this.urlImage = "../img/courses/" + this.internalName + "/" + urlImage;
 		this.isCompleted = false;
+	}
+
+	public Course(String name, String courseLanguage, String courseDescription, String urlImage) {
+		super();
+		this.name = name;
+		this.internalName = this.name.replaceAll(" ", "-").toLowerCase();
+		this.courseLanguage = courseLanguage;
+		this.courseDescription = courseDescription;
+		this.urlImage = "../img/courses/" + this.internalName + "/" + urlImage;
+		this.isCompleted = false;
+
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy");
+		Random aleatorio = new Random();
+
+		int dia = aleatorio.nextInt(30) + 1, mes = aleatorio.nextInt(11) + 1, anyo = aleatorio.nextInt(5) + 2019;
+
+		Calendar calendario = Calendar.getInstance();
+		this.endDate = calendario.getTime();
+		calendario.set(anyo, mes, dia);
+		this.startDate = calendario.getTime();
+		while (this.endDate.compareTo(this.startDate) < 0) {
+			dia = aleatorio.nextInt(30) + 1;
+			mes = aleatorio.nextInt(11) + 1;
+			anyo = aleatorio.nextInt(5) + 2019;
+			calendario.set(anyo, mes, dia);
+			this.endDate = calendario.getTime();
+		}
+
+		this.startDateString = dateFormat.format(this.startDate);
+		this.endDateString = dateFormat.format(this.endDate);
 	}
 
 	/* Methods */
@@ -149,7 +186,7 @@ public class Course {
 	public void setSubjects(List<Subject> subjects) {
 		this.subjects = subjects;
 	}
-	
+
 	public List<Skill> getSkills() {
 		return skills;
 	}
@@ -165,6 +202,5 @@ public class Course {
 	public void setInternalName(String internalName) {
 		this.internalName = internalName;
 	}
-
 
 }

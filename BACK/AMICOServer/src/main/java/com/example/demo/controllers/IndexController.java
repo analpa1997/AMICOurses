@@ -54,9 +54,27 @@ public class IndexController {
 					subjects.add(s);
 			}
 		}
+		List<String> lengthCourse = new ArrayList<>();
+		for (Course course : courseRepository.findAll()) {
+			long duration = (course.getEndDate().getTime() - course.getStartDate().getTime());
+			String lengthCourseString = "";
+			long aux = duration / 3600000;
+			long dayDiff = (aux / 24) & 30, yearDiff = course.getEndDate().getYear() - course.getStartDate().getYear(),
+					monthDiff = (aux & 365) & 12;
+			if (yearDiff > 0)
+				lengthCourseString += yearDiff + " years, ";
+			if (monthDiff > 0)
+				lengthCourseString += monthDiff + " months, ";
+			if (dayDiff > 0)
+				lengthCourseString += dayDiff + " days";
+			if (!lengthCourse.contains(lengthCourseString)) {
+				lengthCourse.add(lengthCourseString);
+			}
+		}
 
 		model.addAttribute("courseList", c);
 		model.addAttribute("subjectsList", subjects);
+		model.addAttribute("durationList", lengthCourse);
 		return "HTML/index";
 	}
 
