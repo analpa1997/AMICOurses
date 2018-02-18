@@ -63,15 +63,43 @@
                 </a>
             
              {{#admin}}
+            <div class = "row">
+                <div class = "col-md-4">
                         <form action = "/course/{{courseInternalName}}/update-subject/{{internalName}}/{{userInternalName}}" method = "post">
                             <label>Rename: </label>
                             <input type = "text" value ={{name}} name = "subjectName">
                             <button type ="submit">Confirm</button>
                         </form>
+                </div>
+                
+                <div class = "col-md-4">
+                        <form>
+                            <label class = "col-md-4">Teachers: </label>
+                               <select class = "col-md-8" size="3" multiple="multiple" tabindex="1">
+                                   <option disabled = "true"> Teaching:</option>
+                                   {{#teachers}}
+                                    <option value="11" disabled ="true">{{username}}</option>
+                                   {{/teachers}}
+                            </select>
+                    </form>
+                    <form action = "/course/{{courseInternalName}}/updateTeachers-subject/{{internalName}}/{{userInternalName}}" method = "post">
+                            <select class = "col-md-8" name="selectTeachers" size="" multiple="multiple" tabindex="1">
+                                   <option disabled = "true"> New Teachers:</option>
+                                   {{#allTeachers}}
+                                   <option value = "{{username}}">{{username}}</option>
+                                   {{/allTeachers}}
+                                </select>
+                            <button class ="col-md-3" type = "submit">Save</button>
+                        </form>
+                    </div>
+                <div class = "col-md-2">
+                        
                         <form action = "/course/{{courseInternalName}}/delete-subject/{{internalName}}/{{userInternalName}}" method = "post">
                             <button type = "submit">Delete Subject</button>
                         </form>
-                    {{/admin}}
+                </div>
+            </div>
+            {{/admin}}
                     
                 
             {{/subjects}}

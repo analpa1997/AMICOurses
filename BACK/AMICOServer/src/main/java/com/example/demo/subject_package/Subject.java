@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -43,6 +44,9 @@ public class Subject {
 	
 	@OneToMany(mappedBy="subject")
 	private List <Message> messages = new ArrayList<>();
+	
+	@ManyToMany
+	private List <User> teachers = new ArrayList<>();
 	
 	private String internalName;
 
@@ -88,16 +92,6 @@ public class Subject {
 
 	public void setCourse(Course course) {
 		this.course = course;
-	}
-
-	public List<User> getTeachers() {
-		List<User> teachers = new ArrayList <> ();
-		for (User user : this.course.getInscribedUsers()) {
-			if (!user.isStudent()) {
-				teachers.add(user);
-			}
-		}
-		return teachers;
 	}
 
 	public List<User> getUsers() {
@@ -146,7 +140,19 @@ public class Subject {
 
 	public void setInternalName(String internalName) {
 		this.internalName = internalName;
+	}
+
+
+	public List<User> getTeachers() {
+		return teachers;
+	}
+
+
+	public void setTeachers(List<User> teachers) {
+		this.teachers = teachers;
 	} 
+	
+	
 	
 	
 

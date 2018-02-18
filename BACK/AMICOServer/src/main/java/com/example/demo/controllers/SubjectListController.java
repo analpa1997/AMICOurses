@@ -43,11 +43,23 @@ public class SubjectListController {
 				}
 			}
 			
+			List<User> users = userRepository.findAll(); 
+			List<User> teachers = new ArrayList<> ();
+			for (User u : users) {
+				if(!u.isStudent()) {
+					teachers.add(u);
+				}
+			}
+			
+			
+			
 			if (actualCourse != null) {
 				model.addAttribute("subjects", actualCourse.getSubjects());
 				model.addAttribute("courseName", actualCourse.getName());
 				model.addAttribute("courseInternalName", actualCourse.getInternalName());
 				model.addAttribute("userInternalName", userName);
+				model.addAttribute("allTeachers", teachers);
+				
 			}
 			
 			// For development only
@@ -109,6 +121,36 @@ public class SubjectListController {
 			subjectRepository.save(subject);
 			courseRepository.save(course);
 			
+		}
+		return new ModelAndView("redirect:/course/" + courseInternalName + "/" + userName);
+	}
+	
+	@RequestMapping (value = "/course/{courseInternalName}/updateTeachers-subject/{subjetctInternalName}/{userName}", method =  RequestMethod.POST)
+	public ModelAndView ChangeTeachersFromSubject (Model model, @PathVariable String courseInternalName, @PathVariable String subjetctInternalName, @PathVariable String userName, @RequestParam String [] selectTeachers) {
+		Course course = courseRepository.findByInternalName(courseInternalName);
+		
+		if (course != null && (selectTeachers.length != 0)) {
+			Subject Toupdate = null;
+			for (Subject subject :course.getSubjects()) {
+				if (subject.getInternalName().equals(subjetctInternalName)) {
+					for(User teacher : subject.getTeachers()) {
+						teacher.getTeaching().remove(subject);
+					}
+					subject.getTeachers().removeAll(subject.getTeachers());
+					
+					List <User> newTeachers = new ArrayList <>();
+					int i = 0;
+					for (String s : selectTeachers) {
+							newTeachers.add(userRepository.findByUsername(s));
+							newTeachers.get(i).getTeaching().add(subject);
+					}
+					subject.getTeachers().addAll(newTeachers);
+					subjectRepository.save(subject);
+					
+				}
+			}	
+			//subjectRepository.delete(toDelete);
+			//toUpdate.setCourse(null);		
 		}
 		return new ModelAndView("redirect:/course/" + courseInternalName + "/" + userName);
 	}

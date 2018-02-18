@@ -11,6 +11,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.example.demo.course_package.Course;
+import com.example.demo.subject_package.Subject;
 
 @Entity
 @Table(name = "Users")
@@ -49,6 +50,9 @@ public class User {
 	private String role;
 	
 	private String internalName;
+	
+	@ManyToMany (mappedBy="teachers")
+	private List <Subject> teaching = new ArrayList <> ();
 	
 	/* Constructors 
 
@@ -197,6 +201,14 @@ public class User {
 
 	public void setInternalName(String internalName) {
 		this.internalName = internalName;
+	}
+
+	public List<Subject> getTeaching() {
+		return teaching;
+	}
+
+	public void setTeaching(List<Subject> teaching) {
+		this.teaching = teaching;
 	}
 
 }
