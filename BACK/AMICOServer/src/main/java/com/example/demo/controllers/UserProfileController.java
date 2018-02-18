@@ -4,6 +4,7 @@ package com.example.demo.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.user_package.User;
@@ -16,9 +17,9 @@ public class UserProfileController {
 	private UserRepository userRepository;
 
 	@RequestMapping("/profile/{username}")
-	public String viewProfile(Model model, User user) {
+	public String viewProfile(Model model, @PathVariable String username) {
 		
-		user = userRepository.findByUsername("amico");
+		User user = userRepository.findByUsername(username);
 
 		model.addAttribute("name", user.getUserFirstName());
 		model.addAttribute("lastName", user.getUserLastName());
@@ -36,6 +37,6 @@ public class UserProfileController {
 		model.addAttribute("isStudent", user.isStudent());
 		
 
-		return "userProfile";
+		return "HTML/Profile/userProfile";
 	}
 }
