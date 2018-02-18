@@ -1,17 +1,24 @@
 
 package com.example.demo.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.user_package.User;
+import com.example.demo.user_package.UserRepository;
 
 @Controller
 public class UserProfileController {
+	
+	@Autowired
+	private UserRepository userRepository;
 
-	@RequestMapping("/profile/{id}")
+	@RequestMapping("/profile/{username}")
 	public String viewProfile(Model model, User user) {
+		
+		user = userRepository.findByUsername("amico");
 
 		model.addAttribute("name", user.getUserFirstName());
 		model.addAttribute("lastName", user.getUserLastName());
