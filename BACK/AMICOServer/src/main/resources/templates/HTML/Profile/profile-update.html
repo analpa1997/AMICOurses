@@ -57,45 +57,46 @@
 
         <section>
             <div class = "container-fluid mb-5 px-5">
-                <form>
+                <form action="/profile/{username}/updated" method="post">
                     <div class="form-group row">
                         <label class = "col-lg-1 " for="name-input">Name: </label>
-                        <input class = "col-lg-4" type="text" class="form-control" id="name-input"  placeholder="Enter your name">
+                        <input class = "col-lg-4" type="text" class="form-control" id="name-input"  placeholder="Enter your name" name='userFirstName' value='{{userFirstName}}'>
                         <label class = "col-lg-1 " for="surname-input">Surname: </label>
-                        <input class = "col-lg-4" type="text" class="form-control" id="surname-input" placeholder="Enter your surname">
+                        <input class = "col-lg-4" type="text" class="form-control" id="surname-input" placeholder="Enter your surname" name='userLastName' value='{{userLastName}}'>
                     </div>
-
                     <div class="form-group row">
                         <label class = "col-lg-1 " for="username-input">Username: </label>
-                        <input class = "col col-lg-4" type="text" class="form-control" id="username-input" placeholder="Enter your username">
+                        <input class = "col col-lg-4" type="text" class="form-control" id="username-input" placeholder="Enter your username" name='username' value='{{username}}'>
                         <label class = "col-lg-1 " for="email-input">Email: </label>
-                        <input class = "col col-lg-4" type="email" class="form-control" id="email-input" placeholder="Enter email">
+                        <input class = "col col-lg-4" type="email" class="form-control" id="email-input" placeholder="Enter email" name='userMail' value='{{userMail}}'>
                     </div>
 
                     <div class="form-group row">
                         <label class = "col-lg-10 " for="password-input">Password:</label>
-                        <input class = "col col-lg-10" type="password" class="form-control" id="password-input" placeholder="Enter your password">
+                        <input class = "col col-lg-10" type="password" class="form-control" id="password-input" placeholder="Enter your password" value='{{password}}>
                         <label class = "col-lg-10 " for="repeat-password-input">Repeat Password:</label>
-                        <input class = "col col-lg-10" type="password" class="form-control" id="repeat-password-input" placeholder="Repeat your password">
+                        <input class = "col col-lg-10" type="password" class="form-control" id="repeat-password-input" placeholder="Repeat your password" name='password' value='{{password}}'>
                     </div>
 
                     <div class="form-group row">
                         <label class = "col-lg-1 " for="country-input">Country: </label>
-                        <input class = "col col-lg-1" type="text" class="form-control" id="country-input" placeholder="Country">
-                        <label class = "col-lg-1 " for="city-input">Email: </label>
-                        <input class = "col col-lg-1" type="text" class="form-control" id="city-input"  placeholder="City">
+                        <input class = "col col-lg-1" type="text" class="form-control" id="country-input" placeholder="Country" name='country' value='{{country}}'>
+                        <label class = "col-lg-1 " for="city-input">City: </label>
+                        <input class = "col col-lg-1" type="text" class="form-control" id="city-input"  placeholder="City" name='city' value='{{city}}'>
                         <label class = "col-lg-1 " for="direction-input">Direction: </label>
-                        <input class = "col col-lg-5" type="text" class="form-control" id="direction-input"  placeholder="Direction">
+                        <input class = "col col-lg-5" type="text" class="form-control" id="direction-input"  placeholder="Direction" name='address' value='{{address}}'>
                     </div>
 
                     <div class="form-group row">
+                    	<label class = "col-lg-1 " for="phone-input">Phone: </label>
+                        <input class = "col col-lg-2" type="text" class="form-control" id="phone-input"  placeholder="Phone" name='phoneNumber' value='{{phoneNumber}}'>
                         <label class = "col-lg-2 " for="photo-input">Profile Photo:</label>
-                        <input type="file" class="form-control-file col-lg" id="photo-input">
+                        <input type="file" class="form-control-file col-lg" id="photo-input" name='urlProfileImage' value='{{urlProfileImage}}'>
                     </div>
 
                     <div class="form-group">
                         <label for="interests-input">Interests:</label>
-                        <textarea class="form-control col-lg-10" id="interests-input" rows="3"></textarea>
+                        <textarea class="form-control col-lg-10" id="interests-input" rows="3" name='role' value='{{role}}'></textarea>
                     </div>
                     <div class = "row border-top pt-2">
                     <button type="submit" class="offset-2 offset-lg-4 btn form-btn">Submit</button>
