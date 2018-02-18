@@ -120,6 +120,15 @@ public class DataLoaderExample implements CommandLineRunner{
 		courses.get(4).getInscribedUsers().add(users.get(51));
 		courses.get(5).getInscribedUsers().add(users.get(51));
 		
+		//No funciona
+		users.get(51).setCity("New York");
+		users.get(51).setCountry("United States of America");
+		users.get(51).setRole("Play Fortnite");
+		users.get(51).setUserAddress("Under the Brooklyn Bridge");
+		users.get(51).setUserFirstName("Amico");
+		users.get(51).setUserLastName("Fernandez");
+		
+		
 		userRepository.save(users);
 			
 		/*List<Message> messages = new ArrayList<> ();
