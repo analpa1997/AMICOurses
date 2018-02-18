@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -35,19 +36,27 @@ public class CourseInformationController {
 		return "HTML/courseInformation/course";
 	}
 
-	@RequestMapping("subjects")
-	public String subjects(Model model) {
+	@RequestMapping("/subjects/{courseID}")
+	public String subjects(Model model,  @PathVariable long courseID) {
 		
-		List<Subject> subjects = course.getSubjects();
+		List<String> sName = new ArrayList<> ();
 		
-		Iterator<Subject> iter = subjects.iterator();
+		course = courseRepository.findOne(courseID);
+		List<Subject> subject = course.getSubjects();
+		
+		/*
+		 Iterator<Subject> iter = subjects.iterator();
+		 
 		while (iter.hasNext()) {
-			Subject sub = iter.next();
-			System.out.println("name" + sub.getName());
-			model.addAttribute("name", sub.getName());
-			System.out.println("description" + sub.getDescription());
-			model.addAttribute("description", sub.getDescription());
+			Subject s = new Subject();
+			s=iter.next();
+			sName.add(s.getName());
 		}
+		*/
+		System.out.println("# Subject" + " " + subject.size());
+		
+		model.addAttribute("subjects", subject);
+		
 		
 		return "HTML/CourseInformation/subjects";
 	}
