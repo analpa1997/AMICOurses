@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.course_package.Course;
 import com.example.demo.course_package.CourseRepository;
+import com.example.demo.subject_package.Subject;
 import com.example.demo.user_package.UserRepository;
 
 @Controller
@@ -33,7 +34,7 @@ public class IndexController {
 	}
 
 	@RequestMapping("/")
-	public String allCourses(Model model) {
+	public String allData(Model model) {
 
 		/* Habria que paginar la busqueda */
 		List<Course> c = new ArrayList<>();
@@ -46,7 +47,16 @@ public class IndexController {
 					+ " \n skills: " + course.getSkills() + " \n subjects " + course.getSubjects());
 		}
 
+		List<Subject> subjects = new ArrayList<>();
+		for (Course course : courseRepository.findAll()) {
+			for (Subject s : course.getSubjects()) {
+				if (!subjects.contains(s))
+					subjects.add(s);
+			}
+		}
+
 		model.addAttribute("courseList", c);
+		model.addAttribute("subjectsList", subjects);
 		return "HTML/index";
 	}
 

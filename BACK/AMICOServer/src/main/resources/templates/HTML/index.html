@@ -101,9 +101,9 @@
                             <label class="mr-sm-2" for="inlineFormCustomSelect">Subject</label>
                             <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="inlineFormCustomSelect">
                       <option selected>Choose...</option>
-                      <option value="1">Programming</option>
-                      <option value="2">Music</option>
-                      <option value="3">Bussiness</option>
+                      {{#subjectsList}}
+                      <option value="{{-index}}">{{name}}</option>
+                      {{/subjectsList}}
                     </select>
                         </form>
                         <form class="form-inline">
@@ -135,6 +135,9 @@
 	                          <a href="./CourseInformation/course.html/{{courseID}}">
 	                      <img class="img-fluid rounded-circle imgCourse" src="{{urlImage}}" alt=" " >
 	                      </a>
+	                      <div class="mt-2 &nbsp"></div>
+	                      <div class = "text-center">Start date: {{startDate}}</div>
+	                      <div class = "text-center">End date: {{startDate}}</div>
 	                      </div>
 	                  </div>
 	              </div>
