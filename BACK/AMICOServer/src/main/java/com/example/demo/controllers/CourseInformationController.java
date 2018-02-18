@@ -1,16 +1,18 @@
 package com.example.demo.controllers;
 
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.demo.course_package.Course;
 import com.example.demo.subject_package.Subject;
 import com.example.demo.subject_package.SubjectRepository;
+import com.example.demo.course_package.Course;
+import com.example.demo.course_package.CourseRepository;
 
 @Controller
 public class CourseInformationController {
@@ -19,25 +21,35 @@ public class CourseInformationController {
 			
 	@Autowired
 	private SubjectRepository sujectRepository;
+	@Autowired
+	private CourseRepository courseRepository;
 	
 	
-	@RequestMapping("/html/courseInformation/course/{courseID}")
-	public String course(Model model, Course c) {
+	@RequestMapping("/course/{courseID}")
+	public String course(Model model, @PathVariable long courseID) {
 		
-		course.setCourseID(c.getCourseID());
-				
-		model.addAttribute(c.getCourseDescription());
+		System.out.println("course" + courseID);
+		course = courseRepository.findOne(courseID);
+			
+		model.addAttribute("courseDescription", course.getCourseDescription());
 		return "HTML/courseInformation/course";
 	}
 
-	@RequestMapping("/html/courseInformation/subjects/{courseID}")
+	@RequestMapping("subjects")
 	public String subjects(Model model) {
 		
-		List<Subject> subjects = new ArrayList<>();
-		subjects = SubjectRepository.findByCourseID(course.getCourseID());
-				
-		model.addAttribute("subjectList", subjects);
-		return "HTML/courseInformation/subjects";
+		List<Subject> subjects = course.getSubjects();
+		
+		Iterator<Subject> iter = subjects.iterator();
+		while (iter.hasNext()) {
+			Subject sub = iter.next();
+			System.out.println("name" + sub.getName());
+			model.addAttribute("name", sub.getName());
+			System.out.println("description" + sub.getDescription());
+			model.addAttribute("description", sub.getDescription());
+		}
+		
+		return "HTML/CourseInformation/subjects";
 	}
 	
 }
