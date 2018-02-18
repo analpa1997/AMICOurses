@@ -48,6 +48,8 @@ public class User {
 	/* The rights the user will have*/
 	private String role;
 	
+	private String internalName;
+	
 	/* Constructors 
 
 	/*Empty constructor for the DB */
@@ -60,6 +62,8 @@ public class User {
 		this.password = password;
 		this.userMail = userMail;
 		this.isStudent = isStudent;
+		this.urlProfileImage = "../img/users/default/default.png";
+		this.internalName = username.replaceAll(" ", "-");
 	}
 	
 	/* Methods */
@@ -150,7 +154,7 @@ public class User {
 	}
 
 	public void setUrlProfileImage(String urlProfileImage) {
-		this.urlProfileImage = urlProfileImage;
+		this.urlProfileImage = "../img/users/" + this.internalName + "/" + urlProfileImage.replaceAll(" ", "-");
 	}
 	
 	public List<Course> getInscribedCourses() {
@@ -185,6 +189,14 @@ public class User {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public String getInternalName() {
+		return internalName;
+	}
+
+	public void setInternalName(String internalName) {
+		this.internalName = internalName;
 	}
 
 }
