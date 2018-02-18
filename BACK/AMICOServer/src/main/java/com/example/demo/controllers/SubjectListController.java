@@ -96,6 +96,22 @@ public class SubjectListController {
 		}
 		return new ModelAndView("redirect:/course/" + courseInternalName + "/" + userName);
 	}
+	
+	@RequestMapping (value = "/course/{courseInternalName}/create-subject/{userName}", method =  RequestMethod.POST)
+	public ModelAndView createSubject (Model model, @PathVariable String courseInternalName,  @PathVariable String userName, @RequestParam String subjectName) {
+		Course course = courseRepository.findByInternalName(courseInternalName);
+		
+		if (course != null) {
+			Subject subject = new Subject (subjectName);
+			course.getSubjects().add(subject);
+			subject.setCourse(course);
+			
+			subjectRepository.save(subject);
+			courseRepository.save(course);
+			
+		}
+		return new ModelAndView("redirect:/course/" + courseInternalName + "/" + userName);
+	}
 
 
 }

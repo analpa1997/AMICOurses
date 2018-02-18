@@ -66,19 +66,20 @@
                         <form action = "/course/{{courseInternalName}}/update-subject/{{internalName}}/{{userInternalName}}" method = "post">
                             <label>Rename: </label>
                             <input type = "text" value ={{name}} name = "subjectName">
-                            <button type ="submit">Hola</button>
+                            <button type ="submit">Confirm</button>
                         </form>
                         <form action = "/course/{{courseInternalName}}/delete-subject/{{internalName}}/{{userInternalName}}" method = "post">
-                            <button type = "submit">Delete</button>
+                            <button type = "submit">Delete Subject</button>
                         </form>
                     {{/admin}}
                     
                 
             {{/subjects}}
             
-            {{#admin}}   
+            {{#admin}}
+            <div class = "mt-2">
             <h4>
-            <form class = "subject ml-2 pl-4 border col-10"action = "/course/{{courseInternalName}}/create" method = "post">
+            <form class = "subject ml-2 pl-4 border col-10"action = "/course/{{courseInternalName}}/create-subject/{{userInternalName}}" method = "post">
                     <label>New Subject: </label>    
                     <input type = "text" class = "col-md-5" name = "subjectName">
                     <button type = "submit" class = "form-controll" >Create</button>
@@ -86,6 +87,7 @@
             </form>
             </h4>
             {{/admin}}
+                </div>
                 
             <!-- End Subjects -->
         </div>    
