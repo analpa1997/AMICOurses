@@ -36,10 +36,10 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="/profile/{{internalUserName}}">My Profile</a>
+              <a class="nav-link" href="/profile/{{userInternalName}}">My Profile</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/{{internalUserName}}/logOut">Log Out</a>
+              <a class="nav-link" href="/{{userInternalName}}/logOut">Log Out</a>
             </li>
           </ul>
         </div>
@@ -61,7 +61,31 @@
                 <a  href = '../course/{{courseInternalName}}/{{internalName}}/{{userInternalName}}' class = "subject m-2 col-lg-10 col-md-10 col-sm-10 col-xs-10  btn btn-link row text-left border pl-5" role = 'button'>
                     <span class="subject-name pt-2">{{name}}</span>
                 </a>
+                    {{#admin}}
+                        <form action = "/course/{{courseInternalName}}/update-subject/{{internalName}}/{{userInternalName}}" method = "post">
+                            <label>Rename: </label>
+                            <input type = "text" value ={{name}} name = "subjectName">
+                            <button type ="submit">Hola</button>
+                        </form>
+                        <form action = "/course/{{courseInternalName}}/delete-subject/{{internalName}}/{{userInternalName}}" method = "post">
+                            <button type = "submit">Delete</button>
+                        </form>
+                    {{/admin}}
+                    
+                
             {{/subjects}}
+            
+            {{#admin}}
+            
+            {{/admin}}
+            <h4>
+            <form class = "subject ml-2 pl-4 border col-10"action = "/course/{{courseInternalName}}/create" method = "post">
+                    <label>New Subject: </label>    
+                    <input type = "text" class = "col-md-5" name = "subjectName">
+                    <button type = "submit" class = "form-controll" >Create</button>
+            
+            </form>
+            </h4>
                 
             <!-- End Subjects -->
         </div>    
