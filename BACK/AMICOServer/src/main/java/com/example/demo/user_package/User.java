@@ -63,7 +63,7 @@ public class User {
 		this.userMail = userMail;
 		this.isStudent = isStudent;
 		this.urlProfileImage = "../img/users/default/default.png";
-		this.internalName = username.replaceAll(" ", "-");
+		this.internalName = username.replaceAll(" ", "-").toLowerCase();
 	}
 	
 	/* Methods */

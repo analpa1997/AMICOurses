@@ -59,7 +59,7 @@ public class Course {
 			String urlImage) {
 		super();
 		this.name = name;
-		this.internalName = this.name.replaceAll(" ", "-");
+		this.internalName = this.name.replaceAll(" ", "-").toLowerCase();
 		this.courseLanguage = courseLanguage;
 		this.startDate = startDate;
 		this.endDate = endDate;
