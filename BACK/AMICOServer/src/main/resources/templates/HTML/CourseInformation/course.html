@@ -28,7 +28,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
       <div class="container">
-        <a class="navbar-brand" href="../../index.html">AMICOURSES</a>
+        <a class="navbar-brand" href="/index.html">AMICOURSES</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           Menu
           <i class="fa fa-bars"></i>
@@ -36,16 +36,13 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="course.html">Home</a>
+              <a class="nav-link" href="/course/{{internalName}}">Description</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="skills.html">Skills</a>
+              <a class="nav-link" href="/course/{{internalName}}/skills.html">Skills</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/course/{{internalName}}/subjects.html">Subject</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="contact.html">Contact</a>
             </li>
           </ul>
         </div>
@@ -59,12 +56,25 @@
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
             <div class="site-heading">
-              <h1>Introduction HTML</h1>
-              <span class="subheading">A course to learn...</span>
+              <h1>{{courseName}}</h1>
+              <span class="subheading">A course to learn...</span><br>
+              <!-- <h3 class="post-title"> Course Start and End dates </h3> -->
+              <div class="table-responsive">
+        		  <table class="table"> 
+        	  	  <tbody>
+          	  <tr>
+          	    <td>  From </td>
+          	    	<td>{{startDateString}}</td>
+          	    	<td>  To  </td>
+            		<td>{{endDateString}}</td>
+              </tr>
+              </tbody>
+              </table>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+       </div>
     </header>
 
     <!-- Main Content -->
@@ -72,10 +82,11 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-preview">
-              <h2 class="post-title">
+               <h2 class="post-title">
                 Description
               </h2>
-  				<p class="post-subtitle">{{courseDescription}}</p>
+              
+  			  <p class="post-subtitle">{{courseDescription}}</p>
  
             <div class="form-group">
               <button type="submit" class="btn btn-primary" id="sendMessageButton">Sign up</button>

@@ -23,12 +23,19 @@ public class Skill {
 
 	@ManyToOne
 	private Course course;
+	
+	private String internalName;
 
 	/* Constructors */
 	public Skill () { }
 	
-	
-	
+	public Skill (String name) {
+		super();
+		this.skillName = name;
+		this.internalName = name.replaceAll(" ", "-");
+	}
+
+		
 	public Skill(String skillName, String skillDescription) {
 		super();
 		this.skillName = skillName;

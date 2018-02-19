@@ -36,16 +36,13 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="course.html">HOME</a>
+              <a class="nav-link" href="/course/{{internalName}}">Description</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="skills.html">Skills</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="subjects.html">Subjects</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="contact.html">Contact</a>
             </li>
           </ul>
         </div>
@@ -71,9 +68,11 @@
     </header>
 
     <!-- Post Content -->
+   <!--  
     <article>
       <div class="container">
         <div class="row">
+        
         	  {{#subjects}}  
           <div class="col-lg-8 col-md-10 mx-auto">
            <div class="p-3" align=center>
@@ -85,9 +84,36 @@
         </div>
       </div>
     </article>
+    -->
+    <article>
+      <div class="container">
+        <h2>Subjects</h2>
+        <div class="table-responsive">
+        
+        <table class="table"> 
+        	  <thead>
+      		<tr>
+      		<th>#</th>
+        		<th>Name</th>
+        		<th>Description</th>
+      		</tr>
+    		</thead>
+    		{{#subjects}} 
+        <tbody>
+          <tr>
+            <td>{{-index}}</td>
+            <td>{{name}}</td>
+            <td>{{description}}</td>
+          </tr>
+         
+        </tbody>
+        {{/subjects}}
+        </table>
+        </div>
+      </div>
+    </article>
 
     <hr>
-
     <!-- Footer -->
     <footer>
       <div class="container">

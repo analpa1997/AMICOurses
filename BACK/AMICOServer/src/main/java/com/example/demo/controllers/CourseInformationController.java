@@ -1,8 +1,7 @@
 package com.example.demo.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
-
+import java.text.SimpleDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.course_package.Course;
 import com.example.demo.course_package.CourseRepository;
+import com.example.demo.skill_package.Skill;
 import com.example.demo.subject_package.Subject;
-import com.example.demo.subject_package.SubjectRepository;
 
 @Controller
 public class CourseInformationController {
@@ -20,40 +19,55 @@ public class CourseInformationController {
 	private Course course;
 
 	@Autowired
-	private SubjectRepository sujectRepository;
-	@Autowired
 	private CourseRepository courseRepository;
 
+	// For course main page description
 	@RequestMapping("/course/{internalName}")
 	public String course(Model model, @PathVariable String internalName) {
 
+		// get the course information by name
 		course = courseRepository.findByInternalName(internalName);
 		System.out.println(internalName);
-
+        
+		//set the course description attributes
+		model.addAttribute("courseName", course.getName());
 		model.addAttribute("courseDescription", course.getCourseDescription());
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy");
+		String startDateString = dateFormat.format(course.getStartDate());
+		String endDateString = dateFormat.format(course.getEndDate());
+		model.addAttribute("startDateString", startDateString);
+		model.addAttribute("endDateString", endDateString);
+		model.addAttribute("nameInternal", internalName);
 		return "HTML/courseInformation/course";
 	}
 
 	@RequestMapping("/course/{internalName}/subjects")
 	public String subjects(Model model, @PathVariable String internalName) {
-
-		List<String> sName = new ArrayList<>();
-
+		
+		System.out.println(internalName);
 		course = courseRepository.findByInternalName(internalName);
 		List<Subject> subject = course.getSubjects();
 
-		/*
-		 * Iterator<Subject> iter = subjects.iterator();
-		 * 
-		 * while (iter.hasNext()) { Subject s = new Subject(); s=iter.next();
-		 * sName.add(s.getName()); }
-		 */
 		System.out.println("# Subject" + " " + subject.size());
 
 		model.addAttribute("subjects", subject);
 		model.addAttribute("nameInternal", internalName);
 
 		return "HTML/CourseInformation/subjects";
+	}
+	
+	@RequestMapping("/course/{internalName}/skills")
+	public String skills(Model model, @PathVariable String internalName) {
+
+		course = courseRepository.findByInternalName(internalName);
+		List<Skill> skill = course.getSkills();
+
+		System.out.println("# skills" + " " + skill.size());
+
+		model.addAttribute("skills", skill);
+		model.addAttribute("nameInternal", internalName);
+
+		return "HTML/CourseInformation/skills";
 	}
 
 }

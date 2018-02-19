@@ -30,7 +30,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
       <div class="container">
-        <a class="navbar-brand" href="../../index.html">HOME</a>
+        <a class="navbar-brand" href="/index.html">AMICOurses</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           Menu
           <i class="fa fa-bars"></i>
@@ -38,16 +38,13 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="course.html">HTML</a>
+              <a class="nav-link" href="/course/{{internalName}}">Description</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="skills.html.html">Skills</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="subjects.html">Subjects</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="contact.html">Contact</a>
             </li>
           </ul>
         </div>
@@ -70,6 +67,7 @@
     </header>
 
     <!-- Main Content -->
+    <!-- 
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
@@ -79,9 +77,34 @@
         </div>
       </div>
     </div>
-
+    -->
+   <div class="container">
+   <h2>Skills</h2>
+   <div class="table-responsive">
+        
+        <table class="table"> 
+        	  <thead>
+      		<tr>
+      		<th>#</th>
+        		<th>Name</th>
+        		<th>Description</th>
+      		</tr>
+    		</thead>
+    		{{#skills}} 
+        <tbody>
+          <tr>
+            <td>{{-index}}</td>
+            <td>{{skillName}}</td>
+            <td>{{skillDescription}}</td>
+          </tr>
+        </tbody>
+        	{{/skills}}
+        </table>
+        
+   </div>
+   </div>
+    
     <hr>
-
     <!-- Footer -->
     <footer>
       <div class="container">
