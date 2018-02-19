@@ -119,12 +119,13 @@ public class DataLoaderExample implements CommandLineRunner {
 		courses.get(5).getInscribedUsers().add(users.get(51));
 
 		// No funciona
-		users.get(51).setCity("New York");
-		users.get(51).setCountry("United States of America");
-		users.get(51).setRole("Play Fortnite");
-		users.get(51).setUserAddress("Under the Brooklyn Bridge");
-		users.get(51).setUserFirstName("Amico");
-		users.get(51).setUserLastName("Fernandez");
+		users.get(50).setCity("New York");
+		users.get(50).setCountry("United States of America");
+		users.get(50).setRole("Play Fortnite");
+		users.get(50).setUserAddress("Under the Brooklyn Bridge");
+		users.get(50).setUserFirstName("Amico");
+		users.get(50).setUserLastName("Fernandez");
+		users.get(50).setInterests("Sleeping and watching tv.");
 
 		List<Subject> subjects = new ArrayList<>();
 		subjects.add(new Subject("History of AI", "A short history for the AI"));
@@ -151,6 +152,20 @@ public class DataLoaderExample implements CommandLineRunner {
 		users.get(51).getTeaching().add(subjects.get(2));
 		users.get(51).getTeaching().add(subjects.get(3));
 		users.get(51).getTeaching().add(subjects.get(4));
+		
+		users.get(50).getInscribedCourses().get(0).setCompleted(true);
+		users.get(50).getInscribedCourses().get(2).setCompleted(true);
+
+		
+		List <Course> completed = new ArrayList<>();
+		for (Course c : users.get(50).getInscribedCourses()) {
+				if (c.isCompleted()) {
+					completed.add(c);
+				}
+		}
+		users.get(50).getInscribedCourses().removeAll(completed);
+		users.get(50).getCompletedCourses().addAll(completed);
+
 
 		userRepository.save(users);
 

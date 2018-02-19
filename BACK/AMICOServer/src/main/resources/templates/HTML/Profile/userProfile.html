@@ -83,7 +83,7 @@
                             </div>
                             <p class="mb-5">{{role}}</p>
 
-                            <a href = "./profile-update.html" class = "border p-2" id = "btn-edit-profile">Edit Profile</a>
+                            <a href = "/profile/{username}/update" class = "border p-2" id = "btn-edit-profile">Edit Profile</a>
                             
                         </div>
                     </section>
@@ -98,13 +98,13 @@
                                     <div class="row align-items-center">
                                         <!-- Image -->
                                         <a href="./student-course-overview.html" class = "col-xs-0 col-sm-3 col-lg-2">
-                                            <img  class="course-img img-fluid rounded-circle" src="../../img/05.png " alt="Course Photo" >
+                                            <img  class="course-img img-fluid rounded-circle" src="../{{urlImage}}" alt="Course Photo" >
                                         </a>
                                         <!-- Text -->
                                         <div class="offset-1 offset-md-0 col-lg-8 col-md-8 col-sm-10 col-10 ">
                                             <div class="p-3">
-                                                <p class="course-name ">Introduction to HTML</p>
-                                                <p class = "course-text">Lorem ipsum dolor sit amet, tur adipisic elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.</p>
+                                                <p class="course-name ">{{name}}</p>
+                                                <p class = "course-text">{{courseDescription}}</p>
                                             </div>
                                         </div>
                                         <div class = 'col-2 offset-5  offset-lg-0 col-lg-2 col-sm-2 mb-1'>
@@ -129,13 +129,13 @@
                                     <div class="row align-items-center">
                                         <!-- Image -->
                                         <a href="./student-course-overview.html" class = "col-0 col-sm-3 col-lg-2">
-                                            <img  class="course-img img-fluid rounded-circle" src="../../img/05.png " alt="Course Photo" >
+                                            <img  class="course-img img-fluid rounded-circle" src="../{{urlImage}}" alt="Course Photo" >
                                         </a>
                                         <!-- Text -->
                                         <div class="offset-1 offset-md-0 col-lg-7 col-md-7 col-sm-10 col-10 ">
                                             <div class="p-3">
-                                                <p class="course-name ">Introduction to HTML</p>
-                                                <p class = "course-text">Lorem ipsum dolor sit amet, tur adipisic elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.</p>
+                                                <p class="course-name ">{{name}}</p>
+                                                <p class = "course-text">{{courseDescription}}</p>
                                             </div>
                                         </div>
                                         <div class = 'col-2 offset-5  offset-lg-0 col-lg-2 col-sm-2 mb-1'>
@@ -151,44 +151,26 @@
                     <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="skills">
                         <div class="my-auto">
                             <h2 class="mb-5">Skills</h2>
-
-                            <div class="subheading mb-3">Programming Languages &amp; Tools</div>
+							{{#completedCourses}}
+                            <div class="subheading mb-3">{{name}} &amp; Tools</div>
 
                             <ul class="fa-ul mb-0">
+                            {{#skills}}
                                 <li>
                                     <i class="fa-li fa fa-check"></i>
-                                    HTML5</li>
+                                    {{skillName}}</li>
                                 <li>
-                                    <i class="fa-li fa fa-check"></i>
-                                    JavaScript</li>
-                                <li>
-                                    <i class="fa-li fa fa-check"></i>
-                                    jQuery</li>
-
+                            {{/skills}}       
                             </ul>
-                            <div class="subheading mb-3">Workflow</div>
-                            <ul class="fa-ul mb-0">
-                                <li>
-                                    <i class="fa-li fa fa-check"></i>
-                                    Mobile-First, Responsive Design</li>
-                                <li>
-                                    <i class="fa-li fa fa-check"></i>
-                                    Cross Browser Testing &amp; Debugging</li>
-                                <li>
-                                    <i class="fa-li fa fa-check"></i>
-                                    Cross Functional Teams</li>
-                                <li>
-                                    <i class="fa-li fa fa-check"></i>
-                                    Agile Development &amp; Scrum</li>
-                            </ul>
+                            {{/completedCourses}}
                         </div>
+                       
                     </section>
 
                     <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="interests">
                         <div class="my-auto">
                             <h2 class="mb-5">Interests</h2>
-                            <p>Apart from being a web developer, I enjoy most of my time being outdoors. In the winter, I am an avid skiier and novice ice climber. During the warmer months here in Colorado, I enjoy mountain biking, free climbing, and kayaking.</p>
-                            <p class="mb-0">When forced indoors, I follow a number of sci-fi and fantasy genre movies and television shows, I am an aspiring chef, and I spend a large amount of my free time exploring the latest technolgy advancements in the front-end web development world.</p>
+                            <p>{{interests}}</p>
                         </div>
                     </section>
 
