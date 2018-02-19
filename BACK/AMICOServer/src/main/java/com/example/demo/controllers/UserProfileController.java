@@ -31,18 +31,11 @@ public class UserProfileController {
 		model.addAttribute("urlProfileImage", user.getUrlProfileImage());
 		model.addAttribute("inscribedCourses", user.getInscribedCourses());
 		model.addAttribute("completedCourses", user.getCompletedCourses());
-		
-		model.addAttribute("city", user.getCity());
-		model.addAttribute("country", user.getCountry());
-		model.addAttribute("phoneNumber", user.getPhoneNumber());
-		model.addAttribute("inscribedCourses", user.getInscribedCourses());
-		model.addAttribute("completedCourses", user.getCompletedCourses());
-		
-		
+		model.addAttribute("interests", user.getInterests());
 
 		return "HTML/Profile/userProfile";
 	}
-	//Actualizado perfil
+	
 	@RequestMapping("/profile/{username}/updated")
 	public String updated(Model model, User userUpdated) {
 		
@@ -59,7 +52,8 @@ public class UserProfileController {
 		user.setUrlProfileImage(userUpdated.getUrlProfileImage());
 		user.setRole(userUpdated.getRole());
 		
-		//No se sobreescribe, Carlos del futuro, arregla esto
+		userRepository.save(user);
+		
 		return "HTML/Profile/userProfile";
 	}
 	@RequestMapping("/profile/{username}/update")
@@ -79,6 +73,7 @@ public class UserProfileController {
 		model.addAttribute("city", user.getCity());
 		model.addAttribute("country", user.getCountry());
 		model.addAttribute("phoneNumber", user.getPhoneNumber());
+		model.addAttribute("interests", user.getInterests());
 		
 		
 
