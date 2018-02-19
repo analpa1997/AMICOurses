@@ -33,7 +33,7 @@ public class IndexController {
 		 */
 	}
 
-	@RequestMapping("/")
+	@RequestMapping("/index.html")
 	public String allData(Model model) {
 
 		/* Habria que paginar la busqueda */
