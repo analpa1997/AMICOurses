@@ -152,6 +152,20 @@ public class DataLoaderExample implements CommandLineRunner {
 		users.get(51).getTeaching().add(subjects.get(2));
 		users.get(51).getTeaching().add(subjects.get(3));
 		users.get(51).getTeaching().add(subjects.get(4));
+		
+		users.get(50).getInscribedCourses().get(0).setCompleted(true);
+		users.get(50).getInscribedCourses().get(2).setCompleted(true);
+
+		
+		List <Course> completed = new ArrayList<>();
+		for (Course c : users.get(50).getInscribedCourses()) {
+				if (c.isCompleted()) {
+					completed.add(c);
+				}
+		}
+		users.get(50).getInscribedCourses().removeAll(completed);
+		users.get(50).getCompletedCourses().addAll(completed);
+
 
 		userRepository.save(users);
 
