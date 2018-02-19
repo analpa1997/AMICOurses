@@ -174,7 +174,13 @@ public class User {
 	}
 	
 	public List<Course> getInscribedCourses() {
-		return inscribedCourses;
+		List<Course> notCompletedCourses = new ArrayList <>();
+		for (Course course : inscribedCourses) {
+			if (!course.isCompleted()) {
+				notCompletedCourses.add(course);
+			}
+		}
+		return notCompletedCourses;
 	}
 
 	public void setInscribedCourses(List<Course> inscribedCourses) {
