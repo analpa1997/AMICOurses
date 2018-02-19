@@ -2,6 +2,7 @@ package com.example.demo.subject_package;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,36 +30,40 @@ public class Subject {
 	private String name;
 
 	private String description;
-	
+
 	@ManyToOne
 	private Course course;
 
-	@OneToMany(mappedBy="subject")
+	@OneToMany(mappedBy = "subject")
 	private List<Practices> practiceList = new ArrayList<>();
 
-	@OneToMany(mappedBy="subject")
+	@OneToMany(mappedBy = "subject")
 	private List<StudyItem> studyItemsList = new ArrayList<>();
 
-	@OneToMany(mappedBy="subject")
-	private List <Exam> exams = new ArrayList<>();
-	
-	@OneToMany(mappedBy="subject")
-	private List <Message> messages = new ArrayList<>();
-	
+	@OneToMany(mappedBy = "subject")
+	private List<Exam> exams = new ArrayList<>();
+
+	@OneToMany(mappedBy = "subject")
+	private List<Message> messages = new ArrayList<>();
+
 	@ManyToMany
-	private List <User> teachers = new ArrayList<>();
-	
+	private List<User> teachers = new ArrayList<>();
+
 	private String internalName;
 
 	/* Constructors */
-	public Subject () { }
-	
-	
+	public Subject() {
+	}
+
 	public Subject(String name) {
 		this.name = name;
 		this.internalName = name.replaceAll(" ", "-");
 	}
 
+	public Subject(String name, String description) {
+		this(name);
+		this.description = description;
+	}
 
 	/* Methods */
 
@@ -105,7 +110,7 @@ public class Subject {
 	public void setPracticeList(List<Practices> practiceList) {
 		this.practiceList = practiceList;
 	}
-	
+
 	public List<StudyItem> getStudyItemsList() {
 		return studyItemsList;
 	}
@@ -122,38 +127,28 @@ public class Subject {
 		this.exams = exams;
 	}
 
-
 	public List<Message> getMessages() {
 		return messages;
 	}
-
 
 	public void setMessages(List<Message> messages) {
 		this.messages = messages;
 	}
 
-
 	public String getInternalName() {
 		return internalName;
 	}
-
 
 	public void setInternalName(String internalName) {
 		this.internalName = internalName;
 	}
 
-
 	public List<User> getTeachers() {
 		return teachers;
 	}
 
-
 	public void setTeachers(List<User> teachers) {
 		this.teachers = teachers;
-	} 
-	
-	
-	
-	
+	}
 
 }

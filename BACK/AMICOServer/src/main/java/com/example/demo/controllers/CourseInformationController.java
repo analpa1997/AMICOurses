@@ -24,17 +24,17 @@ public class CourseInformationController {
 	@Autowired
 	private CourseRepository courseRepository;
 
-	@RequestMapping("/course/{courseID}")
-	public String course(Model model, @PathVariable long courseID) {
+	@RequestMapping("/course/{internalName}")
+	public String course(Model model, @PathVariable String internalName) {
 
-		System.out.println("course" + courseID);
-		course = courseRepository.findOne(courseID);
+		course = courseRepository.findByInternalName(internalName);
+		System.out.println(internalName);
 
 		model.addAttribute("courseDescription", course.getCourseDescription());
 		return "HTML/courseInformation/course";
 	}
 
-	@RequestMapping("/subjects/{internalName}")
+	@RequestMapping("/course/{internalName}/subjects")
 	public String subjects(Model model, @PathVariable String internalName) {
 
 		List<String> sName = new ArrayList<>();
@@ -51,7 +51,7 @@ public class CourseInformationController {
 		System.out.println("# Subject" + " " + subject.size());
 
 		model.addAttribute("subjects", subject);
-		model.addAttribute("courseName", internalName);
+		model.addAttribute("nameInternal", internalName);
 
 		return "HTML/CourseInformation/subjects";
 	}

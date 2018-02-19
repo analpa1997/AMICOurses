@@ -127,11 +127,11 @@ public class DataLoaderExample implements CommandLineRunner {
 		users.get(51).setUserLastName("Fernandez");
 
 		List<Subject> subjects = new ArrayList<>();
-		subjects.add(new Subject("History of AI"));
-		subjects.add(new Subject("Uninformed Search"));
-		subjects.add(new Subject("Informed Search"));
-		subjects.add(new Subject("Heuristic Search"));
-		subjects.add(new Subject("Decisision trees"));
+		subjects.add(new Subject("History of AI", "A short history for the AI"));
+		subjects.add(new Subject("Uninformed Search", "sdvdsvsdvds"));
+		subjects.add(new Subject("Informed Search", "vnkvnirnfñk"));
+		subjects.add(new Subject("Heuristic Search", "kflsdbflsdbf"));
+		subjects.add(new Subject("Decisision trees", "nñnovdsnopsd"));
 
 		subjects.get(0).getTeachers().add(users.get(51));
 		subjects.get(1).getTeachers().add(users.get(51));
