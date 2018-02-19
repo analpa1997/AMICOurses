@@ -57,7 +57,7 @@
 
         <section>
             <div class = "container-fluid mb-5 px-5">
-                <form action="/profile/{username}/updated" method="post">
+                <form action="/profile/{{username}}/updated">
                     <div class="form-group row">
                         <label class = "col-lg-1 " for="name-input">Name: </label>
                         <input class = "col-lg-4" type="text" class="form-control" id="name-input"  placeholder="Enter your name" name='userFirstName' value='{{userFirstName}}'>
@@ -73,9 +73,9 @@
 
                     <div class="form-group row">
                         <label class = "col-lg-10 " for="password-input">Password:</label>
-                        <input class = "col col-lg-10" type="password" class="form-control" id="password-input" placeholder="Enter your password" value='{{password}}>
+                        <input class = "col col-lg-10" type="text" class="form-control" id="password-input" placeholder="Enter your password" value='{{password}}'>
                         <label class = "col-lg-10 " for="repeat-password-input">Repeat Password:</label>
-                        <input class = "col col-lg-10" type="password" class="form-control" id="repeat-password-input" placeholder="Repeat your password" name='password' value='{{password}}'>
+                        <input class = "col col-lg-10" type="text" class="form-control" id="repeat-password-input" placeholder="Repeat your password" name='password' value='{{password}}'>
                     </div>
 
                     <div class="form-group row">
@@ -84,7 +84,7 @@
                         <label class = "col-lg-1 " for="city-input">City: </label>
                         <input class = "col col-lg-1" type="text" class="form-control" id="city-input"  placeholder="City" name='city' value='{{city}}'>
                         <label class = "col-lg-1 " for="direction-input">Direction: </label>
-                        <input class = "col col-lg-5" type="text" class="form-control" id="direction-input"  placeholder="Direction" name='address' value='{{address}}'>
+                        <input class = "col col-lg-5" type="text" class="form-control" id="direction-input"  placeholder="Direction" name='userAddress' value='{{userAddress}}'>
                     </div>
 
                     <div class="form-group row">

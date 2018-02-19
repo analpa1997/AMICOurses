@@ -83,7 +83,7 @@
                             </div>
                             <p class="mb-5">{{role}}</p>
 
-                            <a href = "/profile/{username}/update" class = "border p-2" id = "btn-edit-profile">Edit Profile</a>
+                            <a href = "/profile/{{username}}/update" class = "border p-2" id = "btn-edit-profile">Edit Profile</a>
                             
                         </div>
                     </section>
@@ -152,7 +152,7 @@
                         <div class="my-auto">
                             <h2 class="mb-5">Skills</h2>
 							{{#completedCourses}}
-                            <div class="subheading mb-3">{{name}} &amp; Tools</div>
+                            <div class="subheading mb-3">{{name}}</div>
 
                             <ul class="fa-ul mb-0">
                             {{#skills}}
