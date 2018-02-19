@@ -20,6 +20,22 @@
     <!-- Custom styles for this template -->
     <link href="../CSS/style.css" rel="stylesheet">
     <link href="../CSS/navigationHeader.css" rel="stylesheet">
+    
+    <!-- JQUERY -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- JS SCRIPTS -->
+	<script>
+	$("#newbtn").on('click', function(e){
+		e.preventDefault();
+		if(document.location.href.contains('?')) {
+	        var url = document.location.href+"&sort=startDate";
+	    }else{
+	        var url = document.location.href+"?sort=startDate";
+	    }
+	      document.location = url;
+	      return false;
+	});
+	</script>
 
 </head>
 
@@ -199,6 +215,11 @@
         <!-- /.container -->
     </footer>
 
+	<!-- JS FILES -->
+	
+	
+	
+	
     <!-- Bootstrap core JavaScript -->
     <script src="../BOOTSTRAP/vendor/jquery/jquery.min.js "></script>
     <script src="../BOOTSTRAP/vendor/bootstrap/js/bootstrap.bundle.min.js "></script>
