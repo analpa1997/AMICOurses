@@ -70,7 +70,7 @@ public class User {
 		this.password = password;
 		this.userMail = userMail;
 		this.isStudent = isStudent;
-		this.urlProfileImage = "../img/users/default/default.png";
+		this.urlProfileImage = "null";
 		this.internalName = username.replaceAll(" ", "-").toLowerCase();
 	}
 	
@@ -91,6 +91,7 @@ public class User {
 
 	public void setUsername(String username) {
 		this.username = username;
+		this.internalName = this.username.replaceAll(" ", "-");
 	}
 
 	public String getPassword() {
@@ -170,7 +171,7 @@ public class User {
 	}
 
 	public void setUrlProfileImage(String urlProfileImage) {
-		this.urlProfileImage = "../img/users/" + this.internalName + "/" + urlProfileImage.replaceAll(" ", "-");
+		this.urlProfileImage = urlProfileImage;
 	}
 	
 	public List<Course> getInscribedCourses() {

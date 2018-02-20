@@ -206,9 +206,9 @@ public class DataLoaderExample implements CommandLineRunner {
 		skillRepository.save(skills);
 
 		List<StudyItem> studyItems = new ArrayList<>();
-		studyItems.add(new StudyItem(0, "tema 1", 1, "tema-1.txt"));
-		studyItems.add(new StudyItem(0, "tema 2", 2, "tema-2.txt"));
-		studyItems.add(new StudyItem(0, "tema 3", 3, "tema-3.txt"));
+		studyItems.add(new StudyItem(0, "theme 1", 1, "theme-1.txt"));
+		studyItems.add(new StudyItem(0, "theme 2", 2, "theme-2.txt"));
+		studyItems.add(new StudyItem(0, "theme 3", 3, "theme-3.txt"));
 
 		studyItems.get(0).setSubject(subjects.get(0));
 		studyItems.get(1).setSubject(subjects.get(0));
@@ -217,23 +217,14 @@ public class DataLoaderExample implements CommandLineRunner {
 		studyItemRepository.save(studyItems);
 
 		List<Practices> practices = new ArrayList<>();
-		practices.add(new Practices("practica 1", "practica-1.txt"));
-		practices.add(new Practices("practica 2", "practica-2.txt"));
+		practices.add(new Practices("practice 1", "practice-1.txt"));
+		practices.add(new Practices("practice 2", "practice-2.txt"));
 
 		practices.get(0).setSubject(subjects.get(0));
 		practices.get(1).setSubject(subjects.get(0));
 
 		practicesRepository.save(practices);
 
-		/* No se pueden hacer querys aqui */
-		/* Test Querys */
-		/* /* Test Query. It should retrieve "all the courses of the user-0 */
-		/*
-		 * List<Course> queryCourses =
-		 * userRepository.findByUsername("User-0").getInscribedCourses(); for (Course
-		 * course : queryCourses) { System.out.println("Course name : " +
-		 * course.getName() + " course id: " + course.getCourseID()); }
-		 */
 
 	}
 

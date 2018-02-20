@@ -9,4 +9,5 @@ import com.example.demo.course_package.Course;
 public interface UserRepository extends JpaRepository<User, Long> {
 	User findByUserID(long id);
 	User findByUsername(String name);
+	User findByInternalName(String name);
 }
