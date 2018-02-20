@@ -25,17 +25,22 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- JS SCRIPTS -->
 	<script>
-	$('button').on('click', function(e){
+	function showMore(){
+		var courses;
+		$('button').on('click', function(e){
 		$.ajax({
 			type: 'GET',
 			url: '/api/listCourses/',
 			success: function(data){
-				alert("SUCCESS");
+				courses = data;
+				console.log(courses);
 			},
 			error: function(exception){alert("EXCEPTION");}
 		})
 		e.preventDefault();
-	});
+		return courses;
+		});
+	}
 	</script>
 
 </head>
@@ -164,7 +169,7 @@
 
     <section>
         <div class="container text-center">
-            <button class="btn btn-primary col-lg-12 my-sm-0 " id="btnMoreCourses" type="submit">View more courses</button>
+            <button class="btn btn-primary col-lg-12 my-sm-0 " id="btnMoreCourses" type="submit" onClick="showMore();">View more courses</button>
         </div>
     </section>
 
