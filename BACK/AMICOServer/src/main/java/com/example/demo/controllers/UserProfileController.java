@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.user_package.User;
 import com.example.demo.user_package.UserRepository;
@@ -26,7 +27,7 @@ public class UserProfileController {
 		model.addAttribute("username", user.getUsername());
 		model.addAttribute("userMail", user.getUserMail());
 		model.addAttribute("userAddress", user.getUserAddress());
-		model.addAttribute("role", user.getRole());
+		model.addAttribute("phoneNumber", user.getPhoneNumber());
 		model.addAttribute("isStudent", user.isStudent());
 		model.addAttribute("urlProfileImage", user.getUrlProfileImage());
 		model.addAttribute("inscribedCourses", user.getInscribedCourses());
@@ -36,10 +37,11 @@ public class UserProfileController {
 		return "HTML/Profile/userProfile";
 	}
 	
+	//Requets from form
 	@RequestMapping("/profile/{username}/updated")
-	public String updated(Model model, User userUpdated) {
+	public ModelAndView updated(Model model, User userUpdated, @PathVariable String username) {
 		
-		User user = userRepository.findByUserID(userUpdated.getUserID());
+		User user = userRepository.findByUsername(username);
 
 		user.setUserFirstName(userUpdated.getUserFirstName());
 		user.setUserLastName(userUpdated.getUserLastName());
@@ -50,17 +52,20 @@ public class UserProfileController {
 		user.setCountry(userUpdated.getCountry());
 		user.setPhoneNumber(userUpdated.getPhoneNumber());
 		user.setUrlProfileImage(userUpdated.getUrlProfileImage());
-		user.setRole(userUpdated.getRole());
+		user.setInterests(userUpdated.getInterests());
 		
 		userRepository.save(user);
 		
-		return "HTML/Profile/userProfile";
+		return new ModelAndView("redirect:/profile/"+ user.getUsername());
 	}
+	
+	//Requets to form
 	@RequestMapping("/profile/{username}/update")
 	public String update(Model model, @PathVariable String username) {
 		
 		User user = userRepository.findByUsername(username);
 
+		model.addAttribute("interests", user.getInterests());
 		model.addAttribute("userFirstName", user.getUserFirstName());
 		model.addAttribute("userLastName", user.getUserLastName());
 		model.addAttribute("username", user.getUsername());
@@ -73,7 +78,7 @@ public class UserProfileController {
 		model.addAttribute("city", user.getCity());
 		model.addAttribute("country", user.getCountry());
 		model.addAttribute("phoneNumber", user.getPhoneNumber());
-		model.addAttribute("interests", user.getInterests());
+		
 		
 		
 
