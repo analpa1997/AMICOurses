@@ -1,9 +1,11 @@
 package com.example.demo.course_package;
 
+import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -19,6 +21,7 @@ import javax.persistence.Table;
 import com.example.demo.skill_package.Skill;
 import com.example.demo.subject_package.Subject;
 import com.example.demo.user_package.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "Courses")
@@ -49,12 +52,13 @@ public class Course {
 
 	private boolean isCompleted;
 
+	@JsonIgnore
 	@ManyToMany
 	private List<User> inscribedUsers = new ArrayList<>();
-
+	@JsonIgnore
 	@OneToMany(mappedBy = "course")
 	private List<Subject> subjects = new ArrayList<>();
-
+	@JsonIgnore
 	@OneToMany(mappedBy = "course")
 	private List<Skill> skills = new ArrayList<>();
 
@@ -84,21 +88,27 @@ public class Course {
 		this.urlImage = "../img/courses/" + this.internalName + "/" + urlImage;
 		this.isCompleted = false;
 
+		this.endDate = Date.valueOf(LocalDate.now());
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy");
-		Random aleatorio = new Random();
+		Random random = new Random();
+		LocalDate start = LocalDate.of(2018, Month.MARCH, 1);
+		LocalDate end = LocalDate.of(2025, Month.DECEMBER, 31);
+		long days = ChronoUnit.DAYS.between(start, end);
+		long months = ChronoUnit.MONTHS.between(start, end);
+		long years = ChronoUnit.YEARS.between(start, end);
+		LocalDate randomDate = start.plusDays(random.nextInt((int) days + 1));
+		randomDate = start.plusMonths(random.nextInt((int) months + 1));
+		randomDate = start.plusYears(random.nextInt((int) years + 1));
+		Date date = Date.valueOf(randomDate);
+		this.startDate = date;
 
-		int dia = aleatorio.nextInt(30) + 1, mes = aleatorio.nextInt(11) + 1, anyo = aleatorio.nextInt(5) + 2019;
-
-		Calendar calendario = Calendar.getInstance();
-		this.endDate = calendario.getTime();
-		calendario.set(anyo, mes, dia);
-		this.startDate = calendario.getTime();
 		while (this.endDate.compareTo(this.startDate) < 0) {
-			dia = aleatorio.nextInt(30) + 1;
-			mes = aleatorio.nextInt(11) + 1;
-			anyo = aleatorio.nextInt(5) + 2019;
-			calendario.set(anyo, mes, dia);
-			this.endDate = calendario.getTime();
+			random = new Random();
+			LocalDate randomDate2 = start.plusDays(random.nextInt((int) days + 1));
+			randomDate2 = start.plusMonths(random.nextInt((int) months + 1));
+			randomDate2 = start.plusYears(random.nextInt((int) years + 1));
+			Date date2 = Date.valueOf(randomDate2);
+			this.endDate = date2;
 		}
 
 		this.startDateString = dateFormat.format(this.startDate);

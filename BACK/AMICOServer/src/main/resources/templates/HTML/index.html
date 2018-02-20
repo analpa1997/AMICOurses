@@ -25,15 +25,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- JS SCRIPTS -->
 	<script>
-	$("#newbtn").on('click', function(e){
+	$('button').on('click', function(e){
+		$.ajax({
+			type: 'GET',
+			url: '/api/listCourses/',
+			success: function(data){
+				alert("SUCCESS");
+			},
+			error: function(exception){alert("EXCEPTION");}
+		})
 		e.preventDefault();
-		if(document.location.href.contains('?')) {
-	        var url = document.location.href+"&sort=startDate";
-	    }else{
-	        var url = document.location.href+"?sort=startDate";
-	    }
-	      document.location = url;
-	      return false;
 	});
 	</script>
 

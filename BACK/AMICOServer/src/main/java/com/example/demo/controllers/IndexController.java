@@ -35,7 +35,7 @@ public class IndexController {
 		 */
 	}
 
-	@RequestMapping("/index.html")
+	@RequestMapping("/")
 	public String allData(Model model, Pageable page) {
 
 		/* Habria que paginar la busqueda */
