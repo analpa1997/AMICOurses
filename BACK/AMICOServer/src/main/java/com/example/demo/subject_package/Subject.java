@@ -57,12 +57,14 @@ public class Subject {
 
 	public Subject(String name) {
 		this.name = name;
-		this.internalName = name.replaceAll(" ", "-");
+		this.internalName = name.replaceAll(" ", "-").toLowerCase();
+		this.description = "";
 	}
 
 	public Subject(String name, String description) {
 		this(name);
 		this.description = description;
+		this.internalName = name.replaceAll(" ", "-").toLowerCase();
 	}
 
 	/* Methods */

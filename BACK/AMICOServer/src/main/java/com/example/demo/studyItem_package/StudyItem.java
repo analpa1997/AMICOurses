@@ -42,7 +42,7 @@ public class StudyItem {
 		this.type = type;
 		this.name = name;
 		this.module = module;
-		this.fileName = fileName;
+		this.setFileName(fileName);
 		this.internalName = fileName.replaceAll(" ", "-");
 	}
 
@@ -101,6 +101,16 @@ public class StudyItem {
 
 	public String getInternalName() {
 		return internalName;
+	}
+
+
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	} 
 	
 

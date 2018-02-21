@@ -154,8 +154,8 @@ public class DataLoaderExample implements CommandLineRunner {
 		
 		
 		
-		courses.get(0).setCompleted(true);
-		courses.get(2).setCompleted(true);
+		courses.get(1).setCompleted(true);
+		courses.get(3).setCompleted(true);
 
 		
 		/*List <Course> completed = new ArrayList<>();
