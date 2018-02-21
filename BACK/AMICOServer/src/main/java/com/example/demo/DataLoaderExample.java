@@ -69,42 +69,42 @@ public class DataLoaderExample implements CommandLineRunner {
 		courses.add(new Course("Retrato profesional", "Español",
 				"En este curso se abordaran las técnicas más novedosas a la hora de realizar retratos a mano alzada.",
 				"retrato-profesional.jpg"));
-		courses.add(new Course("Introduction to AI", "English", "If you want to learn all about AI, this is our course",
+		courses.add(new Course("Introduction to AI2", "English", "If you want to learn all about AI, this is our course",
 				"introoduction-to-ai.jpg"));
 
-		courses.add(new Course("AI Advanced Tips", "English", "Learn all the most advanced stuff related to IA",
+		courses.add(new Course("AI Advanced Tips2", "English", "Learn all the most advanced stuff related to IA",
 				"ai-advanced-tips.jpeg"));
 
-		courses.add(new Course("Cocina Moderna", "Español",
+		courses.add(new Course("Cocina Moderna2", "Español",
 				"Si tienes hambre y no sabes ni freir un huevo este es tu curso.", "cocina-moderna.jpg"));
 
-		courses.add(new Course("Cortar con tijeras", "Español",
+		courses.add(new Course("Cortar con tijeras2", "Español",
 				"Aprende a cortar con tijeras como un maestro. Este curso intensivo te hará desarollar tu potencial oculto",
 				"cortar-con-tijeras.jpg"));
 
-		courses.add(new Course("Matematicas Para Gatos", "Miau",
+		courses.add(new Course("Matematicas Para Gatos2", "Miau",
 				"Miau miau miau miau ( +, -, *, /, ...) miau miau miau. Miuau miau", "matematicas-para-gatos.jpg"));
 
-		courses.add(new Course("Retrato profesional", "Español",
+		courses.add(new Course("Retrato profesional2", "Español",
 				"En este curso se abordaran las técnicas más novedosas a la hora de realizar retratos a mano alzada.",
 				"retrato-profesional.jpg"));
-		courses.add(new Course("Introduction to AI", "English", "If you want to learn all about AI, this is our course",
+		courses.add(new Course("Introduction to AI3", "English", "If you want to learn all about AI, this is our course",
 				"introoduction-to-ai.jpg"));
 
-		courses.add(new Course("AI Advanced Tips", "English", "Learn all the most advanced stuff related to IA",
+		courses.add(new Course("AI Advanced Tips3", "English", "Learn all the most advanced stuff related to IA",
 				"ai-advanced-tips.jpeg"));
 
-		courses.add(new Course("Cocina Moderna", "Español",
+		courses.add(new Course("Cocina Moderna3", "Español",
 				"Si tienes hambre y no sabes ni freir un huevo este es tu curso.", "cocina-moderna.jpg"));
 
-		courses.add(new Course("Cortar con tijeras", "Español",
+		courses.add(new Course("Cortar con tijeras3", "Español",
 				"Aprende a cortar con tijeras como un maestro. Este curso intensivo te hará desarollar tu potencial oculto",
 				"cortar-con-tijeras.jpg"));
 
-		courses.add(new Course("Matematicas Para Gatos", "Miau",
+		courses.add(new Course("Matematicas Para Gatos3", "Miau",
 				"Miau miau miau miau ( +, -, *, /, ...) miau miau miau. Miuau miau", "matematicas-para-gatos.jpg"));
 
-		courses.add(new Course("Retrato profesional", "Español",
+		courses.add(new Course("Retrato profesional3", "Español",
 				"En este curso se abordaran las técnicas más novedosas a la hora de realizar retratos a mano alzada.",
 				"retrato-profesional.jpg"));
 
@@ -238,15 +238,30 @@ public class DataLoaderExample implements CommandLineRunner {
 		skillRepository.save(skills);
 
 		List<StudyItem> studyItems = new ArrayList<>();
-		studyItems.add(new StudyItem(0, "theme 1", 1, "theme-1.txt"));
-		studyItems.add(new StudyItem(0, "theme 2", 2, "theme-2.txt"));
-		studyItems.add(new StudyItem(0, "theme 3", 3, "theme-3.txt"));
+		studyItems.add(new StudyItem("file-alt", "Theme 1", 1, "theme-1.txt"));
+		studyItems.add(new StudyItem("file-alt", "Theme 1 exercicies", 1, "theme-1.txt"));
+		studyItems.add(new StudyItem("file-alt", "Theme 2", 1, "theme-1.txt"));
+		studyItems.add(new StudyItem("file-alt", "Theme 2 exercicies", 1, "theme-1.txt"));
+		studyItems.add(new StudyItem("file-alt", "Theme 3", 1, "theme-1.txt"));
+		studyItems.add(new StudyItem("file-alt", "Theme 4", 2, "theme-2.txt"));
+		studyItems.add(new StudyItem("file-alt", "Theme 4 exercices", 2, "theme-2.txt"));
+		studyItems.add(new StudyItem("file-alt", "Theme 5", 3, "theme-3.txt"));
+		studyItems.add(new StudyItem("file-alt", "Theme 5 exercicies", 3, "theme-3.txt"));
+		studyItems.add(new StudyItem("file-alt", "Theme 6", 3, "theme-3.txt"));
+		studyItems.add(new StudyItem("file-alt", "Theme 6 exercicies", 3, "theme-3.txt"));
+		
+		/* There are 3 modules*/
+		subjects.get(0).addModule();
+		subjects.get(0).addModule();
+		subjects.get(0).addModule();
 
-		studyItems.get(0).setSubject(subjects.get(0));
-		studyItems.get(1).setSubject(subjects.get(0));
-		studyItems.get(2).setSubject(subjects.get(0));
+		for (StudyItem study : studyItems) {
+			study.setSubject(subjects.get(0));
+		}
 
+		
 		studyItemRepository.save(studyItems);
+		subjectRepository.save(subjects.get(0));
 
 		List<Practices> practices = new ArrayList<>();
 		practices.add(new Practices("practice 1", "practice-1.txt"));

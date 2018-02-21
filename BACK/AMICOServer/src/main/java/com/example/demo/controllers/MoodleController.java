@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.course_package.Course;
 import com.example.demo.course_package.CourseRepository;
+import com.example.demo.studyItem_package.StudyItem;
 import com.example.demo.subject_package.Subject;
 import com.example.demo.subject_package.SubjectRepository;
 import com.example.demo.user_package.User;
@@ -30,8 +31,46 @@ public class MoodleController {
 	private SubjectRepository subjectRepository;
 
 	@RequestMapping("/moodle/{courseInternalName}/{subjectInternalName}")
-	public String allCourses(Model model, @PathVariable String courseInternalName, @PathVariable String subjectInternalName) {
+	public String allCourses(Model model, @PathVariable String courseInternalName,
+			@PathVariable String subjectInternalName) {
 
+		Course course = courseRepository.findByInternalName(courseInternalName);
+		Subject subject = null;
+		for (Subject subjectAct : course.getSubjects()) {
+			if (subjectAct.getInternalName().equals(subjectInternalName)) {
+				subject = subjectAct;
+			}
+		}
+
+		if (subject != null) {
+
+			/* Get all the studyItems from the subject */
+			/*
+			 * They will consists in n (number of modules a subject has) Lists in order to
+			 * pass them to moustache
+			 */
+			List<List<StudyItem>> allStudyItems = new ArrayList<>();
+
+			for (int i = 0; i < subject.getNumberModules(); i++) {
+				allStudyItems.add(new ArrayList<>());
+			}
+
+			int module;
+			List<StudyItem> moduleNStudyItems;
+			for (StudyItem studyItem : subject.getStudyItemsList()) {
+				/* Get the actual module */
+				module = studyItem.getModule() - 1;
+				moduleNStudyItems = allStudyItems.get(module);
+				/* If it is the first item on this module, the list is null */
+				if (moduleNStudyItems == null) {
+					moduleNStudyItems = new ArrayList<>();
+				}
+				moduleNStudyItems.add(studyItem);
+			}
+
+			model.addAttribute("allStudyItems", allStudyItems);
+
+		}
 		return "HTML/Moodle/student-subject";
 	}
 

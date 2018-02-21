@@ -50,21 +50,22 @@ public class Subject {
 	private List<User> teachers = new ArrayList<>();
 
 	private String internalName;
+	
+	private int numberModules;
 
 	/* Constructors */
 	public Subject() {
 	}
 
 	public Subject(String name) {
-		this.name = name;
-		this.internalName = name.replaceAll(" ", "-").toLowerCase();
-		this.description = "";
+		this(name, "");
 	}
 
 	public Subject(String name, String description) {
-		this(name);
+		this.name = name;
 		this.description = description;
 		this.internalName = name.replaceAll(" ", "-").toLowerCase();
+		setNumberModules(0);
 	}
 
 	/* Methods */
@@ -151,6 +152,18 @@ public class Subject {
 
 	public void setTeachers(List<User> teachers) {
 		this.teachers = teachers;
+	}
+
+	public int getNumberModules() {
+		return numberModules;
+	}
+
+	public void setNumberModules(int numberModules) {
+		this.numberModules = numberModules;
+	}
+	
+	public void addModule () {
+		numberModules++;
 	}
 
 }

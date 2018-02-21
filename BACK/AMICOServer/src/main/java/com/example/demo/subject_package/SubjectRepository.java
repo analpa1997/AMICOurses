@@ -8,11 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface SubjectRepository extends JpaRepository<Subject, Long> {
 	
-	@Query("select s from Subjects s where s.course.courseID = ?1")
-	static
-	List<Subject> findByCourseID(long courseID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
+	Subject findBySubjectID(long subjectID);
 }

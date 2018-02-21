@@ -17,7 +17,7 @@ public class StudyItem {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long studyItemID;
 
-	private int type;
+	private String type;
 
 	private String name;
 
@@ -37,7 +37,7 @@ public class StudyItem {
 	
 	
 	
-	public StudyItem(int type, String name, int module, String fileName) {
+	public StudyItem(String type, String name, int module, String fileName) {
 		super();
 		this.type = type;
 		this.name = name;
@@ -58,11 +58,11 @@ public class StudyItem {
 		this.studyItemID = studyItemID;
 	}
 
-	public int getType() {
+	public String getType() {
 		return type;
 	}
 
-	public void setType(int type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 
