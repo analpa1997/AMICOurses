@@ -25,20 +25,55 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- JS SCRIPTS -->
 	<script>
-	function showMore(){
-		var courses;
-		$('button').on('click', function(e){
+	var numPageDisplay = 0;
+	var lastPage = false;
+	$('document').ready(function(){
 		$.ajax({
 			type: 'GET',
-			url: '/api/listCourses/',
-			success: function(data){
-				courses = data;
-				console.log(courses);
+			url: '/api/listCourses/page=' + (numPageDisplay),
+			data: numPageDisplay,
+			success: function(pageData){
+				if (pageData.last == true){
+					$('#btnMoreCourses').html('No More courses');
+					$('#btnMoreCourses').addClass('disabled');
+					lastPage = true;
+				}
 			},
-			error: function(exception){alert("EXCEPTION");}
+			error: function(exception){alert(exception);}
 		})
+	})
+	
+	function showMore(){
+		$('#btnMoreCourses').on('click', function(e){
+			$.ajax({
+				type: 'GET',
+				url: '/api/listCourses/page=' + (numPageDisplay+1),
+				data: numPageDisplay+1,
+				success: function(pageData){
+					if (pageData.last == true){
+						$('#btnMoreCourses').html('No More courses');
+						$('#btnMoreCourses').addClass('disabled');
+						lastPage = true;
+					}
+					numPageDisplay++;
+					pageData.content.forEach(function(course){
+						$('#allCourses').append('<div class="col-lg-6 col-md-12 col-sm-12 col-12">' + 
+								  '<div class="p-3" align=center>' + 
+								  '<a id = "link-course" href="./HTML/CourseInformation/course.html">' +
+								  '<h2 class="display-4">' + course.name + '</h2>' +
+								  '</a><p class="lead">' + course.courseDescription + '</p>' + 
+								  '<div class="container">'+ 
+								  '<a href="./HTML/CourseInformation/course.html">'+ 
+								  '<img class="img-fluid rounded-circle imgCourse" src="' + course.urlImage + '" alt=" " >'+
+			                      '</a>'+
+			                      '<div class="mt-3 &nbsp"></div>'+
+			                      '<div class = "text-center">Start date: ' + course.startDateString + '</div>'+
+			                      '<div class = "text-center">End date: '+ course.endDateString + '</div>'+
+			                      '</div></div></div>');
+					});
+				}
+			})
 		e.preventDefault();
-		return courses;
 		});
 	}
 	</script>
@@ -145,7 +180,7 @@
         </div>
     </div>
     <div class="container">
-	    <div class="row">
+	    <div class="row" id = "allCourses">
 			{{#courseList}}
 	              <div class="col-lg-6 col-md-12 col-sm-12 col-12">
 	                  <div class="p-3" align=center>
@@ -169,7 +204,7 @@
 
     <section>
         <div class="container text-center">
-            <button class="btn btn-primary col-lg-12 my-sm-0 " id="btnMoreCourses" type="submit" onClick="showMore();">View more courses</button>
+            <button class="btn btn-primary col-lg-12 my-sm-0 " id="btnMoreCourses" onClick="showMore();">View more courses</button>
         </div>
     </section>
 

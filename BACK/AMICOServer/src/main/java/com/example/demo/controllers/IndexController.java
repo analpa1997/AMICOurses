@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,7 +41,7 @@ public class IndexController {
 
 		/* Habria que paginar la busqueda */
 		List<Course> c = new ArrayList<>();
-		Page<Course> p = courseRepository.findAll(page);
+		Page<Course> p = courseRepository.findAll(new PageRequest(0, 10));
 
 		/* Test Query. It should retrieve "Introduction to AI" */
 		List<Course> queryCourses = userRepository.findByUsername("student-0").getInscribedCourses();

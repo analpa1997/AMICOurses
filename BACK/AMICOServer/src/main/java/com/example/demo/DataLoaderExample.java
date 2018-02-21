@@ -69,6 +69,44 @@ public class DataLoaderExample implements CommandLineRunner {
 		courses.add(new Course("Retrato profesional", "Español",
 				"En este curso se abordaran las técnicas más novedosas a la hora de realizar retratos a mano alzada.",
 				"retrato-profesional.jpg"));
+		courses.add(new Course("Introduction to AI", "English", "If you want to learn all about AI, this is our course",
+				"introoduction-to-ai.jpg"));
+
+		courses.add(new Course("AI Advanced Tips", "English", "Learn all the most advanced stuff related to IA",
+				"ai-advanced-tips.jpeg"));
+
+		courses.add(new Course("Cocina Moderna", "Español",
+				"Si tienes hambre y no sabes ni freir un huevo este es tu curso.", "cocina-moderna.jpg"));
+
+		courses.add(new Course("Cortar con tijeras", "Español",
+				"Aprende a cortar con tijeras como un maestro. Este curso intensivo te hará desarollar tu potencial oculto",
+				"cortar-con-tijeras.jpg"));
+
+		courses.add(new Course("Matematicas Para Gatos", "Miau",
+				"Miau miau miau miau ( +, -, *, /, ...) miau miau miau. Miuau miau", "matematicas-para-gatos.jpg"));
+
+		courses.add(new Course("Retrato profesional", "Español",
+				"En este curso se abordaran las técnicas más novedosas a la hora de realizar retratos a mano alzada.",
+				"retrato-profesional.jpg"));
+		courses.add(new Course("Introduction to AI", "English", "If you want to learn all about AI, this is our course",
+				"introoduction-to-ai.jpg"));
+
+		courses.add(new Course("AI Advanced Tips", "English", "Learn all the most advanced stuff related to IA",
+				"ai-advanced-tips.jpeg"));
+
+		courses.add(new Course("Cocina Moderna", "Español",
+				"Si tienes hambre y no sabes ni freir un huevo este es tu curso.", "cocina-moderna.jpg"));
+
+		courses.add(new Course("Cortar con tijeras", "Español",
+				"Aprende a cortar con tijeras como un maestro. Este curso intensivo te hará desarollar tu potencial oculto",
+				"cortar-con-tijeras.jpg"));
+
+		courses.add(new Course("Matematicas Para Gatos", "Miau",
+				"Miau miau miau miau ( +, -, *, /, ...) miau miau miau. Miuau miau", "matematicas-para-gatos.jpg"));
+
+		courses.add(new Course("Retrato profesional", "Español",
+				"En este curso se abordaran las técnicas más novedosas a la hora de realizar retratos a mano alzada.",
+				"retrato-profesional.jpg"));
 
 		List<User> users = new ArrayList<>();
 
@@ -151,24 +189,18 @@ public class DataLoaderExample implements CommandLineRunner {
 		users.get(51).getTeaching().add(subjects.get(2));
 		users.get(51).getTeaching().add(subjects.get(3));
 		users.get(51).getTeaching().add(subjects.get(4));
-		
-		
-		
+
 		courses.get(1).setCompleted(true);
 		courses.get(3).setCompleted(true);
 
-		
-		/*List <Course> completed = new ArrayList<>();
-		for (Course c : courses) {
-				if (c.isCompleted()) {
-					completed.add(c);
-				}
-		}*/
-		
-		//users.get(50).getInscribedCourses().removeAll(completed);
-		
-		//users.get(50).getCompletedCourses().addAll(completed);
+		/*
+		 * List <Course> completed = new ArrayList<>(); for (Course c : courses) { if
+		 * (c.isCompleted()) { completed.add(c); } }
+		 */
 
+		// users.get(50).getInscribedCourses().removeAll(completed);
+
+		// users.get(50).getCompletedCourses().addAll(completed);
 
 		userRepository.save(users);
 
@@ -224,7 +256,6 @@ public class DataLoaderExample implements CommandLineRunner {
 		practices.get(1).setSubject(subjects.get(0));
 
 		practicesRepository.save(practices);
-
 
 	}
 
