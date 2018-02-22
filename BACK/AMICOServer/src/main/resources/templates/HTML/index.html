@@ -26,55 +26,97 @@
     <!-- JS SCRIPTS -->
 	<script>
 	var numPageDisplay = 0;
-	var lastPage = false;
+	var urlSearch = "";
 	$('document').ready(function(){
+		console.log(numPageDisplay);
+		urlSearch = '/api/listCourses/p';
 		$.ajax({
 			type: 'GET',
-			url: '/api/listCourses/page=' + (numPageDisplay),
+			url: urlSearch + (numPageDisplay),
 			data: numPageDisplay,
 			success: function(pageData){
 				if (pageData.last == true){
 					$('#btnMoreCourses').html('No More courses');
 					$('#btnMoreCourses').addClass('disabled');
-					lastPage = true;
 				}
 			},
 			error: function(exception){alert(exception);}
 		})
 	})
 	
-	function showMore(){
-		$('#btnMoreCourses').on('click', function(e){
-			$.ajax({
-				type: 'GET',
-				url: '/api/listCourses/page=' + (numPageDisplay+1),
-				data: numPageDisplay+1,
-				success: function(pageData){
-					if (pageData.last == true){
-						$('#btnMoreCourses').html('No More courses');
-						$('#btnMoreCourses').addClass('disabled');
-						lastPage = true;
-					}
-					numPageDisplay++;
-					pageData.content.forEach(function(course){
-						$('#allCourses').append('<div class="col-lg-6 col-md-12 col-sm-12 col-12">' + 
-								  '<div class="p-3" align=center>' + 
-								  '<a id = "link-course" href="./HTML/CourseInformation/course.html">' +
-								  '<h2 class="display-4">' + course.name + '</h2>' +
-								  '</a><p class="lead">' + course.courseDescription + '</p>' + 
-								  '<div class="container">'+ 
-								  '<a href="./HTML/CourseInformation/course.html">'+ 
-								  '<img class="img-fluid rounded-circle imgCourse" src="' + course.urlImage + '" alt=" " >'+
-			                      '</a>'+
-			                      '<div class="mt-3 &nbsp"></div>'+
-			                      '<div class = "text-center">Start date: ' + course.startDateString + '</div>'+
-			                      '<div class = "text-center">End date: '+ course.endDateString + '</div>'+
-			                      '</div></div></div>');
-					});
+	function showNewest(){
+		$('#newbtn').html('<img src="./img/ajax-loader.gif">');
+		console.log(numPageDisplay);
+		urlSearch = '/api/listCourses/byNewest/p';
+		numPageDisplay = 0;
+		$.ajax({
+			type: 'GET',
+			url: urlSearch + numPageDisplay,
+			data: numPageDisplay,
+			success: function(pageData){
+				if (pageData.last == true){
+					$('#btnMoreCourses').html('No More courses');
+					$('#btnMoreCourses').addClass('disabled');
+				}else{
+					$('#btnMoreCourses').html('View more courses');
+					$('#btnMoreCourses').removeClass('disabled');
 				}
-			})
-		e.preventDefault();
-		});
+				$('#allCourses').html('');
+				pageData.content.forEach(function(course){
+					$('#allCourses').append('<div class="col-lg-6 col-md-12 col-sm-12 col-12">' + 
+							  '<div class="p-3" align=center>' + 
+							  '<a id = "link-course" href="./course/' + course.internalName + '.html">' +
+							  '<h2 class="display-4">' + course.name + '</h2>' +
+							  '</a><p class="lead">' + course.courseDescription + '</p>' + 
+							  '<div class="container">'+ 
+							  '<a href="../course/' + course.internalName + '.html">'+ 
+							  '<img class="img-fluid rounded-circle imgCourse" src="' + course.urlImage + '" alt=" " >'+
+		                      '</a>'+
+		                      '<div class="mt-3 &nbsp"></div>'+
+		                      '<div class = "text-center">Start date: ' + course.startDateString + '</div>'+
+		                      '<div class = "text-center">End date: '+ course.endDateString + '</div>'+
+		                      '</div></div></div>');
+				});
+				$('#newbtn').html('Newest');
+			},
+			error: function(exception){console.log('ERROR');}
+		})
+		console.log(urlSearch);
+	}
+	
+	function showMore(){
+		$('#btnMoreCourses').html('<img src = "./img/ajax-loader.gif">');
+		console.log(numPageDisplay);
+		$.ajax({
+			type: 'GET',
+			url: urlSearch + (numPageDisplay+1),
+			data: (numPageDisplay+1),
+			success: function(pageData){
+				if (pageData.last == true){
+					$('#btnMoreCourses').html('No More courses');
+					$('#btnMoreCourses').addClass('disabled');
+				}else{
+					$('#btnMoreCourses').html('View more courses');
+				}
+				numPageDisplay++;
+				pageData.content.forEach(function(course){
+					$('#allCourses').append('<div class="col-lg-6 col-md-12 col-sm-12 col-12">' + 
+							  '<div class="p-3" align=center>' + 
+							  '<a id = "link-course" href="./course/'+ course.internalName + '.html">' +
+							  '<h2 class="display-4">' + course.name + '</h2>' +
+							  '</a><p class="lead">' + course.courseDescription + '</p>' + 
+							  '<div class="container">'+ 
+							  '<a href="../course/' + course.internalName + '.html">'+ 
+							  '<img class="img-fluid rounded-circle imgCourse" src="' + course.urlImage + '" alt=" " >'+
+		                      '</a>'+
+		                      '<div class="mt-3 &nbsp"></div>'+
+		                      '<div class = "text-center">Start date: ' + course.startDateString + '</div>'+
+		                      '<div class = "text-center">End date: '+ course.endDateString + '</div>'+
+		                      '</div></div></div>');
+				});
+			},
+			error: function(exception){alert(exception);}
+		})
 	}
 	</script>
 
@@ -126,7 +168,7 @@
                 <h1 class="h3 mx-auto">Check some of our courses</h1>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12 col-12 text-center">
-                <a href="#" class="btn btn-primary btn-xl rounded-pill mt-5" id="newbtn">Newest</a>
+                <button class="btn btn-primary btn-xl rounded-pill mt-5" id="newbtn" onClick="showNewest();">Newest</button>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12 col-12 text-center">
                 <a href="#" class="btn btn-primary btn-xl rounded-pill mt-5" id="trendbtn">Trending</a>
@@ -141,7 +183,7 @@
                 <nav class="navbar navbar-light bg-faded p-2">
                     <form class="form-inline" id="searchCourses">
                         <input class="form-control mr-sm-2" type="text" placeholder="Search">
-                        <a href="#" class="btn btn-primary btn-xl rounded-pill" id="searchbtn">Search</a>
+                        <button class="btn btn-primary btn-xl rounded-pill" id="searchbtn">Search</button>
                     </form>
                 </nav>
             </div>
@@ -184,12 +226,12 @@
 			{{#courseList}}
 	              <div class="col-lg-6 col-md-12 col-sm-12 col-12">
 	                  <div class="p-3" align=center>
-	                      <a id = "link-course" href="./HTML/CourseInformation/course.html">
+	                      <a id = "link-course" href="./course/{{internalName}}.html">
 	                      <h2 class="display-4">{{name}}</h2>
 	                      </a>
 	                      <p class="lead">{{courseDescription}}</p>
 	                      <div class="container">
-	                          <a href="./HTML/CourseInformation/course.html">
+	                          <a href="./course/{{internalName}}.html">
 	                      <img class="img-fluid rounded-circle imgCourse" src="{{urlImage}}" alt=" " >
 	                      </a>
 	                      <div class="mt-3 &nbsp"></div>
