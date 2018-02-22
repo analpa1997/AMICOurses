@@ -33,34 +33,29 @@ public class StudyItem {
 	private String internalName;
 	
 	private String originalName;
+	
+	private String extension;
 
 	/* Constructors */
 	public StudyItem () {}
 	
 	
-	
-	public StudyItem(String type, String name, int module, String fileName) {
-		super();
+	public StudyItem(String type, String name, int module, String filename, String originalName) {
 		if (!type.isEmpty()) {
 			type = "-" + type;
 		}
 		this.type = "file" + type;
 		this.name = name;
 		this.module = module;
-		this.setFileName(fileName);
-		this.internalName = fileName.replaceAll(" ", "-");
-	}
-	
-	public StudyItem(String name, int module, String fileName) {
-		this("", name, module, fileName);
-	}
-	
-	public StudyItem (String type, String name, String originalName) {
-		this(type, name, 0, "");
+		this.fileName = filename;
 		this.originalName = originalName;
 	}
-
-
+	
+	public StudyItem(String type, String name, int module, String originalName) {
+		this(type, name, module, "", originalName);
+	}
+	
+	
 
 	/* Methods */
 
@@ -137,6 +132,18 @@ public class StudyItem {
 
 	public void setOriginalName(String originalName) {
 		this.originalName = originalName;
+	}
+
+
+
+	public String getExtension() {
+		return extension;
+	}
+
+
+
+	public void setExtension(String extension) {
+		this.extension = extension;
 	} 
 	
 

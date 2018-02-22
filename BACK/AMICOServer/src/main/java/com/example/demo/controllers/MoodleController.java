@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -8,9 +9,12 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -50,13 +54,15 @@ public class MoodleController {
 		/*
 		 * This is for when we have the login system.s User user =
 		 * sessionUserComponent.getLoggedUser(); Course course = null;
-		 * 
-		 * for (Course courseAct : user.getInscribedCourses()) { if
-		 * (courseAct.getInternalName().equals(courseInternalName)) { course =
-		 * courseAct; } }
 		 */
-		/* this line wont be useful */
-		Course course = courseRepository.findByInternalName(courseInternalName);
+		User user = userRepository.findByInternalName("amicoteacher");
+
+		Course course = null;
+		for (Course courseAct : user.getInscribedCourses()) {
+			if (courseAct.getInternalName().equals(courseInternalName)) {
+				course = courseAct;
+			}
+		}
 
 		Subject subject = null;
 		for (Subject subjectAct : course.getSubjects()) {
@@ -115,8 +121,6 @@ public class MoodleController {
 		// User user = sessionUserComponent.getLoggedUser();
 		User user = userRepository.findByInternalName("amicoteacher");
 
-		// if (user.getInscribedCourses())
-
 		if (!user.isStudent() && !itemName.isEmpty() && (module != null)) {
 
 			Course course = null;
@@ -141,25 +145,23 @@ public class MoodleController {
 						/* If there is not file the imageName wont change */
 						if (!file.isEmpty()) {
 							try {
-								Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"),
-										"files/documents/" + course.getCourseID() + "/" + subject.getSubjectID() + "/studyItems/");
+								Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"), "files/documents/" + course.getCourseID() + "/" + subject.getSubjectID() + "/studyItems/");
 								if (!Files.exists(FILES_FOLDER)) {
 									Files.createDirectories(FILES_FOLDER);
 								}
 								String[] fileOriginal = file.getOriginalFilename().split("[.]");
-								System.err.println(fileOriginal.length);
 								String extension = fileOriginal[fileOriginal.length - 1];
 								String type = extension;
 								if (!itemType.isEmpty()) {
 									type = itemType;
 								}
-								StudyItem studyItem = new StudyItem(type, itemName, file.getOriginalFilename());
+								StudyItem studyItem = new StudyItem(type, itemName, module, file.getOriginalFilename());
 
 								studyItemRepository.save(studyItem);
 
 								String fileName = "studyItem-" + studyItem.getStudyItemID() + "." + extension;
+								studyItem.setExtension(extension);
 								studyItem.setFileName(fileName);
-								studyItem.setModule(module);
 
 								studyItem.setSubject(subject);
 								subject.getStudyItemsList().add(studyItem);
@@ -177,10 +179,57 @@ public class MoodleController {
 					}
 				}
 			}
+		}
+		return new ModelAndView("redirect:/moodle/" + courseInternalName + "/" + subjectInternalName);
+	}
 
+	@RequestMapping("/moodle/download/studyItem/{courseInternalName}/{subjectInternalName}/{studyItemID}")
+	private void getStudyItemFile(@PathVariable String courseInternalName, @PathVariable String subjectInternalName,
+			@PathVariable Long studyItemID, HttpServletResponse res) throws FileNotFoundException, IOException {
+
+		// User user = sessionUserComponent.getLoggedUser();
+		User user = userRepository.findByInternalName("amicoteacher");
+		
+		Course course = null;
+		for (Course courseAct : user.getInscribedCourses()) {
+			if (courseAct.getInternalName().equals(courseInternalName)) {
+				course = courseAct;
+			}
 		}
 
-		return new ModelAndView("redirect:/moodle/" + courseInternalName + "/" + subjectInternalName);
+		if (course != null) {
+			Subject subject = null;
+			for (Subject subjectAct : course.getSubjects()) {
+				if (subjectAct.getInternalName().equals(subjectInternalName)) {
+					subject = subjectAct;
+				}
+			}
+			if (subject != null) {
+				if (subject.getUsers().contains(user)) {
+					StudyItem studyItem = null;
+					for (StudyItem studyItemAct: subject.getStudyItemsList()) {
+						if (studyItemAct.getStudyItemID() == studyItemID.longValue()) {
+							studyItem = studyItemAct;
+						}
+					}
+
+					
+					Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"), "files/documents/" + course.getCourseID() + "/" + subject.getSubjectID() + "/studyItems/");
+					String extension = studyItem.getExtension();
+					if (extension == null) {
+						String[] fileOriginal = studyItem.getOriginalName().split("[.]");
+						extension = fileOriginal[fileOriginal.length - 1];
+					}
+					Path filePath = FILES_FOLDER.resolve("studyItem-" + studyItem.getStudyItemID() + "." + extension);
+					
+					res.addHeader("Content-Disposition", "attachment; filename = " + studyItem.getOriginalName());
+					res.setContentType("application/octet-stream");
+					res.setContentLength((int) filePath.toFile().length());
+					FileCopyUtils.copy(Files.newInputStream(filePath), res.getOutputStream());
+				}
+			}
+		}
+
 	}
 
 }
