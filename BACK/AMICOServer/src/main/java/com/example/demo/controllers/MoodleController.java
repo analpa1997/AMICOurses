@@ -142,7 +142,7 @@ public class MoodleController {
 						if (!file.isEmpty()) {
 							try {
 								Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"),
-										"files/documents/" + course.getCourseID() + "/" + subject.getSubjectID() + "/");
+										"files/documents/" + course.getCourseID() + "/" + subject.getSubjectID() + "/studyItems/");
 								if (!Files.exists(FILES_FOLDER)) {
 									Files.createDirectories(FILES_FOLDER);
 								}
