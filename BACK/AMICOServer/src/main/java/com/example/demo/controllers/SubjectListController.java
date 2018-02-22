@@ -16,6 +16,7 @@ import com.example.demo.course_package.Course;
 import com.example.demo.course_package.CourseRepository;
 import com.example.demo.subject_package.Subject;
 import com.example.demo.subject_package.SubjectRepository;
+import com.example.demo.user_package.SessionUserComponent;
 import com.example.demo.user_package.User;
 import com.example.demo.user_package.UserRepository;
 
@@ -28,10 +29,14 @@ public class SubjectListController {
 	private UserRepository userRepository;
 	@Autowired
 	private SubjectRepository subjectRepository;
+	
+	@Autowired
+	private SessionUserComponent sessionUserComponent;
 
 	@RequestMapping("/course-overview/{courseName}/{userName}")
 	public String allCourses(Model model, @PathVariable String userName, @PathVariable String courseName) {
 
+		//User user = sessionUserComponent.getLoggedUser();
 		User user = userRepository.findByUsername(userName.replaceAll("-", " "));
 		String InternalCourseName = courseName;
 		if (user != null) {

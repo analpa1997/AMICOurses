@@ -17,6 +17,7 @@ import com.example.demo.course_package.CourseRepository;
 import com.example.demo.studyItem_package.StudyItem;
 import com.example.demo.subject_package.Subject;
 import com.example.demo.subject_package.SubjectRepository;
+import com.example.demo.user_package.SessionUserComponent;
 import com.example.demo.user_package.User;
 import com.example.demo.user_package.UserRepository;
 
@@ -29,12 +30,27 @@ public class MoodleController {
 	private UserRepository userRepository;
 	@Autowired
 	private SubjectRepository subjectRepository;
+	
+	/*@Autowired
+	private SessionUserComponent sessionUserComponent;*/
 
 	@RequestMapping("/moodle/{courseInternalName}/{subjectInternalName}")
 	public String allCourses(Model model, @PathVariable String courseInternalName,
 			@PathVariable String subjectInternalName) {
 
+		/* This is for when we have the login system.s
+		User user = sessionUserComponent.getLoggedUser();
+		Course course = null;
+		
+		for (Course courseAct : user.getInscribedCourses()) {
+			if (courseAct.getInternalName().equals(courseInternalName)) {
+				course = courseAct;
+			}
+		}
+		*/
+		/* this line wont be useful */
 		Course course = courseRepository.findByInternalName(courseInternalName);
+		
 		Subject subject = null;
 		for (Subject subjectAct : course.getSubjects()) {
 			if (subjectAct.getInternalName().equals(subjectInternalName)) {
@@ -71,7 +87,11 @@ public class MoodleController {
 			model.addAttribute("allStudyItems", allStudyItems);
 
 		}
+		
+		//model.addAttribute("isTeacher", !user.isStudent());
+		model.addAttribute("isTeacher", true);
 		return "HTML/Moodle/student-subject";
 	}
-
 }
+
+
