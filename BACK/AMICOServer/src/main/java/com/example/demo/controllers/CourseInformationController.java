@@ -22,8 +22,10 @@ public class CourseInformationController {
 	private CourseRepository courseRepository;
 
 	// For course main page description
-	@RequestMapping("/course/{internalName}")
-	public String course(Model model, @PathVariable String internalName) {
+	@RequestMapping("/course/{internalName}/{userName}")
+	public String course(Model model, 
+			@PathVariable String internalName,
+			@PathVariable String userName) {
 
 		// get the course information by name
 		course = courseRepository.findByInternalName(internalName);
@@ -32,12 +34,19 @@ public class CourseInformationController {
 		//set the course description attributes
 		model.addAttribute("courseName", course.getName());
 		model.addAttribute("courseDescription", course.getCourseDescription());
+		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy");
 		String startDateString = dateFormat.format(course.getStartDate());
 		String endDateString = dateFormat.format(course.getEndDate());
+		
 		model.addAttribute("startDateString", startDateString);
 		model.addAttribute("endDateString", endDateString);
+		model.addAttribute("urlImage", course.getUrlImage());
 		model.addAttribute("nameInternal", internalName);
+		
+		if (userName.length() > 1);
+			model.addAttribute("userName", userName);
+		
 		return "HTML/courseInformation/course";
 	}
 
@@ -49,10 +58,11 @@ public class CourseInformationController {
 		List<Subject> subject = course.getSubjects();
 
 		System.out.println("# Subject" + " " + subject.size());
-
+		
+		model.addAttribute("courseName", course.getName());
 		model.addAttribute("subjects", subject);
+		model.addAttribute("urlImage", course.getUrlImage());
 		model.addAttribute("nameInternal", internalName);
-
 		return "HTML/CourseInformation/subjects";
 	}
 	
@@ -65,6 +75,7 @@ public class CourseInformationController {
 		System.out.println("# skills" + " " + skill.size());
 
 		model.addAttribute("skills", skill);
+		model.addAttribute("urlImage", course.getUrlImage());
 		model.addAttribute("nameInternal", internalName);
 
 		return "HTML/CourseInformation/skills";
