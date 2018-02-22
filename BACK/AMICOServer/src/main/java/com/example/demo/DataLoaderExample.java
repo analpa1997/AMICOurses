@@ -238,17 +238,17 @@ public class DataLoaderExample implements CommandLineRunner {
 		skillRepository.save(skills);
 
 		List<StudyItem> studyItems = new ArrayList<>();
-		studyItems.add(new StudyItem("file-alt", "Theme 1", 1, "theme-1.txt"));
-		studyItems.add(new StudyItem("file-alt", "Theme 1 exercicies", 1, "theme-1.txt"));
-		studyItems.add(new StudyItem("file-alt", "Theme 2", 1, "theme-1.txt"));
-		studyItems.add(new StudyItem("file-alt", "Theme 2 exercicies", 1, "theme-1.txt"));
-		studyItems.add(new StudyItem("file-alt", "Theme 3", 1, "theme-1.txt"));
-		studyItems.add(new StudyItem("file-alt", "Theme 4", 2, "theme-2.txt"));
-		studyItems.add(new StudyItem("file-alt", "Theme 4 exercices", 2, "theme-2.txt"));
-		studyItems.add(new StudyItem("file-alt", "Theme 5", 3, "theme-3.txt"));
-		studyItems.add(new StudyItem("file-alt", "Theme 5 exercicies", 3, "theme-3.txt"));
-		studyItems.add(new StudyItem("file-alt", "Theme 6", 3, "theme-3.txt"));
-		studyItems.add(new StudyItem("file-alt", "Theme 6 exercicies", 3, "theme-3.txt"));
+		studyItems.add(new StudyItem("pdf", "Theme 1", 1, "theme-1.txt"));
+		studyItems.add(new StudyItem("pdf", "Theme 1 exercicies", 1, "theme-1.txt"));
+		studyItems.add(new StudyItem("video", "Theme 2", 1, "theme-1.txt"));
+		studyItems.add(new StudyItem("word", "Theme 2 exercicies", 1, "theme-1.txt"));
+		studyItems.add(new StudyItem("pdf", "Theme 3", 1, "theme-1.txt"));
+		studyItems.add(new StudyItem("pdf", "Theme 4", 2, "theme-2.txt"));
+		studyItems.add(new StudyItem("pdf", "Theme 4 exercices", 2, "theme-2.txt"));
+		studyItems.add(new StudyItem("word", "Theme 5", 3, "theme-3.txt"));
+		studyItems.add(new StudyItem("", "Theme 5 exercicies", 3, "theme-3.txt"));
+		studyItems.add(new StudyItem("", "Theme 6", 3, "theme-3.txt"));
+		studyItems.add(new StudyItem("video", "Theme 6 exercicies", 3, "theme-3.txt"));
 		
 		/* There are 3 modules*/
 		subjects.get(0).addModule();

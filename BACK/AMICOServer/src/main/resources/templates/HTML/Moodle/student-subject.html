@@ -68,9 +68,9 @@
 	<div class="my-5"></div>
 	<div class="mt-5">&nbsp</div>
 	<nav class="breadcrumb">
-		<a href="../StudentCourses/student-course-overview.html"
-			class="breadcrumb-item">Course Name</a> <span
-			class="breadcrumb-item active">Subject Name</span>
+		<a href="/course-overview/{{courseInternalName}}"
+			class="breadcrumb-item">{{courseName}}</a> <span
+			class="breadcrumb-item active">{{subjectName}}</span>
 	</nav>
 	<section>
 		<div class="container-fluid ">
@@ -123,6 +123,18 @@
 											<li class="list-group-item"><span
 												class="item-icon fa fa-{{type}} pl-5"></span> {{name}}</li>
 										</a> {{/.}}
+										{{#isTeacher}}
+											<li class = "item-content list-group-item">
+												<form action = "moodle/upload/studyItem/{{courseInternalName}}" method="post" enctype="multipart/form-data">
+												<label>Upload new:</label>
+												<input type = "text" name = "itemName" placeholder = "Name:">
+												<input type = "text" name = "itemType" placeholder = "Type (pdf, word, video...)">
+												
+												
+												<button type = "submit">Upload</button>
+												</form>
+											</li> 
+										{{/isTeacher}}
 									</ul>
 								</div>
 								{{/allStudyItems}}

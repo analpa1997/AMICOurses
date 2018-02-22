@@ -33,16 +33,15 @@ public class SubjectListController {
 	@Autowired
 	private SessionUserComponent sessionUserComponent;
 
-	@RequestMapping("/course-overview/{courseName}/{userName}")
-	public String allCourses(Model model, @PathVariable String userName, @PathVariable String courseName) {
+	@RequestMapping("/course-overview/{courseInternalName}/{userInternalName}")
+	public String allCourses(Model model, @PathVariable String userInternalName, @PathVariable String courseInternalName) {
 
 		//User user = sessionUserComponent.getLoggedUser();
-		User user = userRepository.findByUsername(userName.replaceAll("-", " "));
-		String InternalCourseName = courseName;
+		User user = userRepository.findByUsername(userInternalName.replaceAll("-", " "));
 		if (user != null) {
 			Course actualCourse = null;
 			for (Course course : user.getInscribedCourses()) {
-				if (course.getInternalName().equals(InternalCourseName)) {
+				if (course.getInternalName().equals(courseInternalName)) {
 					actualCourse = course;
 				}
 			}
@@ -60,7 +59,7 @@ public class SubjectListController {
 				model.addAttribute("subjects", actualCourse.getSubjects());
 				model.addAttribute("courseName", actualCourse.getName());
 				model.addAttribute("courseInternalName", actualCourse.getInternalName());
-				model.addAttribute("userInternalName", userName);
+				model.addAttribute("userInternalName", userInternalName);
 				model.addAttribute("allTeachers", teachers);
 
 			}

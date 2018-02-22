@@ -39,11 +39,18 @@ public class StudyItem {
 	
 	public StudyItem(String type, String name, int module, String fileName) {
 		super();
-		this.type = type;
+		if (!type.isEmpty()) {
+			type = "-" + type;
+		}
+		this.type = "file" + type;
 		this.name = name;
 		this.module = module;
 		this.setFileName(fileName);
 		this.internalName = fileName.replaceAll(" ", "-");
+	}
+	
+	public StudyItem(String name, int module, String fileName) {
+		this("", name, module, fileName);
 	}
 
 
