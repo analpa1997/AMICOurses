@@ -124,14 +124,13 @@
 												class="item-icon fa fa-{{type}} pl-5"></span> {{name}}</li>
 										</a> {{/.}}
 										{{#isTeacher}}
-											<li class = "item-content list-group-item">
-												<form action = "moodle/upload/studyItem/{{courseInternalName}}" method="post" enctype="multipart/form-data">
-												<label>Upload new:</label>
-												<input type = "text" name = "itemName" placeholder = "Name:">
-												<input type = "text" name = "itemType" placeholder = "Type (pdf, word, video...)">
-												
-												
-												<button type = "submit">Upload</button>
+											<li class = "item-content list-group-item col-12">
+												<form class = "col-12" action = "/moodle/upload/studyItem/{{courseInternalName}}/{{subjectInternalName}}/{{-index}}" method="post" enctype="multipart/form-data">
+													<label class = "col-md-1">New:</label>
+													<input class = "col-md-2" type = "text" name = "itemName" placeholder = "Name:">
+													<input class = "col-md-3" type = "text" name = "itemType" placeholder = "Icon: (pdf, word, video...)">
+													<input class = "col-md-4" type = "file" name = "itemFile">
+													<button class = "col-md-1" type = "submit">Create</button>
 												</form>
 											</li> 
 										{{/isTeacher}}

@@ -31,6 +31,8 @@ public class StudyItem {
 	private int module;
 	
 	private String internalName;
+	
+	private String originalName;
 
 	/* Constructors */
 	public StudyItem () {}
@@ -51,6 +53,11 @@ public class StudyItem {
 	
 	public StudyItem(String name, int module, String fileName) {
 		this("", name, module, fileName);
+	}
+	
+	public StudyItem (String type, String name, String originalName) {
+		this(type, name, 0, "");
+		this.originalName = originalName;
 	}
 
 
@@ -118,6 +125,18 @@ public class StudyItem {
 
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
+	}
+
+
+
+	public String getOriginalName() {
+		return originalName;
+	}
+
+
+
+	public void setOriginalName(String originalName) {
+		this.originalName = originalName;
 	} 
 	
 
