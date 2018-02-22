@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,8 +51,8 @@ public class DataLoaderExample implements CommandLineRunner {
 		List<Course> courses = new ArrayList<>();
 
 		/* Courses */
-		courses.add(new Course("Introduction to AI", "English", "If you want to learn all about AI, this is our course",
-				"introoduction-to-ai.jpg"));
+		courses.add(new Course("Introduction to AI", "English", new Date(119, 0, 31), new Date(119, 6, 30),
+				"If you want to learn all about AI, this is our course", "introoduction-to-ai.jpg"));
 
 		courses.add(new Course("AI Advanced Tips", "English", "Learn all the most advanced stuff related to IA",
 				"ai-advanced-tips.jpeg"));
@@ -69,8 +70,8 @@ public class DataLoaderExample implements CommandLineRunner {
 		courses.add(new Course("Retrato profesional", "Español",
 				"En este curso se abordaran las técnicas más novedosas a la hora de realizar retratos a mano alzada.",
 				"retrato-profesional.jpg"));
-		courses.add(new Course("Introduction to AI2", "English", "If you want to learn all about AI, this is our course",
-				"introoduction-to-ai.jpg"));
+		courses.add(new Course("Introduction to AI2", "English",
+				"If you want to learn all about AI, this is our course", "introoduction-to-ai.jpg"));
 
 		courses.add(new Course("AI Advanced Tips2", "English", "Learn all the most advanced stuff related to IA",
 				"ai-advanced-tips.jpeg"));
@@ -88,8 +89,8 @@ public class DataLoaderExample implements CommandLineRunner {
 		courses.add(new Course("Retrato profesional2", "Español",
 				"En este curso se abordaran las técnicas más novedosas a la hora de realizar retratos a mano alzada.",
 				"retrato-profesional.jpg"));
-		courses.add(new Course("Introduction to AI3", "English", "If you want to learn all about AI, this is our course",
-				"introoduction-to-ai.jpg"));
+		courses.add(new Course("Introduction to AI3", "English",
+				"If you want to learn all about AI, this is our course", "introoduction-to-ai.jpg"));
 
 		courses.add(new Course("AI Advanced Tips3", "English", "Learn all the most advanced stuff related to IA",
 				"ai-advanced-tips.jpeg"));
@@ -249,8 +250,8 @@ public class DataLoaderExample implements CommandLineRunner {
 		studyItems.add(new StudyItem("", "Theme 5 exercicies", 3, "theme-3.txt"));
 		studyItems.add(new StudyItem("", "Theme 6", 3, "theme-3.txt"));
 		studyItems.add(new StudyItem("video", "Theme 6 exercicies", 3, "theme-3.txt"));
-		
-		/* There are 3 modules*/
+
+		/* There are 3 modules */
 		subjects.get(0).addModule();
 		subjects.get(0).addModule();
 		subjects.get(0).addModule();
@@ -259,7 +260,6 @@ public class DataLoaderExample implements CommandLineRunner {
 			study.setSubject(subjects.get(0));
 		}
 
-		
 		studyItemRepository.save(studyItems);
 		subjectRepository.save(subjects.get(0));
 

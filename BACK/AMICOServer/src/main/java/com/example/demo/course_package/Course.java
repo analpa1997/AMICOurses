@@ -69,6 +69,7 @@ public class Course {
 	public Course(String name, String courseLanguage, Date startDate, Date endDate, String courseDescription,
 			String urlImage) {
 		super();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		this.name = name;
 		this.internalName = this.name.replaceAll(" ", "-").toLowerCase();
 		this.courseLanguage = courseLanguage;
@@ -77,6 +78,8 @@ public class Course {
 		this.courseDescription = courseDescription;
 		this.urlImage = "../img/courses/" + this.internalName + "/" + urlImage;
 		this.isCompleted = false;
+		this.startDateString = dateFormat.format(this.startDate);
+		this.endDateString = dateFormat.format(this.endDate);
 	}
 
 	public Course(String name, String courseLanguage, String courseDescription, String urlImage) {
@@ -89,7 +92,7 @@ public class Course {
 		this.isCompleted = false;
 
 		this.endDate = Date.valueOf(LocalDate.now());
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		Random random = new Random();
 		LocalDate start = LocalDate.of(2018, Month.MARCH, 1);
 		LocalDate end = LocalDate.of(2025, Month.DECEMBER, 31);
@@ -211,6 +214,22 @@ public class Course {
 
 	public void setInternalName(String internalName) {
 		this.internalName = internalName;
+	}
+
+	public String getStartDateString() {
+		return startDateString;
+	}
+
+	public void setStartDateString(String startDateString) {
+		this.startDateString = startDateString;
+	}
+
+	public String getEndDateString() {
+		return endDateString;
+	}
+
+	public void setEndDateString(String endDateString) {
+		this.endDateString = endDateString;
 	}
 
 }

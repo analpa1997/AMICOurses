@@ -30,7 +30,7 @@ public class CourseRestController {
 			return new ResponseEntity(HttpStatus.NOT_FOUND);
 	}
 
-	@RequestMapping(value = "/api/listCourses/p{numPage}", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/listCourses/p{numPage}/", method = RequestMethod.GET)
 	public ResponseEntity<Page<Course>> moreCourses(Pageable pages, @PathVariable int numPage) {
 		Page<Course> pageCourse = repository.findAll(new PageRequest(numPage, 10));
 		if (pageCourse != null)
@@ -48,7 +48,7 @@ public class CourseRestController {
 			return new ResponseEntity(HttpStatus.NOT_FOUND);
 	}
 
-	@RequestMapping(value = "/api/listCourses/byNewest/p{numPage}", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/listCourses/byNewest/p{numPage}/", method = RequestMethod.GET)
 	public ResponseEntity<Page<Course>> coursesSortedByNewest(Pageable pages, @PathVariable int numPage) {
 		Page<Course> pageCourse = repository.findAll(new PageRequest(numPage, 10, Sort.Direction.ASC, "startDate"));
 		if (pageCourse != null)
@@ -57,9 +57,30 @@ public class CourseRestController {
 			return new ResponseEntity(HttpStatus.NOT_FOUND);
 	}
 
-	@RequestMapping(value = "/api/listCourses/{internalName}", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/listCourses/{internalName}/", method = RequestMethod.GET)
 	public ResponseEntity<Course> oneCourse(@PathVariable String internalName) {
 		Course c = repository.findByInternalName(internalName);
+		if (c != null)
+			return new ResponseEntity<>(c, HttpStatus.OK);
+		else
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+
+	@RequestMapping(value = "/api/listCourses/partialName/{internalName}/", method = RequestMethod.GET)
+	public ResponseEntity<Page<Course>> searchByName(@PathVariable String internalName) {
+		Page<Course> c = repository.findByInternalNameContaining(internalName.replace(" ", "-").toLowerCase(),
+				new PageRequest(0, 10));
+		if (c != null)
+			return new ResponseEntity<>(c, HttpStatus.OK);
+		else
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+
+	@RequestMapping(value = "/api/listCourses/partialName/{internalName}/p{numPage}/", method = RequestMethod.GET)
+	public ResponseEntity<Page<Course>> searchByNameOnePage(@PathVariable String internalName,
+			@PathVariable int numPage, Pageable pages) {
+		Page<Course> c = repository.findByInternalNameContaining(internalName.replace(" ", "-").toLowerCase(),
+				new PageRequest(numPage, 10));
 		if (c != null)
 			return new ResponseEntity<>(c, HttpStatus.OK);
 		else
