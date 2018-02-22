@@ -53,8 +53,6 @@ public class SubjectListController {
 					teachers.add(u);
 				}
 			}
-			
-			System.out.println(actualCourse.getName());
 			if (actualCourse != null) {
 				model.addAttribute("subjects", actualCourse.getSubjects());
 				model.addAttribute("courseName", actualCourse.getName());
