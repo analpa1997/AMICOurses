@@ -76,9 +76,13 @@ public class SubjectListController {
 		if (course != null && !subjetctInternalName.isEmpty()) {
 			for (Subject subject : course.getSubjects()) {
 				if (subject.getInternalName().equals(subjetctInternalName)) {
-					subject.setName(subjectName);
-					subject.setInternalName(subjectName.replaceAll(" ", "-"));
-					subject.setDescription(description);
+					if (!subjectName.isEmpty()) {
+						subject.setName(subjectName);
+						subject.setInternalName(subjectName.replaceAll(" ", "-"));
+					}
+					if (!description.isEmpty()) {
+						subject.setDescription(description);
+					}
 					subjectRepository.save(subject);
 				}
 			}
@@ -114,7 +118,7 @@ public class SubjectListController {
 			@PathVariable String userName, @RequestParam String subjectName) {
 		Course course = courseRepository.findByInternalName(courseInternalName);
 
-		if (course != null) {
+		if (course != null && !subjectName.isEmpty()) {
 			Subject subject = new Subject(subjectName);
 			course.getSubjects().add(subject);
 			subject.setCourse(course);
