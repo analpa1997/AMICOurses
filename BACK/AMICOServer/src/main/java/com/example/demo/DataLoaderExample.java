@@ -52,62 +52,68 @@ public class DataLoaderExample implements CommandLineRunner {
 
 		/* Courses */
 		courses.add(new Course("Introduction to AI", "English", new Date(119, 0, 31), new Date(119, 6, 30),
-				"If you want to learn all about AI, this is our course", "introoduction-to-ai.jpg"));
+				"If you want to learn all about AI, this is our course", "Computer Science",
+				"introoduction-to-ai.jpg"));
 
 		courses.add(new Course("AI Advanced Tips", "English", "Learn all the most advanced stuff related to IA",
-				"ai-advanced-tips.jpeg"));
+				"Computer Science", "ai-advanced-tips.jpeg"));
 
 		courses.add(new Course("Cocina Moderna", "Español",
-				"Si tienes hambre y no sabes ni freir un huevo este es tu curso.", "cocina-moderna.jpg"));
+				"Si tienes hambre y no sabes ni freir un huevo este es tu curso.", "Cooking", "cocina-moderna.jpg"));
 
 		courses.add(new Course("Cortar con tijeras", "Español",
 				"Aprende a cortar con tijeras como un maestro. Este curso intensivo te hará desarollar tu potencial oculto",
-				"cortar-con-tijeras.jpg"));
+				"HandWork", "cortar-con-tijeras.jpg"));
 
 		courses.add(new Course("Matematicas Para Gatos", "Miau",
-				"Miau miau miau miau ( +, -, *, /, ...) miau miau miau. Miuau miau", "matematicas-para-gatos.jpg"));
+				"Miau miau miau miau ( +, -, *, /, ...) miau miau miau. Miuau miau", "Maths",
+				"matematicas-para-gatos.jpg"));
 
 		courses.add(new Course("Retrato profesional", "Español",
 				"En este curso se abordaran las técnicas más novedosas a la hora de realizar retratos a mano alzada.",
-				"retrato-profesional.jpg"));
-		courses.add(new Course("Introduction to AI2", "English",
-				"If you want to learn all about AI, this is our course", "introoduction-to-ai.jpg"));
+				"Photograph", "retrato-profesional.jpg"));
+		courses.add(
+				new Course("Introduction to AI2", "English", "If you want to learn all about AI, this is our course",
+						"Computer Science", "introoduction-to-ai.jpg"));
 
 		courses.add(new Course("AI Advanced Tips2", "English", "Learn all the most advanced stuff related to IA",
-				"ai-advanced-tips.jpeg"));
+				"Computer Science", "ai-advanced-tips.jpeg"));
 
 		courses.add(new Course("Cocina Moderna2", "Español",
-				"Si tienes hambre y no sabes ni freir un huevo este es tu curso.", "cocina-moderna.jpg"));
+				"Si tienes hambre y no sabes ni freir un huevo este es tu curso.", "Cooking", "cocina-moderna.jpg"));
 
 		courses.add(new Course("Cortar con tijeras2", "Español",
 				"Aprende a cortar con tijeras como un maestro. Este curso intensivo te hará desarollar tu potencial oculto",
-				"cortar-con-tijeras.jpg"));
+				"HandWork", "cortar-con-tijeras.jpg"));
 
 		courses.add(new Course("Matematicas Para Gatos2", "Miau",
-				"Miau miau miau miau ( +, -, *, /, ...) miau miau miau. Miuau miau", "matematicas-para-gatos.jpg"));
+				"Miau miau miau miau ( +, -, *, /, ...) miau miau miau. Miuau miau", "Maths",
+				"matematicas-para-gatos.jpg"));
 
 		courses.add(new Course("Retrato profesional2", "Español",
 				"En este curso se abordaran las técnicas más novedosas a la hora de realizar retratos a mano alzada.",
-				"retrato-profesional.jpg"));
-		courses.add(new Course("Introduction to AI3", "English",
-				"If you want to learn all about AI, this is our course", "introoduction-to-ai.jpg"));
+				"Drawing", "retrato-profesional.jpg"));
+		courses.add(
+				new Course("Introduction to AI3", "English", "If you want to learn all about AI, this is our course",
+						"Computer Science", "introoduction-to-ai.jpg"));
 
 		courses.add(new Course("AI Advanced Tips3", "English", "Learn all the most advanced stuff related to IA",
-				"ai-advanced-tips.jpeg"));
+				"Computer Science", "ai-advanced-tips.jpeg"));
 
 		courses.add(new Course("Cocina Moderna3", "Español",
-				"Si tienes hambre y no sabes ni freir un huevo este es tu curso.", "cocina-moderna.jpg"));
+				"Si tienes hambre y no sabes ni freir un huevo este es tu curso.", "Cooking", "cocina-moderna.jpg"));
 
 		courses.add(new Course("Cortar con tijeras3", "Español",
 				"Aprende a cortar con tijeras como un maestro. Este curso intensivo te hará desarollar tu potencial oculto",
-				"cortar-con-tijeras.jpg"));
+				"HandWork", "cortar-con-tijeras.jpg"));
 
 		courses.add(new Course("Matematicas Para Gatos3", "Miau",
-				"Miau miau miau miau ( +, -, *, /, ...) miau miau miau. Miuau miau", "matematicas-para-gatos.jpg"));
+				"Miau miau miau miau ( +, -, *, /, ...) miau miau miau. Miuau miau", "Maths",
+				"matematicas-para-gatos.jpg"));
 
 		courses.add(new Course("Retrato profesional3", "Español",
 				"En este curso se abordaran las técnicas más novedosas a la hora de realizar retratos a mano alzada.",
-				"retrato-profesional.jpg"));
+				"Drawing", "retrato-profesional.jpg"));
 
 		List<User> users = new ArrayList<>();
 

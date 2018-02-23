@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.course_package.Course;
 import com.example.demo.course_package.CourseRepository;
-import com.example.demo.subject_package.Subject;
+import com.example.demo.user_package.SessionUserComponent;
 import com.example.demo.user_package.UserRepository;
 
 @Controller
@@ -25,6 +25,9 @@ public class IndexController {
 	private CourseRepository courseRepository;
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private SessionUserComponent sessionUserComponent;
 
 	/* Introduce Mock data */
 	@PostConstruct
@@ -50,12 +53,10 @@ public class IndexController {
 					+ " \n skills: " + course.getSkills() + " \n subjects " + course.getSubjects());
 		}
 
-		List<Subject> subjects = new ArrayList<>();
+		List<String> types = new ArrayList<>();
 		for (Course course : courseRepository.findAll()) {
-			for (Subject s : course.getSubjects()) {
-				if (!subjects.contains(s))
-					subjects.add(s);
-			}
+			if (!types.contains(course.getType()))
+				types.add(course.getType());
 		}
 		List<String> lengthCourse = new ArrayList<>();
 		for (Course course : courseRepository.findAll()) {
@@ -74,10 +75,20 @@ public class IndexController {
 				lengthCourse.add(lengthCourseString);
 			}
 		}
+		if (sessionUserComponent.isLoggedUser()) {
+			model.addAttribute("labelLogIn", "My Profile");
+			model.addAttribute("labelSignUp", "Log Out");
+			model.addAttribute("urlLabelSignUp", "./profile/" + sessionUserComponent.getLoggedUser().getUsername());
+			model.addAttribute("urlLabelLogIn", "/");
+		} else {
+			model.addAttribute("labelLogIn", "Log In");
+			model.addAttribute("labelSignUp", "Sign Up");
+			model.addAttribute("urlLabelSignUp", "./signup");
+			model.addAttribute("urlLabelLogIn", "./login");
+		}
 
 		model.addAttribute("courseList", p);
-		model.addAttribute("subjectsList", subjects);
-		model.addAttribute("durationList", lengthCourse);
+		model.addAttribute("typeList", types);
 		return "HTML/index";
 	}
 

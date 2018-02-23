@@ -37,6 +37,8 @@ public class Course {
 
 	private String courseLanguage;
 
+	private String type;
+
 	private Date startDate;
 
 	private Date endDate;
@@ -44,6 +46,8 @@ public class Course {
 	private String startDateString;
 
 	private String endDateString;
+
+	private int numberOfUsers;
 
 	@Column(length = Short.MAX_VALUE)
 	private String courseDescription;
@@ -67,7 +71,7 @@ public class Course {
 	}
 
 	public Course(String name, String courseLanguage, Date startDate, Date endDate, String courseDescription,
-			String urlImage) {
+			String type, String urlImage) {
 		super();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		this.name = name;
@@ -76,18 +80,20 @@ public class Course {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.courseDescription = courseDescription;
+		this.type = type.replaceAll(" ", "-").toLowerCase();
 		this.urlImage = "../img/courses/" + this.internalName + "/" + urlImage;
 		this.isCompleted = false;
 		this.startDateString = dateFormat.format(this.startDate);
 		this.endDateString = dateFormat.format(this.endDate);
 	}
 
-	public Course(String name, String courseLanguage, String courseDescription, String urlImage) {
+	public Course(String name, String courseLanguage, String courseDescription, String type, String urlImage) {
 		super();
 		this.name = name;
 		this.internalName = this.name.replaceAll(" ", "-").toLowerCase();
 		this.courseLanguage = courseLanguage;
 		this.courseDescription = courseDescription;
+		this.type = type.replaceAll(" ", "-").toLowerCase();
 		this.urlImage = "../img/courses/" + this.internalName + "/" + urlImage;
 		this.isCompleted = false;
 
@@ -230,6 +236,22 @@ public class Course {
 
 	public void setEndDateString(String endDateString) {
 		this.endDateString = endDateString;
+	}
+
+	public int getNumberOfUsers() {
+		return numberOfUsers;
+	}
+
+	public void setNumberOfUsers(int numberOfUsers) {
+		this.numberOfUsers = numberOfUsers;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 }

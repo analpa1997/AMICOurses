@@ -11,4 +11,6 @@ public interface CourseRepository extends JpaRepository<Course, Long>, PagingAnd
 	Course findByInternalName(String internalName);
 
 	Page<Course> findByInternalNameContaining(String internalName, Pageable page);
+
+	Page<Course> findByType(String typeCourse, Pageable page);
 }

@@ -57,6 +57,25 @@ public class CourseRestController {
 			return new ResponseEntity(HttpStatus.NOT_FOUND);
 	}
 
+	@RequestMapping(value = "/api/listCourses/byNumberUsers/", method = RequestMethod.GET)
+	public ResponseEntity<Page<Course>> allCoursesNumberUsers() {
+		Page<Course> pageCourse = repository.findAll(new PageRequest(0, 10, Sort.Direction.DESC, "numberOfUsers"));
+		if (pageCourse != null)
+			return new ResponseEntity<>(pageCourse, HttpStatus.OK);
+		else
+			return new ResponseEntity(HttpStatus.NOT_FOUND);
+	}
+
+	@RequestMapping(value = "/api/listCourses/byNumberUsers/p{numPage}/", method = RequestMethod.GET)
+	public ResponseEntity<Page<Course>> coursesSortedByNumberUsers(Pageable pages, @PathVariable int numPage) {
+		Page<Course> pageCourse = repository
+				.findAll(new PageRequest(numPage, 10, Sort.Direction.DESC, "numberOfUsers"));
+		if (pageCourse != null)
+			return new ResponseEntity<>(pageCourse, HttpStatus.OK);
+		else
+			return new ResponseEntity(HttpStatus.NOT_FOUND);
+	}
+
 	@RequestMapping(value = "/api/listCourses/{internalName}/", method = RequestMethod.GET)
 	public ResponseEntity<Course> oneCourse(@PathVariable String internalName) {
 		Course c = repository.findByInternalName(internalName);
@@ -81,6 +100,25 @@ public class CourseRestController {
 			@PathVariable int numPage, Pageable pages) {
 		Page<Course> c = repository.findByInternalNameContaining(internalName.replace(" ", "-").toLowerCase(),
 				new PageRequest(numPage, 10));
+		if (c != null)
+			return new ResponseEntity<>(c, HttpStatus.OK);
+		else
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+
+	@RequestMapping(value = "/api/listCourses/type/{typeCourse}/", method = RequestMethod.GET)
+	public ResponseEntity<Page<Course>> searchByType(@PathVariable String typeCourse) {
+		Page<Course> c = repository.findByType(typeCourse, new PageRequest(0, 10));
+		if (c != null)
+			return new ResponseEntity<>(c, HttpStatus.OK);
+		else
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+
+	@RequestMapping(value = "/api/listCourses/type/{typeCourse}/p{numPage}/", method = RequestMethod.GET)
+	public ResponseEntity<Page<Course>> searchByTypeOnePage(@PathVariable String typeCourse,
+			@PathVariable int numPage) {
+		Page<Course> c = repository.findByType(typeCourse, new PageRequest(numPage, 10));
 		if (c != null)
 			return new ResponseEntity<>(c, HttpStatus.OK);
 		else

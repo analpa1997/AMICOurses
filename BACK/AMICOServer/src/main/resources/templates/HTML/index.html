@@ -28,6 +28,7 @@
 	var numPageDisplay = 0;
 	var urlSearch = "";
 	$('document').ready(function(){
+		$('#textSearch').val("");
 		urlSearch = '/api/listCourses/p';
 		$.ajax({
 			type: 'GET',
@@ -77,7 +78,7 @@
 		                      '<div class = "text-center">End date: '+ course.endDateString + '</div>'+
 		                      '</div></div></div>');
 				});
-				$('#newbtn').html('Newest');
+				$('#newbtn').html('Course Type');
 			},
 			error: function(exception){console.log('ERROR');}
 		})
@@ -87,7 +88,7 @@
 		$('#searchbtn').html('<img src="./img/ajax-loader.gif">');
 		var text = $('#textSearch').val();
 		if (text === "") urlSearch = '/api/listCourses/p';
-		else urlSearch = '/api/listCourses/partialName/' + text.replace(" ", "-").toLowerCase() + '/p';
+		else urlSearch = '/api/listCourses/partialName/' + text.replace(new RegExp(" ", 'g'), "-").toLowerCase() + '/p';
 		numPageDisplay = 0;
 		$.ajax({
 			type: 'GET',
@@ -123,10 +124,88 @@
 			error: function(exception){console.log('ERROR');}
 		})
 	}
+	function showByNumberUsers(){
+		$('#trendbtn').html('<img src="./img/ajax-loader.gif">');
+		urlSearch = '/api/listCourses/byNumberUsers/p';
+		numPageDisplay = 0;
+		$.ajax({
+			type: 'GET',
+			url: urlSearch + numPageDisplay  + '/',
+			data: numPageDisplay,
+			success: function(pageData){
+				if (pageData.last == true){
+					if(pageData.numberOfElements == 0) $('#btnMoreCourses').html('¡No Courses Found!');
+					else $('#btnMoreCourses').html('No More courses');
+					$('#btnMoreCourses').addClass('disabled');
+				}else{
+					$('#btnMoreCourses').html('View more courses');
+					$('#btnMoreCourses').removeClass('disabled');
+				}
+				$('#allCourses').html('');
+				pageData.content.forEach(function(course){
+					$('#allCourses').append('<div class="col-lg-6 col-md-12 col-sm-12 col-12">' + 
+							  '<div class="p-3" align=center>' + 
+							  '<a id = "link-course" href="./course/' + course.internalName + '.html">' +
+							  '<h2 class="display-4">' + course.name + '</h2>' +
+							  '</a><p class="lead">' + course.courseDescription + '</p>' + 
+							  '<div class="container">'+ 
+							  '<a href="../course/' + course.internalName + '.html">'+ 
+							  '<img class="img-fluid rounded-circle imgCourse" src="' + course.urlImage + '" alt=" " >'+
+		                      '</a>'+
+		                      '<div class="mt-3 &nbsp"></div>'+
+		                      '<div class = "text-center">Start date: ' + course.startDateString + '</div>'+
+		                      '<div class = "text-center">End date: '+ course.endDateString + '</div>'+
+		                      '</div></div></div>');
+				});
+				$('#trendbtn').html('Trending');
+			},
+			error: function(exception){console.log('ERROR');}
+		})
+	}
+	
+	function showByType(){
+		$('#typebtn').html('<img src="./img/ajax-loader.gif">');
+		var type = $('#selectedType option:selected').val();;
+		console.log(type);
+		urlSearch = '/api/listCourses/type/' + type.replace(new RegExp(" ", 'g'), "-").toLowerCase() + '/p';
+		numPageDisplay = 0;
+		$.ajax({
+			type: 'GET',
+			url: urlSearch + numPageDisplay  + '/',
+			data: numPageDisplay,
+			success: function(pageData){
+				if (pageData.last == true){
+					if(pageData.numberOfElements == 0) $('#btnMoreCourses').html('¡No Courses Found!');
+					else $('#btnMoreCourses').html('No More courses');
+					$('#btnMoreCourses').addClass('disabled');
+				}else{
+					$('#btnMoreCourses').html('View more courses');
+					$('#btnMoreCourses').removeClass('disabled');
+				}
+				$('#allCourses').html('');
+				pageData.content.forEach(function(course){
+					$('#allCourses').append('<div class="col-lg-6 col-md-12 col-sm-12 col-12">' + 
+							  '<div class="p-3" align=center>' + 
+							  '<a id = "link-course" href="./course/' + course.internalName + '.html">' +
+							  '<h2 class="display-4">' + course.name + '</h2>' +
+							  '</a><p class="lead">' + course.courseDescription + '</p>' + 
+							  '<div class="container">'+ 
+							  '<a href="../course/' + course.internalName + '.html">'+ 
+							  '<img class="img-fluid rounded-circle imgCourse" src="' + course.urlImage + '" alt=" " >'+
+		                      '</a>'+
+		                      '<div class="mt-3 &nbsp"></div>'+
+		                      '<div class = "text-center">Start date: ' + course.startDateString + '</div>'+
+		                      '<div class = "text-center">End date: '+ course.endDateString + '</div>'+
+		                      '</div></div></div>');
+				});
+				$('#typebtn').html('Course Type');
+			},
+			error: function(exception){console.log('ERROR');}
+		})
+	}
 	
 	function showMore(){
 		$('#btnMoreCourses').html('<img src = "./img/ajax-loader.gif">');
-		console.log(numPageDisplay);
 		$.ajax({
 			type: 'GET',
 			url: urlSearch + (numPageDisplay+1)  + '/',
@@ -176,10 +255,10 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="signup.html">Sign up</a>
+              <a class="nav-link" href="{{urlLabelSignUp}}.html">{{labelSignUp}}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="login.html">Log in</a>
+              <a class="nav-link" href="{{urlLabelLogIn}}.html">{{labelLogIn}}</a>
             </li>
           </ul>
         </div>
@@ -212,7 +291,7 @@
                 <button class="btn btn-primary btn-xl rounded-pill mt-5" id="newbtn" onClick="showNewest();">Newest</button>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12 col-12 text-center">
-                <a href="#" class="btn btn-primary btn-xl rounded-pill mt-5" id="trendbtn">Trending</a>
+                <button class="btn btn-primary btn-xl rounded-pill mt-5" id="trendbtn" onClick="showByNumberUsers();">Trending</button>
             </div>
         </div>
     </div>
@@ -222,42 +301,35 @@
             <div class="col-lg-6 col-md-6 col-sm-12 col-12">
                 <div class="mt-3 &nbsp"></div>
                 <nav class="navbar navbar-light bg-faded p-2 ">
-                    <span class="col-md-6 col-sm-12 col-12 "><input class="form-control mr-sm-2" type="text" placeholder="Search" id = "textSearch"></span>
-                    <span class="col-md-6 col-sm-12 col-12 text-center"><button class="btn btn-primary btn-xl rounded-pill" id="searchbtn" onClick="showByNameLike();">Search</button></span>
+                    <span class="col-md-6 col-sm-12 col-12 ">
+                    	<input class="form-control mr-sm-2" type="text" placeholder="Name of the course" id = "textSearch">
+                    </span>
+                    <span class="col-md-6 col-sm-12 col-12 text-center">
+                    	<button class="btn btn-primary btn-xl rounded-pill" id="searchbtn" onClick="showByNameLike();">Search</button>
+                    </span>
                 </nav>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12 col-12  text-center">
-                <a class="navbar-brand mb-0 m-1">Filter:</a>
-                <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-                    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                        <div class="mt-3 &nbsp"></div>
-                        <a> If you want something more specific you can try here</a>
-                        <form class="form-inline">
-                            <label class="mr-sm-2" for="inlineFormCustomSelect">Subject</label>
-                            <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="inlineFormCustomSelect">
-                      <option selected>Choose...</option>
-                      {{#subjectsList}}
-                      <option value="{{-index}}">{{name}}</option>
-                      {{/subjectsList}}
-                    </select>
-                        </form>
-                        <form class="form-inline">
-                            <label class="mr-sm-2" for="inlineFormCustomSelect">Duration</label>
-                            <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="inlineFormCustomSelect">
-                      <option selected>Choose...</option>
-                      {{#durationList}}
-                      <option value="{{-index}}">{{.}}</option>
-                      {{/durationList}}
-                    </select>
-                            <div class="mt-3 &nbsp"></div>
-                        </form>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </nav>
-            </div>
+            	<div class="mt-4 &nbsp"></div>
+	            <div class = "row">
+	            	<span class="col-md-6 col-sm-12 col-12 ">
+		            	<span class="dropdown">
+		                    <form class="form-inline">
+		                        <label class="mr-sm-2" for="inlineFormCustomSelect">Type of the course</label>
+		                        <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="selectedType">
+				                    <option selected id = "selectedOption">Choose...</option>
+				                    {{#typeList}}
+				                    <option value="{{.}}">{{.}}</option>
+				                    {{/typeList}}
+			                 	</select>
+		                    </form>
+		                </span>
+		             </span>
+		             <span class="col-md-6 col-sm-12 col-12 text-center ">
+		             	<button class="btn btn-primary btn-xl rounded-pill" id = "typebtn" onClick = "showByType();">Course Type</button>
+		             </span>
+	            </div>
+        	</div>
         </div>
     </div>
     <div class="container">
