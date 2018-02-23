@@ -95,13 +95,13 @@
             </div>
             -->
             <!-- 
-            <button type="button" class="btn btn-info">Información</button>
+            <button type="button" class="btn btn-info">información</button>
             -->
             {{#userName}}
-            		<a href="/profile/{{userName}}" class="btn btn-info">Login</a>
+            		<a href="/course/{{internalName}}/{{userName}}/add" class="btn btn-info">Add Course</a>
             	{{/userName}}
             {{^userName}}
-            		<a href="/profile" class="btn btn-info">Login</a>
+            		<a href="/course/{{internalName}}/{{userName}}/error" class="btn btn-info">Add Course</a>
             {{/userName}}
         </div>
       </div>
