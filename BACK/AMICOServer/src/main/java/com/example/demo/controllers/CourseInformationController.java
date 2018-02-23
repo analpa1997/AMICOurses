@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.text.SimpleDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import com.example.demo.course_package.CourseRepository;
 import com.example.demo.skill_package.Skill;
 import com.example.demo.subject_package.Subject;
 import com.example.demo.user_package.UserRepository;
+import com.example.demo.user_package.SessionUserComponent;
 import com.example.demo.user_package.User;
 
 
@@ -29,6 +31,9 @@ public class CourseInformationController {
 	@Autowired
 	private UserRepository userRepository;
 	
+	@Autowired
+	private SessionUserComponent sessionUserComponent;
+
 
 	// For course main page description
 	@RequestMapping("/course/{internalName}/{userName}")
@@ -39,6 +44,7 @@ public class CourseInformationController {
 		// get the course information by name
 		course = courseRepository.findByInternalName(internalName);
 		System.out.println(internalName);
+		System.out.println(userName);
         
 		//set the course description attributes
 		model.addAttribute("courseName", course.getName());
@@ -95,29 +101,53 @@ public class CourseInformationController {
 			@PathVariable String internalName,
 			@PathVariable String userName) {
 
-		User user = userRepository.findByUsername(userName);
-
-		System.out.println("# cursos inscritos" + " " + user.getInscribedCourses().size());
-		for (int i=0; i<user.getInscribedCourses().size(); i++)
-			System.out.println("# nombre" + " " + user.getInscribedCourses().get(i).getName());
+		int courseCounter;
+		List<User> u = null;
+		List<Course> c = null;
+		User user = 	userRepository.findByUsername(userName); // get all user information by userName
+		if (course.getInscribedUsers().size() > 0)
+			u = course.getInscribedUsers(); // get list of user subscribed to course
+		else
+			u = new ArrayList <>(); // initialize array to add user
 		
-		for (User u : userRepository.findAll()) {
-			if (!u.getInscribedCourses().contains(course))
-						
-			System.out.println("course : " + course.getName() + " no lo tiene");
+		if (user.getInscribedCourses().size > 0)
+       	 	c = user.getInscribedCourses(); // get the list of courses to which the user is subscribed
+		else 
+			c = new ArrayList <>(); // initialize array to add users
+		
+       	System.out.println("# cursos inscritos" + " " + c.size());
+       	System.out.println("# usuarios del curso" + " " + course.getInscribedUsers().size());
+       	
+       	// Check if user is already subscribed to the course
+       	Iterator<Course> itr = c.iterator();
+        courseCounter = 0;
+        while(itr.hasNext() ) {
+           Course cr = itr.next();
+           System.out.println(" curso " + " " + course.getCourseID() + " cursoIterator " + "" + cr.getCourseID());
+           if (cr.getCourseID() == course.getCourseID()) {
+        	      courseCounter ++;
+           }
+        }
+        System.out.println("courseCounter : " + courseCounter);	
+        // if user not subscribed to the course, inscribe him
+        	if (courseCounter != 1) {
+        		 	   						
+			System.out.println("course : " + course.getName() + " No lo tiene");		
 			
-			user.getInscribedCourses().add(course);			
-			user.setInscribedCourses(user.getInscribedCourses());
-			System.out.println("# cursos inscritos" + " " + user.getInscribedCourses().size());
+			c.add(course);			
+			user.setInscribedCourses(c);
+			userRepository.save(user); // update user
 			
-			user.setInscribedCourses(user.getInscribedCourses());
+			u.add(user);
+			course.setInscribedUsers(u);	
+			courseRepository.save(course);// update courses
 			
-			userRepository.save(user);
-		}
+		}	
+        	
+        	user = userRepository.findByUsername(userName);
+		System.out.println("# cursos inscritos" + " " + user.getInscribedCourses().size());
 		
 		return new ModelAndView("redirect:/profile/"+ user.getUsername());
 	}
-	
-	
 
 }
