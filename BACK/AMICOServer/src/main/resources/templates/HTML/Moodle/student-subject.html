@@ -104,6 +104,7 @@
 								<li class="nav-item"><a class="nav-link level-2 "
 									data-toggle="tab" href="#mod-{{-index}}">Mod {{-index}}</a></li>
 								{{/allStudyItems}}
+								<li class = "nav-item"> <a class = "nav-link level-2" href = "/moodle/module-add/{{courseInternalName}}/{{subjectInternalName}}"> New Mod +</a></li>
 							</ul>
 
 							<div class="tab-content border-left border-right">
@@ -113,16 +114,42 @@
 								<div class="tab-pane" id="mod-{{-index}}" role="tabpanel">
 									<!-- Modulo {{-index}} -->
 
-									<div class="pl-4">
+									<div class="pl-4 row">
 										<h8>Modulo {{-index}}</h8>
+										{{#isTeacher}}
+										<span class = "offset-md-10"><a class = "btn btn-warning" href = "/moodle/module-delete/{{courseInternalName}}/{{subjectInternalName}}?module={{-index}}"> Delete Module {{-index}} </a></span>
+										{{/isTeacher}}
 									</div>
 									<ul class="list-group">
 										{{#.}}
 										<!-- Item -->
-										<a class="item-content" href="/moodle/download/studyItem/{{courseInternalName}}/{{subjectInternalName}}/{{studyItemID}}">
-											<li class="list-group-item"><span
-												class="item-icon fa fa-{{type}} pl-5"></span> {{name}}</li>
-										</a> {{/.}}
+											{{^isTeacher}}
+												<a class="item-content" href="/moodle/download/studyItem/{{courseInternalName}}/{{subjectInternalName}}/{{studyItemID}}">
+													<li class="list-group-item"><span
+														class="item-icon fa fa-{{type}} pl-5"></span> {{name}}</li>
+												</a> 
+											{{/isTeacher}}
+											
+											
+											{{#isTeacher}}
+												<li class="list-group-item" >
+													<span class = "row"> <a class="item-content col-md-2" href="/moodle/download/studyItem/{{courseInternalName}}/{{subjectInternalName}}/{{studyItemID}}"> <span>{{-index}}.- </span><span class="item-icon fa fa-{{type}} pl-3 pr-3"></span>{{name}} </a>
+													<span class = "col-md-8"> <form class = "form-inline" method = "post" action = "/moodle/studyItem/modify/{{courseInternalName}}/{{subjectInternalName}}/{{studyItemID}}">
+															<label class ="ml-1">Position: </label>
+															<input class = "form-control" style="max-width: 4em;" type = "number" min = "1" name = "newPosition" value = "{{-index}}">
+															<label class ="ml-1">Rename: </label>
+															<input class = "form-control" type = "text" name = "newName" value = "{{name}}">
+															<label class ="ml-1"> Type: </label>
+															<input class = "form-control col-md-1" type = "text" name = "newType"  size = "2" value = {{icon}}>
+															<label class ="ml-1 col-md-3 text-left" >File : {{originalName}} </label>
+															<button class = "ml-1" type = "submit" name = "btnSave" value = "save"> Save </button>
+															<button class = "ml-1" type = "submit" name = "btnDelete" value = "delete"> Delete </button>
+														</form> 
+													</span>
+													</span>
+												</li>
+											{{/isTeacher}}
+										{{/.}}
 										{{#isTeacher}}
 											<li class = "item-content list-group-item col-12">
 												<form class = "col-12" action = "/moodle/upload/studyItem/{{courseInternalName}}/{{subjectInternalName}}/{{-index}}" method="post" enctype="multipart/form-data">

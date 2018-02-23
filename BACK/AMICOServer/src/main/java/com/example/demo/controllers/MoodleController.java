@@ -101,8 +101,7 @@ public class MoodleController {
 
 		}
 
-		// model.addAttribute("isTeacher", !user.isStudent());
-		model.addAttribute("isTeacher", true);
+		model.addAttribute("isTeacher", !user.isStudent());
 
 		/* Info about course and subject */
 		model.addAttribute("courseInternalName", course.getInternalName());
@@ -111,6 +110,65 @@ public class MoodleController {
 		model.addAttribute("subjectName", subject.getName());
 
 		return "HTML/Moodle/student-subject";
+	}
+
+	@RequestMapping("/moodle/module-{option}/{courseInternalName}/{subjectInternalName}")
+	private ModelAndView moduleAction(@PathVariable String option, @PathVariable String courseInternalName,
+			@PathVariable String subjectInternalName, @RequestParam(required = false) Integer module) {
+
+		// User user = sessionUserComponent.getLoggedUser();
+		User user = userRepository.findByInternalName("amicoteacher");
+
+		if (!user.isStudent() && !option.isEmpty() && (option.equals("add") || option.equals("delete"))) {
+
+			Course course = null;
+			for (Course courseAct : user.getInscribedCourses()) {
+				if (courseAct.getInternalName().equals(courseInternalName)) {
+					course = courseAct;
+				}
+			}
+
+			if (course != null) {
+				Subject subject = null;
+				for (Subject subjectAct : course.getSubjects()) {
+					if (subjectAct.getInternalName().equals(subjectInternalName)) {
+						subject = subjectAct;
+					}
+				}
+				if (subject != null) {
+					if (subject.getTeachers().contains(user)) {
+						if (option.equals("add")) {
+							subject.addModule();
+							subjectRepository.save(subject);
+						} else {
+							if (option.equals("delete") && (module != null)) {
+								/* Get the studyItems of the module */
+								List<StudyItem> studyItemsToRemove = new ArrayList<>();
+								for (StudyItem studyItemAct : subject.getStudyItemsList()) {
+									if (studyItemAct.getModule() == module) {
+										studyItemsToRemove.add(studyItemAct);
+										studyItemAct.setSubject(null);
+									} else {
+										if (studyItemAct.getModule() > module) {
+											studyItemAct.setModule(studyItemAct.getModule() - 1);
+										}
+									}
+								}
+								/* Now remove the studyItems from the subject */
+								subject.getStudyItemsList().removeAll(studyItemsToRemove);
+								studyItemRepository.delete(studyItemsToRemove);
+								subject.deleteModule();
+
+								subjectRepository.save(subject);
+							}
+						}
+
+					}
+				}
+			}
+		}
+
+		return new ModelAndView("redirect:/moodle/" + courseInternalName + "/" + subjectInternalName);
 	}
 
 	@RequestMapping(value = "/moodle/upload/studyItem/{courseInternalName}/{subjectInternalName}/{module}", method = RequestMethod.POST)
@@ -145,7 +203,8 @@ public class MoodleController {
 						/* If there is not file the imageName wont change */
 						if (!file.isEmpty()) {
 							try {
-								Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"), "files/documents/" + course.getCourseID() + "/" + subject.getSubjectID() + "/studyItems/");
+								Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"), "files/documents/"
+										+ course.getCourseID() + "/" + subject.getSubjectID() + "/studyItems/");
 								if (!Files.exists(FILES_FOLDER)) {
 									Files.createDirectories(FILES_FOLDER);
 								}
@@ -189,7 +248,7 @@ public class MoodleController {
 
 		// User user = sessionUserComponent.getLoggedUser();
 		User user = userRepository.findByInternalName("amicoteacher");
-		
+
 		Course course = null;
 		for (Course courseAct : user.getInscribedCourses()) {
 			if (courseAct.getInternalName().equals(courseInternalName)) {
@@ -207,29 +266,120 @@ public class MoodleController {
 			if (subject != null) {
 				if (subject.getUsers().contains(user)) {
 					StudyItem studyItem = null;
-					for (StudyItem studyItemAct: subject.getStudyItemsList()) {
+					for (StudyItem studyItemAct : subject.getStudyItemsList()) {
 						if (studyItemAct.getStudyItemID() == studyItemID.longValue()) {
 							studyItem = studyItemAct;
 						}
 					}
 
-					
-					Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"), "files/documents/" + course.getCourseID() + "/" + subject.getSubjectID() + "/studyItems/");
-					String extension = studyItem.getExtension();
-					if (extension == null) {
-						String[] fileOriginal = studyItem.getOriginalName().split("[.]");
-						extension = fileOriginal[fileOriginal.length - 1];
+					if (studyItem != null) {
+
+						Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"), "files/documents/"
+								+ course.getCourseID() + "/" + subject.getSubjectID() + "/studyItems/");
+						String extension = studyItem.getExtension();
+						if (extension == null) {
+							String[] fileOriginal = studyItem.getOriginalName().split("[.]");
+							extension = fileOriginal[fileOriginal.length - 1];
+						}
+						Path filePath = FILES_FOLDER
+								.resolve("studyItem-" + studyItem.getStudyItemID() + "." + extension);
+
+						res.addHeader("Content-Disposition", "attachment; filename = " + studyItem.getOriginalName());
+						res.setContentType("application/octet-stream");
+						res.setContentLength((int) filePath.toFile().length());
+						FileCopyUtils.copy(Files.newInputStream(filePath), res.getOutputStream());
 					}
-					Path filePath = FILES_FOLDER.resolve("studyItem-" + studyItem.getStudyItemID() + "." + extension);
-					
-					res.addHeader("Content-Disposition", "attachment; filename = " + studyItem.getOriginalName());
-					res.setContentType("application/octet-stream");
-					res.setContentLength((int) filePath.toFile().length());
-					FileCopyUtils.copy(Files.newInputStream(filePath), res.getOutputStream());
 				}
 			}
 		}
 
+	}
+
+	@RequestMapping(value = "/moodle/studyItem/modify/{courseInternalName}/{subjectInternalName}/{studyItemID}", method = RequestMethod.POST)
+	private ModelAndView modifyStudyItem(@PathVariable String courseInternalName,
+			@PathVariable String subjectInternalName, @PathVariable Long studyItemID, @RequestParam Integer newPosition,
+			@RequestParam String newName, @RequestParam String newType, @RequestParam(required = false) String btnSave,
+			@RequestParam(required = false) String btnDelete) {
+
+		// User user = sessionUserComponent.getLoggedUser();
+		User user = userRepository.findByInternalName("amicoteacher");
+
+		Course course = null;
+		for (Course courseAct : user.getInscribedCourses()) {
+			if (courseAct.getInternalName().equals(courseInternalName)) {
+				course = courseAct;
+			}
+		}
+
+		if (course != null) {
+			Subject subject = null;
+			for (Subject subjectAct : course.getSubjects()) {
+				if (subjectAct.getInternalName().equals(subjectInternalName)) {
+					subject = subjectAct;
+				}
+			}
+			if (subject != null) {
+				if (subject.getUsers().contains(user)) {
+					StudyItem studyItem = null;
+					for (StudyItem studyItemAct : subject.getStudyItemsList()) {
+						if (studyItemAct.getStudyItemID() == studyItemID.longValue()) {
+							studyItem = studyItemAct;
+						}
+					}
+
+					if (studyItem != null) {
+						
+						if (btnSave != null) {
+							/* Change the studyItem*/
+							if (!newName.isEmpty()) {
+								studyItem.setName(newName);
+							}
+							if (!newType.isEmpty()) {
+								studyItem.setType(newType);
+							}
+							studyItemRepository.save(studyItem);
+							
+							if (newPosition != null) {
+								int startModule = -1;
+								int sizeModule = 0;
+								int i = 0;
+								int antPos = 0;
+								int module = studyItem.getModule();
+								for (StudyItem studyItemAct : subject.getStudyItemsList()) {
+									if (studyItemAct.getModule() == module) {
+										if (startModule < 0) {
+											startModule = i;
+										}
+										if (studyItemAct.getStudyItemID() == studyItem.getStudyItemID()) {
+											antPos = i;
+										}
+										sizeModule++;
+									}
+									i++;
+								}
+								if ((antPos + startModule) != (newPosition-1 + startModule) && (sizeModule < subject.getStudyItemsList().size())) {
+									subject.getStudyItemsList().add((newPosition-1+startModule), studyItem);;
+									subject.getStudyItemsList().remove(startModule+antPos);
+								}
+								subjectRepository.save(subject);
+							}
+							
+						} else {
+							/* Delete the studyItem*/
+							if (btnDelete != null) {
+								studyItem.setSubject(null);
+								subject.getStudyItemsList().remove(studyItem);
+								studyItemRepository.delete(studyItem);
+								subjectRepository.save(subject);
+							}
+						}
+
+					}
+				}
+			}
+		}
+
+		return new ModelAndView("redirect:/moodle/" + courseInternalName + "/" + subjectInternalName);
 	}
 
 }

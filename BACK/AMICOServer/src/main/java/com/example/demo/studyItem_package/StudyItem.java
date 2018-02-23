@@ -20,8 +20,6 @@ public class StudyItem {
 	private String type;
 
 	private String name;
-
-	private String path;
 	
 	private String fileName;
 	
@@ -35,12 +33,15 @@ public class StudyItem {
 	private String originalName;
 	
 	private String extension;
+	
+	private String icon;
 
 	/* Constructors */
 	public StudyItem () {}
 	
 	
 	public StudyItem(String type, String name, int module, String filename, String originalName) {
+		setIcon(type);
 		if (!type.isEmpty()) {
 			type = "-" + type;
 		}
@@ -72,7 +73,10 @@ public class StudyItem {
 	}
 
 	public void setType(String type) {
-		this.type = type;
+		if (!type.isEmpty()) {
+			type = "-" + type;
+		}
+		this.type = "file" + type;
 	}
 
 	public String getName() {
@@ -82,14 +86,6 @@ public class StudyItem {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public String getPath() {
-		return path;
-	}
-
-	public void setPath(String path) {
-		this.path = path;
-	}
 	
 	public Subject getSubject() {
 		return subject;
@@ -97,7 +93,6 @@ public class StudyItem {
 
 	public void setSubject(Subject subject) {
 		this.subject = subject;
-		this.path = "../files/" + subject.getCourse().getInternalName() + "/" + internalName;
 	}
 
 	public int getModule() {
@@ -144,6 +139,16 @@ public class StudyItem {
 
 	public void setExtension(String extension) {
 		this.extension = extension;
+	}
+
+
+	public String getIcon() {
+		return icon;
+	}
+
+
+	public void setIcon(String icon) {
+		this.icon = icon;
 	} 
 	
 

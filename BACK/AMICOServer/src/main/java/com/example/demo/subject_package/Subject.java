@@ -165,5 +165,9 @@ public class Subject {
 	public void addModule () {
 		numberModules++;
 	}
+	
+	public void deleteModule () {
+		numberModules--;
+	}
 
 }
