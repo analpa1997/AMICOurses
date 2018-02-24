@@ -23,7 +23,8 @@ import com.example.demo.user_package.UserRepository;
 @Controller
 public class CourseInformationController {
 
-	private Course course;
+	private Course course = null;
+	private String userName;
 
 	@Autowired
 	private CourseRepository courseRepository;
@@ -33,17 +34,28 @@ public class CourseInformationController {
 
 	@Autowired
 	private SessionUserComponent sessionUserComponent;
+	
+	
 
 	// For course main page description
-	@RequestMapping("/course/{internalName}/{userName}")
-	public String course(Model model, @PathVariable String internalName, @PathVariable String userName) {
-
-		// get the course information by name
+	@RequestMapping("/course/{internalName}")
+	public String course(Model model, @PathVariable String internalName) {
+		
+		User u = null;
+		
+		// Check for the logged user
+		u = sessionUserComponent.getLoggedUser();
+		if (u == null)
+			userName = "amico";  // para que funcione
+		else 
+			userName = u.getInternalName();
+		
+		// get the course information by course internal name
 		course = courseRepository.findByInternalName(internalName);
 		System.out.println(internalName);
 		System.out.println(userName);
 
-		// set the course description attributes
+		// set the course  attributes to show
 		model.addAttribute("courseName", course.getName());
 		model.addAttribute("courseDescription", course.getCourseDescription());
 
@@ -54,11 +66,7 @@ public class CourseInformationController {
 		model.addAttribute("startDateString", startDateString);
 		model.addAttribute("endDateString", endDateString);
 		model.addAttribute("urlImage", course.getUrlImage());
-		model.addAttribute("nameInternal", internalName);
-
-		if (userName.length() > 1)
-			;
-		model.addAttribute("userName", userName);
+		//model.addAttribute("nameInternal", internalName);
 
 		return "HTML/courseInformation/course";
 	}
@@ -94,17 +102,21 @@ public class CourseInformationController {
 		return "HTML/CourseInformation/skills";
 	}
 
-	@RequestMapping("/course/{internalName}/{userName}/add")
-	public ModelAndView addCourseToUser(Model model, @PathVariable String internalName, @PathVariable String userName) {
+	@RequestMapping("/course/{internalName}/add")
+	public ModelAndView addCourseToUser(Model model, @PathVariable String internalName) {
 
 		int courseCounter;
 		List<User> u = null;
 		List<Course> c = null;
+		
+		if (userName.equals("anonymous"))
+			return new ModelAndView("redirect:/");
+		
 		User user = userRepository.findByUsername(userName); // get all user information by userName
 		if (course.getInscribedUsers().size() > 0)
 			u = course.getInscribedUsers(); // get list of user subscribed to course
 		else
-<<<<<<< HEAD
+/***** HEAD  
 			u = new ArrayList <>(); // initialize array to add user
 		
 		if (user.getInscribedCourses().size() > 0)
@@ -132,7 +144,7 @@ public class CourseInformationController {
 			System.out.println("course : " + course.getName() + " No lo tiene");		
 			
 			c.add(course);			
-=======
+END HEAD ***/
 			u = new ArrayList<>(); // initialize array to add user
 
 		if (user.getInscribedCourses().size() > 0)
@@ -154,13 +166,13 @@ public class CourseInformationController {
 			}
 		}
 		System.out.println("courseCounter : " + courseCounter);
-		// if user not subscribed to the course, inscribe him
+		// if user not subscribed to the course, register him
 		if (courseCounter != 1) {
 
 			System.out.println("course : " + course.getName() + " No lo tiene");
 
 			c.add(course);
->>>>>>> 19411b2f2870148992f19ee82443e327540cfa06
+/*** >>>>>>> 19411b2f2870148992f19ee82443e327540cfa06 ***/
 			user.setInscribedCourses(c);
 			userRepository.save(user); // update user
 
@@ -173,8 +185,9 @@ public class CourseInformationController {
 
 		user = userRepository.findByUsername(userName);
 		System.out.println("# cursos inscritos" + " " + user.getInscribedCourses().size());
-
+		
 		return new ModelAndView("redirect:/profile/" + user.getUsername());
+		
 	}
 
 }
