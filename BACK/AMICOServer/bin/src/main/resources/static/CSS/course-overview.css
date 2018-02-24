@@ -1,0 +1,76 @@
+
+.subject {
+    text-decoration: none; 
+    color: dimgrey;
+    background-color:aliceblue 
+}
+
+.subject:hover {
+    text-decoration: none;
+    color: darkgray;
+}
+
+.subject-name {
+    font-weight: 600;
+    font-size: 0.8rem;
+    margin-left: -1.5rem;
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) { 
+    .subject-name {
+        font-size:1.5em;
+    }
+}
+.footer {
+    position: relative;
+    margin-top: 30%;
+}
+
+.list-title h2 {
+    color: lightslategray;
+    font-size:1.5em;
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) { 
+    .list-title {
+        font-size: 1.7em;
+    }
+}
+
+.course-name {
+    font-size: 2em;
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) { 
+    .course-name {
+        font-size:3em;
+    }
+}
+
+
+.course-text {
+    font-size: 0.9em;
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) { 
+    .course-text {
+        font-size:1em;
+    }
+}
+
+.course-img {
+    display : none;
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) { 
+    .course-img {
+        display: block
+    }
+}
+
+.containerTeachers { border:2px solid #ccc; width:300px; height: 100px; overflow-y: scroll; }

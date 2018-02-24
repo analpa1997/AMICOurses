@@ -110,7 +110,7 @@ public class CourseInformationController {
 		else
 			u = new ArrayList <>(); // initialize array to add user
 		
-		if (user.getInscribedCourses().size > 0)
+		if (user.getInscribedCourses().size() > 0)
        	 	c = user.getInscribedCourses(); // get the list of courses to which the user is subscribed
 		else 
 			c = new ArrayList <>(); // initialize array to add users
