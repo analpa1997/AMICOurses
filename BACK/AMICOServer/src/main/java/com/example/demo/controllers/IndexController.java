@@ -11,11 +11,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.course_package.Course;
 import com.example.demo.course_package.CourseRepository;
 import com.example.demo.user_package.SessionUserComponent;
+import com.example.demo.user_package.User;
 import com.example.demo.user_package.UserRepository;
 
 @Controller
@@ -100,6 +102,12 @@ public class IndexController {
 	@RequestMapping("/signup.html")
 	public String signup(Model model) {
 		return "HTML/LogIn/signup";
+	}
+
+	@RequestMapping("/profile/{username}.html")
+	public String goToProfile(Model model, @PathVariable String username) {
+		User user = sessionUserComponent.getLoggedUser();
+		return "HTML/Profile/userProfile";
 	}
 
 	// @RequestMapping("/searchByName")
