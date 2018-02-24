@@ -35,6 +35,8 @@ public class Practices {
 	
 	private String originalName;
 	
+	private boolean presented;
+	
 	
 	/* Constructors */
 	
@@ -44,6 +46,7 @@ public class Practices {
 		this.practiceName = practiceName;
 		this.originalName = originalName;
 		this.calification = 0d;
+		this.presented = false;
 	}
 
 	/* Methods */
@@ -115,6 +118,14 @@ public class Practices {
 
 	public void setOriginalName(String originalName) {
 		this.originalName = originalName;
+	}
+
+	public boolean isPresented() {
+		return presented;
+	}
+
+	public void setPresented(boolean presented) {
+		this.presented = presented;
 	}
 
 	

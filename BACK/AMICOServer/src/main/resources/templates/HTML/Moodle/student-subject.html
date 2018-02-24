@@ -104,7 +104,7 @@
 								<li class="nav-item"><a class="nav-link level-2 "
 									data-toggle="tab" href="#mod-{{-index}}">Mod {{-index}}</a></li>
 								{{/allStudyItems}}
-								{{#isTeacher}}<li class = "nav-item"> <a class = "nav-link level-2" href = "/moodle/module-add/{{courseInternalName}}/{{subjectInternalName}}"> New Mod +</a></li>{{/isTeacher}}
+							{{#isTeacher}}<li class = "nav-item"> <a class = "nav-link level-2" href = "/moodle/module-add/{{courseInternalName}}/{{subjectInternalName}}"> New Mod +</a></li>{{/isTeacher}}
 							</ul>
 
 							<div class="tab-content border-left border-right">
@@ -128,7 +128,7 @@
 													<li class="list-group-item"><span
 														class="item-icon fa fa-{{type}} pl-5"></span> {{name}}</li>
 												</a> 
-											{{/isTeacher}}
+								{{/isTeacher}}
 											
 											
 											{{#isTeacher}}
@@ -174,13 +174,14 @@
 							<div class="pl-3 py-1 tab-title"> Practices: </div>
 							
 							
+							{{#isTeacher}}
 							{{#studyItemPractices}}
 								<div class="pl-3 py-1 tab-title ml-2"> {{name}}: </div>
 								<ul class="list-group mx-2">
 								<!-- statement -->
-									<li class = "item-content list-group-item col-12">
+																	<li class = "item-content list-group-item col-12">
 										<span class = "row"> <a class="item-content col-md-2" href="/moodle/download/studyItem/{{courseInternalName}}/{{subjectInternalName}}/{{studyItemID}}"> <span>{{-index}}.- </span><span class="item-icon fa fa-{{type}} pl-3 pr-3"></span>{{name}} </a>
-										{{#isTeacher}}
+										
 										<span class = "col-md-8"> <form class = "form-inline" method = "post" action = "/moodle/studyItem/modify/{{courseInternalName}}/{{subjectInternalName}}/{{studyItemID}}">
 												<label class ="ml-1">Rename: </label>
 												<input class = "form-control" type = "text" name = "newName" value = "{{name}}">
@@ -191,11 +192,9 @@
 												<button class = "ml-1" type = "submit" name = "btnDelete" value = "delete"> Delete </button>
 											</form> 
 										</span>
-										{{/isTeacher}}
 										</span>
 									</li>
-									
-									{{#isTeacher}}
+									<!-- Teacher -->	
 									{{#practices}}
 										<li class = "item-content list-group-item col-11 offset-1">
 											<span class = "row ml-3">
@@ -208,9 +207,37 @@
 												</form> 
 											</span>
 										</li>
-										{{/practices}}
+									{{/practices}}
+									{{/studyItemPractices}}
 									{{/isTeacher}}
-								{{/studyItemPractices}}
+									
+									<!--  student -->
+									{{^isTeacher}}
+									{{#studentPractices}}
+									<ul>						
+										<li class = "item-content list-group-item col-12">
+										<span class = "row"> <a class="item-content col-md-2" href="/moodle/download/studyItem/{{courseInternalName}}/{{subjectInternalName}}/{{0.studyItemID}}"> <span>{{-index}}.- </span><span class="item-icon fa fa-{{0.type}} pl-3 pr-3"></span>{{0.name}} </a></span> 
+										</li>
+										<li class = "item-content list-group-item col-11 offset-1">
+										<div class = "row">
+											{{#1.presented}} 
+												<a class="item-content col-md-2" href="/moodle/download/studyItem/{{courseInternalName}}/{{subjectInternalName}}/{{0.studyItemID}}"><span class="item-icon fa fa-{{0.type}} pl-3 pr-3"></span>{{1.practiceName}}</a></span>
+											{{/1.presented}}
+											{{^1.presented}}
+												<span class = "col-md-2">{{1.practiceName}}</span>
+											{{/1.presented}}
+											
+											lo de despues
+										</div>
+										</li>
+											
+									
+									</ul>
+									{{/studentPractices}}
+									{{/isTeacher}}
+									
+									
+								
 								
 								{{#isTeacher}}
 									<div class="pl-3 py-1 tab-title ml-2"> New Practice: </div>

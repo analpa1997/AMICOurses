@@ -110,7 +110,37 @@ public class MoodleController {
 
 			model.addAttribute("studyItemPractices", studyItemPractices);
 			model.addAttribute("allStudyItems", allStudyItems);
-
+			
+			List<List<Object>> studentPractices = new ArrayList<>();
+			/* To retrieve only the student practices (one practice per studyItemPractice) */
+			int i = 0;
+			if (user.isStudent()) {
+				
+				for (StudyItem studyItemPrac : studyItemPractices) {
+					studentPractices.add(new ArrayList <> ());
+					
+				
+					Practices practice = null;
+					for (Practices practiceAct : studyItemPrac.getPractices()) {
+						if (practiceAct.getOwner().getUserID() == user.getUserID()) {
+							practice = practiceAct;
+						}
+					}
+					if (practice == null) {
+						practice = new Practices("Not Presented", "Not Presented");
+						practice.setStudyItem(studyItemPrac);
+						practice.setOwner(user);
+						practicesRepository.save(practice);
+						practice = practicesRepository.getOne(practicesRepository.count());
+						studyItemRepository.save(studyItemPrac);
+					}
+					studentPractices.get(i).add(studyItemPrac);
+					studentPractices.get(i).add(practice);
+					
+					i++;
+				}
+				model.addAttribute("studentPractices", studentPractices);
+			}
 		}
 
 		model.addAttribute("isTeacher", !user.isStudent());
