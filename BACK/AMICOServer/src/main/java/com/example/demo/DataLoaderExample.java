@@ -256,6 +256,12 @@ public class DataLoaderExample implements CommandLineRunner {
 		studyItems.add(new StudyItem("", "Theme 5 exercicies", 3, "studyItem-9", "theme-5-ex.txt"));
 		studyItems.add(new StudyItem("", "Theme 6", 3, "studyItem-10", "theme-6.txt"));
 		studyItems.add(new StudyItem("video", "Theme 6 exercicies", 3, "studyItem-11", "theme-6-ex.txt"));
+		
+		studyItems.add(new StudyItem("pdf", "Practice 1", -1, "studyItem-12", "Practice 1.txt"));
+		studyItems.get(studyItems.size()-1).setPractice(true);
+		
+		studyItems.add(new StudyItem("pdf", "Practice 2", -1, "studyItem-13", "Practice 2.txt"));
+		studyItems.get(studyItems.size()-1).setPractice(true);
 
 		/* There are 3 modules */
 		subjects.get(0).addModule();
@@ -271,12 +277,25 @@ public class DataLoaderExample implements CommandLineRunner {
 
 		List<Practices> practices = new ArrayList<>();
 		practices.add(new Practices("practice 1", "practice-1.txt"));
-		practices.add(new Practices("practice 2", "practice-2.txt"));
-
-		practices.get(0).setSubject(subjects.get(0));
-		practices.get(1).setSubject(subjects.get(0));
-
+		practices.get(0).setOwner(users.get(50));
+		practices.get(0).setCalification(7.3);
+		practices.get(0).setStudyItem(studyItems.get(studyItems.size()-2));
+		studyItems.get(studyItems.size()-2).getPractices().add(practices.get(0));
+		
+		practices.add(new Practices("practice 1", "practice-1.txt"));
+		practices.get(1).setOwner(users.get(30));
+		practices.get(1).setCalification(5.25);
+		practices.get(1).setStudyItem(studyItems.get(studyItems.size()-2));
+		studyItems.get(studyItems.size()-2).getPractices().add(practices.get(1));
+		
+		practices.add(new Practices("practice 2", "practice-1.txt"));
+		practices.get(2).setOwner(users.get(50));
+		practices.get(2).setStudyItem(studyItems.get(studyItems.size()-1));
+		studyItems.get(studyItems.size()-1).getPractices().add(practices.get(2));
+		
+		
 		practicesRepository.save(practices);
+		studyItemRepository.save(studyItems);
 
 	}
 

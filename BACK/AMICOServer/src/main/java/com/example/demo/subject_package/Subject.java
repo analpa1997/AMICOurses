@@ -35,9 +35,6 @@ public class Subject {
 	private Course course;
 
 	@OneToMany(mappedBy = "subject")
-	private List<Practices> practiceList = new ArrayList<>();
-
-	@OneToMany(mappedBy = "subject")
 	private List<StudyItem> studyItemsList = new ArrayList<>();
 
 	@OneToMany(mappedBy = "subject")
@@ -104,14 +101,6 @@ public class Subject {
 
 	public List<User> getUsers() {
 		return this.course.getInscribedUsers();
-	}
-
-	public List<Practices> getPracticeList() {
-		return practiceList;
-	}
-
-	public void setPracticeList(List<Practices> practiceList) {
-		this.practiceList = practiceList;
 	}
 
 	public List<StudyItem> getStudyItemsList() {

@@ -1,12 +1,17 @@
 package com.example.demo.studyItem_package;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.example.demo.practices_package.Practices;
 import com.example.demo.subject_package.Subject;
 
 @Entity
@@ -35,6 +40,11 @@ public class StudyItem {
 	private String extension;
 	
 	private String icon;
+	
+	private boolean isPractice;
+	
+	@OneToMany (mappedBy = "studyItem")
+	private List<Practices> practices = new ArrayList <> ();
 
 	/* Constructors */
 	public StudyItem () {}
@@ -50,6 +60,7 @@ public class StudyItem {
 		this.module = module;
 		this.fileName = filename;
 		this.originalName = originalName;
+		this.isPractice = false;
 	}
 	
 	public StudyItem(String type, String name, int module, String originalName) {
@@ -149,6 +160,26 @@ public class StudyItem {
 
 	public void setIcon(String icon) {
 		this.icon = icon;
+	}
+
+
+	public boolean isPractice() {
+		return isPractice;
+	}
+
+
+	public void setPractice(boolean isPractice) {
+		this.isPractice = isPractice;
+	}
+
+
+	public List<Practices> getPractices() {
+		return practices;
+	}
+
+
+	public void setPractices(List<Practices> practices) {
+		this.practices = practices;
 	} 
 	
 

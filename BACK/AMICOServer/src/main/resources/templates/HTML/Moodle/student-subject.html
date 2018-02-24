@@ -135,11 +135,9 @@
 												<li class="list-group-item" >
 													<span class = "row"> <a class="item-content col-md-2" href="/moodle/download/studyItem/{{courseInternalName}}/{{subjectInternalName}}/{{studyItemID}}"> <span>{{-index}}.- </span><span class="item-icon fa fa-{{type}} pl-3 pr-3"></span>{{name}} </a>
 													<span class = "col-md-8"> <form class = "form-inline" method = "post" action = "/moodle/studyItem/modify/{{courseInternalName}}/{{subjectInternalName}}/{{studyItemID}}">
-															<label class ="ml-1">Position: </label>
-															<input class = "form-control" style="max-width: 4em;" type = "number" min = "1" name = "newPosition" value = "{{-index}}">
 															<label class ="ml-1">Rename: </label>
 															<input class = "form-control" type = "text" name = "newName" value = "{{name}}">
-															<label class ="ml-1"> Type: </label>
+															<label class ="ml-1"> Icon: </label>
 															<input class = "form-control col-md-1" type = "text" name = "newType"  size = "2" value = {{icon}}>
 															<label class ="ml-1 col-md-3 text-left" >File : {{originalName}} </label>
 															<button class = "ml-1" type = "submit" name = "btnSave" value = "save"> Save </button>
@@ -169,7 +167,59 @@
 						</div>
 						<!-- Evalutaion tab -->
 						<div class="tab-pane" id="evaluation" role="tabpanel">
-							EVALUATION</div>
+							<span class="pl-3 py-1 tab-title"> Evaluation:</span>
+							
+							<div class="pl-3 py-1 tab-title"> Exams : </div>
+							
+							<div class="pl-3 py-1 tab-title"> Practices: </div>
+							
+							
+							{{#studyItemPractices}}
+								<div class="pl-3 py-1 tab-title ml-2"> {{name}}: </div>
+								<ul class="list-group mx-2">
+								<!-- statement -->
+									<li class = "item-content list-group-item col-12">
+										<span class = "row"> <a class="item-content col-md-2" href="/moodle/download/studyItem/{{courseInternalName}}/{{subjectInternalName}}/{{studyItemID}}"> <span>{{-index}}.- </span><span class="item-icon fa fa-{{type}} pl-3 pr-3"></span>{{name}} </a>
+										<span class = "col-md-8"> <form class = "form-inline" method = "post" action = "/moodle/studyItem/modify/{{courseInternalName}}/{{subjectInternalName}}/{{studyItemID}}">
+												<label class ="ml-1">Rename: </label>
+												<input class = "form-control" type = "text" name = "newName" value = "{{name}}">
+												<label class ="ml-1"> Type: </label>
+												<input class = "form-control col-md-1" type = "text" name = "newType"  size = "2" value = {{icon}}>
+												<label class ="ml-1 col-md-3 text-left" >File : {{originalName}} </label>
+												<button class = "ml-1" type = "submit" name = "btnSave" value = "save"> Save </button>
+												<button class = "ml-1" type = "submit" name = "btnDelete" value = "delete"> Delete </button>
+											</form> 
+										</span>
+										</span>
+									</li>
+									
+									{{#practices}}
+									<li class = "item-content list-group-item col-11 offset-1">
+										<span class = "row ml-3">
+											<span class = col-md-2 >Username : {{owner.username}} </span> 
+											<span class = "col-md-3" >File : <a class="item-content col-md-2" href="/moodle/download/studyItem/{{courseInternalName}}/{{subjectInternalName}}/{{studyItemID}}/{{practiceID}}">{{practiceName}}</a></span>
+											<span class = "col-md-7"> <form class = "form-inline" method = "post" action = "/moodle/practice/update-calification/{{courseInternalName}}/{{subjectInternalName}}/{{studyItemID}}/{{practiceID}}">
+												<label class ="mr-2">Calification: </label>
+												<input class = "form-control" type = "number" name = "newCalification" value = "{{calification}}" min = "0" max = "10" step="any">
+												<button class = "ml-3" type = "submit" name = "btnSave" value = "save"> Save </button>
+											</form> 
+										</span>
+									</li>
+									{{/practices}}
+								{{/studyItemPractices}}
+									<div class="pl-3 py-1 tab-title ml-2"> New Practice: </div>
+									<li class = "item-content list-group-item col-12">
+											<form class = "col-12" action = "/moodle/upload/studyItem/{{courseInternalName}}/{{subjectInternalName}}/-1" method="post" enctype="multipart/form-data">
+												<label class = "col-md-1">New:</label>
+												<input class = "col-md-2" type = "text" name = "itemName" placeholder = "Name:">
+												<input class = "col-md-3" type = "text" name = "itemType" placeholder = "Icon: (pdf, word, video...)">
+												<input class = "col-md-4" type = "file" name = "itemFile">
+												<button class = "col-md-1" type = "submit">Create</button>
+											</form>
+									</li> 
+								</ul>
+							
+						</div>
 						<!-- Progress tab -->
 						<div class="tab-pane" id="progress" role="tabpanel">
 							<div class="pl-3 py-1 tab-title">Marks Chart:</div>

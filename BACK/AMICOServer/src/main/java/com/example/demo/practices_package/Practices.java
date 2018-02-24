@@ -7,7 +7,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.example.demo.studyItem_package.StudyItem;
 import com.example.demo.subject_package.Subject;
+import com.example.demo.user_package.User;
 
 @Entity
 @Table(name = "Practices")
@@ -25,22 +27,24 @@ public class Practices {
 	
 	private String internalName;
 	
-	private String path;
+	@ManyToOne
+	private StudyItem studyItem;
 	
 	@ManyToOne
-	private Subject subject;
+	private User owner;
+	
+	private String originalName;
+	
 	
 	/* Constructors */
 	
 	public Practices () {}
 	
-	public Practices(String practiceName, String fileName) {
-		super();
+	public Practices(String practiceName, String originalName) {
 		this.practiceName = practiceName;
-		this.internalName = fileName.replaceAll(" ", "-");
+		this.originalName = originalName;
+		this.calification = 0d;
 	}
-
-
 
 	/* Methods */
 
@@ -69,13 +73,9 @@ public class Practices {
 	}
 
 	public Subject getSubject() {
-		return subject;
+		return studyItem.getSubject();
 	}
 
-	public void setSubject(Subject subject) {
-		this.subject = subject;
-		this.path = "../files/" + subject.getCourse().getInternalName() + "/" + internalName;
-	}
 
 	public String getInternalName() {
 		return internalName;
@@ -93,13 +93,30 @@ public class Practices {
 		this.fileName = fileName;
 	}
 
-	public String getPath() {
-		return path;
+	public StudyItem getStudyItem() {
+		return studyItem;
 	}
 
-	public void setPath(String path) {
-		this.path = path;
+	public void setStudyItem(StudyItem studyItem) {
+		this.studyItem = studyItem;
 	}
+
+	public User getOwner() {
+		return owner;
+	}
+
+	public void setOwner(User owner) {
+		this.owner = owner;
+	}
+
+	public String getOriginalName() {
+		return originalName;
+	}
+
+	public void setOriginalName(String originalName) {
+		this.originalName = originalName;
+	}
+
 	
 	
 
