@@ -104,7 +104,7 @@
 								<li class="nav-item"><a class="nav-link level-2 "
 									data-toggle="tab" href="#mod-{{-index}}">Mod {{-index}}</a></li>
 								{{/allStudyItems}}
-								<li class = "nav-item"> <a class = "nav-link level-2" href = "/moodle/module-add/{{courseInternalName}}/{{subjectInternalName}}"> New Mod +</a></li>
+								{{#isTeacher}}<li class = "nav-item"> <a class = "nav-link level-2" href = "/moodle/module-add/{{courseInternalName}}/{{subjectInternalName}}"> New Mod +</a></li>{{/isTeacher}}
 							</ul>
 
 							<div class="tab-content border-left border-right">
@@ -196,7 +196,7 @@
 									</li>
 									
 									{{#isTeacher}}
-										{{#practices}}
+									{{#practices}}
 										<li class = "item-content list-group-item col-11 offset-1">
 											<span class = "row ml-3">
 												<span class = col-md-2 >Username : {{owner.username}} </span> 
