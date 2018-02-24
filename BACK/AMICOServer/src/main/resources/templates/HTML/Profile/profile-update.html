@@ -31,7 +31,7 @@
         <!-- Navigation -->
         <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
             <div class="container">
-                <a class="navbar-brand" href="../index.html">AMICOURSES</a>
+                <a class="navbar-brand" href="/">AMICOURSES</a>
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="fa fa-bars"></i>
@@ -39,10 +39,10 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="/profile/{{username}}.html">My Profile</a>
+                            <a class="nav-link" href="/profile/{{userInternalName}}">My Profile</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/">Log Out</a>
+                            <a class="nav-link" href="/logOut">Log Out</a>
                         </li>
                     </ul>
                 </div>
@@ -57,7 +57,7 @@
 
         <section>
             <div class = "container-fluid mb-5 px-5">
-                <form action="/profile/{{username}}/updated" method="post" enctype="multipart/form-data">
+                <form action="/profile/{{userInternalName}}/updated" method="post" enctype="multipart/form-data">
                     <div class="form-group row">
                         <label class = "col-lg-1 " for="name-input">Name: </label>
                         <input class = "col-lg-4" type="text" class="form-control" id="name-input"  placeholder="Enter your name" name='userFirstName' value='{{userFirstName}}'>
@@ -100,7 +100,7 @@
                     </div>
                     <div class = "row border-top pt-2">
                     <button type="submit" class="offset-2 offset-lg-4 btn form-btn">Submit</button>
-                    <a class = "offset-3 offset-lg-2 btn form-btn" href = "/profile/{{username}}.html">Cancel</a>
+                    <a class = "offset-3 offset-lg-2 btn form-btn" href = "/profile/{{userInternalName}}">Cancel</a>
                     </div>
 
                 </form>

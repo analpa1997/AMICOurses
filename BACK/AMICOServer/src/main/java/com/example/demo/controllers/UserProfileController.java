@@ -26,6 +26,7 @@ import com.example.demo.course_package.Course;
 import com.example.demo.course_package.CourseRepository;
 import com.example.demo.skill_package.Skill;
 import com.example.demo.subject_package.Subject;
+import com.example.demo.user_package.SessionUserComponent;
 import com.example.demo.user_package.User;
 import com.example.demo.user_package.UserRepository;
 import com.itextpdf.text.BaseColor;
@@ -50,13 +51,14 @@ public class UserProfileController {
 
 	@Autowired
 	private CourseRepository courseRepository;
+	
+	@Autowired SessionUserComponent sessionUserComponent; 
 
-	@RequestMapping("/profile/{username}")
-	public String viewProfile(Model model, @PathVariable String username) {
+	@RequestMapping("/profile/{userInternalName}")
+	public String viewProfile(Model model, @PathVariable String userInternalName) {
 
-		User user = userRepository.findByUsername(username);
+		User user = userRepository.findByInternalName(userInternalName);
 
-		model.addAttribute("userID", user.getUserID());
 		model.addAttribute("userFirstName", user.getUserFirstName());
 		model.addAttribute("userLastName", user.getUserLastName());
 		model.addAttribute("username", user.getUsername());
@@ -69,16 +71,21 @@ public class UserProfileController {
 		model.addAttribute("completedCourses", user.getCompletedCourses());
 		model.addAttribute("interests", user.getInterests());
 		model.addAttribute("internalName", user.getInternalName());
+model.addAttribute("userID", user.getUserID());
+		
+		/* Only the user can change its profile, enter in the courses and get certificates */
+		//model.addAttribute("isTheUser" ,(user.getUserID() == sessionUserComponent.getLoggedUser().getUserID()));
+		model.addAttribute("isTheProfileUser", true);
 
 		return "HTML/Profile/userProfile";
 	}
 
 	// Requets from form
-	@RequestMapping(value = "/profile/{username}/updated", method = RequestMethod.POST)
-	public ModelAndView updated(Model model, User userUpdated, @PathVariable String username,
+	@RequestMapping(value = "/profile/{userInternalName}/updated", method = RequestMethod.POST)
+	public ModelAndView updated(Model model, User userUpdated, @PathVariable String userInternalName,
 			@RequestParam("profileImage") MultipartFile file) {
 
-		User user = userRepository.findByUsername(username);
+		User user = userRepository.findByInternalName(userInternalName);
 
 		/* Image uploading controll. If a profile image exists, it is overwritten */
 		/* If there is not file the imageName wont change */
@@ -115,14 +122,14 @@ public class UserProfileController {
 
 		userRepository.save(user);
 
-		return new ModelAndView("redirect:/profile/" + user.getUsername());
+		return new ModelAndView("redirect:/profile/" + user.getInternalName());
 	}
 
 	// Requets to form
-	@RequestMapping("/profile/{username}/update")
-	public String update(Model model, @PathVariable String username) {
+	@RequestMapping("/profile/{userInternalName}/update")
+	public String update(Model model, @PathVariable String userInternalName) {
 
-		User user = userRepository.findByUsername(username);
+		User user = userRepository.findByInternalName(userInternalName);
 
 		model.addAttribute("interests", user.getInterests());
 		model.addAttribute("userFirstName", user.getUserFirstName());
@@ -137,6 +144,7 @@ public class UserProfileController {
 		model.addAttribute("city", user.getCity());
 		model.addAttribute("country", user.getCountry());
 		model.addAttribute("phoneNumber", user.getPhoneNumber());
+		model.addAttribute("userInternalName", user.getInternalName());
 
 		return "HTML/Profile/profile-update";
 	}

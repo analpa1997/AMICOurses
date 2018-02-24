@@ -33,11 +33,11 @@ public class SubjectListController {
 	@Autowired
 	private SessionUserComponent sessionUserComponent;
 
-	@RequestMapping("/course-overview/{courseInternalName}/{userInternalName}")
-	public String allCourses(Model model, @PathVariable String userInternalName, @PathVariable String courseInternalName) {
+	@RequestMapping("/course-overview/{courseInternalName}")
+	public String allCourses(Model model, @PathVariable String courseInternalName) {
 
 		//User user = sessionUserComponent.getLoggedUser();
-		User user = userRepository.findByUsername(userInternalName.replaceAll("-", " "));
+		User user = userRepository.findByInternalName("amicoteacher");
 		if (user != null) {
 			Course actualCourse = null;
 			for (Course course : user.getInscribedCourses()) {
@@ -57,11 +57,12 @@ public class SubjectListController {
 				model.addAttribute("subjects", actualCourse.getSubjects());
 				model.addAttribute("courseName", actualCourse.getName());
 				model.addAttribute("courseInternalName", actualCourse.getInternalName());
-				model.addAttribute("userInternalName", userInternalName);
+				model.addAttribute("userInternalName", user.getInternalName());
 				model.addAttribute("allTeachers", teachers);
 
 			}
 
+			//model.AddAttribute("admin",user.isAdmin());
 			// For development only
 			model.addAttribute("admin", true);
 		}
@@ -69,99 +70,119 @@ public class SubjectListController {
 		return "HTML/StudentCourses/student-course-overview";
 	}
 
-	@RequestMapping(value = "/course/{courseInternalName}/update-subject/{subjetctInternalName}/{userName}", method = RequestMethod.POST)
+	@RequestMapping(value = "/course/{courseInternalName}/update-subject/{subjetctInternalName}", method = RequestMethod.POST)
 	public ModelAndView updateSubject(Model model, @PathVariable String courseInternalName,
-			@PathVariable String subjetctInternalName, @PathVariable String userName,
+			@PathVariable String subjetctInternalName,
 			@RequestParam String subjectName, @RequestParam String description) {
-		Course course = courseRepository.findByInternalName(courseInternalName);
 		
-		if (course != null && !subjetctInternalName.isEmpty()) {
-			for (Subject subject : course.getSubjects()) {
-				if (subject.getInternalName().equals(subjetctInternalName)) {
-					if (!subjectName.isEmpty()) {
-						subject.setName(subjectName);
-						subject.setInternalName(subjectName.replaceAll(" ", "-"));
+		//User user = sessionUserComponent.getLoggedUser();
+		//if (user.isAdmin())
+		//{
+			Course course = courseRepository.findByInternalName(courseInternalName);
+			
+			if (course != null && !subjetctInternalName.isEmpty()) {
+				for (Subject subject : course.getSubjects()) {
+					if (subject.getInternalName().equals(subjetctInternalName)) {
+						if (!subjectName.isEmpty()) {
+							subject.setName(subjectName);
+							subject.setInternalName(subjectName.replaceAll(" ", "-"));
+						}
+						if (!description.isEmpty()) {
+							subject.setDescription(description);
+						}
+						subjectRepository.save(subject);
 					}
-					if (!description.isEmpty()) {
-						subject.setDescription(description);
-					}
-					subjectRepository.save(subject);
 				}
 			}
-		}
-		return new ModelAndView("redirect:/course-overview/" + courseInternalName + "/" + userName);
+		//}
+		return new ModelAndView("redirect:/course-overview/" + courseInternalName);
 	}
 
 	@RequestMapping(value = "/course/{courseInternalName}/delete-subject/{subjetctInternalName}/{userName}", method = RequestMethod.POST)
 	public ModelAndView deleteSubject(Model model, @PathVariable String courseInternalName,
-			@PathVariable String subjetctInternalName, @PathVariable String userName) {
-		Course course = courseRepository.findByInternalName(courseInternalName);
-
-		if (course != null) {
-			Subject toDelete = null;
-			for (Subject subject : course.getSubjects()) {
-				if (subject.getInternalName().equals(subjetctInternalName)) {
-					toDelete = subject;
+			@PathVariable String subjetctInternalName) {
+		
+		//User user = sessionUserComponent.getLoggedUser();
+		//if (user.isAdmin())
+		//{
+			Course course = courseRepository.findByInternalName(courseInternalName);
+	
+			if (course != null) {
+				Subject toDelete = null;
+				for (Subject subject : course.getSubjects()) {
+					if (subject.getInternalName().equals(subjetctInternalName)) {
+						toDelete = subject;
+					}
 				}
+	
+				// subjectRepository.delete(toDelete);
+				toDelete.setCourse(null);
+				course.getSubjects().remove(toDelete);
+	
+				courseRepository.save(course);
+	
 			}
-
-			// subjectRepository.delete(toDelete);
-			toDelete.setCourse(null);
-			course.getSubjects().remove(toDelete);
-
-			courseRepository.save(course);
-
-		}
-		return new ModelAndView("redirect:/course-overview/" + courseInternalName + "/" + userName);
+		//}
+		return new ModelAndView("redirect:/course-overview/" + courseInternalName);
 	}
 
-	@RequestMapping(value = "/course/{courseInternalName}/create-subject/{userName}", method = RequestMethod.POST)
-	public ModelAndView createSubject(Model model, @PathVariable String courseInternalName,
-			@PathVariable String userName, @RequestParam String subjectName) {
-		Course course = courseRepository.findByInternalName(courseInternalName);
-
-		if (course != null && !subjectName.isEmpty()) {
-			Subject subject = new Subject(subjectName);
-			course.getSubjects().add(subject);
-			subject.setCourse(course);
-
-			subjectRepository.save(subject);
-			courseRepository.save(course);
-
-		}
-		return new ModelAndView("redirect:/course-overview/" + courseInternalName + "/" + userName);
+	@RequestMapping(value = "/course/{courseInternalName}/create-subject", method = RequestMethod.POST)
+	public ModelAndView createSubject(Model model, @PathVariable String courseInternalName, @RequestParam String subjectName) {
+		
+		//User user = sessionUserComponent.getLoggedUser();
+		//if (user.isAdmin())
+		//{
+			
+			Course course = courseRepository.findByInternalName(courseInternalName);
+	
+			if (course != null && !subjectName.isEmpty()) {
+				Subject subject = new Subject(subjectName);
+				course.getSubjects().add(subject);
+				subject.setCourse(course);
+	
+				subjectRepository.save(subject);
+				courseRepository.save(course);
+	
+			}
+		//}
+		return new ModelAndView("redirect:/course-overview/" + courseInternalName);
 	}
 
-	@RequestMapping(value = "/course/{courseInternalName}/updateTeachers-subject/{subjetctInternalName}/{userName}", method = RequestMethod.POST)
+	@RequestMapping(value = "/course/{courseInternalName}/updateTeachers-subject/{subjetctInternalName}", method = RequestMethod.POST)
 	public ModelAndView ChangeTeachersFromSubject(Model model, @PathVariable String courseInternalName,
-			@PathVariable String subjetctInternalName, @PathVariable String userName,
+			@PathVariable String subjetctInternalName,
 			@RequestParam String[] selectTeachers) {
-		Course course = courseRepository.findByInternalName(courseInternalName);
-
-		if (course != null && (selectTeachers.length != 0)) {
-			Subject Toupdate = null;
-			for (Subject subject : course.getSubjects()) {
-				if (subject.getInternalName().equals(subjetctInternalName)) {
-					for (User teacher : subject.getTeachers()) {
-						teacher.getTeaching().remove(subject);
+		
+		//User user = sessionUserComponent.getLoggedUser();
+		//if (user.isAdmin())
+		//{
+			Course course = courseRepository.findByInternalName(courseInternalName);
+	
+			if (course != null && (selectTeachers.length != 0)) {
+				Subject Toupdate = null;
+				for (Subject subject : course.getSubjects()) {
+					if (subject.getInternalName().equals(subjetctInternalName)) {
+						for (User teacher : subject.getTeachers()) {
+							teacher.getTeaching().remove(subject);
+						}
+						subject.getTeachers().removeAll(subject.getTeachers());
+	
+						List<User> newTeachers = new ArrayList<>();
+						int i = 0;
+						for (String s : selectTeachers) {
+							newTeachers.add(userRepository.findByUsername(s));
+							newTeachers.get(i).getTeaching().add(subject);
+						}
+						subject.getTeachers().addAll(newTeachers);
+						subjectRepository.save(subject);
+	
 					}
-					subject.getTeachers().removeAll(subject.getTeachers());
-
-					List<User> newTeachers = new ArrayList<>();
-					int i = 0;
-					for (String s : selectTeachers) {
-						newTeachers.add(userRepository.findByUsername(s));
-						newTeachers.get(i).getTeaching().add(subject);
-					}
-					subject.getTeachers().addAll(newTeachers);
-					subjectRepository.save(subject);
-
 				}
-			}
 			// subjectRepository.delete(toDelete);
 			// toUpdate.setCourse(null);
-		}
-		return new ModelAndView("redirect:/course-overview/" + courseInternalName + "/" + userName);
+			}
+		//}
+		return new ModelAndView("redirect:/course-overview/" + courseInternalName);
 	}
 
 }

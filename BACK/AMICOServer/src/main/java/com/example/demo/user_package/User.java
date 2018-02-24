@@ -72,6 +72,15 @@ public class User {
 		this.isStudent = isStudent;
 		this.urlProfileImage = "null";
 		this.internalName = username.replaceAll(" ", "-").toLowerCase();
+		
+		this.userFirstName = "";
+		this.userLastName = "";
+		this.userAddress = "";
+		this.city = "";
+		this.country = "";
+		this.phoneNumber = 00000000;
+		this.interests = "";
+		
 	}
 	
 	/* Methods */
@@ -91,7 +100,7 @@ public class User {
 
 	public void setUsername(String username) {
 		this.username = username;
-		this.internalName = this.username.replaceAll(" ", "-");
+		this.internalName = this.username.replaceAll(" ", "-").toLowerCase();
 	}
 
 	public String getPassword() {

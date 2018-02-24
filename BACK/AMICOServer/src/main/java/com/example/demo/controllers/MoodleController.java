@@ -103,11 +103,12 @@ public class MoodleController {
 
 		model.addAttribute("isTeacher", !user.isStudent());
 
-		/* Info about course and subject */
+		/* Info about the user, course and subject */
 		model.addAttribute("courseInternalName", course.getInternalName());
 		model.addAttribute("courseName", course.getName());
 		model.addAttribute("subjectInternalName", subject.getInternalName());
 		model.addAttribute("subjectName", subject.getName());
+		model.addAttribute("userInternalName", user.getInternalName());
 
 		return "HTML/Moodle/student-subject";
 	}
