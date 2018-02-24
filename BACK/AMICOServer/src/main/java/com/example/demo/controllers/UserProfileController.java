@@ -56,6 +56,7 @@ public class UserProfileController {
 
 		User user = userRepository.findByUsername(username);
 
+		model.addAttribute("userID", user.getUserID());
 		model.addAttribute("userFirstName", user.getUserFirstName());
 		model.addAttribute("userLastName", user.getUserLastName());
 		model.addAttribute("username", user.getUsername());
