@@ -60,7 +60,7 @@ public class MoodleController {
 		 * This is for when we have the login system.s User user =
 		 * sessionUserComponent.getLoggedUser(); Course course = null;
 		 */
-		User user = userRepository.findByInternalName("amicoteacher");
+		User user = userRepository.findByInternalName("amico");
 
 		Course course = null;
 		for (Course courseAct : user.getInscribedCourses()) {

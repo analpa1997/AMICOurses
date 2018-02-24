@@ -180,6 +180,7 @@
 								<!-- statement -->
 									<li class = "item-content list-group-item col-12">
 										<span class = "row"> <a class="item-content col-md-2" href="/moodle/download/studyItem/{{courseInternalName}}/{{subjectInternalName}}/{{studyItemID}}"> <span>{{-index}}.- </span><span class="item-icon fa fa-{{type}} pl-3 pr-3"></span>{{name}} </a>
+										{{#isTeacher}}
 										<span class = "col-md-8"> <form class = "form-inline" method = "post" action = "/moodle/studyItem/modify/{{courseInternalName}}/{{subjectInternalName}}/{{studyItemID}}">
 												<label class ="ml-1">Rename: </label>
 												<input class = "form-control" type = "text" name = "newName" value = "{{name}}">
@@ -190,23 +191,28 @@
 												<button class = "ml-1" type = "submit" name = "btnDelete" value = "delete"> Delete </button>
 											</form> 
 										</span>
+										{{/isTeacher}}
 										</span>
 									</li>
 									
-									{{#practices}}
-									<li class = "item-content list-group-item col-11 offset-1">
-										<span class = "row ml-3">
-											<span class = col-md-2 >Username : {{owner.username}} </span> 
-											<span class = "col-md-3" >File : <a class="item-content col-md-2" href="/moodle/download/studyItem/{{courseInternalName}}/{{subjectInternalName}}/{{studyItemID}}/{{practiceID}}">{{practiceName}}</a></span>
-											<span class = "col-md-7"> <form class = "form-inline" method = "post" action = "/moodle/practice/update-calification/{{courseInternalName}}/{{subjectInternalName}}/{{studyItemID}}/{{practiceID}}">
-												<label class ="mr-2">Calification: </label>
-												<input class = "form-control" type = "number" name = "newCalification" value = "{{calification}}" min = "0" max = "10" step="any">
-												<button class = "ml-3" type = "submit" name = "btnSave" value = "save"> Save </button>
-											</form> 
-										</span>
-									</li>
-									{{/practices}}
+									{{#isTeacher}}
+										{{#practices}}
+										<li class = "item-content list-group-item col-11 offset-1">
+											<span class = "row ml-3">
+												<span class = col-md-2 >Username : {{owner.username}} </span> 
+												<span class = "col-md-3" >File : <a class="item-content col-md-2" href="/moodle/download/studyItem/{{courseInternalName}}/{{subjectInternalName}}/{{studyItemID}}/{{practiceID}}">{{practiceName}}</a></span>
+												<span class = "col-md-7"> <form class = "form-inline" method = "post" action = "/moodle/practice/update-calification/{{courseInternalName}}/{{subjectInternalName}}/{{studyItemID}}/{{practiceID}}">
+													<label class ="mr-2">Calification: </label>
+													<input class = "form-control" type = "number" name = "newCalification" value = "{{calification}}" min = "0" max = "10" step="any">
+													<button class = "ml-3" type = "submit" name = "btnSave" value = "save"> Save </button>
+												</form> 
+											</span>
+										</li>
+										{{/practices}}
+									{{/isTeacher}}
 								{{/studyItemPractices}}
+								
+								{{#isTeacher}}
 									<div class="pl-3 py-1 tab-title ml-2"> New Practice: </div>
 									<li class = "item-content list-group-item col-12">
 											<form class = "col-12" action = "/moodle/upload/studyItem/{{courseInternalName}}/{{subjectInternalName}}/-1" method="post" enctype="multipart/form-data">
@@ -217,6 +223,7 @@
 												<button class = "col-md-1" type = "submit">Create</button>
 											</form>
 									</li> 
+								{{/isTeacher}}
 								</ul>
 							
 						</div>
