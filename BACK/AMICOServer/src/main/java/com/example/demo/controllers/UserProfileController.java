@@ -24,8 +24,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.course_package.Course;
 import com.example.demo.course_package.CourseRepository;
-import com.example.demo.skill_package.Skill;
-import com.example.demo.subject_package.Subject;
 import com.example.demo.user_package.SessionUserComponent;
 import com.example.demo.user_package.User;
 import com.example.demo.user_package.UserRepository;
@@ -37,7 +35,6 @@ import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -51,8 +48,9 @@ public class UserProfileController {
 
 	@Autowired
 	private CourseRepository courseRepository;
-	
-	@Autowired SessionUserComponent sessionUserComponent; 
+
+	@Autowired
+	SessionUserComponent sessionUserComponent;
 
 	@RequestMapping("/profile/{userInternalName}")
 	public String viewProfile(Model model, @PathVariable String userInternalName) {
@@ -71,10 +69,14 @@ public class UserProfileController {
 		model.addAttribute("completedCourses", user.getCompletedCourses());
 		model.addAttribute("interests", user.getInterests());
 		model.addAttribute("internalName", user.getInternalName());
-model.addAttribute("userID", user.getUserID());
-		
-		/* Only the user can change its profile, enter in the courses and get certificates */
-		//model.addAttribute("isTheUser" ,(user.getUserID() == sessionUserComponent.getLoggedUser().getUserID()));
+		model.addAttribute("userID", user.getUserID());
+
+		/*
+		 * Only the user can change its profile, enter in the courses and get
+		 * certificates
+		 */
+		// model.addAttribute("isTheUser" ,(user.getUserID() ==
+		// sessionUserComponent.getLoggedUser().getUserID()));
 		model.addAttribute("isTheProfileUser", true);
 
 		return "HTML/Profile/userProfile";
@@ -168,8 +170,8 @@ model.addAttribute("userID", user.getUserID());
 	}
 
 	@RequestMapping(value = "/profile/{userInternalName}/certificate/{internalName}-{userID}", method = RequestMethod.GET)
-	public void downloadPdf(HttpServletResponse res, @PathVariable String userInternalName, @PathVariable String internalName,
-			@PathVariable long userID) throws IOException, DocumentException {
+	public void downloadPdf(HttpServletResponse res, @PathVariable String userInternalName,
+			@PathVariable String internalName, @PathVariable long userID) throws IOException, DocumentException {
 		User user = userRepository.findByInternalName(userInternalName);
 		Course course = courseRepository.findByInternalName(internalName);
 
@@ -182,98 +184,13 @@ model.addAttribute("userID", user.getUserID());
 
 		Path pdf = FILES_FOLDER.resolve(fileName);
 		File file;
+		file = new File(FILES_FOLDER.toFile(), fileName);
+		FileOutputStream fileout = new FileOutputStream(file);
 
-		if (!Files.exists(pdf)) {
-			file = new File(FILES_FOLDER.toFile(), fileName);
-			FileOutputStream fileout = new FileOutputStream(file);
+		Document document = new Document();
+		PdfWriter.getInstance(document, fileout);
 
-			Document document = new Document();
-			PdfWriter.getInstance(document, fileout);
-			document.addTitle("Certificate: " + course.getName());
-
-			document.open();
-
-			// Here is the content of the PDF
-
-			Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
-			Font fontHeader = FontFactory.getFont(FontFactory.COURIER, 24, BaseColor.BLACK);
-
-			Chunk glue = new Chunk(new VerticalPositionMark());
-			Paragraph p = new Paragraph("AMICOurses Certification");
-			p.add(new Chunk(glue));
-			p.add(course.getEndDateString());
-
-			document.add(p);
-			document.add(Chunk.NEWLINE);
-			document.add(Chunk.NEWLINE);
-			document.add(Chunk.NEWLINE);
-
-			String pTwo = "We are glad to certificate than our student " + user.getUserFirstName() + " "
-					+ user.getUserLastName() + " have passed our course:";
-			p = new Paragraph(pTwo);
-
-			document.add(p);
-			document.add(Chunk.NEWLINE);
-
-			p = new Paragraph(course.getName(), fontHeader);
-			p.setAlignment(Element.ALIGN_CENTER);
-
-			document.add(p);
-			document.add(Chunk.NEWLINE);
-
-			p = new Paragraph("Language: " + course.getCourseLanguage());
-			p.setAlignment(Element.ALIGN_CENTER);
-
-			document.add(p);
-			document.add(Chunk.NEWLINE);
-
-			p = new Paragraph(course.getCourseDescription());
-
-			document.add(p);
-			document.add(Chunk.NEWLINE);
-
-			// Create table for subjects in the course
-
-			PdfPTable table = new PdfPTable(2);
-			table.setHorizontalAlignment(Element.ALIGN_CENTER);
-			table.setWidthPercentage(80);
-			PdfPCell cell = new PdfPCell(new Phrase("Subjects of the course"));
-			table.addCell(cell);
-
-			// Create a row for subject
-
-			int i = 1;
-			for (Subject s : course.getSubjects()) {
-				table.addCell(new PdfPCell(new Phrase(i)));
-				table.addCell(new PdfPCell(new Phrase(s.getName())));
-				i++;
-			}
-
-			document.add(table);
-
-			// Create table for skills in the course
-
-			table = new PdfPTable(3);
-			table.setHorizontalAlignment(Element.ALIGN_CENTER);
-			table.setWidthPercentage(80);
-			cell = new PdfPCell(new Phrase("Skills of the course"));
-			table.addCell(cell);
-
-			// Create a row for skill
-
-			i = 1;
-			for (Skill s : course.getSkills()) {
-				table.addCell(new PdfPCell(new Phrase(i)));
-				table.addCell(new PdfPCell(new Phrase(s.getSkillName())));
-				table.addCell(new PdfPCell(new Phrase(s.getSkillDescription())));
-				i++;
-			}
-
-			document.add(table);
-			document.close();
-		} else {
-			file = pdf.toFile();
-		}
+		createPdf(document, course, user);
 
 		Path filePath = pdf;
 		res.addHeader("Content-Disposition", String.format("inline; filename=\"" + file.getName() + "\""));
@@ -281,5 +198,104 @@ model.addAttribute("userID", user.getUserID());
 		res.setContentLength((int) filePath.toFile().length());
 		FileCopyUtils.copy(Files.newInputStream(filePath), res.getOutputStream());
 
+	}
+
+	private void createPdf(Document document, Course course, User user) throws DocumentException {
+		document.addTitle("Certificate: " + course.getName());
+
+		document.open();
+
+		// Here is the content of the PDF
+
+		Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
+		Font fontHeader = FontFactory.getFont(FontFactory.COURIER, 24, BaseColor.BLACK);
+
+		Chunk glue = new Chunk(new VerticalPositionMark());
+		Paragraph p = new Paragraph("AMICOurses Certification");
+		p.add(new Chunk(glue));
+		p.add(course.getEndDateString());
+
+		document.add(p);
+		document.add(Chunk.NEWLINE);
+		document.add(Chunk.NEWLINE);
+		document.add(Chunk.NEWLINE);
+
+		String pTwo = "We are glad to certificate than our student " + user.getUserFirstName() + " "
+				+ user.getUserLastName() + " have passed our course:";
+		p = new Paragraph(pTwo);
+
+		document.add(p);
+		document.add(Chunk.NEWLINE);
+
+		p = new Paragraph(course.getName(), fontHeader);
+		p.setAlignment(Element.ALIGN_CENTER);
+
+		document.add(p);
+		document.add(Chunk.NEWLINE);
+
+		p = new Paragraph("Language: " + course.getCourseLanguage());
+		p.setAlignment(Element.ALIGN_CENTER);
+
+		document.add(p);
+		document.add(Chunk.NEWLINE);
+
+		p = new Paragraph(course.getCourseDescription());
+
+		document.add(p);
+		document.add(Chunk.NEWLINE);
+
+		p = new Paragraph("Subjects of the course");
+
+		document.add(p);
+		document.add(Chunk.NEWLINE);
+
+		// Create table for subjects in the course
+
+		PdfPTable table = new PdfPTable(2);
+		table.setHorizontalAlignment(Element.ALIGN_CENTER);
+		table.setWidthPercentage(80);
+		table.setHeaderRows(1);
+
+		// Create a header row
+		table.addCell(new PdfPCell(new Paragraph("Index")));
+		table.addCell(new PdfPCell(new Paragraph("Subjects")));
+
+		// Create a row for subject
+
+		for (int aw = 0; aw < course.getSubjects().size(); aw++) {
+			table.addCell(String.valueOf(aw));
+			table.addCell(course.getSubjects().get(aw).getName());
+		}
+		document.add(table);
+		document.add(Chunk.NEWLINE);
+
+		p = new Paragraph("Skills of the course");
+
+		document.add(p);
+		document.add(Chunk.NEWLINE);
+
+		// Create table for skills in the course
+
+		table = new PdfPTable(3);
+		table.setHorizontalAlignment(Element.ALIGN_CENTER);
+		table.setWidthPercentage(80);
+		table.setHeaderRows(1);
+
+		// Create a header row
+
+		table.addCell(new PdfPCell(new Paragraph("Index")));
+		table.addCell(new PdfPCell(new Paragraph("Skill name")));
+		table.addCell(new PdfPCell(new Paragraph("Skill description")));
+
+		// Create a row for skill
+
+		for (int aw = 0; aw < course.getSkills().size(); aw++) {
+			table.addCell(String.valueOf(aw));
+			table.addCell(course.getSkills().get(aw).getSkillName());
+			table.addCell(course.getSkills().get(aw).getSkillDescription());
+		}
+
+		document.add(table);
+		document.close();
 	}
 }
