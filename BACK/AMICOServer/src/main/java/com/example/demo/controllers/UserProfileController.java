@@ -167,10 +167,10 @@ model.addAttribute("userID", user.getUserID());
 
 	}
 
-	@RequestMapping(value = "/profile/{username}/certificate/{internalName}-{userID}", method = RequestMethod.GET)
-	public void downloadPdf(HttpServletResponse res, @PathVariable String username, @PathVariable String internalName,
+	@RequestMapping(value = "/profile/{userInternalName}/certificate/{internalName}-{userID}", method = RequestMethod.GET)
+	public void downloadPdf(HttpServletResponse res, @PathVariable String userInternalName, @PathVariable String internalName,
 			@PathVariable long userID) throws IOException, DocumentException {
-		User user = userRepository.findByUsername(username);
+		User user = userRepository.findByInternalName(userInternalName);
 		Course course = courseRepository.findByInternalName(internalName);
 
 		Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"), "files/documents/certificates/" + userID + "/");
@@ -184,7 +184,6 @@ model.addAttribute("userID", user.getUserID());
 		File file;
 
 		if (!Files.exists(pdf)) {
-			Files.createDirectories(pdf);
 			file = new File(FILES_FOLDER.toFile(), fileName);
 			FileOutputStream fileout = new FileOutputStream(file);
 
