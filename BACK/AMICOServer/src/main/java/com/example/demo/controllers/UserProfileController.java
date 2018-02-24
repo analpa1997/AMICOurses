@@ -3,6 +3,7 @@ package com.example.demo.controllers;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -21,18 +22,38 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.course_package.Course;
+import com.example.demo.course_package.CourseRepository;
+import com.example.demo.skill_package.Skill;
+import com.example.demo.subject_package.Subject;
 import com.example.demo.user_package.User;
 import com.example.demo.user_package.UserRepository;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.draw.VerticalPositionMark;
 
 @Controller
 public class UserProfileController {
-	
+
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private CourseRepository courseRepository;
+
 	@RequestMapping("/profile/{username}")
 	public String viewProfile(Model model, @PathVariable String username) {
-		
+
 		User user = userRepository.findByUsername(username);
 
 		model.addAttribute("userFirstName", user.getUserFirstName());
@@ -50,35 +71,37 @@ public class UserProfileController {
 
 		return "HTML/Profile/userProfile";
 	}
-	
-	//Requets from form
+
+	// Requets from form
 	@RequestMapping(value = "/profile/{username}/updated", method = RequestMethod.POST)
-	public ModelAndView updated(Model model, User userUpdated, @PathVariable String username, @RequestParam("profileImage") MultipartFile file) {
-		
+	public ModelAndView updated(Model model, User userUpdated, @PathVariable String username,
+			@RequestParam("profileImage") MultipartFile file) {
+
 		User user = userRepository.findByUsername(username);
-		
-		/*Image uploading controll. If a profile image exists, it is overwritten*/
-		/* If there is not file the imageName wont change*/
-		if (!file.isEmpty()) { 
+
+		/* Image uploading controll. If a profile image exists, it is overwritten */
+		/* If there is not file the imageName wont change */
+		if (!file.isEmpty()) {
 			try {
-				Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"), "files/image/users/" + user.getUserID() + "/");
+				Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"),
+						"files/image/users/" + user.getUserID() + "/");
 				if (!Files.exists(FILES_FOLDER)) {
 					Files.createDirectories(FILES_FOLDER);
 				}
-				
+
 				String fileName = "profile-" + user.getUserID() + ".jpg";
 
 				File uploadedFile = new File(FILES_FOLDER.toFile(), fileName);
 				file.transferTo(uploadedFile);
 				user.setUrlProfileImage(fileName);
-				
+
 			} catch (IOException e) {
 				System.out.println(e.getMessage());
 			}
 		}
-		
-		/* End of the image upload section*/
-			
+
+		/* End of the image upload section */
+
 		user.setUserFirstName(userUpdated.getUserFirstName());
 		user.setUserLastName(userUpdated.getUserLastName());
 		user.setUsername(userUpdated.getUsername());
@@ -88,16 +111,16 @@ public class UserProfileController {
 		user.setCountry(userUpdated.getCountry());
 		user.setPhoneNumber(userUpdated.getPhoneNumber());
 		user.setInterests(userUpdated.getInterests());
-		
+
 		userRepository.save(user);
-		
-		return new ModelAndView("redirect:/profile/"+ user.getUsername());
+
+		return new ModelAndView("redirect:/profile/" + user.getUsername());
 	}
-	
-	//Requets to form
+
+	// Requets to form
 	@RequestMapping("/profile/{username}/update")
 	public String update(Model model, @PathVariable String username) {
-		
+
 		User user = userRepository.findByUsername(username);
 
 		model.addAttribute("interests", user.getInterests());
@@ -113,24 +136,142 @@ public class UserProfileController {
 		model.addAttribute("city", user.getCity());
 		model.addAttribute("country", user.getCountry());
 		model.addAttribute("phoneNumber", user.getPhoneNumber());
-		
+
 		return "HTML/Profile/profile-update";
 	}
-	
+
 	@RequestMapping("/profileimg/{userInternalName}")
-	public void getProfileImage (@PathVariable String userInternalName, HttpServletResponse res) throws FileNotFoundException, IOException{
+	public void getProfileImage(@PathVariable String userInternalName, HttpServletResponse res)
+			throws FileNotFoundException, IOException {
 		User user = userRepository.findByInternalName(userInternalName);
-		Path FILES_FOLDER =  Paths.get(System.getProperty("user.dir"), "files/image/users/" + user.getUserID() + "/");
-		
+		Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"), "files/image/users/" + user.getUserID() + "/");
+
 		Path image = FILES_FOLDER.resolve(user.getUrlProfileImage());
-		
+
 		if (!Files.exists(image)) {
-			image =  Paths.get(System.getProperty("user.dir"), "files/image/users/default/default.jpg");
+			image = Paths.get(System.getProperty("user.dir"), "files/image/users/default/default.jpg");
 		}
 
 		res.setContentType("image/jpeg");
 		res.setContentLength((int) image.toFile().length());
 		FileCopyUtils.copy(Files.newInputStream(image), res.getOutputStream());
+
+	}
+
+	@RequestMapping(value = "/profile/{username}/certificate/{internalName}-{userID}", method = RequestMethod.GET)
+	public void downloadPdf(HttpServletResponse res, @PathVariable String username, @PathVariable String internalName,
+			@PathVariable long userID) throws IOException, DocumentException {
+		User user = userRepository.findByUsername(username);
+		Course course = courseRepository.findByInternalName(internalName);
+
+		Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"), "files/documents/certificates/" + userID + "/");
+		if (!Files.exists(FILES_FOLDER)) {
+			Files.createDirectories(FILES_FOLDER);
+		}
+
+		String fileName = course.getInternalName() + "-" + user.getUserID() + ".pdf";
+
+		Path pdf = FILES_FOLDER.resolve(fileName);
+		File file;
+
+		if (!Files.exists(pdf)) {
+			Files.createDirectories(pdf);
+			file = new File(FILES_FOLDER.toFile(), fileName);
+			FileOutputStream fileout = new FileOutputStream(file);
+
+			Document document = new Document();
+			PdfWriter.getInstance(document, fileout);
+			document.addTitle("Certificate: " + course.getName());
+
+			document.open();
+
+			// Here is the content of the PDF
+
+			Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
+			Font fontHeader = FontFactory.getFont(FontFactory.COURIER, 24, BaseColor.BLACK);
+
+			Chunk glue = new Chunk(new VerticalPositionMark());
+			Paragraph p = new Paragraph("AMICOurses Certification");
+			p.add(new Chunk(glue));
+			p.add(course.getEndDateString());
+
+			document.add(p);
+			document.add(Chunk.NEWLINE);
+			document.add(Chunk.NEWLINE);
+			document.add(Chunk.NEWLINE);
+
+			String pTwo = "We are glad to certificate than our student " + user.getUserFirstName() + " "
+					+ user.getUserLastName() + " have passed our course:";
+			p = new Paragraph(pTwo);
+
+			document.add(p);
+			document.add(Chunk.NEWLINE);
+
+			p = new Paragraph(course.getName(), fontHeader);
+			p.setAlignment(Element.ALIGN_CENTER);
+
+			document.add(p);
+			document.add(Chunk.NEWLINE);
+
+			p = new Paragraph("Language: " + course.getCourseLanguage());
+			p.setAlignment(Element.ALIGN_CENTER);
+
+			document.add(p);
+			document.add(Chunk.NEWLINE);
+
+			p = new Paragraph(course.getCourseDescription());
+
+			document.add(p);
+			document.add(Chunk.NEWLINE);
+
+			// Create table for subjects in the course
+
+			PdfPTable table = new PdfPTable(2);
+			table.setHorizontalAlignment(Element.ALIGN_CENTER);
+			table.setWidthPercentage(80);
+			PdfPCell cell = new PdfPCell(new Phrase("Subjects of the course"));
+			table.addCell(cell);
+
+			// Create a row for subject
+
+			int i = 1;
+			for (Subject s : course.getSubjects()) {
+				table.addCell(new PdfPCell(new Phrase(i)));
+				table.addCell(new PdfPCell(new Phrase(s.getName())));
+				i++;
+			}
+
+			document.add(table);
+
+			// Create table for skills in the course
+
+			table = new PdfPTable(3);
+			table.setHorizontalAlignment(Element.ALIGN_CENTER);
+			table.setWidthPercentage(80);
+			cell = new PdfPCell(new Phrase("Skills of the course"));
+			table.addCell(cell);
+
+			// Create a row for skill
+
+			i = 1;
+			for (Skill s : course.getSkills()) {
+				table.addCell(new PdfPCell(new Phrase(i)));
+				table.addCell(new PdfPCell(new Phrase(s.getSkillName())));
+				table.addCell(new PdfPCell(new Phrase(s.getSkillDescription())));
+				i++;
+			}
+
+			document.add(table);
+			document.close();
+		} else {
+			file = pdf.toFile();
+		}
+
+		Path filePath = pdf;
+		res.addHeader("Content-Disposition", String.format("inline; filename=\"" + file.getName() + "\""));
+		res.setContentType("application/octet-stream");
+		res.setContentLength((int) filePath.toFile().length());
+		FileCopyUtils.copy(Files.newInputStream(filePath), res.getOutputStream());
 
 	}
 }
