@@ -126,9 +126,9 @@ var numPageDisplay = 0;
                 '<div class ="row">' +
             	'<div class="col-md-6 col-sm-12 col-12">' +
             	'<div>Start date: ' + course.startDateString + '</div>' +
-            	'<div>Number of users</div></div>' +
+            	'<div>End date: ' + course.endDateString + '</div></div>' +
             	'<div class="col-md-6 col-sm-12 col-12">' +
-            	'<div>End date: ' + course.endDateString + '</div>' +
+            	'<div>Number of users</div>' +
             	'<div>' + course.numberOfUsers + '</div></div></div>' + 
                 '</div></div></div>');
 	}
