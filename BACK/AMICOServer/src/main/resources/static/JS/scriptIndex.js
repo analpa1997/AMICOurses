@@ -115,11 +115,11 @@ var numPageDisplay = 0;
 	function addHTML(course){
 		$('#allCourses').append('<div class="col-lg-6 col-md-12 col-sm-12 col-12">' + 
 				  '<div class="p-3" align=center>' + 
-				  '<a id = "link-course" href="./course/' + course.internalName + '.html">' +
+				  '<a id = "link-course" href="./course/' + course.internalName + '">' +
 				  '<h2 class="display-4">' + course.name + '</h2>' +
 				  '</a><p class="lead">' + course.courseDescription + '</p>' + 
 				  '<div class="container">'+ 
-				  '<a href="../course/' + course.internalName + '.html">'+ 
+				  '<a href="../course/' + course.internalName + '">'+ 
 				  '<img class="img-fluid rounded-circle imgCourse" src="/courses/img/' + course.courseID + '" alt=" " >'+
                 '</a>'+
                 '<div class="mt-3 &nbsp"></div>'+

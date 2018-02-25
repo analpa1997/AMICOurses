@@ -74,6 +74,7 @@ public class CourseInformationController {
 		model.addAttribute("startDateString", startDateString);
 		model.addAttribute("endDateString", endDateString);
 		model.addAttribute("urlImage", course.getOriginalName());
+		model.addAttribute("courseID", course.getCourseID());
 
 		return "HTML/courseInformation/course";
 	}
