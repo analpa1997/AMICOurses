@@ -34,10 +34,11 @@
             }
         }
         window.onload = function() {
-            //show('tables');
+            show('tables');
             show('teacher');
             show('course');
             show('subject');
+            show('tables');
         }
 
     </script>
@@ -53,7 +54,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                    <a class="nav-link active" onclick="show('tables')">
+                    <a class="nav-link " onclick="show('tables')">
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text">Tables</span>
           </a>
@@ -70,13 +71,14 @@
                         <li>
                             <a class="nav-link" onclick="show('course')">Add Course</a>
                         </li>
-                        <li>
+                       <!--  <li>
                             <a class="nav-link" onclick="show('subject')">Add Subject</a>
-                        </li>
+                        </li> 
+                        -->
                     </ul>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
-                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
+      <!--              <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-file"></i>
             <span class="nav-link-text">My Web</span>
           </a>
@@ -103,8 +105,10 @@
                             <a href="forgot-password.html">Profile Page</a>
                         </li>
                     </ul>
+                    --> 
                 </li>
             </ul>
+             
             <ul class="navbar-nav sidenav-toggler">
                 <li class="nav-item">
                     <a class="nav-link text-center" id="sidenavToggler">
@@ -141,6 +145,7 @@
                                                 <th>Start Date</th>
                                                 <th>End Date</th>
                                                 <th>Description</th>
+                                                <th>Enter </th>
                                                 <th>Save </th>
                                                 <th>Delete</th>
                                             </tr>
@@ -160,6 +165,7 @@
                                                 <td contenteditable="true"><label size = "2">{{startDateString}}</label></td>
                                                 <td contenteditable="true"><label size = "30">{{endDateString}}</label></td>
                                                 <td contenteditable="true"><input type = "text" size = "50" value = "{{courseDescription}}" name = "newDescription"></td>
+                                                <td><a class = "btn btn-primary" href = "/course-overview/{{internalName}}">Enter</a> </td>
                                                 <td> <button type = "submit" name = "btnSave" >Save</button> </td>
                                                 <td> <button type = "submit" name = "btnDelete">Delete</button> </td>
                                                 </form>
@@ -204,37 +210,28 @@
                                                 <th>City</th>
                                                 <th>Address</th>
                                                 <th>Phone</th>
+                                                <th>Delete </th>
 
                                             </tr>
                                         </thead>
-                                        <tfoot>
-                                            <tr>
-                                                <th>Image</th>
-                                                <th>Username</th>
-                                                <th>Name</th>
-                                                <th>Surname</th>
-                                                <th>Mail</th>
-                                                <th>Country</th>
-                                                <th>City</th>
-                                                <th>Address</th>
-                                                <th>Phone</th>
-                                            </tr>
-                                        </tfoot>
+                                        
                                         <tbody>
+                                        {{#teachers}}
                                             <tr>
                                                 <td>
-                                                    <div class="img-container"><img class="rounded-circle" src="matematicas-para-gatos.jpg"></div>
+                                                    <div class="img-container"><img class="rounded-circle" src="/profileimg/{{internalName}}"></div>
                                                 </td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>61</td>
-                                                <td>2011/04/25</td>
-                                                <td>$320,800</td>
-                                                <td>2011/04/25</td>
-                                                <td>$320,800</td>
-                                                <td>$320,800</td>
+                                                <td>{{username}}</td>
+                                                <td>{{userFirstName}}</td>
+                                                <td>{{userLastName}}</td>
+                                                <td>{{userMail}}</td>
+                                                <td>{{country}}</td>
+                                                <td>{{city}}</td>
+                                                <td>{{userAddress}}</td>
+                                                <td>{{phoneNumber}}</td>
+                                                <td><a class = "btn btn-secondary" href = "/admin/delete/{{internalName}}" >Delete</a></td>
                                             </tr>
-
+										{{/teachers}}
                                         </tbody>
                                     </table>
                                 </div>
@@ -247,24 +244,27 @@
                         <h2 class="text-center">Add Teacher</h2>
                         <div class="row">
                             <div class="offset-3 col-xs-6 col-sm-6 col-md-6 ">
-                                <form class="form-teacher">
+                                <form class="form-teacher" action = "/admin/create/teacher" method = "post">
                                     <div class="form-group">
                                         <label class="col-lg-1" for="name-input">Name: </label>
-                                        <input class="form-control" type="text" id="name-input" placeholder="Enter name">
+                                        <input class="form-control" type="text" id="name-input" placeholder="Enter name" name = "newName">
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-1 " for="surname-input">Surname: </label>
-                                        <input class="form-control" type="text" id="surname-input" placeholder="Enter surname">
+                                        <input class="form-control" type="text" id="surname-input" placeholder="Enter surname" name = "newSecondName">
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-1 " for="username-input">Username: </label>
-                                        <input class="form-control" type="text" id="username-input" placeholder="Enter username">
+                                        <input class="form-control" type="text" id="username-input" placeholder="Enter username" name = "newUsername">
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-1 " for="email-input">Email: </label>
-                                        <input class="form-control" type="email" id="email-input" placeholder="Enter email">
+                                        <input class="form-control" type="email" id="email-input" placeholder="Enter email" name = "newUserMail">
                                     </div>
-                                    <!----------- Subjets-->
+                                    <div class="form-group">
+                                        <label class="col-lg-1 " for="email-input">Password: </label>
+                                        <input class="form-control" type="password" id="password-input" placeholder="Enter passsword" name = "newPassword">
+                                    </div>
                                     <div class="row">
                                         <button type="submit" class="offset-6 btn form-btn">Submit</button>
                                     </div>
@@ -278,19 +278,30 @@
                         <h2 class="text-center">Add Course</h2>
                         <div class="row">
                             <div class="offset-3 col-xs-6 col-sm-6 col-md-6">
-                                <form class="add-course">
+                                <form class="add-course" action = "/admin/create/course"  method = "post" enctype="multipart/form-data">
                                     <div class="form-group">
                                         <label for="name-input">Name: </label>
-                                        <input class="form-control" type="text" id="name-input" placeholder="Enter name">
+                                        <input class="form-control" type="text" id="name-input" placeholder="Enter name" name = "newName">
 
                                         <label for="startdate-input">Start Date:</label>
-                                        <input class="form-control" type="text" id="startdate-input" placeholder="Enter start date">
+                                        <input class="form-control" type="date" id="startdate-input"  name = "startDate">
 
                                         <label for="finaldate-input">Final Date:</label>
-                                        <input class="form-control" type="text" id="finaldate-input" placeholder="Enter final date">
-
+                                        <input class="form-control" type="date" id="finaldate-input" name = "endDate">
+                                        <label> Language: </label>
+										<input class = "form-control" type = "text" name = "newLanguage" placeholder = "Enter the language">
+										<label> Type: </label>
+										<input class = "form-control" type = "text" name = "newType" placeholder = "Enter the type">
+										<label> Skill 1: </label>
+										<input class = "form-control" type = "text" name = "newSkill1" placeholder = "Enter Skill 1">
+										<label> Skill 2: </label>
+										<input class = "form-control" type = "text" name = "newSkill2" placeholder = "Enter Skill 2 (optional)">
+										<label> Skill 2: </label>
+										<input class = "form-control" type = "text" name = "newSkill3" placeholder = "Enter Skill 3 (optional)">
+										<label class = "mt-4">Photo: </label>
+										<input class = "mb-4" type = "file" name = "courseImage">
                                         <label for="description-input">Description: </label>
-                                        <textarea class="form-control" id="description-input">Description</textarea>
+                                        <textarea class="form-control" id="description-input" name = "newDescription">Description</textarea>
                                         
                                         <!-- Subjets--->
                                         

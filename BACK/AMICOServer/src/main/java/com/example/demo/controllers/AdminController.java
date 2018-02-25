@@ -7,10 +7,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.aspectj.weaver.NewConstructorTypeMunger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.example.demo.course_package.Course;
 import com.example.demo.course_package.CourseRepository;
 import com.example.demo.skill_package.Skill;
+import com.example.demo.skill_package.SkillRepository;
 import com.example.demo.subject_package.Subject;
 import com.example.demo.user_package.SessionUserComponent;
 import com.example.demo.user_package.User;
@@ -49,6 +53,8 @@ public class AdminController {
 	private UserRepository userRepository;
 	@Autowired
 	private CourseRepository courseRepository;
+	@Autowired
+	private SkillRepository skillRepository;
 	
 	@Autowired
 	private SessionUserComponent sessionUserComponent;
@@ -98,20 +104,26 @@ public class AdminController {
 			} else {
 				/* Delete */
 				if (btnDelete != null) {
+					List<Subject> toRemoveS = new ArrayList<> ();
 					for (Subject subjectAct : course.getSubjects()) {
 						subjectAct.setCourse(null);
-						course.getSubjects().remove(subjectAct);
+						toRemoveS.add(subjectAct);
 					}
+					course.getSubjects().removeAll(toRemoveS);
 					
+					List<User> toRemoveU = new ArrayList<> ();
 					for (User userAct : course.getInscribedUsers()) {
 						userAct.getInscribedCourses().remove(course);
-						course.getInscribedUsers().remove(userAct);
+						toRemoveU.add(userAct);
 					}
+					course.getInscribedUsers().removeAll(toRemoveU);
+					
+					List <Skill> toRemoveSkill = new ArrayList<> ();
 					for (Skill skillAct : course.getSkills()) {
 						skillAct.setCourse(null);
-						course.getSkills().remove(skillAct);
+						toRemoveSkill.add(skillAct);
 					}
-					
+					course.getSkills().removeAll(toRemoveSkill);
 					courseRepository.delete(course);
 				}
 			}
@@ -122,7 +134,111 @@ public class AdminController {
 		
 	//}
 		
+		return new ModelAndView("redirect:/admin/");
+	}
+	
+	@RequestMapping (value = "/admin/delete/{userInternalName}")
+	private ModelAndView modifyCourse (@PathVariable String userInternalName) {
+		//User user = sessionUserComponent.getLoggedUser();
+		//if (user != null && user.getRole() == "ROLE_ADMIN") {
+		User userToRemove = userRepository.findByInternalName(userInternalName);
+		
+		List <Course> coursesToRemove = new ArrayList <> ();
+		for (Course courseAct : userToRemove.getInscribedCourses()) {
+			List <Subject> subjectsToRemove = new ArrayList<> ();
+			for (Subject subjectAct : courseAct.getSubjects()) {
+				subjectAct.getTeachers().remove(userToRemove);
+			}
+			userToRemove.getTeaching().removeAll(subjectsToRemove);
+			courseAct.getInscribedUsers().remove(userToRemove);
+			coursesToRemove.add(courseAct);
+		}
+		
+		userToRemove.getInscribedCourses().removeAll(coursesToRemove);
+		userToRemove.getCompletedCourses().removeAll(coursesToRemove);
+		userRepository.delete(userToRemove);
+		
+		//}
 		
 		return new ModelAndView("redirect:/admin/");
 	}
+	
+	@RequestMapping(value = "/admin/create/teacher" , method = RequestMethod.POST)
+	private ModelAndView createTeacher (@RequestParam String newName, @RequestParam String newSecondName, @RequestParam String newUsername, @RequestParam String newUserMail, @RequestParam String newPassword) {  
+		
+		//User user = sessionUserComponent.getLoggedUser();
+		//if (user != null && user.getRole() == "ROLE_ADMIN") {
+		User user = userRepository.findByUsername(newUsername);
+		if (user == null && !newUsername.isEmpty() && !newUserMail.isEmpty() && !newPassword.isEmpty()) {
+			user = new User (newUsername, newPassword, newUserMail, false);
+			user.setUserFirstName(newName);
+			user.setUserLastName(newSecondName);
+			userRepository.save(user);
+		}
+		
+		//}
+	
+		return new ModelAndView("redirect:/admin/");
+	}
+	
+	@RequestMapping (value = "/admin/create/course", method = RequestMethod.POST)
+	private ModelAndView createCourse (@RequestParam String newName, @RequestParam String newLanguage, @RequestParam String newType, @RequestParam String newSkill1, @RequestParam String newSkill2, @RequestParam String newSkill3, @RequestParam Date startDate, @RequestParam Date endDate, @RequestParam String newDescription, @RequestParam("courseImage") MultipartFile file) {
+		
+		//User user = sessionUserComponent.getLoggedUser();
+		//if (user != null && user.getRole() == "ROLE_ADMIN") {
+		Course course = courseRepository.findByName(newName);
+		
+		if (course == null) {
+			if (!newName.isEmpty() && !newLanguage.isEmpty() && !newDescription.isEmpty() && !newType.isEmpty() && !newSkill1.isEmpty()) {
+				course = new Course(newName, newLanguage, newDescription, newType, "" );
+				course.setStartDate(startDate);
+				course.setEndDate(endDate);
+				
+				
+				courseRepository.save(course);
+				course = courseRepository.findByName(course.getName());
+				
+				Skill skill1 = new Skill (newSkill1);
+				skill1.setCourse(course);
+				skillRepository.save(skill1);
+				
+				if (!newSkill2.isEmpty()) {
+					Skill skill2 = new Skill (newSkill2);
+					skill2.setCourse(course);
+					skillRepository.save(skill2);
+				}
+				
+				if (!newSkill3.isEmpty()) {
+					Skill skill3 = new Skill (newSkill3);
+					skill3.setCourse(course);
+					skillRepository.save(skill3);
+				}
+				
+				if (!file.isEmpty()) {
+					try {
+						Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"),
+								"files/image/courses/" + course.getCourseID() + "/");
+						if (!Files.exists(FILES_FOLDER)) {
+							Files.createDirectories(FILES_FOLDER);
+						}
+		
+						String fileName = "course-" + course.getCourseID() + ".jpg";
+		
+						File uploadedFile = new File(FILES_FOLDER.toFile(), fileName);
+						file.transferTo(uploadedFile);
+					} catch (IOException e) {
+						System.out.println(e.getMessage());
+					}
+				}
+			}
+		}
+		
+		//}
+		
+		
+		return new ModelAndView("redirect:/admin/");
+	}
+
+	
+	
 }
