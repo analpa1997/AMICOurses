@@ -64,7 +64,7 @@ public class UserProfileController {
 		model.addAttribute("phoneNumber", user.getPhoneNumber());
 		model.addAttribute("isStudent", user.isStudent());
 		model.addAttribute("urlProfileImage", user.getUrlProfileImage());
-		model.addAttribute("inscribedCourses", user.getInscribedCourses());
+		model.addAttribute("inscribedCourses", user.getCurrentCourses());
 		model.addAttribute("completedCourses", user.getCompletedCourses());
 		model.addAttribute("interests", user.getInterests());
 		model.addAttribute("internalName", user.getInternalName());
@@ -139,7 +139,6 @@ public class UserProfileController {
 		model.addAttribute("userMail", user.getUserMail());
 		model.addAttribute("password", user.getPassword());
 		model.addAttribute("userAddress", user.getUserAddress());
-		model.addAttribute("role", user.getRole());
 		model.addAttribute("isStudent", user.isStudent());
 		model.addAttribute("urlProfileImage", user.getUrlProfileImage());
 		model.addAttribute("city", user.getCity());

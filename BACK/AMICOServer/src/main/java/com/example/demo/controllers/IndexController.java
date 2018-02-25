@@ -80,13 +80,13 @@ public class IndexController {
 		if (sessionUserComponent.isLoggedUser()) {
 			model.addAttribute("labelLogIn", "My Profile");
 			model.addAttribute("labelSignUp", "Log Out");
-			model.addAttribute("urlLabelSignUp", "./profile/" + sessionUserComponent.getLoggedUser().getUsername());
+			model.addAttribute("urlLabelSignUp", "./profile/" + sessionUserComponent.getLoggedUser().getInternalName());
 			model.addAttribute("urlLabelLogIn", "/");
 		} else {
-			model.addAttribute("labelLogIn", "Log In");
-			model.addAttribute("labelSignUp", "Sign Up");
-			model.addAttribute("urlLabelSignUp", "./signup");
-			model.addAttribute("urlLabelLogIn", "./login");
+			model.addAttribute("labelLogIn", "Sign Up");
+			model.addAttribute("labelSignUp", "Login");
+			model.addAttribute("urlLabelSignUp", "/signup");
+			model.addAttribute("urlLabelLogIn", "/login");
 		}
 
 		model.addAttribute("courseList", p);
@@ -94,20 +94,14 @@ public class IndexController {
 		return "HTML/index";
 	}
 
-	@RequestMapping("/login.html")
+	@RequestMapping("/login")
 	public String login(Model model) {
 		return "HTML/LogIn/login";
 	}
 
-	@RequestMapping("/signup.html")
+	@RequestMapping("/signup")
 	public String signup(Model model) {
 		return "HTML/LogIn/signup";
-	}
-
-	@RequestMapping("/profile/{username}.html")
-	public String goToProfile(Model model, @PathVariable String username) {
-		User user = sessionUserComponent.getLoggedUser();
-		return "HTML/Profile/userProfile";
 	}
 
 	// @RequestMapping("/searchByName")

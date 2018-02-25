@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
@@ -27,7 +29,7 @@ import com.example.demo.user_package.UserRepository;
 
 @Component
 @Order(1)
-public class DataLoaderExample implements CommandLineRunner {
+public class DataLoaderExample {
 
 	@Autowired
 	private CourseRepository courseRepository;
@@ -46,8 +48,8 @@ public class DataLoaderExample implements CommandLineRunner {
 	@Autowired
 	private SubjectRepository subjectRepository;
 
-	@Override
-	public void run(String... arg0) throws Exception {
+	@PostConstruct
+	public void init() {
 
 		List<Course> courses = new ArrayList<>();
 
@@ -124,23 +126,28 @@ public class DataLoaderExample implements CommandLineRunner {
 
 		for (int i = 0; i < 35; i++) {
 			courses.get(0).getInscribedUsers().add(users.get(i));
+			users.get(i).getInscribedCourses().add(courses.get(0));
 
 		}
 
 		for (int i = 0; i < 20; i++) {
 			courses.get(1).getInscribedUsers().add(users.get(i));
+			users.get(i).getInscribedCourses().add(courses.get(1));
 		}
 
 		for (int i = 30; i < 50; i++) {
 			courses.get(2).getInscribedUsers().add(users.get(i));
+			users.get(i).getInscribedCourses().add(courses.get(2));
 		}
 
 		for (int i = 0; i < 18; i++) {
 			courses.get(3).getInscribedUsers().add(users.get(i));
+			users.get(i).getInscribedCourses().add(courses.get(3));
 		}
 
 		for (int i = 20; i < 35; i++) {
 			courses.get(4).getInscribedUsers().add(users.get(i));
+			users.get(i).getInscribedCourses().add(courses.get(4));
 		}
 
 		users.add(new User("amico", "pass", "amicourses@mail.com", true));
@@ -152,22 +159,33 @@ public class DataLoaderExample implements CommandLineRunner {
 		users.add(new User("amicoTeacher6", "pass", "amicoTeacher6@mail.com", false));
 
 		courses.get(0).getInscribedUsers().add(users.get(50));
+		users.get(50).getInscribedCourses().add(courses.get(0));
 		courses.get(1).getInscribedUsers().add(users.get(50));
+		users.get(50).getInscribedCourses().add(courses.get(1));
 		courses.get(2).getInscribedUsers().add(users.get(50));
+		users.get(50).getInscribedCourses().add(courses.get(2));
 		courses.get(3).getInscribedUsers().add(users.get(50));
+		users.get(50).getInscribedCourses().add(courses.get(3));
 		courses.get(4).getInscribedUsers().add(users.get(50));
+		users.get(50).getInscribedCourses().add(courses.get(4));
 		courses.get(5).getInscribedUsers().add(users.get(50));
+		users.get(50).getInscribedCourses().add(courses.get(5));
 
 		courses.get(0).getInscribedUsers().add(users.get(51));
+		users.get(51).getInscribedCourses().add(courses.get(0));
 		courses.get(1).getInscribedUsers().add(users.get(51));
+		users.get(51).getInscribedCourses().add(courses.get(1));
 		courses.get(2).getInscribedUsers().add(users.get(51));
+		users.get(51).getInscribedCourses().add(courses.get(2));
 		courses.get(3).getInscribedUsers().add(users.get(51));
+		users.get(51).getInscribedCourses().add(courses.get(3));
 		courses.get(4).getInscribedUsers().add(users.get(51));
+		users.get(51).getInscribedCourses().add(courses.get(4));
 		courses.get(5).getInscribedUsers().add(users.get(51));
+		users.get(51).getInscribedCourses().add(courses.get(5));
 
 		users.get(50).setCity("New York");
 		users.get(50).setCountry("United States of America");
-		users.get(50).setRole("Play Fortnite");
 		users.get(50).setUserAddress("Under the Brooklyn Bridge");
 		users.get(50).setUserFirstName("Amico");
 		users.get(50).setUserLastName("Fernandez");
@@ -215,9 +233,9 @@ public class DataLoaderExample implements CommandLineRunner {
 
 		// users.get(50).getCompletedCourses().addAll(completed);
 
-		userRepository.save(users);
-
 		courseRepository.save(courses);
+		
+		userRepository.save(users);
 
 		/*
 		 * List<Message> messages = new ArrayList<> (); for (int i = 0; i < 5; i++){

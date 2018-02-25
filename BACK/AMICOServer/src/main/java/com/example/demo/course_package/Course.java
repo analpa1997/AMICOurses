@@ -58,7 +58,7 @@ public class Course {
 	private boolean isCompleted;
 
 	@JsonIgnore
-	@ManyToMany (fetch = FetchType.EAGER)
+	@ManyToMany(mappedBy="inscribedCourses", fetch = FetchType.LAZY)
 	private List<User> inscribedUsers = new ArrayList<>();
 	@JsonIgnore
 	@OneToMany(mappedBy = "course")

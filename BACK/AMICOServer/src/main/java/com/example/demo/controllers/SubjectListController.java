@@ -36,8 +36,7 @@ public class SubjectListController {
 	@RequestMapping("/course-overview/{courseInternalName}")
 	public String allCourses(Model model, @PathVariable String courseInternalName) {
 
-		//User user = sessionUserComponent.getLoggedUser();
-		User user = userRepository.findByInternalName("amicoteacher");
+		User user = sessionUserComponent.getLoggedUser();
 		if (user != null) {
 			Course actualCourse = null;
 			for (Course course : user.getInscribedCourses()) {

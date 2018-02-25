@@ -1,15 +1,20 @@
 package com.example.demo.user_package;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.example.demo.course_package.Course;
 import com.example.demo.subject_package.Subject;
@@ -45,18 +50,18 @@ public class User {
 	private String interests;
 
 	private String urlProfileImage;
-	@ManyToMany(mappedBy="inscribedUsers")
+	@ManyToMany
 	private List<Course> inscribedCourses = new ArrayList<>();
 	
 	private boolean isStudent;
-	
-	/* The rights the user will have*/
-	private String role;
 	
 	private String internalName;
 	
 	@ManyToMany (mappedBy="teachers")
 	private List <Subject> teaching = new ArrayList <> ();
+
+	@ElementCollection(fetch = FetchType.EAGER)
+	private List<String> roles;
 	
 	/* Constructors 
 
@@ -67,7 +72,7 @@ public class User {
 	public User(String username, String password, String userMail, boolean isStudent) {
 		super();
 		this.username = username;
-		this.password = password;
+		this.password = new BCryptPasswordEncoder().encode(password);;
 		this.userMail = userMail;
 		this.isStudent = isStudent;
 		this.urlProfileImage = "null";
@@ -80,7 +85,7 @@ public class User {
 		this.country = "";
 		this.phoneNumber = 00000000;
 		this.interests = "";
-		
+		this.roles = new ArrayList<>(Arrays.asList("ROLE_USER"));
 	}
 	
 	/* Methods */
@@ -184,8 +189,12 @@ public class User {
 	}
 	
 	public List<Course> getInscribedCourses() {
+		return inscribedCourses;
+	}
+	
+	public List<Course> getCurrentCourses() {
 		List<Course> notCompletedCourses = new ArrayList <>();
-		for (Course course : inscribedCourses) {
+		for (Course course : this.inscribedCourses) {
 			if (!course.isCompleted()) {
 				notCompletedCourses.add(course);
 			}
@@ -215,14 +224,6 @@ public class User {
 		this.isStudent = isStudent;
 	}
 
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
-
 	public String getInternalName() {
 		return internalName;
 	}
@@ -237,6 +238,27 @@ public class User {
 
 	public void setTeaching(List<Subject> teaching) {
 		this.teaching = teaching;
+	}
+
+	public List<String> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
+	}
+	
+	@Override
+	public boolean equals (Object obj2) {
+		
+		boolean sameObj = false;
+
+        if (obj2 != null && obj2 instanceof User)
+        {
+        	sameObj = (this.userID == ((User) obj2).userID);
+        }
+		return sameObj;
+		
 	}
 
 }
