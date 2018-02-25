@@ -124,6 +124,7 @@ public class DataLoaderExample implements CommandLineRunner {
 
 		for (int i = 0; i < 35; i++) {
 			courses.get(0).getInscribedUsers().add(users.get(i));
+		
 		}
 
 		for (int i = 0; i < 20; i++) {
@@ -281,18 +282,19 @@ public class DataLoaderExample implements CommandLineRunner {
 		practices.get(0).setOwner(users.get(50));
 		practices.get(0).setCalification(7.3);
 		practices.get(0).setPresented(true);
-		practices.get(0).setCorriged(true);
+		practices.get(0).setCorrected(true);
 		practices.get(0).setStudyItem(studyItems.get(studyItems.size()-2));
 		studyItems.get(studyItems.size()-2).getPractices().add(practices.get(0));
 		
-		practices.add(new Practices("practice 1", "practice-1.txt"));
-		practices.get(1).setOwner(users.get(30));
+		practices.add(new Practices("practice 1", "practice-2.txt"));
+		practices.get(1).setOwner(users.get(5));
 		practices.get(1).setCalification(5.25);
+		practices.get(1).setCorrected(true);
 		practices.get(1).setPresented(true);
 		practices.get(1).setStudyItem(studyItems.get(studyItems.size()-2));
 		studyItems.get(studyItems.size()-2).getPractices().add(practices.get(1));
 		
-		practices.add(new Practices("practice 2", "practice-1.txt"));
+		practices.add(new Practices("practice 2", "practice-3.txt"));
 		practices.get(2).setOwner(users.get(5));
 		practices.get(2).setPresented(true);
 		practices.get(2).setStudyItem(studyItems.get(studyItems.size()-1));
