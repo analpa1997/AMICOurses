@@ -11,13 +11,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.course_package.Course;
 import com.example.demo.course_package.CourseRepository;
 import com.example.demo.user_package.SessionUserComponent;
-import com.example.demo.user_package.User;
 import com.example.demo.user_package.UserRepository;
 
 @Controller
@@ -60,33 +58,20 @@ public class IndexController {
 			if (!types.contains(course.getType()))
 				types.add(course.getType());
 		}
-		List<String> lengthCourse = new ArrayList<>();
-		for (Course course : courseRepository.findAll()) {
-			long duration = (course.getEndDate().getTime() - course.getStartDate().getTime());
-			String lengthCourseString = "";
-			long aux = duration / 3600000;
-			long dayDiff = (aux / 24) & 30, yearDiff = course.getEndDate().getYear() - course.getStartDate().getYear(),
-					monthDiff = (aux & 365) & 12;
-			if (yearDiff > 0)
-				lengthCourseString += yearDiff + " years, ";
-			if (monthDiff > 0)
-				lengthCourseString += monthDiff + " months, ";
-			if (dayDiff > 0)
-				lengthCourseString += dayDiff + " days";
-			if (!lengthCourse.contains(lengthCourseString)) {
-				lengthCourse.add(lengthCourseString);
-			}
-		}
 		if (sessionUserComponent.isLoggedUser()) {
 			model.addAttribute("labelLogIn", "My Profile");
 			model.addAttribute("labelSignUp", "Log Out");
 			model.addAttribute("urlLabelSignUp", "./profile/" + sessionUserComponent.getLoggedUser().getInternalName());
-			model.addAttribute("urlLabelLogIn", "/");
+			model.addAttribute("urlLabelLogIn", "/logOut");
+			model.addAttribute("linkGetStarted", "/profile/" + sessionUserComponent.getLoggedUser().getInternalName());
+			model.addAttribute("textGetStarted", "Go to my profile");
 		} else {
-			model.addAttribute("labelLogIn", "Sign Up");
-			model.addAttribute("labelSignUp", "Login");
+			model.addAttribute("labelLogIn", "Log In");
+			model.addAttribute("labelSignUp", "Sign Up");
 			model.addAttribute("urlLabelSignUp", "/signup");
 			model.addAttribute("urlLabelLogIn", "/login");
+			model.addAttribute("linkGetStarted", "/login");
+			model.addAttribute("textGetStarted", "Get Started Now");
 		}
 
 		model.addAttribute("courseList", p);
@@ -98,7 +83,6 @@ public class IndexController {
 	public String login(Model model) {
 		return "HTML/LogIn/login";
 	}
-
 
 	// @RequestMapping("/searchByName")
 	/*
