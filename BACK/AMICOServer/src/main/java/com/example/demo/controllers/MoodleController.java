@@ -486,7 +486,7 @@ public class MoodleController {
 
 						if (practice != null && (!user.isStudent())) {
 							practice.setCalification(newCalification);
-							practice.setCorriged(true);
+							practice.setCorrected(true);
 							practicesRepository.save(practice);
 						}
 					}

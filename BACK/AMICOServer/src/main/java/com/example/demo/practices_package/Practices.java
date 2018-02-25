@@ -37,7 +37,7 @@ public class Practices {
 	
 	private boolean presented;
 	
-	private boolean corriged;
+	private boolean corrected;
 	
 	
 	/* Constructors */
@@ -49,7 +49,7 @@ public class Practices {
 		this.originalName = originalName;
 		this.calification = 0d;
 		this.presented = false;
-		this.setCorriged(false);
+		this.setCorrected(false);
 	}
 
 	/* Methods */
@@ -131,12 +131,12 @@ public class Practices {
 		this.presented = presented;
 	}
 
-	public boolean isCorriged() {
-		return corriged;
+	public boolean isCorrected() {
+		return corrected;
 	}
 
-	public void setCorriged(boolean corriged) {
-		this.corriged = corriged;
+	public void setCorrected(boolean corriged) {
+		this.corrected = corriged;
 	}
 
 	

@@ -281,7 +281,7 @@ public class DataLoaderExample implements CommandLineRunner {
 		practices.get(0).setOwner(users.get(50));
 		practices.get(0).setCalification(7.3);
 		practices.get(0).setPresented(true);
-		practices.get(0).setCorriged(true);
+		practices.get(0).setCorrected(true);
 		practices.get(0).setStudyItem(studyItems.get(studyItems.size()-2));
 		studyItems.get(studyItems.size()-2).getPractices().add(practices.get(0));
 		
