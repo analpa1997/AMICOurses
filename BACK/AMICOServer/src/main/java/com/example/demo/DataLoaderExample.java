@@ -124,7 +124,7 @@ public class DataLoaderExample implements CommandLineRunner {
 
 		for (int i = 0; i < 35; i++) {
 			courses.get(0).getInscribedUsers().add(users.get(i));
-		
+
 		}
 
 		for (int i = 0; i < 20; i++) {
@@ -172,6 +172,10 @@ public class DataLoaderExample implements CommandLineRunner {
 		users.get(50).setUserFirstName("Amico");
 		users.get(50).setUserLastName("Fernandez");
 		users.get(50).setInterests("Sleeping and watching tv.");
+
+		for (Course c : courses) {
+			c.setNumberOfUsers(c.getInscribedUsers().size());
+		}
 
 		List<Subject> subjects = new ArrayList<>();
 		subjects.add(new Subject("History of AI", "A short history for the AI"));
@@ -258,12 +262,12 @@ public class DataLoaderExample implements CommandLineRunner {
 		studyItems.add(new StudyItem("", "Theme 5 exercicies", 3, "studyItem-9", "theme-5-ex.txt"));
 		studyItems.add(new StudyItem("", "Theme 6", 3, "studyItem-10", "theme-6.txt"));
 		studyItems.add(new StudyItem("video", "Theme 6 exercicies", 3, "studyItem-11", "theme-6-ex.txt"));
-		
+
 		studyItems.add(new StudyItem("pdf", "Practice 1", -1, "studyItem-12", "Practice 1.txt"));
-		studyItems.get(studyItems.size()-1).setPractice(true);
-		
+		studyItems.get(studyItems.size() - 1).setPractice(true);
+
 		studyItems.add(new StudyItem("pdf", "Practice 2", -1, "studyItem-13", "Practice 2.txt"));
-		studyItems.get(studyItems.size()-1).setPractice(true);
+		studyItems.get(studyItems.size() - 1).setPractice(true);
 
 		/* There are 3 modules */
 		subjects.get(0).addModule();
@@ -283,24 +287,23 @@ public class DataLoaderExample implements CommandLineRunner {
 		practices.get(0).setCalification(7.3);
 		practices.get(0).setPresented(true);
 		practices.get(0).setCorrected(true);
-		practices.get(0).setStudyItem(studyItems.get(studyItems.size()-2));
-		studyItems.get(studyItems.size()-2).getPractices().add(practices.get(0));
-		
+		practices.get(0).setStudyItem(studyItems.get(studyItems.size() - 2));
+		studyItems.get(studyItems.size() - 2).getPractices().add(practices.get(0));
+
 		practices.add(new Practices("practice 1", "practice-2.txt"));
 		practices.get(1).setOwner(users.get(5));
 		practices.get(1).setCalification(5.25);
 		practices.get(1).setCorrected(true);
 		practices.get(1).setPresented(true);
-		practices.get(1).setStudyItem(studyItems.get(studyItems.size()-2));
-		studyItems.get(studyItems.size()-2).getPractices().add(practices.get(1));
-		
+		practices.get(1).setStudyItem(studyItems.get(studyItems.size() - 2));
+		studyItems.get(studyItems.size() - 2).getPractices().add(practices.get(1));
+
 		practices.add(new Practices("practice 2", "practice-3.txt"));
 		practices.get(2).setOwner(users.get(5));
 		practices.get(2).setPresented(true);
-		practices.get(2).setStudyItem(studyItems.get(studyItems.size()-1));
-		studyItems.get(studyItems.size()-1).getPractices().add(practices.get(2));
-		
-		
+		practices.get(2).setStudyItem(studyItems.get(studyItems.size() - 1));
+		studyItems.get(studyItems.size() - 1).getPractices().add(practices.get(2));
+
 		practicesRepository.save(practices);
 		studyItemRepository.save(studyItems);
 
