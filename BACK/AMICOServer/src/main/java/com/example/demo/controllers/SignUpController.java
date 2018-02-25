@@ -30,7 +30,7 @@ public class SignUpController {
 			@RequestParam String password, @RequestParam String repeatPassword) {
 		
 		if(passwordMatch(password, repeatPassword) && correctName(username)&& isValidEmailAddress(userMail)
-				&& (userRepository.findByUsername(username) == null) ){
+				&& (userRepository.findByUsername(username) == null) &&  (userRepository.findByUserMail(userMail) == null)){
 			User u = new User(username, password, userMail, true);
 			userRepository.save(u);
 			
