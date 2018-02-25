@@ -86,7 +86,7 @@
 						<li class="nav-item"><a class="nav-link level-1"
 							data-toggle="tab" href="#progress">Progress</a></li>
 						<li class="nav-item"><a class="nav-link level-1"
-							data-toggle="tab" href="#teachers">Teachers</a></li>
+							data-toggle="tab" href="#teachers">{{^isTeacher}}Teachers:{{/isTeacher}} {{#isTeacher}} Students {{/isTeacher}}</a></li>
 
 						<li class="nav-item hidden-link"><a class="nav-link level-1"
 							data-toggle="tab" id="mail-pane-opener" href="#mailPane"></a></li>
@@ -285,18 +285,18 @@
 						</div>
 						<!-- Teachers tab -->
 						<div class="tab-pane" id="teachers" role="tabpanel">
-							<span class="pl-3 py-1 tab-title"> Teachers:</span>
+							<span class="pl-3 py-1 tab-title"> {{^isTeacher}}Teachers:{{/isTeacher}} {{#isTeacher}} Students {{/isTeacher}}</span>
 							<ul class="list-group">
+							{{#usersToShowList}}
 								<!-- Item -->
-								<a class="item-content" href="#">
-									<li class="list-group-item"><span
-										class="fa fa-user-circle pl-5"></span> Teacher One Profile</li>
+								<a class="item-content" href="/profile/{{internalName}}">
+									<li class="list-group-item">
+									<img class="img-fluid img-profile rounded-circle mx-auto mb-2 offset-md-2" style="width:64px;height:64px" src="/profileimg/{{internalName}}" alt="profileImg"> 
+									<span class = "ml-5">{{username}}</span> 
+									</li>
 								</a>
-
-								<a class="item-content" href="#">
-									<li class="list-group-item"><span
-										class="fa fa-user-circle pl-5"></span> Teacher One Profile</li>
-								</a>
+								
+								{{/usersToShowList}}
 							</ul>
 						</div>
 

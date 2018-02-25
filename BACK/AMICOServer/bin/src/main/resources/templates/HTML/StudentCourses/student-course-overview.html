@@ -39,7 +39,7 @@
               <a class="nav-link" href="/profile/{{userInternalName}}">My Profile</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/{{userInternalName}}/logOut">Log Out</a>
+              <a class="nav-link" href="/logOut">Log Out</a>
             </li>
           </ul>
         </div>
@@ -65,7 +65,7 @@
              {{#admin}}
             <div class = "row">
                 <div class = "col-md-4">
-                        <form action = "/course/{{courseInternalName}}/update-subject/{{internalName}}/{{userInternalName}}" method = "post">
+                        <form action = "/course/{{courseInternalName}}/update-subject/{{internalName}}" method = "post">
                             <label>Rename: </label>
                             <input type = "text" placeholder="{{name}}" name = "subjectName">
                             <label>Description: </label>
@@ -85,7 +85,7 @@
                                    {{/teachers}}
                             </select>
                     </form>
-                    <form action = "/course/{{courseInternalName}}/updateTeachers-subject/{{internalName}}/{{userInternalName}}" method = "post">
+                    <form action = "/course/{{courseInternalName}}/updateTeachers-subject/{{internalName}}" method = "post">
                             <select class = "col-md-8" name="selectTeachers" size="" multiple="multiple" tabindex="1">
                                    <option disabled = "true"> New Teachers:</option>
                                    {{#allTeachers}}
@@ -97,7 +97,7 @@
                     </div>
                 <div class = "col-md-2">
                         
-                        <form action = "/course/{{courseInternalName}}/delete-subject/{{internalName}}/{{userInternalName}}" method = "post">
+                        <form action = "/course/{{courseInternalName}}/delete-subject/{{internalName}}" method = "post">
                             <button type = "submit">Delete Subject</button>
                         </form>
                 </div>
@@ -110,7 +110,7 @@
             {{#admin}}
             <div class = "mt-2">
             <h4>
-            <form class = "subject ml-2 pl-4 border col-10"action = "/course/{{courseInternalName}}/create-subject/{{userInternalName}}" method = "post">
+            <form class = "subject ml-2 pl-4 border col-10"action = "/course/{{courseInternalName}}/create-subject" method = "post">
                     <label>New Subject: </label>    
                     <input type = "text" class = "col-md-5" name = "subjectName">
                     <button type = "submit" class = "form-controll" >Create</button>

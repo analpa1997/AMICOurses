@@ -37,7 +37,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="/course/{{internalName}}/{{userName}}">Description</a>
+              <a class="nav-link" href="/course/{{internalName}}">Description</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/course/{{internalName}}/skills.html">Skills</a>
@@ -97,13 +97,8 @@
             <!-- 
             <button type="button" class="btn btn-info">información</button>
             -->
-            {{#userName}}
-            		<a href="/course/{{internalName}}/{{userName}}/add" class="btn btn-info">Add Course</a>
-            	{{/userName}}
-            {{^userName}}
-            		<a href="/course/{{internalName}}/{{userName}}/error" class="btn btn-info">Add Course</a>
-            {{/userName}}
-        </div>
+            	<a href="/course/{{internalName}}/add" class="btn btn-info">Add Course</a>
+          </div>
       </div>
     </div>
     </div>
