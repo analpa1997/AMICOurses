@@ -141,6 +141,7 @@ public class Course {
 
 	public void setName(String name) {
 		this.name = name;
+		this.internalName = name.replaceAll(" ", "-").toLowerCase();
 	}
 
 	public String getCourseLanguage() {

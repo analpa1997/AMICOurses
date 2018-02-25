@@ -34,7 +34,7 @@
             }
         }
         window.onload = function() {
-            show('tables');
+            //show('tables');
             show('teacher');
             show('course');
             show('subject');
@@ -53,7 +53,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                    <a class="nav-link" onclick="show('tables')">
+                    <a class="nav-link active" onclick="show('tables')">
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text">Tables</span>
           </a>
@@ -140,37 +140,33 @@
                                                 <th>Type</th>
                                                 <th>Start Date</th>
                                                 <th>End Date</th>
-                                                <th>Users</th>
                                                 <th>Description</th>
-                                                <th>URLI</th>
+                                                <th>Save </th>
+                                                <th>Delete</th>
                                             </tr>
                                         </thead>
-                                        <tfoot>
-                                            <tr>
-                                                <th>Image</th>
-                                                <th>Name</th>
-                                                <th>Language</th>
-                                                <th>Type</th>
-                                                <th>Start Date</th>
-                                                <th>End Date</th>
-                                                <th>Users</th>
-                                                <th>Description</th>
-                                                <th>URLI</th>
-                                            </tr>
-                                        </tfoot>
                                         <tbody>
+                                            
+                                            {{#allCourses}}
                                             <tr>
+                                            <form action = "/admin/modify/course/{{internalName}}" method = "post">
+                                            
                                                 <td>
-                                                    <div class="img-container"><img class="rounded-circle" src="matematicas-para-gatos.jpg"></div>
+                                                	<div class="img-container"><img class="rounded-circle" src="/courses/img/{{courseID}}"></div>
                                                 </td>
-                                                <td contenteditable="true">Tiger Nixon</td>
-                                                <td contenteditable="true">System Architect</td>
-                                                <td contenteditable="true">Edinburgh</td>
-                                                <td contenteditable="true">61</td>
-                                                <td contenteditable="true">2011/04/25</td>
-                                                <td contenteditable="true">$320,800</td>
-                                                <td contenteditable="true">2011/04/25</td>
-                                                <td contenteditable="true">$320,800</td>
+                                                <td contenteditable="true"><input type = "text" size = "20"value = "{{name}}" name = "newName"> </td>
+                                                <td contenteditable="true"><input type = "text" size = "10" value = "{{courseLanguage}}" name = "newLanguage""> </td>
+                                                <td contenteditable="true"><input type = "text" size = "20"value = "{{type}}" name = "newType"> </td>
+                                                <td contenteditable="true"><label size = "2">{{startDateString}}</label></td>
+                                                <td contenteditable="true"><label size = "30">{{endDateString}}</label></td>
+                                                <td contenteditable="true"><input type = "text" size = "50" value = "{{courseDescription}}" name = "newDescription"></td>
+                                                <td> <button type = "submit" name = "btnSave" >Save</button> </td>
+                                                <td> <button type = "submit" name = "btnDelete">Delete</button> </td>
+                                                </form>
+                                               
+                                           
+                                            </tr>
+                                             {{/allCourses}}
                                                 <!----To save the data changes <body>
 	<p contenteditable="true" id="editable">
 		Aqui puede editar...
@@ -184,7 +180,7 @@
 	</script>
 </body>-->
 
-                                            </tr>
+                                            
 
                                         </tbody>
                                     </table>

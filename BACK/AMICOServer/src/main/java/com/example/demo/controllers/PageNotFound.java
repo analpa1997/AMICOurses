@@ -45,7 +45,7 @@ public class PageNotFound {
 	@Autowired
 	private UserRepository userRepository;
 	
-	@RequestMapping("/{userInternalName}/500")
+	@RequestMapping("/error/oasdas")
 	public String viewProfile(Model model, @PathVariable String userInternalName) {
 		
 
