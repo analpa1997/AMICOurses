@@ -99,10 +99,6 @@ public class IndexController {
 		return "HTML/LogIn/login";
 	}
 
-	@RequestMapping("/signup")
-	public String signup(Model model) {
-		return "HTML/LogIn/signup";
-	}
 
 	// @RequestMapping("/searchByName")
 	/*

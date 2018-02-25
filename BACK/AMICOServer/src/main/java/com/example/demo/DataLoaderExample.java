@@ -157,6 +157,7 @@ public class DataLoaderExample {
 		users.add(new User("amicoTeacher4", "pass", "amicoTeacher4@mail.com", false));
 		users.add(new User("amicoTeacher5", "pass", "amicoTeacher5@mail.com", false));
 		users.add(new User("amicoTeacher6", "pass", "amicoTeacher6@mail.com", false));
+		
 
 		courses.get(0).getInscribedUsers().add(users.get(50));
 		users.get(50).getInscribedCourses().add(courses.get(0));
