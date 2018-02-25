@@ -11,7 +11,7 @@
     <title>AMICOurses</title>
 
     <!-- Bootstrap core CSS -->
-        <!-- Bootstrap core CSS -->
+    <!-- Bootstrap core CSS -->
     <link href="../../BOOTSTRAP/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom fonts for this template -->
@@ -26,67 +26,59 @@
 </head>
 
 <body>
-    
-    
+
+
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-      <div class="container">
-        <a class="navbar-brand" href="../index.html">AMICOURSES</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">AMICOURSES</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           Menu
           <i class="fa fa-bars"></i>
         </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="./login.html">Log in</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="../index.html">Back</a>
-            </li>
-          </ul>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="./login.html">Log in</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Back</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-      </div>
     </nav>
-<!-- End Navigation -->
-    
-    
+    <!-- End Navigation -->
+
+
 
     <section class="login-block">
         <div class="container login mt-3">
             <h3 class="text-center">Sign Up Now</h3>
             <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-6 login-sec">
-                    <form class="login-form">
+                <div class="col-xs-12 col-sm-12 col-md-12 login-sec" align=center>
+                    <form action="/signup" class="login-form">
                         <div class="form-group">
                             <label for="exampleInputUsername1" class="text-uppercase">username</label>
-                            <input type="text" class="form-control" placeholder="John Smith">
+                            <input name="username" type="text" class="col-lg-8 text-uppercase text-center form-control" placeholder="John Smith">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1" class="text-uppercase">email</label>
-                            <input type="password" class="form-control" placeholder="johnsmith@hotmail.com">
+                            <input name="userMail" type="text" class="col-lg-8 text-uppercase text-center text-uppercase form-control" placeholder="johnsmith@hotmail.com">
                         </div>
 
-                    </form>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-6 login-sec">
-                    <form class="login-form">
                         <div class="form-group">
                             <label for="exampleInputPassword1" class="text-uppercase">password</label>
-                            <input type="text" class="form-control" placeholder="">
+                            <input name="password" type="password" class="col-lg-8 text-uppercase text-center form-control" placeholder="">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1" class="text-uppercase">repeat password</label>
-                            <input type="password" class="form-control" placeholder="">
+                            <input type="password" class="col-lg-8 text-uppercase text-center form-control" placeholder="">
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 form-check">
+                            <a href="../Profile/studentProfile.html" class="btn btn-login float-right">Sign Up!</a>
                         </div>
                     </form>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12 form-check">
-                    <label class="form-check-label">
-      <input type="checkbox" class="form-check-input">
-      <small>I want to receive news of new courses, promotions and changes in my registrations </small>
-    </label>
-                    <a href = "../Profile/studentProfile.html" class="btn btn-login float-right">Sign Up!</a>
                 </div>
             </div>
         </div>
