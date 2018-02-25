@@ -53,7 +53,7 @@ public class Course {
 	@Column(length = Short.MAX_VALUE)
 	private String courseDescription;
 
-	private String urlImage;
+	private String originalName;
 
 	private boolean isCompleted;
 
@@ -82,7 +82,7 @@ public class Course {
 		this.endDate = endDate;
 		this.courseDescription = courseDescription;
 		this.type = type.replaceAll(" ", "-").toLowerCase();
-		this.urlImage = "../img/courses/" + this.internalName + "/" + urlImage;
+		this.originalName = "../img/courses/" + this.internalName + "/" + urlImage;
 		this.isCompleted = false;
 		this.startDateString = dateFormat.format(this.startDate);
 		this.endDateString = dateFormat.format(this.endDate);
@@ -95,7 +95,7 @@ public class Course {
 		this.courseLanguage = courseLanguage;
 		this.courseDescription = courseDescription;
 		this.type = type.replaceAll(" ", "-").toLowerCase();
-		this.urlImage = "../img/courses/" + this.internalName + "/" + urlImage;
+		this.originalName = "../img/courses/" + this.internalName + "/" + urlImage;
 		this.isCompleted = false;
 
 		this.endDate = Date.valueOf(LocalDate.now());
@@ -176,12 +176,12 @@ public class Course {
 		this.courseDescription = courseDescription;
 	}
 
-	public String getUrlImage() {
-		return urlImage;
+	public String getOriginalName() {
+		return originalName;
 	}
 
-	public void setUrlImage(String urlImage) {
-		this.urlImage = urlImage;
+	public void setOriginalName(String urlImage) {
+		this.originalName = urlImage;
 	}
 
 	public List<User> getInscribedUsers() {

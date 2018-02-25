@@ -65,7 +65,7 @@ public class CourseInformationController {
 
 		model.addAttribute("startDateString", startDateString);
 		model.addAttribute("endDateString", endDateString);
-		model.addAttribute("urlImage", course.getUrlImage());
+		model.addAttribute("urlImage", course.getOriginalName());
 
 		return "HTML/courseInformation/course";
 	}
@@ -81,7 +81,7 @@ public class CourseInformationController {
 
 		model.addAttribute("courseName", course.getName());
 		model.addAttribute("subjects", subject);
-		model.addAttribute("urlImage", course.getUrlImage());
+		model.addAttribute("urlImage", course.getOriginalName());
 		model.addAttribute("nameInternal", internalName);
 		return "HTML/CourseInformation/subjects";
 	}
@@ -95,7 +95,7 @@ public class CourseInformationController {
 		System.out.println("# skills" + " " + skill.size());
 
 		model.addAttribute("skills", skill);
-		model.addAttribute("urlImage", course.getUrlImage());
+		model.addAttribute("urlImage", course.getOriginalName());
 		model.addAttribute("nameInternal", internalName);
 
 		return "HTML/CourseInformation/skills";

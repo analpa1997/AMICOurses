@@ -71,13 +71,14 @@
                         <li>
                             <a class="nav-link" onclick="show('course')">Add Course</a>
                         </li>
-                        <li>
+                       <!--  <li>
                             <a class="nav-link" onclick="show('subject')">Add Subject</a>
-                        </li>
+                        </li> 
+                        -->
                     </ul>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
-                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
+      <!--              <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-file"></i>
             <span class="nav-link-text">My Web</span>
           </a>
@@ -104,8 +105,10 @@
                             <a href="forgot-password.html">Profile Page</a>
                         </li>
                     </ul>
+                    --> 
                 </li>
             </ul>
+             
             <ul class="navbar-nav sidenav-toggler">
                 <li class="nav-item">
                     <a class="nav-link text-center" id="sidenavToggler">
@@ -275,19 +278,30 @@
                         <h2 class="text-center">Add Course</h2>
                         <div class="row">
                             <div class="offset-3 col-xs-6 col-sm-6 col-md-6">
-                                <form class="add-course">
+                                <form class="add-course" action = "/admin/create/course"  method = "post" enctype="multipart/form-data">
                                     <div class="form-group">
                                         <label for="name-input">Name: </label>
-                                        <input class="form-control" type="text" id="name-input" placeholder="Enter name">
+                                        <input class="form-control" type="text" id="name-input" placeholder="Enter name" name = "newName">
 
                                         <label for="startdate-input">Start Date:</label>
-                                        <input class="form-control" type="text" id="startdate-input" placeholder="Enter start date">
+                                        <input class="form-control" type="date" id="startdate-input"  name = "startDate">
 
                                         <label for="finaldate-input">Final Date:</label>
-                                        <input class="form-control" type="text" id="finaldate-input" placeholder="Enter final date">
-
+                                        <input class="form-control" type="date" id="finaldate-input" name = "endDate">
+                                        <label> Language: </label>
+										<input class = "form-control" type = "text" name = "newLanguage" placeholder = "Enter the language">
+										<label> Type: </label>
+										<input class = "form-control" type = "text" name = "newType" placeholder = "Enter the type">
+										<label> Skill 1: </label>
+										<input class = "form-control" type = "text" name = "newSkill1" placeholder = "Enter Skill 1">
+										<label> Skill 2: </label>
+										<input class = "form-control" type = "text" name = "newSkill2" placeholder = "Enter Skill 2 (optional)">
+										<label> Skill 2: </label>
+										<input class = "form-control" type = "text" name = "newSkill3" placeholder = "Enter Skill 3 (optional)">
+										<label class = "mt-4">Photo: </label>
+										<input class = "mb-4" type = "file" name = "courseImage">
                                         <label for="description-input">Description: </label>
-                                        <textarea class="form-control" id="description-input">Description</textarea>
+                                        <textarea class="form-control" id="description-input" name = "newDescription">Description</textarea>
                                         
                                         <!-- Subjets--->
                                         
