@@ -1,13 +1,21 @@
 package com.example.demo.controllers;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -176,6 +184,19 @@ public class CourseInformationController {
 			return new ModelAndView("redirect:/course/{internalName}/").addObject("error", "You are already registered in this course"); 
 			
 		}
+	}
+	
+	@RequestMapping("/courses/img/{courseID}")
+	public void getProfileImage(@PathVariable Long courseID, HttpServletResponse res)
+			throws FileNotFoundException, IOException {
+		Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"), "files/image/courses/" + courseID + "/");
+
+		Path image = FILES_FOLDER.resolve("course-" + courseID + ".jpg");
+
+		res.setContentType("image/jpeg");
+		res.setContentLength((int) image.toFile().length());
+		FileCopyUtils.copy(Files.newInputStream(image), res.getOutputStream());
+
 	}
 
 }

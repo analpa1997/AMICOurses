@@ -120,7 +120,7 @@ var numPageDisplay = 0;
 				  '</a><p class="lead">' + course.courseDescription + '</p>' + 
 				  '<div class="container">'+ 
 				  '<a href="../course/' + course.internalName + '.html">'+ 
-				  '<img class="img-fluid rounded-circle imgCourse" src="' + course.urlImage + '" alt=" " >'+
+				  '<img class="img-fluid rounded-circle imgCourse" src="/courses/img/' + course.courseID + '" alt=" " >'+
                 '</a>'+
                 '<div class="mt-3 &nbsp"></div>'+
                 '<div class ="row">' +
