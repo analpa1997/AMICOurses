@@ -47,7 +47,7 @@ public class CourseInformationController {
 		usr = sessionUserComponent.getLoggedUser();
 		
 		if (usr == null)
-			userName = "amico";  // para que funcione
+			userName = "amico";
 		else {
 			userName = usr.getInternalName();
 			isAnStudent = usr.isStudent();
