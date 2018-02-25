@@ -53,10 +53,15 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-        		<groupId>org.apache.tomcat.embed</groupId>
-        		<artifactId>tomcat-embed-jasper</artifactId>
-        		<scope>provided</scope>
-    		</dependency>
+       		<groupId>org.apache.tomcat.embed</groupId>
+       		<artifactId>tomcat-embed-jasper</artifactId>
+       		<scope>provided</scope>
+   		</dependency>
+   		<dependency>
+		    <groupId>com.itextpdf</groupId>
+		    <artifactId>itextpdf</artifactId>
+		    <version>5.5.10</version>
+		</dependency>
 	</dependencies>
 
 	<build>
