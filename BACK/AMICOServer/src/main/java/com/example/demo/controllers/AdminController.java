@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -98,20 +99,26 @@ public class AdminController {
 			} else {
 				/* Delete */
 				if (btnDelete != null) {
+					List<Subject> toRemoveS = new ArrayList<> ();
 					for (Subject subjectAct : course.getSubjects()) {
 						subjectAct.setCourse(null);
-						course.getSubjects().remove(subjectAct);
+						toRemoveS.add(subjectAct);
 					}
+					course.getSubjects().removeAll(toRemoveS);
 					
+					List<User> toRemoveU = new ArrayList<> ();
 					for (User userAct : course.getInscribedUsers()) {
 						userAct.getInscribedCourses().remove(course);
-						course.getInscribedUsers().remove(userAct);
+						toRemoveU.add(userAct);
 					}
+					course.getInscribedUsers().removeAll(toRemoveU);
+					
+					List <Skill> toRemoveSkill = new ArrayList<> ();
 					for (Skill skillAct : course.getSkills()) {
 						skillAct.setCourse(null);
-						course.getSkills().remove(skillAct);
+						toRemoveSkill.add(skillAct);
 					}
-					
+					course.getSkills().removeAll(toRemoveSkill);
 					courseRepository.delete(course);
 				}
 			}
@@ -122,7 +129,53 @@ public class AdminController {
 		
 	//}
 		
+		return new ModelAndView("redirect:/admin/");
+	}
+	
+	@RequestMapping (value = "/admin/delete/{userInternalName}")
+	private ModelAndView modifyCourse (@PathVariable String userInternalName) {
+		//User user = sessionUserComponent.getLoggedUser();
+		//if (user != null && user.getRole() == "ROLE_ADMIN") {
+		User userToRemove = userRepository.findByInternalName(userInternalName);
+		
+		List <Course> coursesToRemove = new ArrayList <> ();
+		for (Course courseAct : userToRemove.getInscribedCourses()) {
+			List <Subject> subjectsToRemove = new ArrayList<> ();
+			for (Subject subjectAct : courseAct.getSubjects()) {
+				subjectAct.getTeachers().remove(userToRemove);
+			}
+			userToRemove.getTeaching().removeAll(subjectsToRemove);
+			courseAct.getInscribedUsers().remove(userToRemove);
+			coursesToRemove.add(courseAct);
+		}
+		
+		userToRemove.getInscribedCourses().removeAll(coursesToRemove);
+		userToRemove.getCompletedCourses().removeAll(coursesToRemove);
+		userRepository.delete(userToRemove);
+		
+		//}
 		
 		return new ModelAndView("redirect:/admin/");
 	}
+	
+	@RequestMapping(value = "/admin/create/teacher" , method = RequestMethod.POST)
+	private ModelAndView createTeacher (@RequestParam String newName, @RequestParam String newSecondName, @RequestParam String newUsername, @RequestParam String newUserMail, @RequestParam String newPassword) {  
+		
+		//User user = sessionUserComponent.getLoggedUser();
+		//if (user != null && user.getRole() == "ROLE_ADMIN") {
+		User user = userRepository.findByUsername(newUsername);
+		if (user == null && !newUsername.isEmpty() && !newUserMail.isEmpty() && !newPassword.isEmpty()) {
+			user = new User (newUsername, newPassword, newUserMail, false);
+			user.setUserFirstName(newName);
+			user.setUserLastName(newSecondName);
+			userRepository.save(user);
+		}
+		
+		//}
+	
+		return new ModelAndView("redirect:/admin/");
+	}
+
+	
+	
 }
