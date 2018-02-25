@@ -574,5 +574,7 @@ public class MoodleController {
 		return new ModelAndView("redirect:/moodle/" + courseInternalName + "/" + subjectInternalName);
 	}
 	
+	
+	
 
 }

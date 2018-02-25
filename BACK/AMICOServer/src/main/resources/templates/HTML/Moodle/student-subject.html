@@ -232,18 +232,18 @@
 											<span class = "col-md-10"> 
 												<form class = "form-inline" method = "post" enctype="multipart/form-data" action = "/moodle/practice/modify/{{courseInternalName}}/{{subjectInternalName}}/{{0.studyItemID}}/{{1.practiceID}}">
 													
-													{{^1.corriged}}
+													{{^1.corrected}}
 													<label class ="ml-1">Rename: </label>
 													<input class = "form-control col-md-3" type = "text" name = "newName" value = "{{1.practiceName}}">
 													<input class = "col-md-4" type = "file" name = "itemFile">
 													<label class = "col-md-2">Uploaded: {{1.originalName}}</label>
 													<button class = "ml-1 col-md-1" type = "submit" name = "btnSave" value = "save"> {{#1.isPresented}} Modify {{/1.isPresented}} {{^1.isPresented}} Save {{/1.isPresented}} </button>
-													{{/1.corriged}}
+													{{/1.corrected}}
 													
-													{{#1.corriged}}
+													{{#1.corrected}}
 													<label class = "ml-1 col-md-3">Name: {{1.practiceName}}</label>
 													<label class = col-md-2>Calification : {{1.calification}} </label>
-													{{/1.corriged}}
+													{{/1.corrected}}
 												</form> 
 											</span>
 											
@@ -273,9 +273,14 @@
 						</div>
 						<!-- Progress tab -->
 						<div class="tab-pane" id="progress" role="tabpanel">
-							<div class="pl-3 py-1 tab-title">Marks Chart:</div>
+							<div class="pl-3 py-1 tab-title">Exams Chart:</div>
 							<div>
-								<canvas class="ml-5 w-75 h-100" id="marks-chart-canvas"></canvas>
+								<canvas class="ml-5 w-75 h-100" id="marks-exams-chart-canvas"></canvas>
+							</div>
+							
+							<div class="pl-3 py-1 tab-title">Practices Chart:</div>
+							<div>
+								<canvas class="ml-5 w-75 h-100" id="marks-practices-chart-canvas"></canvas>
 							</div>
 						</div>
 						<!-- Teachers tab -->
@@ -597,6 +602,54 @@
 				$('#received-message-1-link').click();
 			})
 		});
+	</script>
+	
+	<script>
+	/* To get the course and subject information for the marks*/
+	$(document).ready(function () {
+	
+	$.ajax({
+		url:"/api/moodle/getMarks/{{courseInternalName}}/{{subjectInternalName}}/practices/"
+		}).done(function(practices){
+			
+			var practicesCntx = document.getElementById("marks-practices-chart-canvas").getContext('2d');
+			console.log(practices);
+			
+			var practicesLabels = [];
+			var practicesCalifications = [];
+			
+			for (i = 0; i < practices.length; i++)	{
+				practicesLabels.push(practices[i][0]);
+				practicesCalifications.push(practices[i][1]);
+			}
+			//console.log ("labels " + practicesLabels  + "  califications " + practicesCalifications);
+			
+			var practicesChart = new Chart (practicesCntx, {
+			    type : 'bar',
+			    data: {
+			         labels: practicesLabels,
+			        datasets: [{
+			            label: 'Score',
+			            data: practicesCalifications,
+			            backgroundColor:'rgba(255, 99, 132, 0.9)',
+			            borderColor: 'rgba(255,99,132,1)',
+			            borderWidth: 1
+			        }]
+			    },
+			    options: {
+			        scales: {
+			            yAxes: [{
+			                ticks: {
+			                    beginAtZero:true,
+			                    max : 10
+			                }
+			            }]
+			        }
+			    }   
+			});
+		});
+	});
+	
 	</script>
 
 </body>
