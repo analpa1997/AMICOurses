@@ -141,6 +141,19 @@ public class MoodleController {
 				}
 				model.addAttribute("studentPractices", studentPractices);
 			}
+			
+			/* Users to show in the teachers/students tab */
+			List <User> usersToShowList = new ArrayList <> ();
+			if (user.isStudent()) {
+				usersToShowList.addAll(subject.getTeachers());
+			}
+			if (!user.isStudent()) {
+				usersToShowList.addAll(subject.getUsers());
+			}
+			usersToShowList.remove(user);
+			model.addAttribute("usersToShowList" , usersToShowList);
+			
+			
 		}
 
 		model.addAttribute("isTeacher", !user.isStudent());
