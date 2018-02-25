@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.course_package.Course;
@@ -25,7 +26,7 @@ import com.example.demo.user_package.User;
 import com.example.demo.user_package.UserRepository;
 
 @Component
-// @Order(1)
+@Order(1)
 public class DataLoaderExample implements CommandLineRunner {
 
 	@Autowired
@@ -280,6 +281,7 @@ public class DataLoaderExample implements CommandLineRunner {
 		practices.get(0).setOwner(users.get(50));
 		practices.get(0).setCalification(7.3);
 		practices.get(0).setPresented(true);
+		practices.get(0).setCorriged(true);
 		practices.get(0).setStudyItem(studyItems.get(studyItems.size()-2));
 		studyItems.get(studyItems.size()-2).getPractices().add(practices.get(0));
 		

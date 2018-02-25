@@ -223,18 +223,27 @@
 										<li class = "item-content list-group-item col-11 offset-1">
 										<div class = "row">
 											{{#1.presented}} 
-												<a class="item-content col-md-2" href="/moodle/download/studyItem/{{courseInternalName}}/{{subjectInternalName}}/{{0.studyItemID}}"><span class="item-icon fa fa-{{0.type}} pl-3 pr-3"></span>{{1.practiceName}}</a></span>
+												<span class = "col-md-2" >File : <a class="item-content col-md-2" href="/moodle/download/studyItem/{{courseInternalName}}/{{subjectInternalName}}/{{0.studyItemID}}/{{1.practiceID}}">{{1.practiceName}}</a></span>
 											{{/1.presented}}
 											{{^1.presented}}
 												<span class = "col-md-2">{{1.practiceName}}</span>
 											{{/1.presented}}
 											
-											<span class = "col-md-8"> 
-												<form class = "form-inline" method = "post" action = "/moodle/practice/modify/{{courseInternalName}}/{{subjectInternalName}}/{{0.studyItemID}}/{{1.practiceID}}">
+											<span class = "col-md-10"> 
+												<form class = "form-inline" method = "post" enctype="multipart/form-data" action = "/moodle/practice/modify/{{courseInternalName}}/{{subjectInternalName}}/{{0.studyItemID}}/{{1.practiceID}}">
+													
+													{{^1.corriged}}
 													<label class ="ml-1">Rename: </label>
-													<input class = "form-control" type = "text" name = "newName" value = "{{1.practiceName}}">
-													<input class = "col-md-6" type = "file" name = "itemFile" value = "{{1.originalName}}">
-													<button class = "ml-1" type = "submit" name = "btnSave" value = "save"> {{#1.isPresented}} Modify {{/1.isPresented}} {{^1.isPresented}} Save {{/1.isPresented}} </button>
+													<input class = "form-control col-md-3" type = "text" name = "newName" value = "{{1.practiceName}}">
+													<input class = "col-md-4" type = "file" name = "itemFile">
+													<label class = "col-md-2">Uploaded: {{1.originalName}}</label>
+													<button class = "ml-1 col-md-1" type = "submit" name = "btnSave" value = "save"> {{#1.isPresented}} Modify {{/1.isPresented}} {{^1.isPresented}} Save {{/1.isPresented}} </button>
+													{{/1.corriged}}
+													
+													{{#1.corriged}}
+													<label class = "ml-1 col-md-3">Name: {{1.practiceName}}</label>
+													<label class = col-md-2>Calification : {{1.calification}} </label>
+													{{/1.corriged}}
 												</form> 
 											</span>
 											
@@ -247,8 +256,6 @@
 									{{/isTeacher}}
 									
 									
-								
-								
 								{{#isTeacher}}
 									<div class="pl-3 py-1 tab-title ml-2"> New Practice: </div>
 									<li class = "item-content list-group-item col-12">

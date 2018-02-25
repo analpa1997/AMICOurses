@@ -10,9 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -51,16 +53,13 @@ public class MoodleController {
 
 	@Autowired
 	private SessionUserComponent sessionUserComponent;
-
+	
 	@RequestMapping("/moodle/{courseInternalName}/{subjectInternalName}")
 	public String allCourses(Model model, @PathVariable String courseInternalName,
 			@PathVariable String subjectInternalName) {
-
-		/*
-		 * This is for when we have the login system.s User user =
-		 * sessionUserComponent.getLoggedUser(); Course course = null;
-		 */
 		User user = userRepository.findByInternalName("amico");
+		sessionUserComponent.setLoggedUser(user);
+		user = sessionUserComponent.getLoggedUser();
 
 		Course course = null;
 		for (Course courseAct : user.getInscribedCourses()) {
@@ -132,6 +131,7 @@ public class MoodleController {
 						practice.setOwner(user);
 						practicesRepository.save(practice);
 						practice = practicesRepository.getOne(practicesRepository.count());
+						studyItemPrac.getPractices().add(practice);
 						studyItemRepository.save(studyItemPrac);
 					}
 					studentPractices.get(i).add(studyItemPrac);
@@ -159,8 +159,7 @@ public class MoodleController {
 	private ModelAndView moduleAction(@PathVariable String option, @PathVariable String courseInternalName,
 			@PathVariable String subjectInternalName, @RequestParam(required = false) Integer module) {
 
-		// User user = sessionUserComponent.getLoggedUser();
-		User user = userRepository.findByInternalName("amicoteacher");
+		User user = sessionUserComponent.getLoggedUser();
 
 		if (!user.isStudent() && !option.isEmpty() && (option.equals("add") || option.equals("delete"))) {
 
@@ -219,8 +218,7 @@ public class MoodleController {
 			@PathVariable String subjectInternalName, @PathVariable Integer module, @RequestParam String itemName,
 			@RequestParam String itemType, @RequestParam("itemFile") MultipartFile file) {
 
-		// User user = sessionUserComponent.getLoggedUser();
-		User user = userRepository.findByInternalName("amicoteacher");
+		User user = sessionUserComponent.getLoggedUser();
 
 		if (!user.isStudent() && !itemName.isEmpty() && (module != null)) {
 
@@ -242,8 +240,8 @@ public class MoodleController {
 					if (subject.getTeachers().contains(user)) {
 						/* If the user is a teacher of the subject can upload the file */
 
-						/* File uploading control. If a profile image exists, it is overwritten */
-						/* If there is not file the imageName wont change */
+						/* File uploading control. If the file exists, it is overwritten */
+						
 						if (!file.isEmpty()) {
 							try {
 								Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"), "files/documents/"
@@ -294,8 +292,7 @@ public class MoodleController {
 			@PathVariable Long studyItemID, @PathVariable Optional<Long> practiceID, HttpServletResponse res)
 			throws FileNotFoundException, IOException {
 
-		// User user = sessionUserComponent.getLoggedUser();
-		User user = userRepository.findByInternalName("amicoteacher");
+		User user = sessionUserComponent.getLoggedUser();
 
 		Course course = null;
 		for (Course courseAct : user.getInscribedCourses()) {
@@ -379,8 +376,8 @@ public class MoodleController {
 			@RequestParam String newType, @RequestParam(required = false) String btnSave,
 			@RequestParam(required = false) String btnDelete) {
 
-		// User user = sessionUserComponent.getLoggedUser();
-		User user = userRepository.findByInternalName("amicoteacher");
+		User user = sessionUserComponent.getLoggedUser();
+
 
 		Course course = null;
 		for (Course courseAct : user.getInscribedCourses()) {
@@ -454,8 +451,7 @@ public class MoodleController {
 			@PathVariable String subjectInternalName, @PathVariable Long studyItemID, @PathVariable Long practiceID,
 			@RequestParam Double newCalification) {
 
-		// User user = sessionUserComponent.getLoggedUser();
-		User user = userRepository.findByInternalName("amicoteacher");
+		User user = sessionUserComponent.getLoggedUser();
 
 		Course course = null;
 		for (Course courseAct : user.getInscribedCourses()) {
@@ -490,6 +486,7 @@ public class MoodleController {
 
 						if (practice != null && (!user.isStudent())) {
 							practice.setCalification(newCalification);
+							practice.setCorriged(true);
 							practicesRepository.save(practice);
 						}
 					}
@@ -497,7 +494,85 @@ public class MoodleController {
 			}
 		}
 		return new ModelAndView("redirect:/moodle/" + courseInternalName + "/" + subjectInternalName);
-
 	}
+	
+	
+	@RequestMapping(value = "/moodle/practice/modify/{courseInternalName}/{subjectInternalName}/{studyItemID}/{practiceID}", method = RequestMethod.POST)
+	private ModelAndView modifyPractice(@PathVariable String courseInternalName,
+			@PathVariable String subjectInternalName, @PathVariable Long studyItemID, @PathVariable Long practiceID, @RequestParam String newName, @RequestParam("itemFile") MultipartFile file) {
+
+		User user = sessionUserComponent.getLoggedUser();
+
+		if (user.isStudent() && !newName.isEmpty()) {
+
+			Course course = null;
+			for (Course courseAct : user.getInscribedCourses()) {
+				if (courseAct.getInternalName().equals(courseInternalName)) {
+					course = courseAct;
+				}
+			}
+
+			if (course != null) {
+				Subject subject = null;
+				for (Subject subjectAct : course.getSubjects()) {
+					if (subjectAct.getInternalName().equals(subjectInternalName)) {
+						subject = subjectAct;
+					}
+				}
+				if (subject != null) {
+					if (subject.getUsers().contains(user)) {
+						StudyItem studyItem = null;
+						for (StudyItem studyItemAct : subject.getStudyItemsList()) {
+							if (studyItemAct.getStudyItemID() == studyItemID.longValue()) {
+								studyItem = studyItemAct;
+							}
+						}
+
+						if (studyItem != null) {
+							Practices practice = null;
+							for (Practices practiceAct : studyItem.getPractices()) {
+								if (practiceAct.getPracticeID() == practiceID) {
+									practice = practiceAct;
+								}
+							}
+							
+							if (practice != null)
+								if (!newName.isEmpty()) {
+									practice.setPracticeName(newName);
+									practice.setPresented(true);
+									practicesRepository.save(practice);
+								}
+					
+							if (!file.isEmpty() && (practice != null)) {
+								try {
+									Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"), "files/documents/"
+											+ course.getCourseID() + "/" + subject.getSubjectID() + "/studyItems/practices/");
+									if (!Files.exists(FILES_FOLDER)) {
+										Files.createDirectories(FILES_FOLDER);
+									}
+									
+									practice.setOriginalName(file.getOriginalFilename());
+									practicesRepository.save(practice);
+									
+									String[] fileOriginal = studyItem.getOriginalName().split("[.]");
+									String extension = fileOriginal[fileOriginal.length - 1];
+
+									String fileName = "practice-" + practice.getPracticeID() + "." + extension;
+									
+									File uploadedFile = new File(FILES_FOLDER.toFile(), fileName);
+									file.transferTo(uploadedFile);
+	
+								} catch (IOException e) {
+									System.out.println(e.getMessage());
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return new ModelAndView("redirect:/moodle/" + courseInternalName + "/" + subjectInternalName);
+	}
+	
 
 }

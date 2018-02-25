@@ -37,6 +37,8 @@ public class Practices {
 	
 	private boolean presented;
 	
+	private boolean corriged;
+	
 	
 	/* Constructors */
 	
@@ -47,6 +49,7 @@ public class Practices {
 		this.originalName = originalName;
 		this.calification = 0d;
 		this.presented = false;
+		this.setCorriged(false);
 	}
 
 	/* Methods */
@@ -126,6 +129,14 @@ public class Practices {
 
 	public void setPresented(boolean presented) {
 		this.presented = presented;
+	}
+
+	public boolean isCorriged() {
+		return corriged;
+	}
+
+	public void setCorriged(boolean corriged) {
+		this.corriged = corriged;
 	}
 
 	
