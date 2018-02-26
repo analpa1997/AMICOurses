@@ -153,3 +153,21 @@ On the other hand, teachers have same funcionalities than students into their su
 And last, but not least, the user can enter into the forum, where he can interact when all their classmates/other teachers and their teachers/students. He/she can read the latest news related to the subject, and post all his questions and suggestions in order to make easier his learning.
 
 ---
+
+## Phase III
+
+### Navigation Diagram
+
+The navigation diagram haven't changed since the last phase
+
+### Entity Diagram
+
+![Entity Diagram List](https://github.com/analpa1997/AMICOurses/blob/master/Readme%20ScreenShots/Entity%20Diagram%20Phase%203.png)
+
+### Component Diagram
+
+![Component Diagram List](https://github.com/analpa1997/AMICOurses/blob/master/Readme%20ScreenShots/Components%20Diagram%20Phase%203.png)
+
+### IDE Configuration
+
+We created a Maven project and we imported in pom.xml all the dependencies we needed to manage the application. For the database connection, we used JPA Repository interfaces, based on CRUD method, to manage the queries and the modifications into the BD
