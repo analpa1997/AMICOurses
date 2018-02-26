@@ -1,4 +1,4 @@
-package com.example.demo.practices_package;
+package com.example.demo.practices;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,9 +7,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.example.demo.studyItem_package.StudyItem;
-import com.example.demo.subject_package.Subject;
-import com.example.demo.user_package.User;
+import com.example.demo.studyItem.StudyItem;
+import com.example.demo.subject.Subject;
+import com.example.demo.user.User;
 
 @Entity
 @Table(name = "Practices")

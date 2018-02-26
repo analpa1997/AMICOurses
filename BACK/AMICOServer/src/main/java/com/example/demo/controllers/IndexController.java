@@ -13,10 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.demo.course_package.Course;
-import com.example.demo.course_package.CourseRepository;
-import com.example.demo.user_package.SessionUserComponent;
-import com.example.demo.user_package.UserRepository;
+import com.example.demo.course.Course;
+import com.example.demo.course.CourseRepository;
+import com.example.demo.user.SessionUserComponent;
+import com.example.demo.user.UserRepository;
 
 @Controller
 public class IndexController {

@@ -1,4 +1,4 @@
-package com.example.demo.skill_package;
+package com.example.demo.skill;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

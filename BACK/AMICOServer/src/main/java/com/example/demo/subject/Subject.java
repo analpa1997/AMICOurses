@@ -1,4 +1,4 @@
-package com.example.demo.subject_package;
+package com.example.demo.subject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,12 +12,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.example.demo.course_package.Course;
-import com.example.demo.exam_package.Exam;
-import com.example.demo.message_package.Message;
-import com.example.demo.practices_package.Practices;
-import com.example.demo.studyItem_package.StudyItem;
-import com.example.demo.user_package.User;
+import com.example.demo.course.Course;
+import com.example.demo.exam.Exam;
+import com.example.demo.message.Message;
+import com.example.demo.practices.Practices;
+import com.example.demo.studyItem.StudyItem;
+import com.example.demo.user.User;
 
 @Entity
 @Table(name = "Subjects")

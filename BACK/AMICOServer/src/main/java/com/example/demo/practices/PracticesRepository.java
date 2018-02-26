@@ -1,4 +1,4 @@
-package com.example.demo.practices_package;
+package com.example.demo.practices;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

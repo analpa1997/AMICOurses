@@ -1,4 +1,4 @@
-package com.example.demo.course_package;
+package com.example.demo.course;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -19,9 +19,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.example.demo.skill_package.Skill;
-import com.example.demo.subject_package.Subject;
-import com.example.demo.user_package.User;
+import com.example.demo.skill.Skill;
+import com.example.demo.subject.Subject;
+import com.example.demo.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity

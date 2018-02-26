@@ -1,4 +1,4 @@
-package com.example.demo.message_package;
+package com.example.demo.message;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

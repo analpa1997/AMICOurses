@@ -1,4 +1,4 @@
-package com.example.demo.studyItem_package;
+package com.example.demo.studyItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.example.demo.practices_package.Practices;
-import com.example.demo.subject_package.Subject;
+import com.example.demo.practices.Practices;
+import com.example.demo.subject.Subject;
 
 @Entity
 @Table(name = "StudyItems")

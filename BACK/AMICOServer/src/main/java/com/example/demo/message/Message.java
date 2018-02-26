@@ -1,4 +1,4 @@
-package com.example.demo.message_package;
+package com.example.demo.message;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,8 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.example.demo.subject_package.Subject;
-import com.example.demo.user_package.User;
+import com.example.demo.subject.Subject;
+import com.example.demo.user.User;
 
 @Entity
 @Table(name = "Messages")

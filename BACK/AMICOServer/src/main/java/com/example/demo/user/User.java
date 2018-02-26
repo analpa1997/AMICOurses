@@ -1,4 +1,4 @@
-package com.example.demo.user_package;
+package com.example.demo.user;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,8 +16,8 @@ import javax.persistence.Table;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.example.demo.course_package.Course;
-import com.example.demo.subject_package.Subject;
+import com.example.demo.course.Course;
+import com.example.demo.subject.Subject;
 
 @Entity
 @Table(name = "Users")

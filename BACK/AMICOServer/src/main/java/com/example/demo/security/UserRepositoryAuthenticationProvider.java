@@ -14,9 +14,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.user_package.SessionUserComponent;
-import com.example.demo.user_package.User;
-import com.example.demo.user_package.UserRepository;
+import com.example.demo.user.SessionUserComponent;
+import com.example.demo.user.User;
+import com.example.demo.user.UserRepository;
 
 @Component
 public class UserRepositoryAuthenticationProvider implements AuthenticationProvider {

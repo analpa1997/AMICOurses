@@ -20,13 +20,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.demo.course_package.Course;
-import com.example.demo.course_package.CourseRepository;
-import com.example.demo.skill_package.Skill;
-import com.example.demo.subject_package.Subject;
-import com.example.demo.user_package.SessionUserComponent;
-import com.example.demo.user_package.User;
-import com.example.demo.user_package.UserRepository;
+import com.example.demo.course.Course;
+import com.example.demo.course.CourseRepository;
+import com.example.demo.skill.Skill;
+import com.example.demo.subject.Subject;
+import com.example.demo.user.SessionUserComponent;
+import com.example.demo.user.User;
+import com.example.demo.user.UserRepository;
 
 @Controller
 public class CourseInformationController {

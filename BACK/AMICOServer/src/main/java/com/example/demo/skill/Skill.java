@@ -1,4 +1,4 @@
-package com.example.demo.skill_package;
+package com.example.demo.skill;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.example.demo.course_package.Course;
+import com.example.demo.course.Course;
 
 @Entity
 @Table(name = "Skills")

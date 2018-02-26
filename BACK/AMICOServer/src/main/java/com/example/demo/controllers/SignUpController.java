@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.demo.user_package.User;
-import com.example.demo.user_package.UserRepository;
+import com.example.demo.user.User;
+import com.example.demo.user.UserRepository;
 
 @Controller
 public class SignUpController {

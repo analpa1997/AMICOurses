@@ -11,21 +11,21 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.course_package.Course;
-import com.example.demo.course_package.CourseRepository;
-import com.example.demo.exam_package.Exam;
-import com.example.demo.exam_package.ExamRepository;
-import com.example.demo.message_package.MessageRepository;
-import com.example.demo.practices_package.Practices;
-import com.example.demo.practices_package.PracticesRepository;
-import com.example.demo.skill_package.Skill;
-import com.example.demo.skill_package.SkillRepository;
-import com.example.demo.studyItem_package.StudyItem;
-import com.example.demo.studyItem_package.StudyItemRepository;
-import com.example.demo.subject_package.Subject;
-import com.example.demo.subject_package.SubjectRepository;
-import com.example.demo.user_package.User;
-import com.example.demo.user_package.UserRepository;
+import com.example.demo.course.Course;
+import com.example.demo.course.CourseRepository;
+import com.example.demo.exam.Exam;
+import com.example.demo.exam.ExamRepository;
+import com.example.demo.message.MessageRepository;
+import com.example.demo.practices.Practices;
+import com.example.demo.practices.PracticesRepository;
+import com.example.demo.skill.Skill;
+import com.example.demo.skill.SkillRepository;
+import com.example.demo.studyItem.StudyItem;
+import com.example.demo.studyItem.StudyItemRepository;
+import com.example.demo.subject.Subject;
+import com.example.demo.subject.SubjectRepository;
+import com.example.demo.user.User;
+import com.example.demo.user.UserRepository;
 
 @Component
 @Order(1)

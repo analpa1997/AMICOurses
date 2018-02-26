@@ -1,4 +1,4 @@
-package com.example.demo.user_package;
+package com.example.demo.user;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
