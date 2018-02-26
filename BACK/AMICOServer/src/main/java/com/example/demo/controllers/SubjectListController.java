@@ -91,7 +91,7 @@ public class SubjectListController {
 		return new ModelAndView("redirect:/course-overview/" + courseInternalName);
 	}
 
-	@RequestMapping(value = "/course/{courseInternalName}/delete-subject/{subjetctInternalName}/{userName}", method = RequestMethod.POST)
+	@RequestMapping(value = "/course/{courseInternalName}/delete-subject/{subjetctInternalName}", method = RequestMethod.POST)
 	public ModelAndView deleteSubject(Model model, @PathVariable String courseInternalName,
 			@PathVariable String subjetctInternalName) {
 		
@@ -131,7 +131,7 @@ public class SubjectListController {
 			if (course != null && !subjectName.isEmpty()) {
 				Subject subject = new Subject(subjectName);
 				subject.setCourse(course);
-				
+				subject.getUsers().add(user);
 				subjectRepository.save(subject);
 				course.getSubjects().add(subject);
 				courseRepository.save(course);
@@ -147,9 +147,9 @@ public class SubjectListController {
 			@PathVariable String subjetctInternalName,
 			@RequestParam String[] selectTeachers) {
 		
-		//User user = sessionUserComponent.getLoggedUser();
-		//if (user.isAdmin())
-		//{
+		User user = sessionUserComponent.getLoggedUser();
+		if (user.isAdmin())
+		{
 			Course course = courseRepository.findByInternalName(courseInternalName);
 	
 			if (course != null && (selectTeachers.length != 0)) {
@@ -175,7 +175,7 @@ public class SubjectListController {
 			// subjectRepository.delete(toDelete);
 			// toUpdate.setCourse(null);
 			}
-		//}
+		}
 		return new ModelAndView("redirect:/course-overview/" + courseInternalName);
 	}
 
