@@ -26,12 +26,12 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long userID;
-	
+
 	private String username;
-	
-	//TO DO: Convert the password using a hash function 
+
+	// TO DO: Convert the password using a hash function
 	private String password;
-	
+
 	private String userMail;
 
 	private String userFirstName;
@@ -39,45 +39,48 @@ public class User {
 	private String userLastName;
 
 	private String userAddress;
-	
+
 	private String city;
-	
+
 	private String country;
 
 	private int phoneNumber;
-	
+
 	@Column(length = Short.MAX_VALUE)
 	private String interests;
 
 	private String urlProfileImage;
 	@ManyToMany
 	private List<Course> inscribedCourses = new ArrayList<>();
-	
+
 	private boolean isStudent;
-	
+
 	private String internalName;
-	
-	@ManyToMany (mappedBy="teachers")
-	private List <Subject> teaching = new ArrayList <> ();
+
+	@ManyToMany(mappedBy = "teachers")
+	private List<Subject> teaching = new ArrayList<>();
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	private List<String> roles;
-	
-	/* Constructors 
 
-	/*Empty constructor for the DB */
-	public User () { }
-	
-	/*Minimum fields constructor*/
+	/*
+	 * Constructors
+	 * 
+	 * /*Empty constructor for the DB
+	 */
+	public User() {
+	}
+
+	/* Minimum fields constructor */
 	public User(String username, String password, String userMail, boolean isStudent) {
 		super();
 		this.username = username;
-		this.password = new BCryptPasswordEncoder().encode(password);;
+		this.password = new BCryptPasswordEncoder().encode(password);
 		this.userMail = userMail;
 		this.isStudent = isStudent;
 		this.urlProfileImage = "null";
 		this.internalName = username.replaceAll(" ", "-").toLowerCase();
-		
+
 		this.userFirstName = "";
 		this.userLastName = "";
 		this.userAddress = "";
@@ -87,10 +90,9 @@ public class User {
 		this.interests = "";
 		this.roles = new ArrayList<>(Arrays.asList("ROLE_USER"));
 	}
-	
+
 	/* Methods */
-	
-	
+
 	public long getUserID() {
 		return userID;
 	}
@@ -187,13 +189,13 @@ public class User {
 	public void setUrlProfileImage(String urlProfileImage) {
 		this.urlProfileImage = urlProfileImage;
 	}
-	
+
 	public List<Course> getInscribedCourses() {
 		return inscribedCourses;
 	}
-	
+
 	public List<Course> getCurrentCourses() {
-		List<Course> notCompletedCourses = new ArrayList <>();
+		List<Course> notCompletedCourses = new ArrayList<>();
 		for (Course course : this.inscribedCourses) {
 			if (!course.isCompleted()) {
 				notCompletedCourses.add(course);
@@ -207,7 +209,7 @@ public class User {
 	}
 
 	public List<Course> getCompletedCourses() {
-		List<Course> completedCourses = new ArrayList<> ();
+		List<Course> completedCourses = new ArrayList<>();
 		for (Course course : inscribedCourses) {
 			if (course.isCompleted()) {
 				completedCourses.add(course);
@@ -247,20 +249,19 @@ public class User {
 	public void setRoles(List<String> roles) {
 		this.roles = roles;
 	}
-	
+
 	@Override
-	public boolean equals (Object obj2) {
-		
+	public boolean equals(Object obj2) {
+
 		boolean sameObj = false;
 
-        if (obj2 != null && obj2 instanceof User)
-        {
-        	sameObj = (this.userID == ((User) obj2).userID);
-        }
+		if (obj2 != null && obj2 instanceof User) {
+			sameObj = (this.userID == ((User) obj2).userID);
+		}
 		return sameObj;
 	}
-	
-	public boolean isAdmin () {
+
+	public boolean isAdmin() {
 		return this.getRoles().contains("ROLE_ADMIN");
 	}
 
