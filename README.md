@@ -156,6 +156,25 @@ And last, but not least, the user can enter into the forum, where he can interac
 
 ## Phase III
 
+### Updated screenshots
+
+#### Error pages
+
+![404](https://github.com/analpa1997/AMICOurses/blob/master/Readme%20ScreenShots/Error%20404%20page.png)
+
+![500](https://github.com/analpa1997/AMICOurses/blob/master/Readme%20ScreenShots/Error%20500%20page.png)
+
+#### Admin page
+
+![Admin page 1](https://github.com/analpa1997/AMICOurses/blob/master/Readme%20ScreenShots/Admin%20page1.png)
+
+![Admin page 2](https://github.com/analpa1997/AMICOurses/blob/master/Readme%20ScreenShots/Admin%20page2.png)
+
+
+#### Moodle page
+
+![Moodle page](https://github.com/analpa1997/AMICOurses/blob/master/Readme%20ScreenShots/Moodle%20page.png)
+
 ### Navigation Diagram
 
 The navigation diagram haven't changed since the last phase
