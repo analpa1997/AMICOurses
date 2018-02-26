@@ -62,15 +62,15 @@ public class AdminController {
 	@RequestMapping("/admin")
 	public String viewProfile(Model model) {
 		
-		//User user = sessionUserComponent.getLoggedUser();
-		//if (user != null && user.getRole() == "ROLE_ADMIN") {
+		User user = sessionUserComponent.getLoggedUser();
+		if (user != null && user.isAdmin()) {
 			
 			List<Course> allCourses = courseRepository.findAll();
 			List<User> teachers = userRepository.findByIsStudent(false);
 			
 			model.addAttribute("allCourses", allCourses);
 			model.addAttribute("teachers", teachers);
-		//}
+		}
 		
 		
 		return "HTML/Admin/admin_page";
@@ -81,84 +81,84 @@ public class AdminController {
 			@RequestParam String newType, @RequestParam String newDescription, @RequestParam(required = false) String btnSave,
 			@RequestParam(required = false) String btnDelete ) {
 		
-		//User user = sessionUserComponent.getLoggedUser();
-		//if (user != null && user.getRole() == "ROLE_ADMIN") {
-		Course course = courseRepository.findByInternalName(courseInternalName);
-		if (course != null) {
-			/* Save */
-			if (btnSave != null) {
-				if (!newName.isEmpty()) {
-					course.setName(newName);
-				}
-				if (!newType.isEmpty()) {
-					course.setType(newType);
-				}
-				if (!newLanguage.isEmpty()) {
-					course.setCourseLanguage(newLanguage);
-				}
-				if (!newDescription.isEmpty()) {
-					course.setCourseDescription(newDescription);
-				}
-				courseRepository.save(course);
-					
-			} else {
-				/* Delete */
-				if (btnDelete != null) {
-					List<Subject> toRemoveS = new ArrayList<> ();
-					for (Subject subjectAct : course.getSubjects()) {
-						subjectAct.setCourse(null);
-						toRemoveS.add(subjectAct);
+		User user = sessionUserComponent.getLoggedUser();
+		if (user != null && user.isAdmin()) {
+			Course course = courseRepository.findByInternalName(courseInternalName);
+			if (course != null) {
+				/* Save */
+				if (btnSave != null) {
+					if (!newName.isEmpty()) {
+						course.setName(newName);
 					}
-					course.getSubjects().removeAll(toRemoveS);
-					
-					List<User> toRemoveU = new ArrayList<> ();
-					for (User userAct : course.getInscribedUsers()) {
-						userAct.getInscribedCourses().remove(course);
-						toRemoveU.add(userAct);
+					if (!newType.isEmpty()) {
+						course.setType(newType);
 					}
-					course.getInscribedUsers().removeAll(toRemoveU);
-					
-					List <Skill> toRemoveSkill = new ArrayList<> ();
-					for (Skill skillAct : course.getSkills()) {
-						skillAct.setCourse(null);
-						toRemoveSkill.add(skillAct);
+					if (!newLanguage.isEmpty()) {
+						course.setCourseLanguage(newLanguage);
 					}
-					course.getSkills().removeAll(toRemoveSkill);
-					courseRepository.delete(course);
+					if (!newDescription.isEmpty()) {
+						course.setCourseDescription(newDescription);
+					}
+					courseRepository.save(course);
+						
+				} else {
+					/* Delete */
+					if (btnDelete != null) {
+						List<Subject> toRemoveS = new ArrayList<> ();
+						for (Subject subjectAct : course.getSubjects()) {
+							subjectAct.setCourse(null);
+							toRemoveS.add(subjectAct);
+						}
+						course.getSubjects().removeAll(toRemoveS);
+						
+						List<User> toRemoveU = new ArrayList<> ();
+						for (User userAct : course.getInscribedUsers()) {
+							userAct.getInscribedCourses().remove(course);
+							toRemoveU.add(userAct);
+						}
+						course.getInscribedUsers().removeAll(toRemoveU);
+						
+						List <Skill> toRemoveSkill = new ArrayList<> ();
+						for (Skill skillAct : course.getSkills()) {
+							skillAct.setCourse(null);
+							toRemoveSkill.add(skillAct);
+						}
+						course.getSkills().removeAll(toRemoveSkill);
+						courseRepository.delete(course);
+					}
 				}
-			}
 			
 		}
 		
 		
 		
-	//}
+	}
 		
 		return new ModelAndView("redirect:/admin/");
 	}
 	
 	@RequestMapping (value = "/admin/delete/{userInternalName}")
 	private ModelAndView modifyCourse (@PathVariable String userInternalName) {
-		//User user = sessionUserComponent.getLoggedUser();
-		//if (user != null && user.getRole() == "ROLE_ADMIN") {
-		User userToRemove = userRepository.findByInternalName(userInternalName);
-		
-		List <Course> coursesToRemove = new ArrayList <> ();
-		for (Course courseAct : userToRemove.getInscribedCourses()) {
-			List <Subject> subjectsToRemove = new ArrayList<> ();
-			for (Subject subjectAct : courseAct.getSubjects()) {
-				subjectAct.getTeachers().remove(userToRemove);
+		User user = sessionUserComponent.getLoggedUser();
+			if (user != null && user.isAdmin()) {
+			User userToRemove = userRepository.findByInternalName(userInternalName);
+			
+			List <Course> coursesToRemove = new ArrayList <> ();
+			for (Course courseAct : userToRemove.getInscribedCourses()) {
+				List <Subject> subjectsToRemove = new ArrayList<> ();
+				for (Subject subjectAct : courseAct.getSubjects()) {
+					subjectAct.getTeachers().remove(userToRemove);
+				}
+				userToRemove.getTeaching().removeAll(subjectsToRemove);
+				courseAct.getInscribedUsers().remove(userToRemove);
+				coursesToRemove.add(courseAct);
 			}
-			userToRemove.getTeaching().removeAll(subjectsToRemove);
-			courseAct.getInscribedUsers().remove(userToRemove);
-			coursesToRemove.add(courseAct);
+			
+			userToRemove.getInscribedCourses().removeAll(coursesToRemove);
+			userToRemove.getCompletedCourses().removeAll(coursesToRemove);
+			userRepository.delete(userToRemove);
+			
 		}
-		
-		userToRemove.getInscribedCourses().removeAll(coursesToRemove);
-		userToRemove.getCompletedCourses().removeAll(coursesToRemove);
-		userRepository.delete(userToRemove);
-		
-		//}
 		
 		return new ModelAndView("redirect:/admin/");
 	}
@@ -166,17 +166,17 @@ public class AdminController {
 	@RequestMapping(value = "/admin/create/teacher" , method = RequestMethod.POST)
 	private ModelAndView createTeacher (@RequestParam String newName, @RequestParam String newSecondName, @RequestParam String newUsername, @RequestParam String newUserMail, @RequestParam String newPassword) {  
 		
-		//User user = sessionUserComponent.getLoggedUser();
-		//if (user != null && user.getRole() == "ROLE_ADMIN") {
-		User user = userRepository.findByUsername(newUsername);
-		if (user == null && !newUsername.isEmpty() && !newUserMail.isEmpty() && !newPassword.isEmpty()) {
-			user = new User (newUsername, newPassword, newUserMail, false);
-			user.setUserFirstName(newName);
-			user.setUserLastName(newSecondName);
-			userRepository.save(user);
-		}
+		User user = sessionUserComponent.getLoggedUser();
+		if (user != null && user.isAdmin()) {
+		User teacher = userRepository.findByUsername(newUsername);
+			if (teacher == null && !newUsername.isEmpty() && !newUserMail.isEmpty() && !newPassword.isEmpty()) {
+				teacher = new User (newUsername, newPassword, newUserMail, false);
+				teacher.setUserFirstName(newName);
+				teacher.setUserLastName(newSecondName);
+				userRepository.save(teacher);
+			}
 		
-		//}
+		}
 	
 		return new ModelAndView("redirect:/admin/");
 	}
@@ -184,8 +184,8 @@ public class AdminController {
 	@RequestMapping (value = "/admin/create/course", method = RequestMethod.POST)
 	private ModelAndView createCourse (@RequestParam String newName, @RequestParam String newLanguage, @RequestParam String newType, @RequestParam String newSkill1, @RequestParam String newSkill2, @RequestParam String newSkill3, @RequestParam Date startDate, @RequestParam Date endDate, @RequestParam String newDescription, @RequestParam("courseImage") MultipartFile file) {
 		
-		//User user = sessionUserComponent.getLoggedUser();
-		//if (user != null && user.getRole() == "ROLE_ADMIN") {
+		User user = sessionUserComponent.getLoggedUser();
+		if (user != null && user.isAdmin()) {
 		Course course = courseRepository.findByName(newName);
 		
 		if (course == null) {
@@ -193,9 +193,11 @@ public class AdminController {
 				course = new Course(newName, newLanguage, newDescription, newType, "" );
 				course.setStartDate(startDate);
 				course.setEndDate(endDate);
-				
+				course.getInscribedUsers().add(user);
+				user.getInscribedCourses().add(course);
 				
 				courseRepository.save(course);
+				userRepository.save(user);
 				course = courseRepository.findByName(course.getName());
 				
 				Skill skill1 = new Skill (newSkill1);
@@ -233,7 +235,7 @@ public class AdminController {
 			}
 		}
 		
-		//}
+		}
 		
 		
 		return new ModelAndView("redirect:/admin/");

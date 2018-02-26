@@ -53,7 +53,6 @@ public class UserProfileController {
 
 	@RequestMapping("/profile/{userInternalName}")
 	public String viewProfile(Model model, @PathVariable String userInternalName) {
-
 		User user = userRepository.findByInternalName(userInternalName);
 
 		model.addAttribute("userFirstName", user.getUserFirstName());
@@ -74,9 +73,7 @@ public class UserProfileController {
 		 * Only the user can change its profile, enter in the courses and get
 		 * certificates
 		 */
-		// model.addAttribute("isTheUser" ,(user.getUserID() ==
-		// sessionUserComponent.getLoggedUser().getUserID()));
-		model.addAttribute("isTheProfileUser", true);
+		model.addAttribute("isTheProfileUser" ,(user.getUserID() == sessionUserComponent.getLoggedUser().getUserID()));
 
 		return "HTML/Profile/userProfile";
 	}

@@ -61,8 +61,8 @@ public class IndexController {
 		if (sessionUserComponent.isLoggedUser()) {
 			model.addAttribute("labelLogIn", "My Profile");
 			model.addAttribute("labelSignUp", "Log Out");
-			model.addAttribute("urlLabelSignUp", "./profile/" + sessionUserComponent.getLoggedUser().getInternalName());
-			model.addAttribute("urlLabelLogIn", "/logOut");
+			model.addAttribute("urlLabelSignUp", "/logOut");
+			model.addAttribute("urlLabelLogIn", "/profile/" + sessionUserComponent.getLoggedUser().getInternalName());
 			model.addAttribute("linkGetStarted", "/profile/" + sessionUserComponent.getLoggedUser().getInternalName());
 			model.addAttribute("textGetStarted", "Go to my profile");
 		} else {

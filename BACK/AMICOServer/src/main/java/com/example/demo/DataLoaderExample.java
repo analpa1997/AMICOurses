@@ -152,6 +152,8 @@ public class DataLoaderExample {
 
 		users.add(new User("amico", "pass", "amicourses@mail.com", true));
 		users.add(new User("amicoTeacher", "pass", "amicoTeacher@mail.com", false));
+		users.add(new User("admin", "pass", "admin@mail.com", false));
+		users.get(52).getRoles().add("ROLE_ADMIN");
 		users.add(new User("amicoTeacher2", "pass", "amicoTeacher2@mail.com", false));
 		users.add(new User("amicoTeacher3", "pass", "amicoTeacher3@mail.com", false));
 		users.add(new User("amicoTeacher4", "pass", "amicoTeacher4@mail.com", false));
@@ -184,6 +186,19 @@ public class DataLoaderExample {
 		users.get(51).getInscribedCourses().add(courses.get(4));
 		courses.get(5).getInscribedUsers().add(users.get(51));
 		users.get(51).getInscribedCourses().add(courses.get(5));
+		
+		courses.get(0).getInscribedUsers().add(users.get(52));
+		users.get(52).getInscribedCourses().add(courses.get(0));
+		courses.get(1).getInscribedUsers().add(users.get(52));
+		users.get(52).getInscribedCourses().add(courses.get(1));
+		courses.get(2).getInscribedUsers().add(users.get(52));
+		users.get(52).getInscribedCourses().add(courses.get(2));
+		courses.get(3).getInscribedUsers().add(users.get(52));
+		users.get(52).getInscribedCourses().add(courses.get(3));
+		courses.get(4).getInscribedUsers().add(users.get(52));
+		users.get(52).getInscribedCourses().add(courses.get(4));
+		courses.get(5).getInscribedUsers().add(users.get(52));
+		users.get(52).getInscribedCourses().add(courses.get(5));
 
 		users.get(50).setCity("New York");
 		users.get(50).setCountry("United States of America");
@@ -295,6 +310,7 @@ public class DataLoaderExample {
 
 		for (StudyItem study : studyItems) {
 			study.setSubject(subjects.get(0));
+			subjects.get(0).getStudyItemsList().add(study);
 		}
 
 		studyItemRepository.save(studyItems);

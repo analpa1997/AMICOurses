@@ -35,5 +35,6 @@ public class SessionUserComponent {
 	public boolean isLoggedUser() {
 		return this.user != null;
 	}
+	
 
 }

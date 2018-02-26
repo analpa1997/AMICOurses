@@ -258,7 +258,10 @@ public class User {
         	sameObj = (this.userID == ((User) obj2).userID);
         }
 		return sameObj;
-		
+	}
+	
+	public boolean isAdmin () {
+		return this.getRoles().contains("ROLE_ADMIN");
 	}
 
 }

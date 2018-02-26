@@ -57,9 +57,7 @@ public class MoodleController {
 	@RequestMapping("/moodle/{courseInternalName}/{subjectInternalName}")
 	public String allCourses(Model model, @PathVariable String courseInternalName,
 			@PathVariable String subjectInternalName) {
-		User user = userRepository.findByInternalName("amico");
-		sessionUserComponent.setLoggedUser(user);
-		user = sessionUserComponent.getLoggedUser();
+		User user = sessionUserComponent.getLoggedUser();
 
 		Course course = null;
 		for (Course courseAct : user.getInscribedCourses()) {
@@ -285,7 +283,7 @@ public class MoodleController {
 								file.transferTo(uploadedFile);
 
 								studyItemRepository.save(studyItem);
-								subjectRepository.save(subject);
+								//subjectRepository.save(subject);
 
 							} catch (IOException e) {
 								System.out.println(e.getMessage());
@@ -435,7 +433,7 @@ public class MoodleController {
 									studyItem.setSubject(null);
 									subject.getStudyItemsList().remove(studyItem);
 									studyItemRepository.delete(studyItem);
-									subjectRepository.save(subject);
+									//subjectRepository.save(subject);
 								} else {
 									List<Practices> toRemove = new ArrayList<>();
 									for (Practices pract : studyItem.getPractices()) {

@@ -38,21 +38,17 @@ public class SubjectListController {
 
 		User user = sessionUserComponent.getLoggedUser();
 		if (user != null) {
-			Course actualCourse = null;
-			for (Course course : user.getInscribedCourses()) {
-				if (course.getInternalName().equals(courseInternalName)) {
-					actualCourse = course;
-				}
-			}
+			Course actualCourse = courseRepository.findByInternalName(courseInternalName);
 
 			List<User> users = userRepository.findAll();
 			List<User> teachers = new ArrayList<>();
 			for (User u : users) {
-				if (!u.isStudent()) {
+				if (!u.isStudent() && !u.isAdmin()) {
 					teachers.add(u);
 				}
 			}
 			if (actualCourse != null) {
+				System.out.println(actualCourse.getSubjects().size());
 				model.addAttribute("subjects", actualCourse.getSubjects());
 				model.addAttribute("courseName", actualCourse.getName());
 				model.addAttribute("courseInternalName", actualCourse.getInternalName());
@@ -61,9 +57,7 @@ public class SubjectListController {
 
 			}
 
-			//model.AddAttribute("admin",user.isAdmin());
-			// For development only
-			model.addAttribute("admin", true);
+			model.addAttribute("admin",user.isAdmin());
 		}
 
 		return "HTML/StudentCourses/student-course-overview";
@@ -74,9 +68,9 @@ public class SubjectListController {
 			@PathVariable String subjetctInternalName,
 			@RequestParam String subjectName, @RequestParam String description) {
 		
-		//User user = sessionUserComponent.getLoggedUser();
-		//if (user.isAdmin())
-		//{
+		User user = sessionUserComponent.getLoggedUser();
+		if (user.isAdmin())
+		{
 			Course course = courseRepository.findByInternalName(courseInternalName);
 			
 			if (course != null && !subjetctInternalName.isEmpty()) {
@@ -93,7 +87,7 @@ public class SubjectListController {
 					}
 				}
 			}
-		//}
+		}
 		return new ModelAndView("redirect:/course-overview/" + courseInternalName);
 	}
 
@@ -101,9 +95,9 @@ public class SubjectListController {
 	public ModelAndView deleteSubject(Model model, @PathVariable String courseInternalName,
 			@PathVariable String subjetctInternalName) {
 		
-		//User user = sessionUserComponent.getLoggedUser();
-		//if (user.isAdmin())
-		//{
+		User user = sessionUserComponent.getLoggedUser();
+		if (user.isAdmin())
+		{
 			Course course = courseRepository.findByInternalName(courseInternalName);
 	
 			if (course != null) {
@@ -121,29 +115,30 @@ public class SubjectListController {
 				courseRepository.save(course);
 	
 			}
-		//}
+		}
 		return new ModelAndView("redirect:/course-overview/" + courseInternalName);
 	}
 
 	@RequestMapping(value = "/course/{courseInternalName}/create-subject", method = RequestMethod.POST)
 	public ModelAndView createSubject(Model model, @PathVariable String courseInternalName, @RequestParam String subjectName) {
 		
-		//User user = sessionUserComponent.getLoggedUser();
-		//if (user.isAdmin())
-		//{
+		User user = sessionUserComponent.getLoggedUser();
+		if (user.isAdmin())
+		{
 			
 			Course course = courseRepository.findByInternalName(courseInternalName);
 	
 			if (course != null && !subjectName.isEmpty()) {
 				Subject subject = new Subject(subjectName);
-				course.getSubjects().add(subject);
 				subject.setCourse(course);
-	
+				
 				subjectRepository.save(subject);
+				course.getSubjects().add(subject);
 				courseRepository.save(course);
+				
 	
 			}
-		//}
+		}
 		return new ModelAndView("redirect:/course-overview/" + courseInternalName);
 	}
 
