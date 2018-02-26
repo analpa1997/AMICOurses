@@ -68,12 +68,16 @@ public class UserProfileController {
 		model.addAttribute("interests", user.getInterests());
 		model.addAttribute("internalName", user.getInternalName());
 		model.addAttribute("userID", user.getUserID());
+		if (user.isAdmin())
+			model.addAttribute("buttonCourses", "Edit");
+		else
+			model.addAttribute("buttonCourses", "Enter");
 
 		/*
 		 * Only the user can change its profile, enter in the courses and get
 		 * certificates
 		 */
-		model.addAttribute("isTheProfileUser" ,(user.getUserID() == sessionUserComponent.getLoggedUser().getUserID()));
+		model.addAttribute("isTheProfileUser", (user.getUserID() == sessionUserComponent.getLoggedUser().getUserID()));
 
 		return "HTML/Profile/userProfile";
 	}

@@ -109,7 +109,7 @@
                                         </div>
                                         {{#isTheProfileUser}}
                                         <div class = 'col-2 offset-5  offset-lg-0 col-lg-2 col-sm-2 mb-1'>
-                                            <a href = '/course-overview/{{internalName}}' class = 'btn btn-primary px-3 ' role = 'button'>Enter</a>
+                                            <a href = '/course-overview/{{internalName}}' class = 'btn btn-primary px-3 ' role = 'button'>{{buttonCourses}}</a>
                                         </div>
                                         {{/isTheProfileUser}}
                                     </div>
@@ -119,7 +119,7 @@
 
                         </div>
                     </section>
-
+					{{#isStudent}}
                     <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="completed-courses">
                         <div class="my-auto">
                             <h2 class="mb-5">Completed Courses</h2>
@@ -151,6 +151,7 @@
                             </ul>
                         </div>
                     </section>
+                    {{/isStudent}}
                     
                     <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="skills">
                         <div class="my-auto">

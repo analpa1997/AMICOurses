@@ -123,7 +123,7 @@ public class CourseInformationController {
 			return new ModelAndView("redirect:/login").addObject("error",
 					"You need to be logged before registrate in any course");
 		} else {
-			if (!user.isStudent()) {
+			if (!user.isStudent() && (!user.isAdmin())) {
 				return new ModelAndView("redirect:/course/{internalName}/").addObject("error",
 						"Teachers cannot registrate into a course");
 			}
