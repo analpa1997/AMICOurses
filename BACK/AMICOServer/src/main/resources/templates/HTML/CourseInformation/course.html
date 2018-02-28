@@ -7,53 +7,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <title>AMICOurses</title>
 
-
     <!-- Bootstrap core CSS -->
     <link href="../../BOOTSTRAP/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
+    
     <!-- Custom fonts for this template -->
     <link href="../../BOOTSTRAP/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-
+    
     <!-- Custom styles for this template -->
      <link href="../../CSS/clean-blog.css" rel="stylesheet">
     <link href="../../CSS/clean-blog.min.css" rel="stylesheet">
-    <!-- 
-    <script>
-   $(document).ready(function() {
-      $("#mostrarmodal").modal("show");
-   });
-   </script>
-   -->
-    
+        
   </head>
 
   <body>
-  <!-- 
-  {{#error}}
-  <div class="modal fade" id="mostrarmodal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-           <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h3>Information</h3>
-           </div>
-           <div class="modal-body">
-              <h4>{{error}}</h4>
-       </div>
-           <div class="modal-footer">
-          <a href="#" data-dismiss="modal" class="btn btn-danger">close</a>
-           </div>
-      </div>
-   </div>
-</div>
-{{/error}}
--->
-
+ 
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
       <div class="container">
@@ -116,15 +92,6 @@
               </h2>
               
   			  <p class="post-subtitle">{{courseDescription}}</p>
- 
-            <!-- 
-            <div class="form-group">
-              <button type="submit" class="btn btn-primary" id="sendMessageButton">Sign up</button>
-            </div>
-            -->
-            <!-- 
-            <button type="button" class="btn btn-info">información</button>
-            -->
             	<a href="/course/{{internalName}}/add" class="btn btn-info">Add Course</a>
           </div>
       </div>
@@ -132,18 +99,15 @@
     </div>
     
     <br>
+   
     {{#error}}
     <div class="alert alert-info alert-dismissable">
-  
-    		<button type="button" class="close" data-dismiss="alert">&times;(x)</button>
-    		<strong> {{error}} </strong>
+    		<button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+    		<strong> {{message}} </strong>
      
     	</div>
    {{/error}}
-
-     	
    
- 
     <hr>
 
     <!-- Footer -->
@@ -183,10 +147,11 @@
       </div>
     </footer>
 
+
     <!-- Bootstrap core JavaScript -->
     <script src="../../BOOTSTRAP/vendor/jquery/jquery.min.js"></script>
     <script src="../../BOOTSTRAP/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+    
     <!-- Custom scripts for this template -->
     <script src="../../BOOTSTRAP/js/clean-blog.min.js"></script>
 

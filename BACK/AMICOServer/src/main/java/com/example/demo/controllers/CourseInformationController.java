@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.course.Course;
@@ -31,10 +33,8 @@ import com.example.demo.user.UserRepository;
 public class CourseInformationController {
 
 	private Course course = null;
-	private String userName;
-	private User usr = null;
-	private boolean isAnStudent = false;
-
+	private User user = null;
+	
 	@Autowired
 	private CourseRepository courseRepository;
 
@@ -47,16 +47,13 @@ public class CourseInformationController {
 	// For course main page description
 	@RequestMapping("/course/{internalName}")
 	public String course(Model model, @PathVariable String internalName) {
+		
 
 		// Check for the logged user
-		usr = sessionUserComponent.getLoggedUser();
-
-		if (usr == null)
-			userName = "amico";
-		else {
-			userName = usr.getInternalName();
-			isAnStudent = usr.isStudent();
+		if (sessionUserComponent.isLoggedUser()) {
+			user = sessionUserComponent.getLoggedUser();
 		}
+	
 		// get the course information by course internal name
 		course = courseRepository.findByInternalName(internalName);
 
@@ -107,7 +104,7 @@ public class CourseInformationController {
 		return "HTML/CourseInformation/skills";
 	}
 
-	@RequestMapping("/course/{internalName}/add")
+	@RequestMapping(value="/course/{internalName}/add", method = RequestMethod.GET)
 	public ModelAndView addCourseToUser(Model model, @PathVariable String internalName) {
 
 		int courseInscribedCounter;
@@ -115,75 +112,65 @@ public class CourseInformationController {
 		List<User> uInscribedList = null; // Users list
 		List<Course> cInscribedUsers = null; // Courses list
 		List<Course> cCompletedList = null;
-		ModelAndView mv = null;
-		User user = sessionUserComponent.getLoggedUser(); // get all user information by userName
-
-		// Check the users to allow or not the course registration
-		if (user == null) {
-			return new ModelAndView("redirect:/login").addObject("error",
-					"You need to be logged before registrate in any course");
-		} else {
-			if (!user.isStudent() && (!user.isAdmin())) {
-				return new ModelAndView("redirect:/course/{internalName}/").addObject("error",
-						"Teachers cannot registrate into a course");
-			}
+		
+		if (!sessionUserComponent.isLoggedUser()) {
+			user = userRepository.findByUsername("amico");
 		}
-
+		else {
+			user = sessionUserComponent.getLoggedUser();
+		}
+					
 		if (course.getInscribedUsers().size() > 0)
 			uInscribedList = course.getInscribedUsers(); // get list of user subscribed to course
 		else
 			uInscribedList = new ArrayList<>(); // initialize array to add user
-
+	
 		if (user.getInscribedCourses().size() > 0)
 			cInscribedUsers = user.getInscribedCourses(); // get the list of courses to which the user is subscribed
 		else
 			cInscribedUsers = new ArrayList<>(); // initialize array to add users
-
+	
 		if (user.getCompletedCourses().size() > 0)
 			cCompletedList = user.getCompletedCourses(); // get the list of courses to which the user is subscribed
 		else
 			cCompletedList = new ArrayList<>(); // initialize array to add users
-
-		System.out.println("# cursos inscritos" + " " + cInscribedUsers.size());
-
+	
 		courseInscribedCounter = 0;
 		while (courseInscribedCounter < cInscribedUsers.size()
 				&& cInscribedUsers.get(courseInscribedCounter).getCourseID() != course.getCourseID())
 			courseInscribedCounter++;
-
-		System.out.println("courseCounter : " + courseInscribedCounter);
-
+	
 		courseCompletedCounter = 0;
 		while (courseCompletedCounter < cCompletedList.size()
 				&& cCompletedList.get(courseCompletedCounter).getCourseID() != course.getCourseID())
 			courseCompletedCounter++;
-
-		System.out.println("courseCounter : " + courseCompletedCounter);
-
+	
+	
 		// if user not subscribed to the course, register him
 		if (courseInscribedCounter == cInscribedUsers.size() && courseCompletedCounter == cCompletedList.size()) {
-
+	
 			System.out.println("course : " + course.getName() + " No lo tiene");
-
+	
 			cInscribedUsers.add(course);
 			user.setInscribedCourses(cInscribedUsers);
 			userRepository.save(user); // update user
-
+	
 			uInscribedList.add(user);
 			course.setInscribedUsers(uInscribedList);
 			course.setNumberOfUsers(course.getNumberOfUsers() + 1);
 			courseRepository.save(course);// update courses
-			return new ModelAndView("redirect:/profile/" + user.getUsername());
-
-		} else {// " already registered in this course");
-			return new ModelAndView("redirect:/course/{internalName}/").addObject("error",
-					"You are already registered in this course");
-
+			
+			return new ModelAndView ("rediret:/profile/" + user.getInternalName());
+	
+		} else {// " already registered in this course");						
+			model.addAttribute("message", "You are already registered in this course");
+			model.addAttribute("error", true);	
+			return new ModelAndView ("rediret:/course/{internalName}/");
 		}
 	}
 
 	@RequestMapping("/courses/img/{courseID}")
-	public void getProfileImage(@PathVariable Long courseID, HttpServletResponse res)
+	public void getCourseImage(@PathVariable Long courseID, HttpServletResponse res)
 			throws FileNotFoundException, IOException {
 		Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"), "files/image/courses/" + courseID + "/");
 
@@ -194,5 +181,5 @@ public class CourseInformationController {
 		FileCopyUtils.copy(Files.newInputStream(image), res.getOutputStream());
 
 	}
-
+	
 }
