@@ -15,11 +15,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.demo.course.Course;
 import com.example.demo.course.CourseRepository;
@@ -33,7 +36,8 @@ import com.example.demo.user.UserRepository;
 public class CourseInformationController {
 
 	private Course course = null;
-	private User user = null;
+	private String message = "You are already registered in this course.";
+	private boolean error = false;
 	
 	@Autowired
 	private CourseRepository courseRepository;
@@ -48,12 +52,6 @@ public class CourseInformationController {
 	@RequestMapping("/course/{internalName}")
 	public String course(Model model, @PathVariable String internalName) {
 		
-
-		// Check for the logged user
-		if (sessionUserComponent.isLoggedUser()) {
-			user = sessionUserComponent.getLoggedUser();
-		}
-	
 		// get the course information by course internal name
 		course = courseRepository.findByInternalName(internalName);
 
@@ -69,6 +67,9 @@ public class CourseInformationController {
 		model.addAttribute("endDateString", endDateString);
 		model.addAttribute("urlImage", course.getOriginalName());
 		model.addAttribute("courseID", course.getCourseID());
+		model.addAttribute("message", message);
+		model.addAttribute("error", error);	
+		error = false;
 
 		return "HTML/courseInformation/course";
 	}
@@ -76,11 +77,8 @@ public class CourseInformationController {
 	@RequestMapping("/course/{internalName}/subjects")
 	public String subjects(Model model, @PathVariable String internalName) {
 
-		System.out.println(internalName);
 		course = courseRepository.findByInternalName(internalName);
 		List<Subject> subject = course.getSubjects();
-
-		System.out.println("# Subject" + " " + subject.size());
 
 		model.addAttribute("courseName", course.getName());
 		model.addAttribute("subjects", subject);
@@ -95,8 +93,6 @@ public class CourseInformationController {
 		course = courseRepository.findByInternalName(internalName);
 		List<Skill> skill = course.getSkills();
 
-		System.out.println("# skills" + " " + skill.size());
-
 		model.addAttribute("skills", skill);
 		model.addAttribute("urlImage", course.getOriginalName());
 		model.addAttribute("nameInternal", internalName);
@@ -104,9 +100,10 @@ public class CourseInformationController {
 		return "HTML/CourseInformation/skills";
 	}
 
-	@RequestMapping(value="/course/{internalName}/add", method = RequestMethod.GET)
-	public ModelAndView addCourseToUser(Model model, @PathVariable String internalName) {
+	@RequestMapping("/course/{internalName}/add")
+	public RedirectView addCourseToUser(Model model, @PathVariable String internalName) {
 
+		User user = null;
 		int courseInscribedCounter;
 		int courseCompletedCounter;
 		List<User> uInscribedList = null; // Users list
@@ -114,7 +111,7 @@ public class CourseInformationController {
 		List<Course> cCompletedList = null;
 		
 		if (!sessionUserComponent.isLoggedUser()) {
-			user = userRepository.findByUsername("amico");
+			return new RedirectView ("/");
 		}
 		else {
 			user = sessionUserComponent.getLoggedUser();
@@ -149,8 +146,6 @@ public class CourseInformationController {
 		// if user not subscribed to the course, register him
 		if (courseInscribedCounter == cInscribedUsers.size() && courseCompletedCounter == cCompletedList.size()) {
 	
-			System.out.println("course : " + course.getName() + " No lo tiene");
-	
 			cInscribedUsers.add(course);
 			user.setInscribedCourses(cInscribedUsers);
 			userRepository.save(user); // update user
@@ -160,14 +155,21 @@ public class CourseInformationController {
 			course.setNumberOfUsers(course.getNumberOfUsers() + 1);
 			courseRepository.save(course);// update courses
 			
-			return new ModelAndView ("rediret:/profile/" + user.getInternalName());
+			return new RedirectView("/profile/" + user.getInternalName());
+			
 	
-		} else {// " already registered in this course");						
-			model.addAttribute("message", "You are already registered in this course");
-			model.addAttribute("error", true);	
-			return new ModelAndView ("rediret:/course/{internalName}/");
+		} else {// " already registered in this course");		
+			
+			error = true;
+			RedirectView rv = new RedirectView ();
+		    
+			rv.setContextRelative(false);
+		    rv.setUrl("/course/{internalName}");
+		    return rv;
+			
 		}
 	}
+	
 
 	@RequestMapping("/courses/img/{courseID}")
 	public void getCourseImage(@PathVariable Long courseID, HttpServletResponse res)
