@@ -8,20 +8,14 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.demo.course.Course;
@@ -36,7 +30,7 @@ import com.example.demo.user.UserRepository;
 public class CourseInformationController {
 
 	private Course course = null;
-	private String message = "You are already registered in this course.";
+	private String message;
 	private boolean error = false;
 	
 	@Autowired
@@ -74,6 +68,7 @@ public class CourseInformationController {
 		return "HTML/courseInformation/course";
 	}
 
+	// For course Subjects page description
 	@RequestMapping("/course/{internalName}/subjects")
 	public String subjects(Model model, @PathVariable String internalName) {
 
@@ -83,10 +78,12 @@ public class CourseInformationController {
 		model.addAttribute("courseName", course.getName());
 		model.addAttribute("subjects", subject);
 		model.addAttribute("urlImage", course.getOriginalName());
+		model.addAttribute("courseID", course.getCourseID());
 		model.addAttribute("nameInternal", internalName);
 		return "HTML/CourseInformation/subjects";
 	}
 
+	// For course Skills page description
 	@RequestMapping("/course/{internalName}/skills")
 	public String skills(Model model, @PathVariable String internalName) {
 
@@ -95,11 +92,13 @@ public class CourseInformationController {
 
 		model.addAttribute("skills", skill);
 		model.addAttribute("urlImage", course.getOriginalName());
+		model.addAttribute("courseID", course.getCourseID());
 		model.addAttribute("nameInternal", internalName);
 
 		return "HTML/CourseInformation/skills";
 	}
 
+	// For controlling subscriber inscription to a course
 	@RequestMapping("/course/{internalName}/add")
 	public RedirectView addCourseToUser(Model model, @PathVariable String internalName) {
 
@@ -110,10 +109,13 @@ public class CourseInformationController {
 		List<Course> cInscribedUsers = null; // Courses list
 		List<Course> cCompletedList = null;
 		
-		if (!sessionUserComponent.isLoggedUser()) {
-			return new RedirectView ("/");
+		// check if the visitor is registered
+		if (!sessionUserComponent.isLoggedUser()) {  // not registered
+			message = "To register for a course it is necessary to be logged into the system. Press AMICOURSES to return to the main screen and be able to register in the system ";
+			error = true;
+			return new RedirectView ("/course/{internalName}");
 		}
-		else {
+		else { // registered. Get the user data
 			user = sessionUserComponent.getLoggedUser();
 		}
 					
@@ -143,9 +145,16 @@ public class CourseInformationController {
 			courseCompletedCounter++;
 	
 	
-		// if user not subscribed to the course, register him
-		if (courseInscribedCounter == cInscribedUsers.size() && courseCompletedCounter == cCompletedList.size()) {
-	
+		
+		if (courseCompletedCounter != cCompletedList.size()) { // if user has completed the course. show message
+			message = "You have already completed this course.";
+			error = true;
+		}
+		else if (courseInscribedCounter != cInscribedUsers.size()) { // if user is inscribed in the course. show message
+			message = "You are already registered in this course.";
+			error = true;
+		} else {  // user can register in the course
+		
 			cInscribedUsers.add(course);
 			user.setInscribedCourses(cInscribedUsers);
 			userRepository.save(user); // update user
@@ -155,19 +164,15 @@ public class CourseInformationController {
 			course.setNumberOfUsers(course.getNumberOfUsers() + 1);
 			courseRepository.save(course);// update courses
 			
+			// go to user profile
 			return new RedirectView("/profile/" + user.getInternalName());
 			
 	
-		} else {// " already registered in this course");		
-			
-			error = true;
-			RedirectView rv = new RedirectView ();
-		    
-			rv.setContextRelative(false);
-		    rv.setUrl("/course/{internalName}");
-		    return rv;
-			
-		}
+		} 
+		
+		// go to same page to show the message			
+		return new RedirectView ("/course/{internalName}");
+		
 	}
 	
 
