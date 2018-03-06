@@ -1,11 +1,16 @@
 var numPageDisplay = 0;
-	var urlSearch = "";
+	var urlSearch = '/api/courses/';
+	var sort = "courseID";
+	var type = $('#selectedType option:selected').val();
+	var name = $('#textSearch').val();
 	$('document').ready(function(){
-		$('#textSearch').val("");
-		urlSearch = '/api/listCourses/p';
+		$('#textSearch').val('');
+		name = $('#textSearch').val().replace(new RegExp(" ", 'g'), "-").toLowerCase();
+		type = $('#selectedType option:selected').val();
+		sort = "courseID";
 		$.ajax({
 			type: 'GET',
-			url: urlSearch + (numPageDisplay) + '/',
+			url: urlSearch + "?sort=" + sort + "&name=" + name + "&type=" + type + "&page=" + numPageDisplay,
 			data: numPageDisplay,
 			success: function(pageData){
 				areMoreCourses(pageData);
@@ -16,12 +21,13 @@ var numPageDisplay = 0;
 	
 	function showNewest(){
 		$('#newbtn').html('<img src="./img/ajax-loader.gif">');
-		urlSearch = '/api/listCourses/byNewest/p';
+		type = $('#selectedType option:selected').val();
+		name = $('#textSearch').val().replace(new RegExp(" ", 'g'), "-").toLowerCase();
+		sort = "startDate";
 		numPageDisplay = 0;
 		$.ajax({
 			type: 'GET',
-			url: urlSearch + numPageDisplay  + '/',
-			data: numPageDisplay,
+			url: urlSearch + "?sort=" + sort + "&name=" + name + "&type=" + type + "&page=" + numPageDisplay,
 			success: function(pageData){
 				areMoreCourses(pageData);
 				$('#allCourses').html('');
@@ -36,13 +42,12 @@ var numPageDisplay = 0;
 	
 	function showByNameLike(){
 		$('#searchbtn').html('<img src="./img/ajax-loader.gif">');
-		var text = $('#textSearch').val();
-		if (text === "") urlSearch = '/api/listCourses/p';
-		else urlSearch = '/api/listCourses/partialName/' + text.replace(new RegExp(" ", 'g'), "-").toLowerCase() + '/p';
+		type = $('#selectedType option:selected').val();
+		name = $('#textSearch').val().replace(new RegExp(" ", 'g'), "-").toLowerCase();
 		numPageDisplay = 0;
 		$.ajax({
 			type: 'GET',
-			url: urlSearch + numPageDisplay  + '/',
+			url: urlSearch + "?sort=" + sort + "&name=" + name + "&type=" + type + "&page=" + numPageDisplay,
 			data: numPageDisplay,
 			success: function(pageData){
 				areMoreCourses(pageData);
@@ -57,11 +62,13 @@ var numPageDisplay = 0;
 	}
 	function showByNumberUsers(){
 		$('#trendbtn').html('<img src="./img/ajax-loader.gif">');
-		urlSearch = '/api/listCourses/byNumberUsers/p';
+		type = $('#selectedType option:selected').val();
+		sort = "numberOfUsers";
+		name = $('#textSearch').val().replace(new RegExp(" ", 'g'), "-").toLowerCase();
 		numPageDisplay = 0;
 		$.ajax({
 			type: 'GET',
-			url: urlSearch + numPageDisplay  + '/',
+			url: urlSearch + "?sort=" + sort + "&name=" + name + "&type=" + type + "&page=" + numPageDisplay,
 			data: numPageDisplay,
 			success: function(pageData){
 				areMoreCourses(pageData);
@@ -77,12 +84,13 @@ var numPageDisplay = 0;
 	
 	function showByType(){
 		$('#typebtn').html('<img src="./img/ajax-loader.gif">');
-		var type = $('#selectedType option:selected').val();
-		urlSearch = '/api/listCourses/type/' + type.replace(new RegExp(" ", 'g'), "-").toLowerCase() + '/p';
+		type = $('#selectedType option:selected').val();
+		sort = "courseID";
+		name = $('#textSearch').val().replace(new RegExp(" ", 'g'), "-").toLowerCase();
 		numPageDisplay = 0;
 		$.ajax({
 			type: 'GET',
-			url: urlSearch + numPageDisplay  + '/',
+			url: urlSearch + "?sort=" + sort + "&name=" + name + "&type=" + type + "&page=" + numPageDisplay,
 			data: numPageDisplay,
 			success: function(pageData){
 				areMoreCourses(pageData);
@@ -100,8 +108,8 @@ var numPageDisplay = 0;
 		$('#btnMoreCourses').html('<img src = "./img/ajax-loader.gif">');
 		$.ajax({
 			type: 'GET',
-			url: urlSearch + (numPageDisplay+1)  + '/',
-			data: (numPageDisplay+1),
+			url: urlSearch + "?sort=" + sort + "&name=" + name + "&type=" + type + "&page=" + (numPageDisplay+1),
+			data: numPageDisplay+1,
 			success: function(pageData){
 				areMoreCourses(pageData);
 				numPageDisplay++;
@@ -110,7 +118,7 @@ var numPageDisplay = 0;
 				});
 			},
 			error: function(exception){alert(exception);}
-		})
+			})
 	}
 	function addHTML(course){
 		$('#allCourses').append('<div class="col-lg-6 col-md-12 col-sm-12 col-12">' + 
