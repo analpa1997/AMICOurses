@@ -609,7 +609,8 @@
 	$(document).ready(function () {
 	
 	$.ajax({
-		url:"/api/moodle/getMarks/{{courseInternalName}}/{{subjectInternalName}}/practices/"
+		type: 'GET',
+		url:"/api/moodle/practicesMarks/{{courseInternalName}}/{{subjectInternalName}}/practices/"
 		}).done(function(practices){
 			
 			var practicesCntx = document.getElementById("marks-practices-chart-canvas").getContext('2d');
