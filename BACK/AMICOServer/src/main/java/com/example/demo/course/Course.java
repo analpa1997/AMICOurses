@@ -23,42 +23,47 @@ import com.example.demo.skill.Skill;
 import com.example.demo.subject.Subject;
 import com.example.demo.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
 @Table(name = "Courses")
 public class Course {
 
+	interface BasicInformation {
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@JsonView(BasicInformation.class)
 	private long courseID;
-
+	@JsonView(BasicInformation.class)
 	private String name;
-
+	@JsonView(BasicInformation.class)
 	private String internalName;
-
+	@JsonView(BasicInformation.class)
 	private String courseLanguage;
-
+	@JsonView(BasicInformation.class)
 	private String type;
 
 	private Date startDate;
 
 	private Date endDate;
-
+	@JsonView(BasicInformation.class)
 	private String startDateString;
-
+	@JsonView(BasicInformation.class)
 	private String endDateString;
-
+	@JsonView(BasicInformation.class)
 	private int numberOfUsers;
-
+	@JsonView(BasicInformation.class)
 	@Column(length = Short.MAX_VALUE)
 	private String courseDescription;
-
+	@JsonView(BasicInformation.class)
 	private String originalName;
 
 	private boolean isCompleted;
 
 	@JsonIgnore
-	@ManyToMany(mappedBy="inscribedCourses", fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "inscribedCourses", fetch = FetchType.LAZY)
 	private List<User> inscribedUsers = new ArrayList<>();
 	@JsonIgnore
 	@OneToMany(mappedBy = "course")
@@ -76,29 +81,29 @@ public class Course {
 		super();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		this.name = name;
-		this.internalName = this.name.replaceAll(" ", "-").toLowerCase();
+		internalName = this.name.replaceAll(" ", "-").toLowerCase();
 		this.courseLanguage = courseLanguage;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.courseDescription = courseDescription;
 		this.type = type.replaceAll(" ", "-").toLowerCase();
-		this.originalName = "../img/courses/" + this.internalName + "/" + urlImage;
-		this.isCompleted = false;
-		this.startDateString = dateFormat.format(this.startDate);
-		this.endDateString = dateFormat.format(this.endDate);
+		originalName = "../img/courses/" + internalName + "/" + urlImage;
+		isCompleted = false;
+		startDateString = dateFormat.format(this.startDate);
+		endDateString = dateFormat.format(this.endDate);
 	}
 
 	public Course(String name, String courseLanguage, String courseDescription, String type, String urlImage) {
 		super();
 		this.name = name;
-		this.internalName = this.name.replaceAll(" ", "-").toLowerCase();
+		internalName = this.name.replaceAll(" ", "-").toLowerCase();
 		this.courseLanguage = courseLanguage;
 		this.courseDescription = courseDescription;
 		this.type = type.replaceAll(" ", "-").toLowerCase();
-		this.originalName = "../img/courses/" + this.internalName + "/" + urlImage;
-		this.isCompleted = false;
+		originalName = "../img/courses/" + internalName + "/" + urlImage;
+		isCompleted = false;
 
-		this.endDate = Date.valueOf(LocalDate.now());
+		endDate = Date.valueOf(LocalDate.now());
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		Random random = new Random();
 		LocalDate start = LocalDate.of(2018, Month.MARCH, 1);
@@ -110,86 +115,81 @@ public class Course {
 		randomDate = start.plusMonths(random.nextInt((int) months + 1));
 		randomDate = start.plusYears(random.nextInt((int) years + 1));
 		Date date = Date.valueOf(randomDate);
-		this.startDate = date;
+		startDate = date;
 
-		while (this.endDate.compareTo(this.startDate) < 0) {
+		while (endDate.compareTo(startDate) < 0) {
 			random = new Random();
 			LocalDate randomDate2 = start.plusDays(random.nextInt((int) days + 1));
 			randomDate2 = start.plusMonths(random.nextInt((int) months + 1));
 			randomDate2 = start.plusYears(random.nextInt((int) years + 1));
 			Date date2 = Date.valueOf(randomDate2);
-			this.endDate = date2;
+			endDate = date2;
 		}
 
-		this.startDateString = dateFormat.format(this.startDate);
-		this.endDateString = dateFormat.format(this.endDate);
+		startDateString = dateFormat.format(startDate);
+		endDateString = dateFormat.format(endDate);
 	}
 
 	/* Methods */
 
+	public String getCourseDescription() {
+		return courseDescription;
+	}
+
 	public long getCourseID() {
 		return courseID;
-	}
-
-	public void setCourseID(long courseID) {
-		this.courseID = courseID;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-		this.internalName = name.replaceAll(" ", "-").toLowerCase();
 	}
 
 	public String getCourseLanguage() {
 		return courseLanguage;
 	}
 
-	public void setCourseLanguage(String courseLanguage) {
-		this.courseLanguage = courseLanguage;
-	}
-
-	public Date getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
-
 	public Date getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
-
-	public String getCourseDescription() {
-		return courseDescription;
-	}
-
-	public void setCourseDescription(String courseDescription) {
-		this.courseDescription = courseDescription;
-	}
-
-	public String getOriginalName() {
-		return originalName;
-	}
-
-	public void setOriginalName(String urlImage) {
-		this.originalName = urlImage;
+	public String getEndDateString() {
+		return endDateString;
 	}
 
 	public List<User> getInscribedUsers() {
 		return inscribedUsers;
 	}
 
-	public void setInscribedUsers(List<User> inscribedUsers) {
-		this.inscribedUsers = inscribedUsers;
+	public String getInternalName() {
+		return internalName;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public int getNumberOfUsers() {
+		return numberOfUsers;
+	}
+
+	public String getOriginalName() {
+		return originalName;
+	}
+
+	public List<Skill> getSkills() {
+		return skills;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public String getStartDateString() {
+		return startDateString;
+	}
+
+	public List<Subject> getSubjects() {
+		return subjects;
+	}
+
+	public String getType() {
+		return type;
 	}
 
 	public boolean isCompleted() {
@@ -200,56 +200,61 @@ public class Course {
 		this.isCompleted = isCompleted;
 	}
 
-	public List<Subject> getSubjects() {
-		return subjects;
+	public void setCourseDescription(String courseDescription) {
+		this.courseDescription = courseDescription;
 	}
 
-	public void setSubjects(List<Subject> subjects) {
-		this.subjects = subjects;
+	public void setCourseID(long courseID) {
+		this.courseID = courseID;
 	}
 
-	public List<Skill> getSkills() {
-		return skills;
+	public void setCourseLanguage(String courseLanguage) {
+		this.courseLanguage = courseLanguage;
 	}
 
-	public void setSkills(List<Skill> skills) {
-		this.skills = skills;
-	}
-
-	public String getInternalName() {
-		return internalName;
-	}
-
-	public void setInternalName(String internalName) {
-		this.internalName = internalName;
-	}
-
-	public String getStartDateString() {
-		return startDateString;
-	}
-
-	public void setStartDateString(String startDateString) {
-		this.startDateString = startDateString;
-	}
-
-	public String getEndDateString() {
-		return endDateString;
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
 	public void setEndDateString(String endDateString) {
 		this.endDateString = endDateString;
 	}
 
-	public int getNumberOfUsers() {
-		return numberOfUsers;
+	public void setInscribedUsers(List<User> inscribedUsers) {
+		this.inscribedUsers = inscribedUsers;
+	}
+
+	public void setInternalName(String internalName) {
+		this.internalName = internalName;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+		internalName = name.replaceAll(" ", "-").toLowerCase();
 	}
 
 	public void setNumberOfUsers(int numberOfUsers) {
 		this.numberOfUsers = numberOfUsers;
 	}
 
-	public String getType() {
-		return type;
+	public void setOriginalName(String urlImage) {
+		originalName = urlImage;
+	}
+
+	public void setSkills(List<Skill> skills) {
+		this.skills = skills;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public void setStartDateString(String startDateString) {
+		this.startDateString = startDateString;
+	}
+
+	public void setSubjects(List<Subject> subjects) {
+		this.subjects = subjects;
 	}
 
 	public void setType(String type) {

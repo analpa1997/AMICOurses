@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,12 +17,13 @@ import com.example.demo.course.Course;
 import com.example.demo.course.CourseRepository;
 
 @RestController
+@RequestMapping(value = "/api/courses")
 public class CourseRestController {
 
 	@Autowired
 	private CourseRepository repository;
 
-	@RequestMapping(value = "/api/courses/", method = RequestMethod.GET)
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ResponseEntity<Page<Course>> allCourses(Pageable pages,
 			@RequestParam(value = "page", defaultValue = "0") int page,
 			@RequestParam(value = "sort", defaultValue = "courseID") String nameField,
@@ -52,20 +54,31 @@ public class CourseRestController {
 			else
 				pageCourse = repository.findByTypeAndInternalNameContaining(type, nameCourse,
 						new PageRequest(page, 10, Sort.Direction.ASC, nameField));
-		} else {
-			if (type.equals("all"))
-				if (nameCourse.equals(""))
-					pageCourse = repository.findAll(new PageRequest(page, 10));
-				else
-					pageCourse = repository.findByInternalNameContaining(nameCourse, new PageRequest(page, 10));
-			else if (nameCourse.equals(""))
-				pageCourse = repository.findByType(type, new PageRequest(page, 10));
+		} else if (type.equals("all"))
+			if (nameCourse.equals(""))
+				pageCourse = repository.findAll(new PageRequest(page, 10));
 			else
-				pageCourse = repository.findByTypeAndInternalNameContaining(type, nameCourse,
-						new PageRequest(page, 10));
-		}
+				pageCourse = repository.findByInternalNameContaining(nameCourse, new PageRequest(page, 10));
+		else if (nameCourse.equals(""))
+			pageCourse = repository.findByType(type, new PageRequest(page, 10));
+		else
+			pageCourse = repository.findByTypeAndInternalNameContaining(type, nameCourse, new PageRequest(page, 10));
 		if (pageCourse != null)
 			return new ResponseEntity<>(pageCourse, HttpStatus.OK);
+		else
+			return new ResponseEntity(HttpStatus.NOT_FOUND);
+	}
+
+	@RequestMapping(value = { "/id/{courseID}/", "/name/{internalName}/" }, method = RequestMethod.GET)
+	public ResponseEntity<Course> oneCourse(@PathVariable(required = false) Long courseID,
+			@PathVariable(required = false) String internalName) {
+		Course course;
+		if (internalName == null)
+			course = repository.findOne(courseID);
+		else
+			course = repository.findByInternalName(internalName);
+		if (course != null)
+			return new ResponseEntity<>(course, HttpStatus.OK);
 		else
 			return new ResponseEntity(HttpStatus.NOT_FOUND);
 	}
