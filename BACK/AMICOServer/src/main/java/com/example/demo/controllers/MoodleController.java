@@ -150,8 +150,6 @@ public class MoodleController {
 			}
 			usersToShowList.remove(user);
 			model.addAttribute("usersToShowList" , usersToShowList);
-			
-			
 		}
 
 		model.addAttribute("isTeacher", !user.isStudent());
@@ -165,6 +163,8 @@ public class MoodleController {
 
 		return "HTML/Moodle/student-subject";
 	}
+	
+	
 
 	@RequestMapping("/moodle/module-{option}/{courseInternalName}/{subjectInternalName}")
 	private ModelAndView moduleAction(@PathVariable String option, @PathVariable String courseInternalName,

@@ -40,27 +40,31 @@ public class SubjectListController {
 		if (user != null) {
 			Course actualCourse = courseRepository.findByInternalName(courseInternalName);
 
-			List<User> users = userRepository.findAll();
-			List<User> teachers = new ArrayList<>();
-			for (User u : users) {
-				if (!u.isStudent() && !u.isAdmin()) {
-					teachers.add(u);
+			if (actualCourse.getInscribedUsers().contains(user)){
+				List<User> users = userRepository.findAll();
+				List<User> teachers = new ArrayList<>();
+				for (User u : users) {
+					if (!u.isStudent() && !u.isAdmin()) {
+						teachers.add(u);
+					}
 				}
+				if (actualCourse != null) {
+					System.out.println(actualCourse.getSubjects().size());
+					model.addAttribute("subjects", actualCourse.getSubjects());
+					model.addAttribute("courseName", actualCourse.getName());
+					model.addAttribute("courseInternalName", actualCourse.getInternalName());
+					model.addAttribute("userInternalName", user.getInternalName());
+					model.addAttribute("allTeachers", teachers);
+	
+				}
+	
+				model.addAttribute("admin",user.isAdmin());
+				
+				return "HTML/StudentCourses/student-course-overview";
 			}
-			if (actualCourse != null) {
-				System.out.println(actualCourse.getSubjects().size());
-				model.addAttribute("subjects", actualCourse.getSubjects());
-				model.addAttribute("courseName", actualCourse.getName());
-				model.addAttribute("courseInternalName", actualCourse.getInternalName());
-				model.addAttribute("userInternalName", user.getInternalName());
-				model.addAttribute("allTeachers", teachers);
-
-			}
-
-			model.addAttribute("admin",user.isAdmin());
-		}
-
-		return "HTML/StudentCourses/student-course-overview";
+		} 
+			return "/error/";
+		
 	}
 
 	@RequestMapping(value = "/course/{courseInternalName}/update-subject/{subjetctInternalName}", method = RequestMethod.POST)
@@ -125,7 +129,6 @@ public class SubjectListController {
 		User user = sessionUserComponent.getLoggedUser();
 		if (user.isAdmin())
 		{
-			
 			Course course = courseRepository.findByInternalName(courseInternalName);
 	
 			if (course != null && !subjectName.isEmpty()) {
