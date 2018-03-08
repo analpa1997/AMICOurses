@@ -40,7 +40,7 @@ public class SubjectListController {
 		if (user != null) {
 			Course actualCourse = courseRepository.findByInternalName(courseInternalName);
 
-			if (actualCourse.getInscribedUsers().contains(user)){
+			if (actualCourse.getInscribedUsers().contains(user) || user.isAdmin()){
 				List<User> users = userRepository.findAll();
 				List<User> teachers = new ArrayList<>();
 				for (User u : users) {
