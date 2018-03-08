@@ -64,11 +64,9 @@ public class MoodleController {
 		User user = sessionUserComponent.getLoggedUser();
 
 		Course course = null;
-		for (Course courseAct : user.getInscribedCourses()) {
-			if (courseAct.getInternalName().equals(courseInternalName)) {
-				course = courseAct;
-			}
-		}
+		course = courseRepository.findByInternalName(courseInternalName);
+		
+		if (course.getInscribedUsers().contains(user)) {
 
 		Subject subject = null;
 		for (Subject subjectAct : course.getSubjects()) {
@@ -167,6 +165,9 @@ public class MoodleController {
 		model.addAttribute("userInternalName", user.getInternalName());
 
 		return "HTML/Moodle/student-subject";
+		} else {
+			return "/error/";
+		}
 	}
 
 	@RequestMapping("/moodle/module-{option}/{courseInternalName}/{subjectInternalName}")

@@ -60,7 +60,7 @@ public class MoodleRestController {
 	/* DELETE */
 	/* Creates a new module within a subject */
 	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/module/{module}", method = RequestMethod.DELETE)
-	public Object deleteModule(@PathVariable String courseInternalName, @PathVariable String subjectInternalName,
+	public ResponseEntity<Subject> deleteModule(@PathVariable String courseInternalName, @PathVariable String subjectInternalName,
 			@PathVariable Integer module) {
 		
 		User user = sessionUserComponent.getLoggedUser();
@@ -73,7 +73,7 @@ public class MoodleRestController {
 			}
 		}
 
-		return null;
+		return new ResponseEntity<Subject> (HttpStatus.NOT_FOUND);
 	}
 
 	/* STUDY ITEMS */

@@ -52,10 +52,9 @@ public class SubjectService  {
 		
 		course = courseRepository.findByInternalName(courseInternalName);
 		if (course != null && course.getInscribedUsers().contains(user)) {
-			Subject subject = null;
 			for (Subject subjectAct : course.getSubjects()) {
 				if (subjectAct.getInternalName().equals(subjectInternalName)) {
-					return subject;
+					return subjectAct;
 				}
 			}
 		}
