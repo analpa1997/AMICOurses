@@ -33,6 +33,7 @@ import com.example.demo.studyItem.StudyItem;
 import com.example.demo.studyItem.StudyItemRepository;
 import com.example.demo.subject.Subject;
 import com.example.demo.subject.SubjectRepository;
+import com.example.demo.subject.SubjectService;
 import com.example.demo.user.SessionUserComponent;
 import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
@@ -52,8 +53,11 @@ public class MoodleController {
 	private PracticesRepository practicesRepository;
 
 	@Autowired
+	private SubjectService subjectService;
+
+	@Autowired
 	private SessionUserComponent sessionUserComponent;
-	
+
 	@RequestMapping("/moodle/{courseInternalName}/{subjectInternalName}")
 	public String allCourses(Model model, @PathVariable String courseInternalName,
 			@PathVariable String subjectInternalName) {
@@ -107,16 +111,17 @@ public class MoodleController {
 
 			model.addAttribute("studyItemPractices", studyItemPractices);
 			model.addAttribute("allStudyItems", allStudyItems);
-			
+
 			List<List<Object>> studentPractices = new ArrayList<>();
-			/* To retrieve only the student practices (one practice per studyItemPractice) */
+			/*
+			 * To retrieve only the student practices (one practice per studyItemPractice)
+			 */
 			int i = 0;
 			if (user.isStudent()) {
-				
+
 				for (StudyItem studyItemPrac : studyItemPractices) {
-					studentPractices.add(new ArrayList <> ());
-					
-				
+					studentPractices.add(new ArrayList<>());
+
 					Practices practice = null;
 					for (Practices practiceAct : studyItemPrac.getPractices()) {
 						if (practiceAct.getOwner().getUserID() == user.getUserID()) {
@@ -134,14 +139,14 @@ public class MoodleController {
 					}
 					studentPractices.get(i).add(studyItemPrac);
 					studentPractices.get(i).add(practice);
-					
+
 					i++;
 				}
 				model.addAttribute("studentPractices", studentPractices);
 			}
-			
+
 			/* Users to show in the teachers/students tab */
-			List <User> usersToShowList = new ArrayList <> ();
+			List<User> usersToShowList = new ArrayList<>();
 			if (user.isStudent()) {
 				usersToShowList.addAll(subject.getTeachers());
 			}
@@ -149,7 +154,7 @@ public class MoodleController {
 				usersToShowList.addAll(subject.getUsers());
 			}
 			usersToShowList.remove(user);
-			model.addAttribute("usersToShowList" , usersToShowList);
+			model.addAttribute("usersToShowList", usersToShowList);
 		}
 
 		model.addAttribute("isTeacher", !user.isStudent());
@@ -163,8 +168,6 @@ public class MoodleController {
 
 		return "HTML/Moodle/student-subject";
 	}
-	
-	
 
 	@RequestMapping("/moodle/module-{option}/{courseInternalName}/{subjectInternalName}")
 	private ModelAndView moduleAction(@PathVariable String option, @PathVariable String courseInternalName,
@@ -172,50 +175,18 @@ public class MoodleController {
 
 		User user = sessionUserComponent.getLoggedUser();
 
-		if (!user.isStudent() && !option.isEmpty() && (option.equals("add") || option.equals("delete"))) {
+		if (user != null && !user.isStudent() && !option.isEmpty()
+				&& (option.equals("add") || option.equals("delete"))) {
 
-			Course course = null;
-			for (Course courseAct : user.getInscribedCourses()) {
-				if (courseAct.getInternalName().equals(courseInternalName)) {
-					course = courseAct;
-				}
-			}
-
-			if (course != null) {
-				Subject subject = null;
-				for (Subject subjectAct : course.getSubjects()) {
-					if (subjectAct.getInternalName().equals(subjectInternalName)) {
-						subject = subjectAct;
-					}
-				}
-				if (subject != null) {
-					if (subject.getTeachers().contains(user)) {
-						if (option.equals("add")) {
-							subject.addModule();
-							subjectRepository.save(subject);
-						} else {
-							if (option.equals("delete") && (module != null)) {
-								/* Get the studyItems of the module */
-								List<StudyItem> studyItemsToRemove = new ArrayList<>();
-								for (StudyItem studyItemAct : subject.getStudyItemsList()) {
-									if (studyItemAct.getModule() == module) {
-										studyItemsToRemove.add(studyItemAct);
-										studyItemAct.setSubject(null);
-									} else {
-										if (studyItemAct.getModule() > module) {
-											studyItemAct.setModule(studyItemAct.getModule() - 1);
-										}
-									}
-								}
-								/* Now remove the studyItems from the subject */
-								subject.getStudyItemsList().removeAll(studyItemsToRemove);
-								studyItemRepository.delete(studyItemsToRemove);
-								subject.deleteModule();
-
-								subjectRepository.save(subject);
-							}
+			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
+			if (subject != null) {
+				if (subject.getTeachers().contains(user)) {
+					if (option.equals("add")) {
+						subjectService.addModule(subject);
+					} else {
+						if (option.equals("delete") && (module != null)) {
+							subjectService.deleteModule(subject, module);
 						}
-
 					}
 				}
 			}
@@ -252,7 +223,7 @@ public class MoodleController {
 						/* If the user is a teacher of the subject can upload the file */
 
 						/* File uploading control. If the file exists, it is overwritten */
-						
+
 						if (!file.isEmpty()) {
 							try {
 								Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"), "files/documents/"
@@ -283,7 +254,7 @@ public class MoodleController {
 								file.transferTo(uploadedFile);
 
 								studyItemRepository.save(studyItem);
-								//subjectRepository.save(subject);
+								// subjectRepository.save(subject);
 
 							} catch (IOException e) {
 								System.out.println(e.getMessage());
@@ -389,21 +360,9 @@ public class MoodleController {
 
 		User user = sessionUserComponent.getLoggedUser();
 
+		if (user != null) {
+			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
 
-		Course course = null;
-		for (Course courseAct : user.getInscribedCourses()) {
-			if (courseAct.getInternalName().equals(courseInternalName)) {
-				course = courseAct;
-			}
-		}
-
-		if (course != null) {
-			Subject subject = null;
-			for (Subject subjectAct : course.getSubjects()) {
-				if (subjectAct.getInternalName().equals(subjectInternalName)) {
-					subject = subjectAct;
-				}
-			}
 			if (subject != null) {
 				if (subject.getUsers().contains(user)) {
 					StudyItem studyItem = null;
@@ -433,7 +392,7 @@ public class MoodleController {
 									studyItem.setSubject(null);
 									subject.getStudyItemsList().remove(studyItem);
 									studyItemRepository.delete(studyItem);
-									//subjectRepository.save(subject);
+									// subjectRepository.save(subject);
 								} else {
 									List<Practices> toRemove = new ArrayList<>();
 									for (Practices pract : studyItem.getPractices()) {
@@ -463,21 +422,8 @@ public class MoodleController {
 			@RequestParam Double newCalification) {
 
 		User user = sessionUserComponent.getLoggedUser();
-
-		Course course = null;
-		for (Course courseAct : user.getInscribedCourses()) {
-			if (courseAct.getInternalName().equals(courseInternalName)) {
-				course = courseAct;
-			}
-		}
-
-		if (course != null) {
-			Subject subject = null;
-			for (Subject subjectAct : course.getSubjects()) {
-				if (subjectAct.getInternalName().equals(subjectInternalName)) {
-					subject = subjectAct;
-				}
-			}
+		if (user != null) {
+			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
 			if (subject != null) {
 				if (subject.getUsers().contains(user)) {
 					StudyItem studyItem = null;
@@ -506,15 +452,15 @@ public class MoodleController {
 		}
 		return new ModelAndView("redirect:/moodle/" + courseInternalName + "/" + subjectInternalName);
 	}
-	
-	
+
 	@RequestMapping(value = "/moodle/practice/modify/{courseInternalName}/{subjectInternalName}/{studyItemID}/{practiceID}", method = RequestMethod.POST)
 	private ModelAndView modifyPractice(@PathVariable String courseInternalName,
-			@PathVariable String subjectInternalName, @PathVariable Long studyItemID, @PathVariable Long practiceID, @RequestParam String newName, @RequestParam("itemFile") MultipartFile file) {
+			@PathVariable String subjectInternalName, @PathVariable Long studyItemID, @PathVariable Long practiceID,
+			@RequestParam String newName, @RequestParam("itemFile") MultipartFile file) {
 
 		User user = sessionUserComponent.getLoggedUser();
 
-		if (user.isStudent() && !newName.isEmpty()) {
+		if (user != null && user.isStudent() && !newName.isEmpty()) {
 
 			Course course = null;
 			for (Course courseAct : user.getInscribedCourses()) {
@@ -546,33 +492,34 @@ public class MoodleController {
 									practice = practiceAct;
 								}
 							}
-							
+
 							if (practice != null)
 								if (!newName.isEmpty()) {
 									practice.setPracticeName(newName);
 									practice.setPresented(true);
 									practicesRepository.save(practice);
 								}
-					
+
 							if (!file.isEmpty() && (practice != null)) {
 								try {
-									Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"), "files/documents/"
-											+ course.getCourseID() + "/" + subject.getSubjectID() + "/studyItems/practices/");
+									Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"),
+											"files/documents/" + course.getCourseID() + "/" + subject.getSubjectID()
+													+ "/studyItems/practices/");
 									if (!Files.exists(FILES_FOLDER)) {
 										Files.createDirectories(FILES_FOLDER);
 									}
-									
+
 									practice.setOriginalName(file.getOriginalFilename());
 									practicesRepository.save(practice);
-									
+
 									String[] fileOriginal = studyItem.getOriginalName().split("[.]");
 									String extension = fileOriginal[fileOriginal.length - 1];
 
 									String fileName = "practice-" + practice.getPracticeID() + "." + extension;
-									
+
 									File uploadedFile = new File(FILES_FOLDER.toFile(), fileName);
 									file.transferTo(uploadedFile);
-	
+
 								} catch (IOException e) {
 									System.out.println(e.getMessage());
 								}
@@ -584,8 +531,5 @@ public class MoodleController {
 		}
 		return new ModelAndView("redirect:/moodle/" + courseInternalName + "/" + subjectInternalName);
 	}
-	
-	
-	
 
 }
