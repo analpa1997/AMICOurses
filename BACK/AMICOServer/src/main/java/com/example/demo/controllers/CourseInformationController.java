@@ -29,7 +29,7 @@ import com.example.demo.user.UserRepository;
 @Controller
 public class CourseInformationController {
 
-	private Course course = null;
+	//private Course course = null;
 	private String message;
 	private boolean error = false;
 	
@@ -47,7 +47,7 @@ public class CourseInformationController {
 	public String course(Model model, @PathVariable String internalName) {
 		
 		// get the course information by course internal name
-		course = courseRepository.findByInternalName(internalName);
+		Course course = courseRepository.findByInternalName(internalName);
 
 		// set the course attributes to show
 		model.addAttribute("courseName", course.getName());
@@ -72,7 +72,7 @@ public class CourseInformationController {
 	@RequestMapping("/course/{internalName}/subjects")
 	public String subjects(Model model, @PathVariable String internalName) {
 
-		course = courseRepository.findByInternalName(internalName);
+		Course course = courseRepository.findByInternalName(internalName);
 		List<Subject> subject = course.getSubjects();
 
 		model.addAttribute("courseName", course.getName());
@@ -87,7 +87,7 @@ public class CourseInformationController {
 	@RequestMapping("/course/{internalName}/skills")
 	public String skills(Model model, @PathVariable String internalName) {
 
-		course = courseRepository.findByInternalName(internalName);
+		Course course = courseRepository.findByInternalName(internalName);
 		List<Skill> skill = course.getSkills();
 
 		model.addAttribute("skills", skill);
@@ -102,6 +102,7 @@ public class CourseInformationController {
 	@RequestMapping("/course/{internalName}/add")
 	public RedirectView addCourseToUser(Model model, @PathVariable String internalName) {
 
+		Course course;
 		User user = null;
 		int courseInscribedCounter;
 		int courseCompletedCounter;
@@ -116,6 +117,7 @@ public class CourseInformationController {
 			return new RedirectView ("/course/{internalName}");
 		}
 		else { // registered. Get the user data
+			course = courseRepository.findByInternalName(internalName);
 			user = sessionUserComponent.getLoggedUser();
 		}
 					
