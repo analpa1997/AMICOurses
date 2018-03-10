@@ -13,36 +13,49 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.example.demo.course.Course;
+import com.example.demo.course.Course.BasicInformation;
+//import com.example.demo.course.Course.BasicInformation;
 import com.example.demo.exam.Exam;
 import com.example.demo.message.Message;
 import com.example.demo.practices.Practices;
 import com.example.demo.studyItem.StudyItem;
 import com.example.demo.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
 @Table(name = "Subjects")
 public class Subject {
-
+	
+	public interface SubjectsBasicInformation {}
+	public interface CourseBasicInformation {}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	
+	@JsonView(SubjectsBasicInformation.class)
 	private long subjectID;
 
+	@JsonView(SubjectsBasicInformation.class)
 	private String name;
 
+	@JsonView(SubjectsBasicInformation.class)
 	private String description;
-
+	
+	@JsonView(CourseBasicInformation.class)
 	@ManyToOne
 	private Course course;
-
+	
+	@JsonIgnore
 	@OneToMany(mappedBy = "subject")
 	private List<StudyItem> studyItemsList = new ArrayList<>();
-
+	@JsonIgnore
 	@OneToMany(mappedBy = "subject")
 	private List<Exam> exams = new ArrayList<>();
-
+	@JsonIgnore
 	@OneToMany(mappedBy = "subject")
 	private List<Message> messages = new ArrayList<>();
-
+	@JsonIgnore
 	@ManyToMany
 	private List<User> teachers = new ArrayList<>();
 

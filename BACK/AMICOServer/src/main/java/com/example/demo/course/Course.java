@@ -29,7 +29,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 @Table(name = "Courses")
 public class Course {
 
-	interface BasicInformation {
+	public interface BasicInformation {
 	}
 
 	@Id

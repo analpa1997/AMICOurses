@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.view.RedirectView;
-
 import com.example.demo.course.Course;
 import com.example.demo.course.CourseRepository;
 import com.example.demo.skill.Skill;
@@ -20,6 +18,7 @@ import com.example.demo.subject.Subject;
 import com.example.demo.user.SessionUserComponent;
 import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
+import com.fasterxml.jackson.annotation.JsonView;
 
 
 
@@ -35,10 +34,9 @@ public class CourseInformationRestController {
 	private SessionUserComponent sessionUserComponent;
 	
 	private String message;
-	private boolean error = false;
 
 	@RequestMapping(value = { "/{internalName}" }, method = RequestMethod.GET)
-	public ResponseEntity<Course> courseInformation(@PathVariable String internalName) {
+	public ResponseEntity<Course> course(@PathVariable String internalName) {
 	
 		Course course = null;
 			
@@ -50,7 +48,7 @@ public class CourseInformationRestController {
 	}
 	
 	@RequestMapping(value = { "/{internalName}/Skills" }, method = RequestMethod.GET)
-	public ResponseEntity<List<Skill>> courseInformationSkills(@PathVariable String internalName) {
+	public ResponseEntity<List<Skill>> skills(@PathVariable String internalName) {
 	
 		Course course = null;
 			
@@ -66,8 +64,12 @@ public class CourseInformationRestController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 	
+	interface SubjectsDetail
+	extends Subject.SubjectsBasicInformation, Subject.CourseBasicInformation, Course.BasicInformation{}
+	
+	@JsonView(SubjectsDetail.class)
 	@RequestMapping(value = { "/{internalName}/Subjects" }, method = RequestMethod.GET)
-	public ResponseEntity<List<Subject>> courseInformationSubjects(@PathVariable String internalName) {
+	public ResponseEntity<List<Subject>> subjects(@PathVariable String internalName) {
 	
 		Course course = null;
 			
@@ -84,7 +86,7 @@ public class CourseInformationRestController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 	
-	@RequestMapping("/course/{internalName}/add")
+	@RequestMapping("/{internalName}/add")
 	public ResponseEntity<String> addCourseToUser(Model model, @PathVariable String internalName) {
 
 		Course course;
@@ -98,8 +100,7 @@ public class CourseInformationRestController {
 		// check if the visitor is registered
 		if (!sessionUserComponent.isLoggedUser()) {  // not registered
 			message = "To register for a course it is necessary to be logged into the system. Press AMICOURSES to return to the main screen and be able to register in the system ";
-			error = true;
-			return new ResponseEntity<>(HttpStatus.NON_AUTHORITATIVE_INFORMATION);
+			return new ResponseEntity<>(message, HttpStatus.OK);
 		}
 		else { // registered. Get the user data
 			course = courseRepository.findByInternalName(internalName);
@@ -133,11 +134,10 @@ public class CourseInformationRestController {
 		
 		if (courseCompletedCounter != cCompletedList.size()) { // if user has completed the course. show message
 			message = "You have already completed this course.";
-			error = true;
 		}
 		else if (courseInscribedCounter != cInscribedUsers.size()) { // if user is inscribed in the course. show message
 			message = "You are already registered in this course.";
-			error = true;
+			
 		} else {  // user can register in the course
 		
 			cInscribedUsers.add(course);
@@ -150,12 +150,14 @@ public class CourseInformationRestController {
 			courseRepository.save(course);// update courses
 			
 			// go to user profile
-			return new ResponseEntity<>(HttpStatus.valueOf("Course  Added"));
+			
+			message = "course Added";
+			return new ResponseEntity<>(message, HttpStatus.OK);
 			
 		} 
 		
 		// go to same page to show the message			
-		return new ResponseEntity<>(HttpStatus.valueOf(message));
+		return new ResponseEntity<>(message, HttpStatus.OK);
 		
 	}
 	
