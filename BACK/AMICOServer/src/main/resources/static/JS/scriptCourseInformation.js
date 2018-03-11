@@ -2,7 +2,7 @@
  * 
  */
 
-var urlSearch = 'localhost:8080/api/courseInformation/';
+var urlSearch = '/api/courseInformation/';
 var name = $('#textSearch').val();
 	
 $('document').ready(function(){
@@ -22,8 +22,8 @@ $.ajax({
 				"<p>" +  data.course.endDateString + "</p>");
 	},
 	error: function(exception){alert(exception.message);}
-	})
-})
+	});
+});
 	
 function showSkills(){
 		
