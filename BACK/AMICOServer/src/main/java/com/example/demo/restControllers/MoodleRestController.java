@@ -3,6 +3,8 @@ package com.example.demo.restControllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,7 +36,7 @@ public class MoodleRestController {
 	private CourseRepository courseRepository;
 	@Autowired
 	private SubjectService subjectService;
-	
+
 	@Autowired
 	private SessionUserComponent sessionUserComponent;
 
@@ -42,10 +44,11 @@ public class MoodleRestController {
 	/* POST */
 	/* Creates a new module within a subject */
 	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/module", method = RequestMethod.POST)
-	public ResponseEntity<Subject> addModule(@PathVariable String courseInternalName, @PathVariable String subjectInternalName) {
+	public ResponseEntity<Subject> addModule(@PathVariable String courseInternalName,
+			@PathVariable String subjectInternalName) {
 
 		User user = sessionUserComponent.getLoggedUser();
-		
+
 		if (user != null && !user.isStudent()) {
 			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
 			if (subject != null) {
@@ -60,11 +63,11 @@ public class MoodleRestController {
 	/* DELETE */
 	/* Creates a new module within a subject */
 	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/module/{module}", method = RequestMethod.DELETE)
-	public ResponseEntity<Subject> deleteModule(@PathVariable String courseInternalName, @PathVariable String subjectInternalName,
-			@PathVariable Integer module) {
-		
+	public ResponseEntity<Subject> deleteModule(@PathVariable String courseInternalName,
+			@PathVariable String subjectInternalName, @PathVariable Integer module) {
+
 		User user = sessionUserComponent.getLoggedUser();
-		
+
 		if (user != null && !user.isStudent()) {
 			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
 			if (subject != null) {
@@ -73,7 +76,7 @@ public class MoodleRestController {
 			}
 		}
 
-		return new ResponseEntity<Subject> (HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 	/* STUDY ITEMS */
@@ -81,26 +84,72 @@ public class MoodleRestController {
 	/* GET */
 	/* Retrieves all the studyItems from a subject */
 	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/studyItem/all", method = RequestMethod.GET)
-	public Object getAllStudyItems(@PathVariable String courseInternalName, @PathVariable String subjectInternalName) {
+	public ResponseEntity<List<StudyItem>> getAllStudyItems(@PathVariable String courseInternalName,
+			@PathVariable String subjectInternalName) {
 
-		return null;
+		User user = sessionUserComponent.getLoggedUser();
+
+		if (user != null) {
+			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
+			if (subject != null) {
+				List<StudyItem> studyItems = subjectService.getStudyItems(subject);
+				return new ResponseEntity<>(studyItems, HttpStatus.OK);
+			}
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
-	/* Retrieves the studyItems from a module from a subject */
+	/* Retrieves all the studyItems from a module from a subject */
 	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/studyItem/module/{module}", method = RequestMethod.GET)
-	public Object getStudyItemsFromModule(@PathVariable String courseInternalName,
+	public ResponseEntity<List<StudyItem>> getStudyItemsFromModule(@PathVariable String courseInternalName,
 			@PathVariable String subjectInternalName, @PathVariable Integer module) {
 
-		return null;
+		User user = sessionUserComponent.getLoggedUser();
+
+		if (user != null) {
+			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
+			if (subject != null) {
+				List<StudyItem> studyItems = subjectService.getStudyItems(subject, module);
+				return new ResponseEntity<>(studyItems, HttpStatus.OK);
+			}
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 	/* Retrieves only one studyItem from a subject */
 	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/studyItem/one/{studyItemID}", method = RequestMethod.GET)
-	public Object getOneStudyItem(@PathVariable String courseInternalName, @PathVariable String subjectInternalName,
-			@PathVariable Long studyItemID) {
+	public ResponseEntity<StudyItem> getOneStudyItem(@PathVariable String courseInternalName,
+			@PathVariable String subjectInternalName, @PathVariable Long studyItemID) {
 
-		return null;
+		User user = sessionUserComponent.getLoggedUser();
+
+		if (user != null) {
+			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
+			if (subject != null) {
+				StudyItem studyItem = subjectService.getStudyItem(subject, studyItemID);
+
+				if (studyItem != null) {
+					return new ResponseEntity<>(studyItem, HttpStatus.OK);
+				}
+
+			}
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
+
+	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/studyItem/file/{studyItemID}", method = RequestMethod.GET)
+	public void getStudyItemFile(@PathVariable String courseInternalName, @PathVariable String subjectInternalName,
+			@PathVariable Long studyItemID, HttpServletResponse response) {
+
+		User user = sessionUserComponent.getLoggedUser();
+		if (user != null) {
+			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
+			if (subject != null) {
+
+			}
+		}
+	}
+
 
 	/* POST */
 	/* Creates a studyItem within a subject and a module */
@@ -112,15 +161,28 @@ public class MoodleRestController {
 		return null;
 	}
 
+	/* UPDATE */
+	
 	/* DELETE */
 
-	/*  */
-
+	
+	
+	/* PRACTICES */
+	
+	/* GET */
+	
+	/* POST */
+	
+	/* UPDATE */
+	
+	/* DELETE */
+	
+	/* CONSULT MARKS */
 	/*
 	 * TO DO: refractor all this autentication and checkings into a service/function
 	 */
 	@RequestMapping(value = "/api/moodle/practicesMarks/{courseInternalName}/{subjectInternalName}/practices/", method = RequestMethod.GET)
-	public ResponseEntity<List<List<Object>>> allCourses(@PathVariable String courseInternalName,
+	public ResponseEntity<List<List<Object>>> getMarks(@PathVariable String courseInternalName,
 			@PathVariable String subjectInternalName) {
 
 		User user = sessionUserComponent.getLoggedUser();
@@ -135,8 +197,6 @@ public class MoodleRestController {
 						studyItemsPract.add(studyItemAct);
 					}
 				}
-				
-				
 
 				List<List<Object>> listPractices = new ArrayList<>();
 				int i = 0;

@@ -31,6 +31,7 @@ import com.example.demo.practices.Practices;
 import com.example.demo.practices.PracticesRepository;
 import com.example.demo.studyItem.StudyItem;
 import com.example.demo.studyItem.StudyItemRepository;
+import com.example.demo.studyItem.StudyItemService;
 import com.example.demo.subject.Subject;
 import com.example.demo.subject.SubjectRepository;
 import com.example.demo.subject.SubjectService;
@@ -54,6 +55,8 @@ public class MoodleController {
 
 	@Autowired
 	private SubjectService subjectService;
+	@Autowired
+	private StudyItemService studyItemService;
 
 	@Autowired
 	private SessionUserComponent sessionUserComponent;
@@ -84,29 +87,14 @@ public class MoodleController {
 			 */
 			List<List<StudyItem>> allStudyItems = new ArrayList<>();
 
-			for (int i = 0; i < subject.getNumberModules(); i++) {
-				allStudyItems.add(new ArrayList<>());
-			}
-
-			int module;
-			List<StudyItem> moduleNStudyItems;
-
 			List<StudyItem> studyItemPractices = new ArrayList<>();
-			for (StudyItem studyItem : subject.getStudyItemsList()) {
-				/* Get the actual module */
-				if (!studyItem.isPractice()) {
-					module = studyItem.getModule() - 1;
-					moduleNStudyItems = allStudyItems.get(module);
-					/* If it is the first item on this module, the list is null */
-					if (moduleNStudyItems == null) {
-						moduleNStudyItems = new ArrayList<>();
-					}
-					moduleNStudyItems.add(studyItem);
-				} else {
-					studyItemPractices.add(studyItem);
-				}
+			for (int i = 1; i <= subject.getNumberModules(); i++) {
+				allStudyItems.add(subjectService.getStudyItems(subject, i));
 			}
-
+			
+			
+			studyItemPractices = subjectService.getPractices(subject);
+			
 			model.addAttribute("studyItemPractices", studyItemPractices);
 			model.addAttribute("allStudyItems", allStudyItems);
 
@@ -114,6 +102,7 @@ public class MoodleController {
 			/*
 			 * To retrieve only the student practices (one practice per studyItemPractice)
 			 */
+			
 			int i = 0;
 			if (user.isStudent()) {
 
@@ -303,19 +292,16 @@ public class MoodleController {
 					if (studyItem != null) {
 						/* An studyItem */
 						if (!practiceID.isPresent()) {
-							Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"), "files/documents/"
-									+ course.getCourseID() + "/" + subject.getSubjectID() + "/studyItems/");
-							String extension = studyItem.getExtension();
-							if (extension == null) {
-								String[] fileOriginal = studyItem.getOriginalName().split("[.]");
-								extension = fileOriginal[fileOriginal.length - 1];
-							}
-							Path filePath = FILES_FOLDER
-									.resolve("studyItem-" + studyItem.getStudyItemID() + "." + extension);
+							
+							
+							
 							res.addHeader("Content-Disposition",
 									"attachment; filename = " + studyItem.getOriginalName());
+							
+							Path filePath = studyItemService.getStudyItemFile(course.getCourseID(), subject.getSubjectID(), studyItemID);
 							res.setContentType("application/octet-stream");
 							res.setContentLength((int) filePath.toFile().length());
+							
 							FileCopyUtils.copy(Files.newInputStream(filePath), res.getOutputStream());
 
 							/* A practice */
