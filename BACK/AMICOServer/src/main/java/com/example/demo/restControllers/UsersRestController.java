@@ -15,23 +15,32 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.course.Course;
 import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
+import com.example.demo.user.UserService;
 
 @RestController
-public class UsersRestController { // *** /!\ IN CONSTRUCTION, FOR YOUR SAFETY, WEAR A HELMET /!\ ***
+public class UsersRestController extends UserService {
 
 	@Autowired
 	private UserRepository repository;
 
 	// ********************** POST ********************
-	@RequestMapping(value = "/api/user", method = RequestMethod.POST)
+	@RequestMapping(value = "/api/users", method = RequestMethod.POST)
 	public ResponseEntity<User> newUser(@RequestParam String username, @RequestParam String password,
-			@RequestParam String userMail, @RequestParam boolean isStudent) {
+			@RequestParam String repeatPassword, @RequestParam String userMail,
+			@RequestParam boolean admin) { /* admin to add teachers */
 
-		/* comprobar parametros correctos */
+		User user = checkUser(username, password, repeatPassword, userMail, admin);
+		if (user != null)
+			return new ResponseEntity<>(user, HttpStatus.OK);
+		else
+			return new ResponseEntity(HttpStatus.NOT_FOUND);
+	}
 
-		User user = new User(username, password, userMail, isStudent);
+	// ********************** DELETE ********************
+	@RequestMapping(value = "/api/users/{userInternalName}", method = RequestMethod.DELETE)
+	public ResponseEntity<User> delUser(@PathVariable String userInternalName) {
 
-		repository.save(user);
+		User user = deleteUser(userInternalName);
 		if (user != null)
 			return new ResponseEntity<>(user, HttpStatus.OK);
 		else
@@ -52,7 +61,7 @@ public class UsersRestController { // *** /!\ IN CONSTRUCTION, FOR YOUR SAFETY, 
 	}
 
 	// ********************** FIND IN COURSE ********************
-	@RequestMapping(value = "/api/courses/{courseID}/{userInternalName}", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/users/{courseID}/{userInternalName}", method = RequestMethod.GET)
 	public ResponseEntity<User> findUserInCourse(@PathVariable String userInternalName, @PathVariable Long courseID) {
 		User user = repository.findByInternalName(userInternalName);
 		if (user != null) {
