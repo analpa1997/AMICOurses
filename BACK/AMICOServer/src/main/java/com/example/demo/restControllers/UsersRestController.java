@@ -1,6 +1,9 @@
 package com.example.demo.restControllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,12 +23,13 @@ public class UsersRestController { // *** /!\ IN CONSTRUCTION, FOR YOUR SAFETY, 
 	private UserRepository repository;
 
 	// ********************** POST ********************
-	@RequestMapping(value = "/api/users/new", method = RequestMethod.POST)
+	@RequestMapping(value = "/api/user", method = RequestMethod.POST)
 	public ResponseEntity<User> newUser(@RequestParam String username, @RequestParam String password,
 			@RequestParam String userMail, @RequestParam boolean isStudent) {
-		User user = new User(username, password, userMail, isStudent);
 
 		/* comprobar parametros correctos */
+
+		User user = new User(username, password, userMail, isStudent);
 
 		repository.save(user);
 		if (user != null)
@@ -38,15 +42,11 @@ public class UsersRestController { // *** /!\ IN CONSTRUCTION, FOR YOUR SAFETY, 
 
 	// Find user by internalName
 	@RequestMapping(value = "/api/users/{userInternalName}", method = RequestMethod.GET)
-	public ResponseEntity<User> findUser(@PathVariable String userInternalName, @RequestParam boolean isStudent) {// null
-																													// to
-																													// anyone
+	public ResponseEntity<User> findUser(@PathVariable String userInternalName) {
+
 		User user = repository.findByInternalName(userInternalName);
 		if (user != null)
-			if (user.isStudent() == isStudent)// Student or Teacher
-				return new ResponseEntity<>(user, HttpStatus.OK);
-			else // isStudent==null-> AnyOne
-				return new ResponseEntity<>(user, HttpStatus.OK);
+			return new ResponseEntity<>(user, HttpStatus.OK);
 		else
 			return new ResponseEntity(HttpStatus.NOT_FOUND);
 	}
@@ -65,12 +65,22 @@ public class UsersRestController { // *** /!\ IN CONSTRUCTION, FOR YOUR SAFETY, 
 	}
 
 	// ********************** RETURN ALL ********************
-	/*
-	 * @RequestMapping(value = "/api/users/all", method = RequestMethod.GET) public
-	 * ResponseEntity<Page<User>> allUsers(Pageable pages){ Page<User> pageUser =
-	 * repository.findAll(new PageRequest(0, 0));
-	 * 
-	 * }
-	 */
+
+	@RequestMapping(value = "/api/users/all", method = RequestMethod.GET)
+	public ResponseEntity<Page<User>> allUsers(Pageable pages,
+			@RequestParam(value = "page", defaultValue = "0") int page,
+			@RequestParam(value = "isStudent", required = false) Boolean isStudent) {
+		Page<User> pageUser;
+		if (isStudent = null)
+			pageUser = repository.findAll(new PageRequest(page, 10));
+		else
+			pageUser = repository.findByIsStudent(isStudent, new PageRequest(page, 10));
+
+		if (pageUser != null)
+			return new ResponseEntity(pageUser, HttpStatus.OK);
+		else
+			return new ResponseEntity(pageUser, HttpStatus.NOT_FOUND);
+
+	}
 
 }
