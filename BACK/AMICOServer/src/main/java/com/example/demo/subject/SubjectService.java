@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.course.Course;
@@ -61,28 +63,18 @@ public class SubjectService {
 	}
 
 	/* Retrieves all the studyItems from all modules */
-	public List<StudyItem> getStudyItems(Subject subject) {
+	public Page<StudyItem> getStudyItems(Subject subject, PageRequest pageReq) {
 
-		List<StudyItem> studyItems = new ArrayList<>();
+		Page<StudyItem> studyItems = studyItemRepository.findBySubjectAndIsPractice(subject, false, pageReq);
 
-		int modules = subject.getNumberModules();
-
-		for (int i = 1; i <= modules; i++) {
-			studyItems.addAll(this.getStudyItems(subject, i));
-		}
 		return studyItems;
 	}
 
 	/* Retrieves only the studyItems from a module */
-	public List<StudyItem> getStudyItems(Subject subject, int module) {
+	public Page<StudyItem> getStudyItems(Subject subject, int module, PageRequest pageReq) {
 
-		List<StudyItem> studyItems = new ArrayList<>();
-
-		for (StudyItem studyItem : subject.getStudyItemsList()) {
-			if (!studyItem.isPractice() && studyItem.getModule() == module) {
-				studyItems.add(studyItem);
-			}
-		}
+		Page<StudyItem> studyItems = studyItemRepository.findBySubjectAndModuleAndIsPractice(subject, module, false, pageReq);
+		
 		return studyItems;
 	}
 	

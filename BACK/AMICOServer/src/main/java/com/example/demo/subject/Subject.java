@@ -171,5 +171,16 @@ public class Subject {
 	public void deleteModule () {
 		numberModules--;
 	}
+	
+	@Override
+	public boolean equals(Object obj2) {
+		
+		boolean sameObj = false;
+
+		if (obj2 != null && obj2 instanceof User)
+			sameObj = this.subjectID == ((Subject) obj2).subjectID;
+		
+		return sameObj;
+	}
 
 }

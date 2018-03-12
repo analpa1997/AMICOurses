@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -62,98 +64,97 @@ public class MoodleController {
 	private SessionUserComponent sessionUserComponent;
 
 	@RequestMapping("/moodle/{courseInternalName}/{subjectInternalName}")
-	public String allCourses(Model model, @PathVariable String courseInternalName,
-			@PathVariable String subjectInternalName) {
+	public String allCourses(Model model, Pageable pages, @PathVariable String courseInternalName,
+			@PathVariable String subjectInternalName, @RequestParam(value = "page", defaultValue = "0") int page) {
 		User user = sessionUserComponent.getLoggedUser();
 
 		Course course = null;
 		course = courseRepository.findByInternalName(courseInternalName);
-		
+
 		if (course.getInscribedUsers().contains(user)) {
 
-		Subject subject = null;
-		for (Subject subjectAct : course.getSubjects()) {
-			if (subjectAct.getInternalName().equals(subjectInternalName)) {
-				subject = subjectAct;
-			}
-		}
-
-		if (subject != null) {
-
-			/* Get all the studyItems from the subject */
-			/*
-			 * They will consists in n (number of modules a subject has) Lists in order to
-			 * pass them to moustache
-			 */
-			List<List<StudyItem>> allStudyItems = new ArrayList<>();
-
-			List<StudyItem> studyItemPractices = new ArrayList<>();
-			for (int i = 1; i <= subject.getNumberModules(); i++) {
-				allStudyItems.add(subjectService.getStudyItems(subject, i));
-			}
-			
-			
-			studyItemPractices = subjectService.getPractices(subject);
-			
-			model.addAttribute("studyItemPractices", studyItemPractices);
-			model.addAttribute("allStudyItems", allStudyItems);
-
-			List<List<Object>> studentPractices = new ArrayList<>();
-			/*
-			 * To retrieve only the student practices (one practice per studyItemPractice)
-			 */
-			
-			int i = 0;
-			if (user.isStudent()) {
-
-				for (StudyItem studyItemPrac : studyItemPractices) {
-					studentPractices.add(new ArrayList<>());
-
-					Practices practice = null;
-					for (Practices practiceAct : studyItemPrac.getPractices()) {
-						if (practiceAct.getOwner().getUserID() == user.getUserID()) {
-							practice = practiceAct;
-						}
-					}
-					if (practice == null) {
-						practice = new Practices("Not Presented", "Not Presented");
-						practice.setStudyItem(studyItemPrac);
-						practice.setOwner(user);
-						practicesRepository.save(practice);
-						practice = practicesRepository.getOne(practicesRepository.count());
-						studyItemPrac.getPractices().add(practice);
-						studyItemRepository.save(studyItemPrac);
-					}
-					studentPractices.get(i).add(studyItemPrac);
-					studentPractices.get(i).add(practice);
-
-					i++;
+			Subject subject = null;
+			for (Subject subjectAct : course.getSubjects()) {
+				if (subjectAct.getInternalName().equals(subjectInternalName)) {
+					subject = subjectAct;
 				}
-				model.addAttribute("studentPractices", studentPractices);
 			}
 
-			/* Users to show in the teachers/students tab */
-			List<User> usersToShowList = new ArrayList<>();
-			if (user.isStudent()) {
-				usersToShowList.addAll(subject.getTeachers());
+			if (subject != null) {
+
+				/* Get all the studyItems from the subject */
+				/*
+				 * They will consists in n (number of modules a subject has) Lists in order to
+				 * pass them to moustache
+				 */
+				List<List<StudyItem>> allStudyItems = new ArrayList<>();
+
+				List<StudyItem> studyItemPractices = new ArrayList<>();
+				for (int i = 1; i <= subject.getNumberModules(); i++) {
+					allStudyItems.add(subjectService.getStudyItems(subject, i, new PageRequest(page, 10)).getContent());
+				}
+
+				studyItemPractices = subjectService.getPractices(subject);
+
+				model.addAttribute("studyItemPractices", studyItemPractices);
+				model.addAttribute("allStudyItems", allStudyItems);
+
+				List<List<Object>> studentPractices = new ArrayList<>();
+				/*
+				 * To retrieve only the student practices (one practice per studyItemPractice)
+				 */
+
+				int i = 0;
+				if (user.isStudent()) {
+
+					for (StudyItem studyItemPrac : studyItemPractices) {
+						studentPractices.add(new ArrayList<>());
+
+						Practices practice = null;
+						for (Practices practiceAct : studyItemPrac.getPractices()) {
+							if (practiceAct.getOwner().getUserID() == user.getUserID()) {
+								practice = practiceAct;
+							}
+						}
+						if (practice == null) {
+							practice = new Practices("Not Presented", "Not Presented");
+							practice.setStudyItem(studyItemPrac);
+							practice.setOwner(user);
+							practicesRepository.save(practice);
+							practice = practicesRepository.getOne(practicesRepository.count());
+							studyItemPrac.getPractices().add(practice);
+							studyItemRepository.save(studyItemPrac);
+						}
+						studentPractices.get(i).add(studyItemPrac);
+						studentPractices.get(i).add(practice);
+
+						i++;
+					}
+					model.addAttribute("studentPractices", studentPractices);
+				}
+
+				/* Users to show in the teachers/students tab */
+				List<User> usersToShowList = new ArrayList<>();
+				if (user.isStudent()) {
+					usersToShowList.addAll(subject.getTeachers());
+				}
+				if (!user.isStudent()) {
+					usersToShowList.addAll(subject.getUsers());
+				}
+				usersToShowList.remove(user);
+				model.addAttribute("usersToShowList", usersToShowList);
 			}
-			if (!user.isStudent()) {
-				usersToShowList.addAll(subject.getUsers());
-			}
-			usersToShowList.remove(user);
-			model.addAttribute("usersToShowList", usersToShowList);
-		}
 
-		model.addAttribute("isTeacher", !user.isStudent());
+			model.addAttribute("isTeacher", !user.isStudent());
 
-		/* Info about the user, course and subject */
-		model.addAttribute("courseInternalName", course.getInternalName());
-		model.addAttribute("courseName", course.getName());
-		model.addAttribute("subjectInternalName", subject.getInternalName());
-		model.addAttribute("subjectName", subject.getName());
-		model.addAttribute("userInternalName", user.getInternalName());
+			/* Info about the user, course and subject */
+			model.addAttribute("courseInternalName", course.getInternalName());
+			model.addAttribute("courseName", course.getName());
+			model.addAttribute("subjectInternalName", subject.getInternalName());
+			model.addAttribute("subjectName", subject.getName());
+			model.addAttribute("userInternalName", user.getInternalName());
 
-		return "HTML/Moodle/student-subject";
+			return "HTML/Moodle/student-subject";
 		} else {
 			return "/error/";
 		}
@@ -194,67 +195,26 @@ public class MoodleController {
 
 		if (!user.isStudent() && !itemName.isEmpty() && (module != null)) {
 
-			Course course = null;
-			for (Course courseAct : user.getInscribedCourses()) {
-				if (courseAct.getInternalName().equals(courseInternalName)) {
-					course = courseAct;
-				}
-			}
+			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
+			if (subject != null) {
+				if (subject.getTeachers().contains(user)) {
+					/* If the user is a teacher of the subject can upload the file */
 
-			if (course != null) {
-				Subject subject = null;
-				for (Subject subjectAct : course.getSubjects()) {
-					if (subjectAct.getInternalName().equals(subjectInternalName)) {
-						subject = subjectAct;
-					}
-				}
-				if (subject != null) {
-					if (subject.getTeachers().contains(user)) {
-						/* If the user is a teacher of the subject can upload the file */
+					/* File uploading control. If the file exists, it is overwritten */
 
-						/* File uploading control. If the file exists, it is overwritten */
+					if (!file.isEmpty()) {
+						try {
+							studyItemService.createStudyItem(file, subject, module, itemType, itemName);
 
-						if (!file.isEmpty()) {
-							try {
-								Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"), "files/documents/"
-										+ course.getCourseID() + "/" + subject.getSubjectID() + "/studyItems/");
-								if (!Files.exists(FILES_FOLDER)) {
-									Files.createDirectories(FILES_FOLDER);
-								}
-								String[] fileOriginal = file.getOriginalFilename().split("[.]");
-								String extension = fileOriginal[fileOriginal.length - 1];
-								String type = extension;
-								if (!itemType.isEmpty()) {
-									type = itemType;
-								}
-								StudyItem studyItem = new StudyItem(type, itemName, module, file.getOriginalFilename());
-								if (module < 0) {
-									studyItem.setPractice(true);
-								}
-
-								studyItemRepository.save(studyItem);
-
-								String fileName = "studyItem-" + studyItem.getStudyItemID() + "." + extension;
-								studyItem.setExtension(extension);
-								studyItem.setFileName(fileName);
-
-								studyItem.setSubject(subject);
-								subject.getStudyItemsList().add(studyItem);
-								File uploadedFile = new File(FILES_FOLDER.toFile(), fileName);
-								file.transferTo(uploadedFile);
-
-								studyItemRepository.save(studyItem);
-								// subjectRepository.save(subject);
-
-							} catch (IOException e) {
-								System.out.println(e.getMessage());
-							}
+						} catch (IOException e) {
+							System.out.println(e.getMessage());
 						}
-
 					}
+
 				}
 			}
 		}
+
 		return new ModelAndView("redirect:/moodle/" + courseInternalName + "/" + subjectInternalName);
 	}
 
@@ -292,16 +252,14 @@ public class MoodleController {
 					if (studyItem != null) {
 						/* An studyItem */
 						if (!practiceID.isPresent()) {
-							
-							
-							
+
 							res.addHeader("Content-Disposition",
 									"attachment; filename = " + studyItem.getOriginalName());
-							
-							Path filePath = studyItemService.getStudyItemFile(course.getCourseID(), subject.getSubjectID(), studyItemID);
+							Path filePath = studyItemService.getStudyItemFile(course.getCourseID(),
+									subject.getSubjectID(), studyItemID);
 							res.setContentType("application/octet-stream");
 							res.setContentLength((int) filePath.toFile().length());
-							
+
 							FileCopyUtils.copy(Files.newInputStream(filePath), res.getOutputStream());
 
 							/* A practice */
