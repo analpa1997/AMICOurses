@@ -18,38 +18,63 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.example.demo.course.Course;
 import com.example.demo.subject.Subject;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
 @Table(name = "Users")
 public class User {
 
+	public interface BasicInformation {
+	}
+
+	interface CourseInformation {
+	}
+
+	interface TeachingInformation {
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@JsonView(BasicInformation.class)
 	private long userID;
 
+	@JsonView(BasicInformation.class)
 	private String username;
 
 	// TO DO: Convert the password using a hash function
+	@JsonIgnore
 	private String password;
 
+	@JsonView(BasicInformation.class)
 	private String userMail;
 
+	@JsonView(BasicInformation.class)
 	private String userFirstName;
 
+	@JsonView(BasicInformation.class)
 	private String userLastName;
 
+	@JsonView(BasicInformation.class)
 	private String userAddress;
 
+	@JsonView(BasicInformation.class)
 	private String city;
 
+	@JsonView(BasicInformation.class)
 	private String country;
 
+	@JsonView(BasicInformation.class)
 	private int phoneNumber;
 
+	@JsonView(BasicInformation.class)
 	@Column(length = Short.MAX_VALUE)
 	private String interests;
 
+	@JsonView(BasicInformation.class)
 	private String urlProfileImage;
+
+	@JsonView(CourseInformation.class)
 	@ManyToMany
 	private List<Course> inscribedCourses = new ArrayList<>();
 
@@ -57,6 +82,7 @@ public class User {
 
 	private String internalName;
 
+	@JsonView(TeachingInformation.class)
 	@ManyToMany(mappedBy = "teachers")
 	private List<Subject> teaching = new ArrayList<>();
 
@@ -65,7 +91,7 @@ public class User {
 
 	/*
 	 * Constructors
-	 * 
+	 *
 	 * /*Empty constructor for the DB
 	 */
 	public User() {
@@ -78,191 +104,186 @@ public class User {
 		this.password = new BCryptPasswordEncoder().encode(password);
 		this.userMail = userMail;
 		this.isStudent = isStudent;
-		this.urlProfileImage = "null";
-		this.internalName = username.replaceAll(" ", "-").toLowerCase();
+		urlProfileImage = "null";
+		internalName = username.replaceAll(" ", "-").toLowerCase();
 
-		this.userFirstName = "";
-		this.userLastName = "";
-		this.userAddress = "";
-		this.city = "";
-		this.country = "";
-		this.phoneNumber = 00000000;
-		this.interests = "";
-		this.roles = new ArrayList<>(Arrays.asList("ROLE_USER"));
+		userFirstName = "";
+		userLastName = "";
+		userAddress = "";
+		city = "";
+		country = "";
+		phoneNumber = 00000000;
+		interests = "";
+		roles = new ArrayList<>(Arrays.asList("ROLE_USER"));
 	}
 
 	/* Methods */
-
-	public long getUserID() {
-		return userID;
-	}
-
-	public void setUserID(long userID) {
-		this.userID = userID;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-		this.internalName = this.username.replaceAll(" ", "-").toLowerCase();
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getUserMail() {
-		return userMail;
-	}
-
-	public void setUserMail(String userMail) {
-		this.userMail = userMail;
-	}
-
-	public String getUserFirstName() {
-		return userFirstName;
-	}
-
-	public void setUserFirstName(String userFirstName) {
-		this.userFirstName = userFirstName;
-	}
-
-	public String getUserLastName() {
-		return userLastName;
-	}
-
-	public void setUserLastName(String userLastName) {
-		this.userLastName = userLastName;
-	}
-
-	public String getUserAddress() {
-		return userAddress;
-	}
-
-	public void setUserAddress(String userAddress) {
-		this.userAddress = userAddress;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
-
-	public int getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public void setPhoneNumber(int phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-
-	public String getUrlProfileImage() {
-		return urlProfileImage;
-	}
-
-	public String getInterests() {
-		return interests;
-	}
-
-	public void setInterests(String interests) {
-		this.interests = interests;
-	}
-
-	public void setUrlProfileImage(String urlProfileImage) {
-		this.urlProfileImage = urlProfileImage;
-	}
-
-	public List<Course> getInscribedCourses() {
-		return inscribedCourses;
-	}
-
-	public List<Course> getCurrentCourses() {
-		List<Course> notCompletedCourses = new ArrayList<>();
-		for (Course course : this.inscribedCourses) {
-			if (!course.isCompleted()) {
-				notCompletedCourses.add(course);
-			}
-		}
-		return notCompletedCourses;
-	}
-
-	public void setInscribedCourses(List<Course> inscribedCourses) {
-		this.inscribedCourses = inscribedCourses;
-	}
-
-	public List<Course> getCompletedCourses() {
-		List<Course> completedCourses = new ArrayList<>();
-		for (Course course : inscribedCourses) {
-			if (course.isCompleted()) {
-				completedCourses.add(course);
-			}
-		}
-		return completedCourses;
-	}
-
-	public boolean isStudent() {
-		return isStudent;
-	}
-
-	public void setStudent(boolean isStudent) {
-		this.isStudent = isStudent;
-	}
-
-	public String getInternalName() {
-		return internalName;
-	}
-
-	public void setInternalName(String internalName) {
-		this.internalName = internalName;
-	}
-
-	public List<Subject> getTeaching() {
-		return teaching;
-	}
-
-	public void setTeaching(List<Subject> teaching) {
-		this.teaching = teaching;
-	}
-
-	public List<String> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(List<String> roles) {
-		this.roles = roles;
-	}
 
 	@Override
 	public boolean equals(Object obj2) {
 
 		boolean sameObj = false;
 
-		if (obj2 != null && obj2 instanceof User) {
-			sameObj = (this.userID == ((User) obj2).userID);
-		}
+		if (obj2 != null && obj2 instanceof User)
+			sameObj = userID == ((User) obj2).userID;
 		return sameObj;
 	}
 
+	public String getCity() {
+		return city;
+	}
+
+	public List<Course> getCompletedCourses() {
+		List<Course> completedCourses = new ArrayList<>();
+		for (Course course : inscribedCourses)
+			if (course.isCompleted())
+				completedCourses.add(course);
+		return completedCourses;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public List<Course> getCurrentCourses() {
+		List<Course> notCompletedCourses = new ArrayList<>();
+		for (Course course : inscribedCourses)
+			if (!course.isCompleted())
+				notCompletedCourses.add(course);
+		return notCompletedCourses;
+	}
+
+	public List<Course> getInscribedCourses() {
+		return inscribedCourses;
+	}
+
+	public String getInterests() {
+		return interests;
+	}
+
+	public String getInternalName() {
+		return internalName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public int getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public List<String> getRoles() {
+		return roles;
+	}
+
+	public List<Subject> getTeaching() {
+		return teaching;
+	}
+
+	public String getUrlProfileImage() {
+		return urlProfileImage;
+	}
+
+	public String getUserAddress() {
+		return userAddress;
+	}
+
+	public String getUserFirstName() {
+		return userFirstName;
+	}
+
+	public long getUserID() {
+		return userID;
+	}
+
+	public String getUserLastName() {
+		return userLastName;
+	}
+
+	public String getUserMail() {
+		return userMail;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
 	public boolean isAdmin() {
-		return this.getRoles().contains("ROLE_ADMIN");
+		return getRoles().contains("ROLE_ADMIN");
+	}
+
+	public boolean isStudent() {
+		return isStudent;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public void setInscribedCourses(List<Course> inscribedCourses) {
+		this.inscribedCourses = inscribedCourses;
+	}
+
+	public void setInterests(String interests) {
+		this.interests = interests;
+	}
+
+	public void setInternalName(String internalName) {
+		this.internalName = internalName;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setPhoneNumber(int phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
+	}
+
+	public void setStudent(boolean isStudent) {
+		this.isStudent = isStudent;
+	}
+
+	public void setTeaching(List<Subject> teaching) {
+		this.teaching = teaching;
+	}
+
+	public void setUrlProfileImage(String urlProfileImage) {
+		this.urlProfileImage = urlProfileImage;
+	}
+
+	public void setUserAddress(String userAddress) {
+		this.userAddress = userAddress;
+	}
+
+	public void setUserFirstName(String userFirstName) {
+		this.userFirstName = userFirstName;
+	}
+
+	public void setUserID(long userID) {
+		this.userID = userID;
+	}
+
+	public void setUserLastName(String userLastName) {
+		this.userLastName = userLastName;
+	}
+
+	public void setUserMail(String userMail) {
+		this.userMail = userMail;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+		internalName = this.username.replaceAll(" ", "-").toLowerCase();
 	}
 
 }

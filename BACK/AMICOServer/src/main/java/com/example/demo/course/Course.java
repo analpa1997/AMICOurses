@@ -32,6 +32,9 @@ public class Course {
 	public interface BasicInformation {
 	}
 
+	public interface UserInformation {
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@JsonView(BasicInformation.class)
@@ -62,7 +65,7 @@ public class Course {
 
 	private boolean isCompleted;
 
-	@JsonIgnore
+	@JsonView(UserInformation.class)
 	@ManyToMany(mappedBy = "inscribedCourses", fetch = FetchType.LAZY)
 	private List<User> inscribedUsers = new ArrayList<>();
 	@JsonIgnore
