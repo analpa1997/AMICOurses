@@ -31,7 +31,7 @@ var numPageDisplay = 0;
 			success: function(pageData){
 				areMoreCourses(pageData);
 				$('#allCourses').html('');
-				pageData.content.forEach(function(course){
+				pageData.forEach(function(course){
 					addHTML(course);
 				});
 				$('#newbtn').html('Newest');
@@ -52,7 +52,7 @@ var numPageDisplay = 0;
 			success: function(pageData){
 				areMoreCourses(pageData);
 				$('#allCourses').html('');
-				pageData.content.forEach(function(course){
+				pageData.forEach(function(course){
 					addHTML(course);
 				});
 				$('#searchbtn').html('Search');
@@ -73,7 +73,7 @@ var numPageDisplay = 0;
 			success: function(pageData){
 				areMoreCourses(pageData);
 				$('#allCourses').html('');
-				pageData.content.forEach(function(course){
+				pageData.forEach(function(course){
 					addHTML(course);
 				});
 				$('#trendbtn').html('Trending');
@@ -95,7 +95,7 @@ var numPageDisplay = 0;
 			success: function(pageData){
 				areMoreCourses(pageData);
 				$('#allCourses').html('');
-				pageData.content.forEach(function(course){
+				pageData.forEach(function(course){
 					addHTML(course);
 				});
 				$('#typebtn').html('Course Type');
@@ -113,7 +113,7 @@ var numPageDisplay = 0;
 			success: function(pageData){
 				areMoreCourses(pageData);
 				numPageDisplay++;
-				pageData.content.forEach(function(course){
+				pageData.forEach(function(course){
 					addHTML(course);
 				});
 			},
@@ -141,8 +141,8 @@ var numPageDisplay = 0;
                 '</div></div></div>');
 	}
 	function areMoreCourses(pageData){
-		if (pageData.last == true){
-			if(pageData.numberOfElements == 0) $('#btnMoreCourses').html('¡No Courses Found!');
+		if (pageData.length == 0){
+			if($('#allCourses').val() == '') $('#btnMoreCourses').html('¡No Courses Found!');
 			else $('#btnMoreCourses').html('No More courses');
 			$('#btnMoreCourses').addClass('disabled');
 		}else{

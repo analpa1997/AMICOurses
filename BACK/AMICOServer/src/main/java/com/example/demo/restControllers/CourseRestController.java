@@ -123,9 +123,9 @@ public class CourseRestController {
 
 	}
 
-	@JsonView(Course.BasicInformation.class)
+	@JsonView(CourseInformation.class)
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ResponseEntity<Page<Course>> allCourses(Pageable pages,
+	public ResponseEntity<List<Course>> allCourses(Pageable pages,
 			@RequestParam(value = "page", defaultValue = "0") int page,
 			@RequestParam(value = "sort", defaultValue = "courseID") String nameField,
 			@RequestParam(value = "type", defaultValue = "all") String type,
@@ -168,9 +168,10 @@ public class CourseRestController {
 		else
 			pageCourse = courseRepository.findByTypeAndInternalNameContaining(type, nameCourse,
 					new PageRequest(page, 10));
-		if (pageCourse != null)
-			return new ResponseEntity<>(pageCourse, HttpStatus.OK);
-		else
+		if (pageCourse != null) {
+			List<Course> listCourse = pageCourse.getContent();
+			return new ResponseEntity<>(listCourse, HttpStatus.OK);
+		} else
 			return new ResponseEntity(HttpStatus.NOT_FOUND);
 	}
 
@@ -198,7 +199,7 @@ public class CourseRestController {
 			course = courseRepository.findOne(courseID);
 		else
 			course = courseRepository.findByInternalName(internalName);
-		if (course != null && !course.getSkills().isEmpty()) {
+		if (course != null) {
 
 			List<Skill> skillList;
 			skillList = course.getSkills();
@@ -209,15 +210,19 @@ public class CourseRestController {
 	}
 
 	@JsonView(SubjectsDetail.class)
-	@RequestMapping(value = { "/id/{courseID}/Subjects/",
-			"/name/{internalName}/Subjects/" }, method = RequestMethod.GET)
-	public ResponseEntity<List<Subject>> subjects(@PathVariable String internalName) {
+	@RequestMapping(value = { "/id/{courseID}/subjects/",
+			"/name/{internalName}/subjects/" }, method = RequestMethod.GET)
+	public ResponseEntity<List<Subject>> subjects(@PathVariable(required = false) String internalName,
+			@PathVariable(required = false) Long courseID) {
 
 		Course course = null;
 
-		course = courseRepository.findByInternalName(internalName);
+		if (internalName == null)
+			course = courseRepository.findOne(courseID);
+		else
+			course = courseRepository.findByInternalName(internalName);
 
-		if (course != null && !course.getSubjects().isEmpty()) {
+		if (course != null) {
 
 			List<Subject> subjectsList;
 			subjectsList = course.getSubjects();

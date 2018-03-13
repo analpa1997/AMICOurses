@@ -32,7 +32,7 @@ public class Course {
 	public interface BasicInformation {
 	}
 
-	public interface UserInformation {
+	public interface UserInformation extends BasicInformation {
 	}
 
 	@Id
