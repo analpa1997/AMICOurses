@@ -1,5 +1,6 @@
 package com.example.demo.restControllers;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,13 +13,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.course.Course;
 import com.example.demo.course.CourseRepository;
+import com.example.demo.course.CourseService;
 import com.example.demo.skill.Skill;
 import com.example.demo.subject.Subject;
 import com.example.demo.user.SessionUserComponent;
@@ -48,6 +53,9 @@ public class CourseRestController {
 
 	@Autowired
 	private SessionUserComponent sessionUserComponent;
+
+	@Autowired
+	private CourseService courseService;
 
 	private String message;
 
@@ -198,6 +206,17 @@ public class CourseRestController {
 			return new ResponseEntity<>(listCourse, HttpStatus.OK);
 		} else
 			return new ResponseEntity(HttpStatus.NOT_FOUND);
+	}
+
+	@RequestMapping(value = "/", method = RequestMethod.POST)
+	@ResponseStatus(HttpStatus.CREATED)
+	public Course createCourse(@RequestBody String newName, @RequestBody String newLanguage,
+			@RequestBody String newDescription, @RequestBody String newType,
+			@RequestBody(required = false) String newSkill1, @RequestBody(required = false) String newSkill2,
+			@RequestBody(required = false) String newSkill3, @RequestBody(required = false) Date startDate,
+			@RequestBody(required = false) Date endDate, @RequestBody(required = false) MultipartFile image) {
+		return courseService.createCourse(newName, newLanguage, newType, newSkill1, newSkill2, newSkill3, startDate,
+				endDate, newDescription, image);
 	}
 
 	@JsonView(CourseInformation.class)
