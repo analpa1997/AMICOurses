@@ -1,12 +1,1 @@
-List<StudyItem> studyItems = new ArrayList<>();
-		studyItems.add(new StudyItem("pdf", "Theme 1", 1, "studyItem-1" ,"theme-1.txt"));
-		studyItems.add(new StudyItem("pdf", "Theme 1 exercicies", 1, "studyItem-2", "theme-1 exercices.txt"));
-		studyItems.add(new StudyItem("video", "Theme 2", 1, "studyItem-3", "theme-2.txt"));
-		studyItems.add(new StudyItem("word", "Theme 2 exercicies", 1, "studyItem-4", "theme-2-ex.txt"));
-		studyItems.add(new StudyItem("pdf", "Theme 3", 1, "studyItem-5",  "theme-3.txt"));
-		studyItems.add(new StudyItem("pdf", "Theme 4", 2, "studyItem-6", "theme-4.txt"));
-		studyItems.add(new StudyItem("pdf", "Theme 4 exercices", 2, "studyItem-7", "theme-4-ex.txt"));
-		studyItems.add(new StudyItem("word", "Theme 5", 3, "studyItem-8", "theme-5.txt"));
-		studyItems.add(new StudyItem("", "Theme 5 exercicies", 3, "studyItem-9", "theme-5-ex.txt"));
-		studyItems.add(new StudyItem("", "Theme 6", 3, "studyItem-10", "theme-6.txt"));
-		studyItems.add(new StudyItem("video", "Theme 6 exercicies", 3,  "studyItem-11", "theme-6-ex.txt"));
+Practice 1 statement

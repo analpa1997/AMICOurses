@@ -86,7 +86,7 @@
 						<li class="nav-item"><a class="nav-link level-1"
 							data-toggle="tab" href="#progress">Progress</a></li>
 						<li class="nav-item"><a class="nav-link level-1"
-							data-toggle="tab" href="#teachers">Teachers</a></li>
+							data-toggle="tab" href="#teachers">{{^isTeacher}}Teachers:{{/isTeacher}} {{#isTeacher}} Students {{/isTeacher}}</a></li>
 
 						<li class="nav-item hidden-link"><a class="nav-link level-1"
 							data-toggle="tab" id="mail-pane-opener" href="#mailPane"></a></li>
@@ -104,7 +104,7 @@
 								<li class="nav-item"><a class="nav-link level-2 "
 									data-toggle="tab" href="#mod-{{-index}}">Mod {{-index}}</a></li>
 								{{/allStudyItems}}
-								<li class = "nav-item"> <a class = "nav-link level-2" href = "/moodle/module-add/{{courseInternalName}}/{{subjectInternalName}}"> New Mod +</a></li>
+							{{#isTeacher}}<li class = "nav-item"> <a class = "nav-link level-2" href = "/moodle/module-add/{{courseInternalName}}/{{subjectInternalName}}"> New Mod +</a></li>{{/isTeacher}}
 							</ul>
 
 							<div class="tab-content border-left border-right">
@@ -128,18 +128,16 @@
 													<li class="list-group-item"><span
 														class="item-icon fa fa-{{type}} pl-5"></span> {{name}}</li>
 												</a> 
-											{{/isTeacher}}
+								{{/isTeacher}}
 											
 											
 											{{#isTeacher}}
 												<li class="list-group-item" >
 													<span class = "row"> <a class="item-content col-md-2" href="/moodle/download/studyItem/{{courseInternalName}}/{{subjectInternalName}}/{{studyItemID}}"> <span>{{-index}}.- </span><span class="item-icon fa fa-{{type}} pl-3 pr-3"></span>{{name}} </a>
 													<span class = "col-md-8"> <form class = "form-inline" method = "post" action = "/moodle/studyItem/modify/{{courseInternalName}}/{{subjectInternalName}}/{{studyItemID}}">
-															<label class ="ml-1">Position: </label>
-															<input class = "form-control" style="max-width: 4em;" type = "number" min = "1" name = "newPosition" value = "{{-index}}">
 															<label class ="ml-1">Rename: </label>
 															<input class = "form-control" type = "text" name = "newName" value = "{{name}}">
-															<label class ="ml-1"> Type: </label>
+															<label class ="ml-1"> Icon: </label>
 															<input class = "form-control col-md-1" type = "text" name = "newType"  size = "2" value = {{icon}}>
 															<label class ="ml-1 col-md-3 text-left" >File : {{originalName}} </label>
 															<button class = "ml-1" type = "submit" name = "btnSave" value = "save"> Save </button>
@@ -169,28 +167,136 @@
 						</div>
 						<!-- Evalutaion tab -->
 						<div class="tab-pane" id="evaluation" role="tabpanel">
-							EVALUATION</div>
+							<span class="pl-3 py-1 tab-title"> Evaluation:</span>
+							
+							<div class="pl-3 py-1 tab-title"> Exams : </div>
+							
+							<div class="pl-3 py-1 tab-title"> Practices: </div>
+							
+							
+							{{#isTeacher}}
+							{{#studyItemPractices}}
+								<div class="pl-3 py-1 tab-title ml-2"> {{name}}: </div>
+								<ul class="list-group mx-2">
+								<!-- statement -->
+								
+										<li class = "item-content list-group-item col-12">
+										<span class = "row"> <a class="item-content col-md-2" href="/moodle/download/studyItem/{{courseInternalName}}/{{subjectInternalName}}/{{studyItemID}}"> <span>{{-index}}.- </span><span class="item-icon fa fa-{{type}} pl-3 pr-3"></span>{{name}} </a>
+										
+										<span class = "col-md-8"> <form class = "form-inline" method = "post" action = "/moodle/studyItem/modify/{{courseInternalName}}/{{subjectInternalName}}/{{studyItemID}}">
+												<label class ="ml-1">Rename: </label>
+												<input class = "form-control" type = "text" name = "newName" value = "{{name}}">
+												<label class ="ml-1"> Type: </label>
+												<input class = "form-control col-md-1" type = "text" name = "newType"  size = "2" value = {{icon}}>
+												<label class ="ml-1 col-md-3 text-left" >File : {{originalName}} </label>
+												<button class = "ml-1" type = "submit" name = "btnSave" value = "save"> Save </button>
+												<button class = "ml-1" type = "submit" name = "btnDelete" value = "delete"> Delete </button>
+											</form> 
+										</span>
+										</span>
+									</li>
+									<!-- Every practice from every student -->	
+									{{#practices}}
+										<li class = "item-content list-group-item col-11 offset-1">
+											<span class = "row ml-3">
+												<span class = col-md-2 >Username : {{owner.username}} </span> 
+												<span class = "col-md-3" >File : <a class="item-content col-md-2" href="/moodle/download/studyItem/{{courseInternalName}}/{{subjectInternalName}}/{{studyItemID}}/{{practiceID}}">{{practiceName}}</a></span>
+												<span class = "col-md-7">
+												<form class = "form-inline" method = "post" action = "/moodle/practice/update-calification/{{courseInternalName}}/{{subjectInternalName}}/{{studyItemID}}/{{practiceID}}">
+													<label class ="mr-2">Calification: </label>
+													<input class = "form-control" type = "number" name = "newCalification" value = "{{calification}}" min = "0" max = "10" step="any">
+													<button class = "ml-3" type = "submit" name = "btnSave" value = "save"> Save </button>
+												</form> 
+											</span>
+										</li>
+									{{/practices}}
+									{{/studyItemPractices}}
+									{{/isTeacher}}
+									
+									<!--  student -->
+									{{^isTeacher}}
+									{{#studentPractices}}
+									<ul>						
+										<li class = "item-content list-group-item col-12">
+										<span class = "row"> <a class="item-content col-md-2" href="/moodle/download/studyItem/{{courseInternalName}}/{{subjectInternalName}}/{{0.studyItemID}}"> <span>{{-index}}.- </span><span class="item-icon fa fa-{{0.type}} pl-3 pr-3"></span>{{0.name}} </a></span> 
+										</li>
+										<li class = "item-content list-group-item col-11 offset-1">
+										<div class = "row">
+											{{#1.presented}} 
+												<span class = "col-md-2" >File : <a class="item-content col-md-2" href="/moodle/download/studyItem/{{courseInternalName}}/{{subjectInternalName}}/{{0.studyItemID}}/{{1.practiceID}}">{{1.practiceName}}</a></span>
+											{{/1.presented}}
+											{{^1.presented}}
+												<span class = "col-md-2">{{1.practiceName}}</span>
+											{{/1.presented}}
+											
+											<span class = "col-md-10"> 
+												<form class = "form-inline" method = "post" enctype="multipart/form-data" action = "/moodle/practice/modify/{{courseInternalName}}/{{subjectInternalName}}/{{0.studyItemID}}/{{1.practiceID}}">
+													
+													{{^1.corrected}}
+													<label class ="ml-1">Rename: </label>
+													<input class = "form-control col-md-3" type = "text" name = "newName" value = "{{1.practiceName}}">
+													<input class = "col-md-4" type = "file" name = "itemFile">
+													<label class = "col-md-2">Uploaded: {{1.originalName}}</label>
+													<button class = "ml-1 col-md-1" type = "submit" name = "btnSave" value = "save"> {{#1.isPresented}} Modify {{/1.isPresented}} {{^1.isPresented}} Save {{/1.isPresented}} </button>
+													{{/1.corrected}}
+													
+													{{#1.corrected}}
+													<label class = "ml-1 col-md-3">Name: {{1.practiceName}}</label>
+													<label class = col-md-2>Calification : {{1.calification}} </label>
+													{{/1.corrected}}
+												</form> 
+											</span>
+											
+										</div>
+										</li>
+											
+									
+									</ul>
+									{{/studentPractices}}
+									{{/isTeacher}}
+									
+									
+								{{#isTeacher}}
+									<div class="pl-3 py-1 tab-title ml-2"> New Practice: </div>
+									<li class = "item-content list-group-item col-12">
+											<form class = "col-12" action = "/moodle/upload/studyItem/{{courseInternalName}}/{{subjectInternalName}}/-1" method="post" enctype="multipart/form-data">
+												<label class = "col-md-1">New:</label>
+												<input class = "col-md-2" type = "text" name = "itemName" placeholder = "Name:">
+												<input class = "col-md-3" type = "text" name = "itemType" placeholder = "Icon: (pdf, word, video...)">
+												<input class = "col-md-4" type = "file" name = "itemFile">
+												<button class = "col-md-1" type = "submit">Create</button>
+											</form>
+									</li> 
+								{{/isTeacher}}
+								</ul>
+							
+						</div>
 						<!-- Progress tab -->
 						<div class="tab-pane" id="progress" role="tabpanel">
-							<div class="pl-3 py-1 tab-title">Marks Chart:</div>
+							<div class="pl-3 py-1 tab-title">Exams Chart:</div>
 							<div>
-								<canvas class="ml-5 w-75 h-100" id="marks-chart-canvas"></canvas>
+								<!--  <canvas class="ml-5 w-75 h-100" id="marks-exams-chart-canvas"></canvas> -->
+							</div>
+							
+							<div class="pl-3 py-1 tab-title">Practices Chart:</div>
+							<div>
+								<canvas class="ml-5 w-75 h-100" id="marks-practices-chart-canvas"></canvas>
 							</div>
 						</div>
 						<!-- Teachers tab -->
 						<div class="tab-pane" id="teachers" role="tabpanel">
-							<span class="pl-3 py-1 tab-title"> Teachers:</span>
+							<span class="pl-3 py-1 tab-title"> {{^isTeacher}}Teachers:{{/isTeacher}} {{#isTeacher}} Students {{/isTeacher}}</span>
 							<ul class="list-group">
+							{{#usersToShowList}}
 								<!-- Item -->
-								<a class="item-content" href="#">
-									<li class="list-group-item"><span
-										class="fa fa-user-circle pl-5"></span> Teacher One Profile</li>
+								<a class="item-content" href="/profile/{{internalName}}">
+									<li class="list-group-item">
+									<img class="img-fluid img-profile rounded-circle mx-auto mb-2 offset-md-2" style="width:64px;height:64px" src="/profileimg/{{internalName}}" alt="profileImg"> 
+									<span class = "ml-5">{{username}}</span> 
+									</li>
 								</a>
-
-								<a class="item-content" href="#">
-									<li class="list-group-item"><span
-										class="fa fa-user-circle pl-5"></span> Teacher One Profile</li>
-								</a>
+								
+								{{/usersToShowList}}
 							</ul>
 						</div>
 
@@ -496,6 +602,55 @@
 				$('#received-message-1-link').click();
 			})
 		});
+	</script>
+	
+	<script>
+	/* To get the course and subject information for the marks*/
+	$(document).ready(function () {
+	
+	$.ajax({
+		type: 'GET',
+		url:"/api/moodle/practicesMarks/{{courseInternalName}}/{{subjectInternalName}}/practices/"
+		}).done(function(practices){
+			
+			var practicesCntx = document.getElementById("marks-practices-chart-canvas").getContext('2d');
+			console.log(practices);
+			
+			var practicesLabels = [];
+			var practicesCalifications = [];
+			
+			for (i = 0; i < practices.length; i++)	{
+				practicesLabels.push(practices[i][0]);
+				practicesCalifications.push(practices[i][1]);
+			}
+			//console.log ("labels " + practicesLabels  + "  califications " + practicesCalifications);
+			
+			var practicesChart = new Chart (practicesCntx, {
+			    type : 'bar',
+			    data: {
+			         labels: practicesLabels,
+			        datasets: [{
+			            label: 'Score',
+			            data: practicesCalifications,
+			            backgroundColor:'rgba(255, 99, 132, 0.9)',
+			            borderColor: 'rgba(255,99,132,1)',
+			            borderWidth: 1
+			        }]
+			    },
+			    options: {
+			        scales: {
+			            yAxes: [{
+			                ticks: {
+			                    beginAtZero:true,
+			                    max : 10
+			                }
+			            }]
+			        }
+			    }   
+			});
+		});
+	});
+	
 	</script>
 
 </body>

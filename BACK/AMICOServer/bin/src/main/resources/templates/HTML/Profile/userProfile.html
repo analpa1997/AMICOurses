@@ -36,7 +36,7 @@
             <a class="navbar-brand js-scroll-trigger" href="#page-top">
                 <span class="d-block d-lg-none">Start Bootstrap</span>
                 <span class="d-none d-lg-block">
-                    <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="/profileimg/{{internalName}}" alt="">
+                    <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="/profileimg/{{internalName}}" alt="profileImg">
                 </span>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -97,8 +97,8 @@
                                     <!-- Course -->
                                     <div class="row align-items-center">
                                         <!-- Image -->
-                                        <a href="./student-course-overview.html" class = "col-xs-0 col-sm-3 col-lg-2">
-                                            <img  class="course-img img-fluid rounded-circle" src="../{{urlImage}}" alt="Course Photo" >
+                                        <a href="/course-overview/{{internalName}}" class = "col-xs-0 col-sm-3 col-lg-2">
+                                            <img  class="course-img img-fluid rounded-circle" src="/courses/img/{{courseID}}" alt="Course Photo" >
                                         </a>
                                         <!-- Text -->
                                         <div class="offset-1 offset-md-0 col-lg-8 col-md-8 col-sm-10 col-10 ">
@@ -109,7 +109,7 @@
                                         </div>
                                         {{#isTheProfileUser}}
                                         <div class = 'col-2 offset-5  offset-lg-0 col-lg-2 col-sm-2 mb-1'>
-                                            <a href = '/course-overview/{{internalName}}' class = 'btn btn-primary px-3 ' role = 'button'>Enter</a>
+                                            <a href = '/course-overview/{{internalName}}' class = 'btn btn-primary px-3 ' role = 'button'>{{buttonCourses}}</a>
                                         </div>
                                         {{/isTheProfileUser}}
                                     </div>
@@ -119,7 +119,7 @@
 
                         </div>
                     </section>
-
+					{{#isStudent}}
                     <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="completed-courses">
                         <div class="my-auto">
                             <h2 class="mb-5">Completed Courses</h2>
@@ -130,8 +130,8 @@
                                     <!-- Course -->
                                     <div class="row align-items-center">
                                         <!-- Image -->
-                                        <a href="./student-course-overview.html" class = "col-0 col-sm-3 col-lg-2">
-                                            <img  class="course-img img-fluid rounded-circle" src="../{{urlImage}}" alt="Course Photo" >
+                                        <a class = "col-0 col-sm-3 col-lg-2">
+                                            <img  class="course-img img-fluid rounded-circle" src="/courses/img/{{courseID}}" alt="Course Photo" >
                                         </a>
                                         <!-- Text -->
                                         <div class="offset-1 offset-md-0 col-lg-7 col-md-7 col-sm-10 col-10 ">
@@ -151,6 +151,7 @@
                             </ul>
                         </div>
                     </section>
+                    {{/isStudent}}
                     
                     <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="skills">
                         <div class="my-auto">

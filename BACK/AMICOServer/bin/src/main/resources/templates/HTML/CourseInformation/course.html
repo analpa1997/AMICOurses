@@ -7,25 +7,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
+    
     <title>AMICOurses</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../../BOOTSTRAP/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
+    
     <!-- Custom fonts for this template -->
     <link href="../../BOOTSTRAP/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-
+    
     <!-- Custom styles for this template -->
      <link href="../../CSS/clean-blog.css" rel="stylesheet">
     <link href="../../CSS/clean-blog.min.css" rel="stylesheet">
-
+    
+    <!-- JQUERY -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- JS SCRIPTS -->
+    <script src="../JS/scriptCourseInformation.js"></script>
+        
   </head>
 
   <body>
-
+ 
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
       <div class="container">
@@ -51,7 +56,7 @@
     </nav>
 
     <!-- Page Header -->
-    <header class="masthead" style="background-image: url('../../img/{{urlImage}}')">
+    <header class="masthead" style="background-image: url('/courses/img/{{courseID}}')">
       <div class="overlay"></div>
       <div class="container">
         <div class="row">
@@ -80,7 +85,7 @@
 
     <!-- Main Content -->
     <div class="container">
-      <div class="row">
+      <div class="row" id=courseInformation>
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-preview">
                <h2 class="post-title">
@@ -88,21 +93,25 @@
               </h2>
               
   			  <p class="post-subtitle">{{courseDescription}}</p>
- 
-            <!-- 
-            <div class="form-group">
-              <button type="submit" class="btn btn-primary" id="sendMessageButton">Sign up</button>
-            </div>
-            -->
-            <!-- 
-            <button type="button" class="btn btn-info">información</button>
-            -->
             	<a href="/course/{{internalName}}/add" class="btn btn-info">Add Course</a>
           </div>
       </div>
     </div>
     </div>
-
+    
+    <br>
+   
+    {{#error}}
+    <div class="col-xs-12 col-sm-12 col-md-12 " align=center>
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+	  <strong>{{message}}</strong> 
+	  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	    <span aria-hidden="true">&times;</span>
+	  </button>
+	  </div>
+   </div>
+   {{/error}}
+   
     <hr>
 
     <!-- Footer -->
@@ -142,10 +151,11 @@
       </div>
     </footer>
 
+
     <!-- Bootstrap core JavaScript -->
     <script src="../../BOOTSTRAP/vendor/jquery/jquery.min.js"></script>
     <script src="../../BOOTSTRAP/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+    
     <!-- Custom scripts for this template -->
     <script src="../../BOOTSTRAP/js/clean-blog.min.js"></script>
 

@@ -53,33 +53,29 @@
 
                 <div class="col-xs-12 col-sm-12 col-md-4 login-sec">
                     <h3 class="text-center">Login Now</h3>
-                    <form class="login-form">
+                    <form class="login-form" action = "/login" method = "post">
                         <div class="form-group">
                             <label for="exampleInputUsername1" class="text-uppercase">Username</label>
-                            <input type="text" class="form-control" placeholder="John Smith">
+                            <input type="text" class="form-control" placeholder="Username" name = "username">
 
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1" class="text-uppercase">Password</label>
-                            <input type="password" class="form-control" placeholder="">
+                            <input type="password" class="form-control" name = "password" >
                         </div>
 
                         <div class="form-check">
-                            <label class="form-check-label">
-      <input type="checkbox" class="form-check-input">
-      <small>Remember Me</small>
-    </label>
-                            <a href = "../Profile/studentProfile.html" class="btn btn-login float-right">Submit!</a>
+                            <button type = "submit" value = "Sign In">Submit!</button>
                         </div>
                     </form>
-                    <div class="copy-text">New to AMICOurses? <a href="signup.html">Sign Up Now!</a></div>
+                    <div class="copy-text">New to AMICOurses? <a href="/signUp">Sign Up Now!</a></div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-8 banner-sec">
                     <img class="img-fluid" id="picture" src="https://static.pexels.com/photos/33972/pexels-photo.jpg" alt="First slide">
 
                     <div class="banner-text">
                         <h2>News!</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
+                        <p>Great Courses!!</p>
                     </div>
 
                 </div>

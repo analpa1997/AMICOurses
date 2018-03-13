@@ -8,7 +8,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.h2.util.IOUtils;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

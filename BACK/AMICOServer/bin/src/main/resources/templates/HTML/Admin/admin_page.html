@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Admin Page</title>
+    <!-- Bootstrap core CSS-->
+    <link href="../../BOOTSTRAP/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom fonts for this template-->
+    <link href="../../BOOTSTRAP/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!-- Page level plugin CSS-->
+    <link href="../../BOOTSTRAP/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="../../CSS/sb-admin.css" rel="stylesheet">
+    <script>
+        var currentActive = null;
+
+        function show(id) {
+            if (document.getElementById) {
+                var content = document.getElementById(id);
+                if (content.style.display == 'none') { //if its hidden
+                    if (currentActive != null)
+                        currentActive.style.display = 'none';
+                    content.style.display = 'block'; //appear
+                    currentActive = content;
+                } else {
+                    content.style.display = 'none'; //if its not hidden
+                    currentActive = null;
+                }
+            }
+        }
+        window.onload = function() {
+            show('tables');
+            show('teacher');
+            show('course');
+            show('subject');
+            show('tables');
+        }
+
+    </script>
+</head>
+
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+        <a class="navbar-brand" href>AdMInCOurses</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                    <a class="nav-link " onclick="show('tables')">
+            <i class="fa fa-fw fa-table"></i>
+            <span class="nav-link-text">Tables</span>
+          </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
+            <span class="nav-link-text">Management</span>
+          </a>
+                    <ul class="sidenav-second-level collapse" id="collapseComponents">
+                        <li>
+                            <a class="nav-link" onclick="show('teacher')">Add Teacher</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" onclick="show('course')">Add Course</a>
+                        </li>
+                       <!--  <li>
+                            <a class="nav-link" onclick="show('subject')">Add Subject</a>
+                        </li> 
+                        -->
+                    </ul>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
+      <!--              <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-file"></i>
+            <span class="nav-link-text">My Web</span>
+          </a>
+                    <ul class="sidenav-second-level collapse" id="collapseExamplePages">
+                        <li>
+                            <a href="login.html">Login Page</a>
+                        </li>
+                        <li>
+                            <a href="register.html">Registration Page</a>
+                        </li>
+                        <li>
+                            <a href="forgot-password.html">Main Page</a>
+                        </li>
+                        <li>
+                            <a href="blank.html">Course Page</a>
+                        </li>
+                        <li>
+                            <a href="login.html">Forum Page</a>
+                        </li>
+                        <li>
+                            <a href="register.html">Moodle Page</a>
+                        </li>
+                        <li>
+                            <a href="forgot-password.html">Profile Page</a>
+                        </li>
+                    </ul>
+                    --> 
+                </li>
+            </ul>
+             
+            <ul class="navbar-nav sidenav-toggler">
+                <li class="nav-item">
+                    <a class="nav-link text-center" id="sidenavToggler">
+            <i class="fa fa-fw fa-angle-left"></i>
+          </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+            <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div id="tables">
+                        <!-----------------------------------------------------------------TABLES-->
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <i class="fa fa-table"></i> Courses's Table</div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="dataTable1" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>Image</th>
+                                                <th>Name</th>
+                                                <th>Language</th>
+                                                <th>Type</th>
+                                                <th>Start Date</th>
+                                                <th>End Date</th>
+                                                <th>Description</th>
+                                                <th>Enter </th>
+                                                <th>Save </th>
+                                                <th>Delete</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                            {{#allCourses}}
+                                            <tr>
+                                            <form action = "/admin/modify/course/{{internalName}}" method = "post">
+                                            
+                                                <td>
+                                                	<div class="img-container"><img class="rounded-circle" src="/courses/img/{{courseID}}"></div>
+                                                </td>
+                                                <td contenteditable="true"><input type = "text" size = "20"value = "{{name}}" name = "newName"> </td>
+                                                <td contenteditable="true"><input type = "text" size = "10" value = "{{courseLanguage}}" name = "newLanguage""> </td>
+                                                <td contenteditable="true"><input type = "text" size = "20"value = "{{type}}" name = "newType"> </td>
+                                                <td contenteditable="true"><label size = "2">{{startDateString}}</label></td>
+                                                <td contenteditable="true"><label size = "30">{{endDateString}}</label></td>
+                                                <td contenteditable="true"><input type = "text" size = "50" value = "{{courseDescription}}" name = "newDescription"></td>
+                                                <td><a class = "btn btn-primary" href = "/course-overview/{{internalName}}">Enter</a> </td>
+                                                <td> <button type = "submit" name = "btnSave" >Save</button> </td>
+                                                <td> <button type = "submit" name = "btnDelete">Delete</button> </td>
+                                                </form>
+                                               
+                                           
+                                            </tr>
+                                             {{/allCourses}}
+                                                <!----To save the data changes <body>
+	<p contenteditable="true" id="editable">
+		Aqui puede editar...
+	</p>
+	<script>
+		var p=document.getElementById('editable');
+		p.value = localStorage.getItem('editable') || '';
+		p.onchange = function() {
+			localStorage.setItem('editable',p.value);
+		}
+	</script>
+</body>-->
+
+                                            
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <i class="fa fa-table"></i> Teachers's Table</div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="dataTable2" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>Image</th>
+                                                <th>Username</th>
+                                                <th>Name</th>
+                                                <th>Surname</th>
+                                                <th>Mail</th>
+                                                <th>Country</th>
+                                                <th>City</th>
+                                                <th>Address</th>
+                                                <th>Phone</th>
+                                                <th>Delete </th>
+
+                                            </tr>
+                                        </thead>
+                                        
+                                        <tbody>
+                                        {{#teachers}}
+                                            <tr>
+                                                <td>
+                                                    <div class="img-container"><img class="rounded-circle" src="/profileimg/{{internalName}}"></div>
+                                                </td>
+                                                <td>{{username}}</td>
+                                                <td>{{userFirstName}}</td>
+                                                <td>{{userLastName}}</td>
+                                                <td>{{userMail}}</td>
+                                                <td>{{country}}</td>
+                                                <td>{{city}}</td>
+                                                <td>{{userAddress}}</td>
+                                                <td>{{phoneNumber}}</td>
+                                                <td><a class = "btn btn-secondary" href = "/admin/delete/{{internalName}}" >Delete</a></td>
+                                            </tr>
+										{{/teachers}}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--------------------- END TABLES-->
+                    <!----------------------ADD TEACHERS-->
+                    <div id="teacher">
+                        <h2 class="text-center">Add Teacher</h2>
+                        <div class="row">
+                            <div class="offset-3 col-xs-6 col-sm-6 col-md-6 ">
+                                <form class="form-teacher" action = "/admin/create/teacher" method = "post">
+                                    <div class="form-group">
+                                        <label class="col-lg-1" for="name-input">Name: </label>
+                                        <input class="form-control" type="text" id="name-input" placeholder="Enter name" name = "newName">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-1 " for="surname-input">Surname: </label>
+                                        <input class="form-control" type="text" id="surname-input" placeholder="Enter surname" name = "newSecondName">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-1 " for="username-input">Username: </label>
+                                        <input class="form-control" type="text" id="username-input" placeholder="Enter username" name = "newUsername">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-1 " for="email-input">Email: </label>
+                                        <input class="form-control" type="email" id="email-input" placeholder="Enter email" name = "newUserMail">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-1 " for="email-input">Password: </label>
+                                        <input class="form-control" type="password" id="password-input" placeholder="Enter passsword" name = "newPassword">
+                                    </div>
+                                    <div class="row">
+                                        <button type="submit" class="offset-6 btn form-btn">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!----------------------END ADD TEACHER-->
+                        <!----------------------ADD COURSE-->
+                    </div>
+                    <div id="course">
+                        <h2 class="text-center">Add Course</h2>
+                        <div class="row">
+                            <div class="offset-3 col-xs-6 col-sm-6 col-md-6">
+                                <form class="add-course" action = "/admin/create/course"  method = "post" enctype="multipart/form-data">
+                                    <div class="form-group">
+                                        <label for="name-input">Name: </label>
+                                        <input class="form-control" type="text" id="name-input" placeholder="Enter name" name = "newName">
+
+                                        <label for="startdate-input">Start Date:</label>
+                                        <input class="form-control" type="date" id="startdate-input"  name = "startDate">
+
+                                        <label for="finaldate-input">Final Date:</label>
+                                        <input class="form-control" type="date" id="finaldate-input" name = "endDate">
+                                        <label> Language: </label>
+										<input class = "form-control" type = "text" name = "newLanguage" placeholder = "Enter the language">
+										<label> Type: </label>
+										<input class = "form-control" type = "text" name = "newType" placeholder = "Enter the type">
+										<label> Skill 1: </label>
+										<input class = "form-control" type = "text" name = "newSkill1" placeholder = "Enter Skill 1">
+										<label> Skill 2: </label>
+										<input class = "form-control" type = "text" name = "newSkill2" placeholder = "Enter Skill 2 (optional)">
+										<label> Skill 2: </label>
+										<input class = "form-control" type = "text" name = "newSkill3" placeholder = "Enter Skill 3 (optional)">
+										<label class = "mt-4">Photo: </label>
+										<input class = "mb-4" type = "file" name = "courseImage">
+                                        <label for="description-input">Description: </label>
+                                        <textarea class="form-control" id="description-input" name = "newDescription">Description</textarea>
+                                        
+                                        <!-- Subjets--->
+                                        
+                                    </div>
+                                    <div class="row">
+                                        <button type="submit" class="offset-6 btn form-btn">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!----------------------END ADD COURSE-->
+                    <!----------------------ADD SUBJECT-->
+                    <div id="subject">
+                        <h2 class="text-center">Add Subject</h2>
+                        <div class="row">
+                            <div class="offset-3 col-xs-6 col-sm-6 col-md-6 ">
+                                <form class="form-teacher">
+                                    <div class="form-group">
+                                        <label class="col-lg-1" for="name-input">Name: </label>
+                                        <input class="form-control" type="text" id="name-input" placeholder="Enter name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-1 " for="surname-input">Description: </label>
+                                        <input class="form-control" type="text" id="description-input" placeholder="Enter description">
+                                    </div>
+                                    <!--- Study Items, Teachers and Courses-->
+                                    <div class="row">
+                                        <button type="submit" class="offset-6 btn form-btn">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!----------------------END ADD SUBJECT-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <footer class="sticky-footer">
+            <div class="container">
+                <div class="text-center">
+                    <small>Copyright © AMICOurses 2018</small>
+                </div>
+            </div>
+        </footer>
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fa fa-angle-up"></i>
+    </a>
+        <!-- Logout Modal-->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+                    </div>
+                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" href="login.html">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bootstrap core JavaScript-->
+        <script src="../../BOOTSTRAP/vendor/jquery/jquery.min.js"></script>
+        <script src="../../BOOTSTRAP/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Core plugin JavaScript-->
+        <script src="../../BOOTSTRAP/vendor/jquery-easing/jquery.easing.min.js"></script>
+        <!-- Page level plugin JavaScript-->
+        <script src="../../BOOTSTRAP/vendor/datatables/jquery.dataTables.js"></script>
+        <script src="../../BOOTSTRAP/vendor/datatables/dataTables.bootstrap4.js"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="j../../JS/sb-admin.min.js"></script>
+        <!-- Custom scripts for this page-->
+        <script src="../../JS/sb-admin-datatables.min.js"></script>
+    </div>
+</body>
+
+</html>
