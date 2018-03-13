@@ -60,7 +60,7 @@ public class UserService {
 		return (s.length() > 4 && s.length() < 16 && s.matches("^[a-zA-Z0-9_-]*$"));
 	}
 
-	public static boolean isValidEmailAddress(String email) {
+	public boolean isValidEmailAddress(String email) {
 		boolean result = true;
 		try {
 			InternetAddress emailAddr = new InternetAddress(email);

@@ -13,15 +13,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.course.Course;
+import com.example.demo.user.SessionUserComponent;
 import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
 import com.example.demo.user.UserService;
 
 @RestController
-public class UsersRestController extends UserService {
+public class UsersRestController {
 
 	@Autowired
 	private UserRepository repository;
+	@Autowired
+	private SessionUserComponent sessionUserComponent;
+	@Autowired
+	private UserService userService;
 
 	// ********************** POST ********************
 	@RequestMapping(value = "/api/users", method = RequestMethod.POST)
@@ -29,22 +34,26 @@ public class UsersRestController extends UserService {
 			@RequestParam String repeatPassword, @RequestParam String userMail,
 			@RequestParam boolean admin) { /* admin to add teachers */
 
-		User user = checkUser(username, password, repeatPassword, userMail, admin);
+		User user = userService.checkUser(username, password, repeatPassword, userMail, admin);
 		if (user != null)
 			return new ResponseEntity<>(user, HttpStatus.OK);
 		else
-			return new ResponseEntity(HttpStatus.NOT_FOUND);
+			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	// ********************** DELETE ********************
 	@RequestMapping(value = "/api/users/{userInternalName}", method = RequestMethod.DELETE)
 	public ResponseEntity<User> delUser(@PathVariable String userInternalName) {
 
-		User user = deleteUser(userInternalName);
-		if (user != null)
-			return new ResponseEntity<>(user, HttpStatus.OK);
-		else
-			return new ResponseEntity(HttpStatus.NOT_FOUND);
+		User user = sessionUserComponent.getLoggedUser();/* Only for admin */
+		if (user != null && user.isAdmin()) {
+			User userDel = userService.deleteUser(userInternalName);
+			if (user != null)
+				return new ResponseEntity<>(userDel, HttpStatus.OK);
+			else
+				return new ResponseEntity(HttpStatus.NOT_FOUND);
+		} else
+			return new ResponseEntity(HttpStatus.UNAUTHORIZED);
 	}
 
 	// ********************** FIND ********************
@@ -55,7 +64,7 @@ public class UsersRestController extends UserService {
 
 		User user = repository.findByInternalName(userInternalName);
 		if (user != null)
-			return new ResponseEntity<>(user, HttpStatus.OK);
+			return new ResponseEntity<>(user, HttpStatus.FOUND);
 		else
 			return new ResponseEntity(HttpStatus.NOT_FOUND);
 	}
@@ -67,7 +76,7 @@ public class UsersRestController extends UserService {
 		if (user != null) {
 			for (Course c : user.getInscribedCourses())
 				if (c.getCourseID() == courseID)
-					return new ResponseEntity<>(user, HttpStatus.OK);
+					return new ResponseEntity<>(user, HttpStatus.FOUND);
 			return new ResponseEntity(HttpStatus.NOT_FOUND);
 		} else
 			return new ResponseEntity(HttpStatus.NOT_FOUND);
@@ -86,7 +95,7 @@ public class UsersRestController extends UserService {
 			pageUser = repository.findByIsStudent(isStudent, new PageRequest(page, 10));
 
 		if (pageUser != null)
-			return new ResponseEntity(pageUser, HttpStatus.OK);
+			return new ResponseEntity(pageUser, HttpStatus.FOUND);
 		else
 			return new ResponseEntity(pageUser, HttpStatus.NOT_FOUND);
 

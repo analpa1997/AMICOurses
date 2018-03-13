@@ -11,9 +11,11 @@ import com.example.demo.user.UserRepository;
 import com.example.demo.user.UserService;
 
 @Controller
-public class SignUpController extends UserService {
+public class SignUpController {
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	private UserService userService;
 
 	@RequestMapping("/signup")
 	public String signup(Model model) {
@@ -25,7 +27,7 @@ public class SignUpController extends UserService {
 	public String registered(Model model, @RequestParam String username, @RequestParam String userMail,
 			@RequestParam String password, @RequestParam String repeatPassword) {
 
-		if (checkUser(username, password, repeatPassword, userMail, false) != null)
+		if (userService.checkUser(username, password, repeatPassword, userMail, false) != null)
 			return "HTML/LogIn/login";
 		else {
 			String valError = "";
@@ -35,21 +37,21 @@ public class SignUpController extends UserService {
 				valError = "The password can't be empty";
 			else if (userMail.equals(""))
 				valError = "The userMail can't be empty";
-			else if (!passwordMatch(password, repeatPassword)) {
+			else if (!userService.passwordMatch(password, repeatPassword)) {
 				if (!password.equals(repeatPassword))
 					valError = "The passwords are different.";
 				else if (password.length() <= 7)
 					valError = "The password is too short.";
 				else if (password.length() >= 15)
 					valError = "The password is too long.";
-			} else if (!correctName(username)) {
+			} else if (!userService.correctName(username)) {
 				if (username.length() <= 4)
 					valError = "The username is too short.";
 				else if (username.length() >= 16)
 					valError = "The username is too long.";
 				else if (!username.matches("^[a-zA-Z0-9_-]*$"))
 					valError = "The username only can contains letters, numbers, - or _.";
-			} else if (!isValidEmailAddress(userMail)) {
+			} else if (!userService.isValidEmailAddress(userMail)) {
 				valError = "The email address is not correct.";
 			} else if (userRepository.findByUsername(username) != null)
 				valError = "There is another user with that username.";
