@@ -131,43 +131,68 @@ public class CourseRestController {
 			@RequestParam(value = "type", defaultValue = "all") String type,
 			@RequestParam(value = "name", defaultValue = "") String nameCourse) {
 		Page<Course> pageCourse;
+
 		if (!nameField.equals("")) {
 			if (nameField.equals("numberOfUsers"))
 				if (type.equals("all"))
 					if (nameCourse.equals(""))
-						pageCourse = courseRepository
-								.findAll(new PageRequest(page, 10, Sort.Direction.DESC, nameField));
+						pageCourse = courseRepository.findAll(new PageRequest(page, 10, Sort.Direction.DESC,
+								nameField)); /*
+												 * Return the page selected without any filter, only sorted by
+												 * numberOfUsers
+												 */
 					else
-						pageCourse = courseRepository.findByInternalNameContaining(nameCourse,
-								new PageRequest(page, 10, Sort.Direction.DESC, nameField));
+						pageCourse = courseRepository.findByInternalNameContaining(nameCourse, new PageRequest(page, 10,
+								Sort.Direction.DESC, nameField)); /*
+																	 * Return the page selected filtered by partial name
+																	 * and sorted by numberOfUsers
+																	 */
 				else if (nameCourse.equals(""))
-					pageCourse = courseRepository.findByType(type,
-							new PageRequest(page, 10, Sort.Direction.DESC, nameField));
+					pageCourse = courseRepository.findByType(type, new PageRequest(page, 10, Sort.Direction.DESC,
+							nameField)); /* Return the page filtered by type and sorted by numberOfUsers */
 				else
 					pageCourse = courseRepository.findByTypeAndInternalNameContaining(type, nameCourse,
-							new PageRequest(page, 10, Sort.Direction.DESC, nameField));
+							new PageRequest(page, 10, Sort.Direction.DESC,
+									nameField)); /*
+													 * Return the page filtered by type AND partial name of the course,
+													 * and sorted by numberOfUsers
+													 */
 			else if (type.equals("all"))
 				if (nameCourse.equals(""))
-					pageCourse = courseRepository.findAll(new PageRequest(page, 10, Sort.Direction.ASC, nameField));
+					pageCourse = courseRepository.findAll(new PageRequest(page, 10, Sort.Direction.ASC,
+							nameField)); /* Return the page only sorted by another field distinct of numberOfUsers */
 				else
-					pageCourse = courseRepository.findByInternalNameContaining(nameCourse,
-							new PageRequest(page, 10, Sort.Direction.ASC, nameField));
+					pageCourse = courseRepository.findByInternalNameContaining(nameCourse, new PageRequest(page, 10,
+							Sort.Direction.ASC, nameField)); /*
+																 * Return the page filtered by partial name and sorted
+																 * by another field distinct of numberOfUsers
+																 */
 			else if (nameCourse.equals(""))
-				pageCourse = courseRepository.findByType(type,
-						new PageRequest(page, 10, Sort.Direction.ASC, nameField));
+				pageCourse = courseRepository.findByType(type, new PageRequest(page, 10, Sort.Direction.ASC,
+						nameField)); /*
+										 * Return the page filtered by type and sorted by another field distinct of
+										 * numberOfUsers
+										 */
 			else
 				pageCourse = courseRepository.findByTypeAndInternalNameContaining(type, nameCourse,
-						new PageRequest(page, 10, Sort.Direction.ASC, nameField));
+						new PageRequest(page, 10, Sort.Direction.ASC,
+								nameField)); /*
+												 * Return the page filtered by type AND partial name, and sorted by
+												 * another field distinct of numberOfUsers
+												 */
 		} else if (type.equals("all"))
 			if (nameCourse.equals(""))
-				pageCourse = courseRepository.findAll(new PageRequest(page, 10));
+				pageCourse = courseRepository
+						.findAll(new PageRequest(page, 10)); /* Return the page with all filter and sort by default */
 			else
-				pageCourse = courseRepository.findByInternalNameContaining(nameCourse, new PageRequest(page, 10));
+				pageCourse = courseRepository.findByInternalNameContaining(nameCourse, new PageRequest(page,
+						10)); /* Return the page only filtered by partial name, sorted by default */
 		else if (nameCourse.equals(""))
-			pageCourse = courseRepository.findByType(type, new PageRequest(page, 10));
+			pageCourse = courseRepository.findByType(type,
+					new PageRequest(page, 10)); /* Return the page filtered only by type, sorted by default */
 		else
-			pageCourse = courseRepository.findByTypeAndInternalNameContaining(type, nameCourse,
-					new PageRequest(page, 10));
+			pageCourse = courseRepository.findByTypeAndInternalNameContaining(type, nameCourse, new PageRequest(page,
+					10)); /* Return the page filtered by Type AND partial name, sorted by default */
 		if (pageCourse != null) {
 			List<Course> listCourse = pageCourse.getContent();
 			return new ResponseEntity<>(listCourse, HttpStatus.OK);
