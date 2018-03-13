@@ -31,14 +31,23 @@ public class UsersRestController {
 	// ********************** POST ********************
 	@RequestMapping(value = "/api/users", method = RequestMethod.POST)
 	public ResponseEntity<User> newUser(@RequestParam String username, @RequestParam String password,
-			@RequestParam String repeatPassword, @RequestParam String userMail,
-			@RequestParam boolean admin) { /* admin to add teachers */
+			@RequestParam String repeatPassword, @RequestParam String userMail) { /* admin to add teachers */
 
-		User user = userService.checkUser(username, password, repeatPassword, userMail, admin);
-		if (user != null)
-			return new ResponseEntity<>(user, HttpStatus.OK);
-		else
-			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+		Boolean admin = null;
+
+		User user = sessionUserComponent.getLoggedUser();/* Only for admin */
+		if (user == null)
+			admin = false;
+		else if (user.isAdmin())
+			admin = true;
+		if (admin != null) {
+
+			User newUser = userService.checkUser(username, password, repeatPassword, userMail, admin);
+			if (newUser != null)
+				return new ResponseEntity<>(newUser, HttpStatus.OK);
+		}
+		return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+
 	}
 
 	// ********************** DELETE ********************

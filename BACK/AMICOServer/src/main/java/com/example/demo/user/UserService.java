@@ -20,7 +20,6 @@ public class UserService {
 	UserRepository userRepository;
 
 	public User checkUser(String username, String password, String repeatPassword, String userMail, boolean admin) {
-
 		if (passwordMatch(password, repeatPassword) && correctName(username) && isValidEmailAddress(userMail)
 				&& (userRepository.findByUsername(username) == null)
 				&& (userRepository.findByUserMail(userMail) == null)) {
