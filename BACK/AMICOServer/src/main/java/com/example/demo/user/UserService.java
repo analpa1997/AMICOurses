@@ -16,6 +16,14 @@ import com.example.demo.subject.Subject;
 @Service
 public class UserService {
 
+	int MAXLENGTH = 20;
+	int MINLENGTH = 2;
+
+	int MAXLENGTHADDRESS = 35;
+	int LENGTHPHONE = 9;
+	int MAXLENGTHINTERESTS = 50;
+	int MAXLENGTHURL = 80;
+
 	@Autowired
 	UserRepository userRepository;
 
@@ -28,6 +36,65 @@ public class UserService {
 			return u;
 		} else
 			return null;
+	}
+
+	public User updateUser(String userInternalName, String username, String password, String repeatPassword,
+			String userMail, String userFirstName, String userLastName, String userAddress, String city, String country,
+			Integer phoneNumber, String interests, String urlProfileImage) {
+
+		User u = userRepository.findByInternalName(userInternalName);
+
+		if (u != null) {
+
+			if (username != null)
+				if (correctName(username) && (userRepository.findByUsername(username) == null))
+					u.setUsername(username);
+
+			if ((password != null) && (repeatPassword != null))
+				if (passwordMatch(password, repeatPassword))
+					u.setPassword(password);
+
+			if (userMail != null)
+				if (isValidEmailAddress(userMail))
+					u.setUserMail(userMail);
+
+			if (userFirstName != null)
+				if ((MINLENGTH < userFirstName.length()) && (MAXLENGTH > userFirstName.length()))
+					u.setUserFirstName(userFirstName);
+
+			if (userLastName != null)
+				if ((MINLENGTH < userLastName.length()) && (MAXLENGTH > userLastName.length()))
+					u.setUserLastName(userLastName);
+
+			if (userAddress != null)
+				if (userAddress.length() < MAXLENGTHADDRESS)
+					u.setUserAddress(userAddress);
+
+			if (city != null)
+				if (city.length() < MAXLENGTH)
+					u.setCity(city);
+
+			if (country != null)
+				if (country.length() < MAXLENGTH)
+					u.setCountry(country);
+
+			if (phoneNumber != null)
+				if (phoneNumber.toString().length() < LENGTHPHONE)
+					u.setPhoneNumber(phoneNumber);
+
+			if (interests != null)
+				if (interests.length() < MAXLENGTHINTERESTS)
+					u.setInterests(interests);
+
+			if (urlProfileImage != null)
+				if (urlProfileImage.length() < MAXLENGTHURL)
+					u.setUrlProfileImage(urlProfileImage);
+
+			return u;
+
+		}
+
+		return null;
 	}
 
 	public User deleteUser(String userInternalName) {

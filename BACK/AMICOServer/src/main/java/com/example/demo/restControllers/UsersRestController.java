@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,10 +45,37 @@ public class UsersRestController {
 
 			User newUser = userService.checkUser(username, password, repeatPassword, userMail, admin);
 			if (newUser != null)
-				return new ResponseEntity<>(newUser, HttpStatus.OK);
+				return new ResponseEntity<>(newUser, HttpStatus.CREATED);
 		}
 		return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
 
+	}
+
+	// ********************** PUT ********************
+	@RequestMapping(value = "/{userInternalName}", method = RequestMethod.PUT)
+	public ResponseEntity<User> updateBook(@PathVariable String userInternalName, @RequestBody User updatedUser,
+
+			@RequestParam(value = "username", required = false) String username,
+			@RequestParam(value = "password", required = false) String password,
+			@RequestParam(value = "repeatPassword", required = false) String repeatPassword,
+			@RequestParam(value = "userMail", required = false) String userMail,
+			@RequestParam(value = "userFirstName", required = false) String userFirstName,
+			@RequestParam(value = "userLastName", required = false) String userLastName,
+			@RequestParam(value = "userAddress", required = false) String userAddress,
+			@RequestParam(value = "city", required = false) String city,
+			@RequestParam(value = "country", required = false) String country,
+			@RequestParam(value = "phoneNumber", required = false) Integer phoneNumber,
+			@RequestParam(value = "interests", required = false) String interests,
+			@RequestParam(value = "urlProfileImage", required = false) String urlProfileImage) {
+
+		updatedUser = userService.updateUser(userInternalName, username, password, repeatPassword, userMail,
+				userFirstName, userLastName, userAddress, city, country, phoneNumber, interests, urlProfileImage);
+
+		if (updatedUser != null) {
+			return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 
 	// ********************** DELETE ********************
