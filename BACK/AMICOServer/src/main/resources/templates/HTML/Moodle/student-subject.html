@@ -134,12 +134,12 @@
 											{{#isTeacher}}
 												<li class="list-group-item" >
 													<span class = "row"> <a class="item-content col-md-2" href="/moodle/download/studyItem/{{courseInternalName}}/{{subjectInternalName}}/{{studyItemID}}"> <span>{{-index}}.- </span><span class="item-icon fa fa-{{type}} pl-3 pr-3"></span>{{name}} </a>
-													<span class = "col-md-8"> <form class = "form-inline" method = "post" action = "/moodle/studyItem/modify/{{courseInternalName}}/{{subjectInternalName}}/{{studyItemID}}">
+													<span class = "col-md-10"> <form class = "form-inline" method = "post" action = "/moodle/studyItem/modify/{{courseInternalName}}/{{subjectInternalName}}/{{studyItemID}}">
 															<label class ="ml-1">Rename: </label>
 															<input class = "form-control" type = "text" name = "newName" value = "{{name}}">
 															<label class ="ml-1"> Icon: </label>
 															<input class = "form-control col-md-1" type = "text" name = "newType"  size = "2" value = {{icon}}>
-															<label class ="ml-1 col-md-3 text-left" >File : {{originalName}} </label>
+															<label class ="ml-1 col-md-5 text-left" >File : {{originalName}} </label>
 															<button class = "ml-1" type = "submit" name = "btnSave" value = "save"> Save </button>
 															<button class = "ml-1" type = "submit" name = "btnDelete" value = "delete"> Delete </button>
 														</form> 
@@ -188,7 +188,7 @@
 												<input class = "form-control" type = "text" name = "newName" value = "{{name}}">
 												<label class ="ml-1"> Type: </label>
 												<input class = "form-control col-md-1" type = "text" name = "newType"  size = "2" value = {{icon}}>
-												<label class ="ml-1 col-md-3 text-left" >File : {{originalName}} </label>
+												<label class ="ml-1 col-md-5 text-left" >File : {{originalName}} </label>
 												<button class = "ml-1" type = "submit" name = "btnSave" value = "save"> Save </button>
 												<button class = "ml-1" type = "submit" name = "btnDelete" value = "delete"> Delete </button>
 											</form> 

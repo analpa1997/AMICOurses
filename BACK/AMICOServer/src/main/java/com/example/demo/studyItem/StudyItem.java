@@ -13,36 +13,54 @@ import javax.persistence.Table;
 
 import com.example.demo.practices.Practices;
 import com.example.demo.subject.Subject;
+import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
 @Table(name = "StudyItems")
 public class StudyItem {
+	
+	/* Jackson Interfaces */
+	public interface BasicStudyItem{}
+	public interface Practice {}
+	public interface SubjectOrigin {}
 
+	@JsonView(BasicStudyItem.class)
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long studyItemID;
 
+	@JsonView(BasicStudyItem.class)
 	private String type;
 
+	@JsonView(BasicStudyItem.class)
 	private String name;
 	
+	@JsonView(BasicStudyItem.class)
 	private String fileName;
 	
+	@JsonView(SubjectOrigin.class)
 	@ManyToOne
 	private Subject subject;
 	
+	@JsonView(BasicStudyItem.class)
 	private int module;
 	
+	@JsonView(BasicStudyItem.class)
 	private String internalName;
 	
+	@JsonView(BasicStudyItem.class)
 	private String originalName;
 	
+	@JsonView(BasicStudyItem.class)
 	private String extension;
 	
+	@JsonView(BasicStudyItem.class)
 	private String icon;
 	
+	@JsonView(BasicStudyItem.class)
 	private boolean isPractice;
 	
+	@JsonView(Practice.class)
 	@OneToMany (mappedBy = "studyItem")
 	private List<Practices> practices = new ArrayList <> ();
 

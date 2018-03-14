@@ -10,33 +10,47 @@ import javax.persistence.Table;
 import com.example.demo.studyItem.StudyItem;
 import com.example.demo.subject.Subject;
 import com.example.demo.user.User;
+import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
 @Table(name = "Practices")
 public class Practices {
+	
+	public interface Basic {}
+	public interface Detailed {}
 
+	@JsonView(Basic.class)
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long practiceID;
 
+	@JsonView(Basic.class)
 	private String practiceName;
 
+	@JsonView(Basic.class)
 	private double calification;
 
+	@JsonView(Basic.class)
 	private String fileName;
 	
+	@JsonView(Basic.class)
 	private String internalName;
 	
+	@JsonView(Detailed.class)
 	@ManyToOne
 	private StudyItem studyItem;
 	
+	@JsonView(Detailed.class)
 	@ManyToOne
 	private User owner;
 	
+	@JsonView(Basic.class)
 	private String originalName;
 	
+	@JsonView(Basic.class)
 	private boolean presented;
 	
+	@JsonView(Basic.class)
 	private boolean corrected;
 	
 	

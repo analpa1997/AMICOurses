@@ -66,7 +66,7 @@ public class SubjectService {
 	public Page<StudyItem> getStudyItems(Subject subject, PageRequest pageReq) {
 
 		Page<StudyItem> studyItems = studyItemRepository.findBySubjectAndIsPractice(subject, false, pageReq);
-
+		
 		return studyItems;
 	}
 
@@ -92,7 +92,7 @@ public class SubjectService {
 	public StudyItem getStudyItem (Subject subject, Long studyItemID){
 
 		for (StudyItem studyItem : subject.getStudyItemsList()) {
-			if (!studyItem.isPractice() && studyItem.getStudyItemID() == studyItemID) {
+			if (studyItem.getStudyItemID() == studyItemID) {
 				return studyItem;
 			}
 		}

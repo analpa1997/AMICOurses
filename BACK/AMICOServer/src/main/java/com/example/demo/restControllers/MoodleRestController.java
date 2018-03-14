@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.demo.course.Course;
 import com.example.demo.course.CourseRepository;
 import com.example.demo.practices.Practices;
+import com.example.demo.practices.PracticesRepository;
 import com.example.demo.studyItem.StudyItem;
 import com.example.demo.studyItem.StudyItemRepository;
 import com.example.demo.studyItem.StudyItemService;
@@ -35,6 +36,7 @@ import com.example.demo.subject.SubjectService;
 import com.example.demo.user.SessionUserComponent;
 import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
+import com.fasterxml.jackson.annotation.JsonView;
 
 @RestController
 public class MoodleRestController {
@@ -97,16 +99,20 @@ public class MoodleRestController {
 
 	/* GET */
 	/* Retrieves all the studyItems (not practices enouncements) from a subject */
+	
+	@JsonView(StudyItem.BasicStudyItem.class)
 	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/studyItem/all", method = RequestMethod.GET)
 	public ResponseEntity<Page<StudyItem>> getAllStudyItems(Pageable pages, @PathVariable String courseInternalName,
 			@PathVariable String subjectInternalName, @RequestParam(value = "page", defaultValue = "0") int page) {
 
-		User user = sessionUserComponent.getLoggedUser();
+		//User user = sessionUserComponent.getLoggedUser();
 
+		User user = userRepository.findByInternalName("amico");
 		if (user != null) {
 			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
 			if (subject != null) {
 				Page<StudyItem> studyItems = subjectService.getStudyItems(subject, new PageRequest(page, 10));
+				
 				return new ResponseEntity<>(studyItems, HttpStatus.OK);
 			}
 		}
@@ -114,6 +120,7 @@ public class MoodleRestController {
 	}
 
 	/* Retrieves all the studyItems from a module from a subject */
+	@JsonView(StudyItem.BasicStudyItem.class)
 	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/studyItem/module/{module}", method = RequestMethod.GET)
 	public ResponseEntity<Page<StudyItem>> getStudyItemsFromModule(Pageable pages,
 			@PathVariable String courseInternalName, @PathVariable String subjectInternalName,
@@ -132,11 +139,15 @@ public class MoodleRestController {
 	}
 
 	/* Retrieves only one studyItem from a subject */
+	
+	interface StudyItemDetailed extends StudyItem.BasicStudyItem, StudyItem.Practice, StudyItem.SubjectOrigin, Practices.Basic, Subject.SubjectsBasicInformation {}
+	@JsonView(StudyItemDetailed.class)
 	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/studyItem/one/{studyItemID}", method = RequestMethod.GET)
 	public ResponseEntity<StudyItem> getOneStudyItem(@PathVariable String courseInternalName,
 			@PathVariable String subjectInternalName, @PathVariable Long studyItemID) {
 
-		User user = sessionUserComponent.getLoggedUser();
+		//User user = sessionUserComponent.getLoggedUser();
+		User user = userRepository.findByInternalName("amico");
 
 		if (user != null) {
 			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
@@ -226,12 +237,15 @@ public class MoodleRestController {
 	}
 
 	/* UPDATE */
-	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/studyItem/module/{module}", method = RequestMethod.PUT)
+	
+	@JsonView(StudyItemDetailed.class)
+	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/studyItem/{studyItemID}", method = RequestMethod.PUT)
 	public ResponseEntity<StudyItem> updateStudyItem(@PathVariable String courseInternalName,
 			@PathVariable String subjectInternalName, @PathVariable Integer module, @RequestParam String itemName,
 			@RequestParam String itemType, @RequestParam("itemFile") MultipartFile file) {
 
-		User user = sessionUserComponent.getLoggedUser();
+		//User user = sessionUserComponent.getLoggedUser();
+		User user = userRepository.findByInternalName("amico");
 		
 		if (!user.isStudent() && !itemName.isEmpty() && (module != null)) {
 
