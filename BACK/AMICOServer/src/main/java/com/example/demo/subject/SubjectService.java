@@ -69,6 +69,14 @@ public class SubjectService {
 		
 		return studyItems;
 	}
+	
+	/* Retrieves all the practices */
+	public Page<StudyItem> getPractices(Subject subject, PageRequest pageReq) {
+
+		Page<StudyItem> studyItems = studyItemRepository.findBySubjectAndIsPractice(subject, true, pageReq);
+		
+		return studyItems;
+	}
 
 	/* Retrieves only the studyItems from a module */
 	public Page<StudyItem> getStudyItems(Subject subject, int module, PageRequest pageReq) {
