@@ -112,7 +112,6 @@ public class MoodleRestController {
 			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
 			if (subject != null) {
 				Page<StudyItem> studyItems = subjectService.getStudyItems(subject, new PageRequest(page, 10));
-				
 				return new ResponseEntity<>(studyItems, HttpStatus.OK);
 			}
 		}
