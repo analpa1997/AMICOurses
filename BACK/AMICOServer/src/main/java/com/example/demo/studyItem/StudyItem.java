@@ -201,6 +201,23 @@ public class StudyItem {
 	} 
 	
 
+	public void copy (StudyItem origin) {
+		this.type = origin.type;
+		this.name = origin.name;
+		this.fileName = origin.fileName;
+		this.subject = origin.subject;
+		this.module = origin.module;
+		this.internalName = origin.internalName;
+		this.originalName = origin.originalName;
+		this.extension = origin.extension;
+		this.icon = origin.icon;
+		this.isPractice = origin.isPractice;
+		this.practices = origin.practices;
+		
+	}
+
+
+
 	
 
 }

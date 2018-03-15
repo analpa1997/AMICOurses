@@ -205,7 +205,6 @@ public class MoodleController {
 					if (!file.isEmpty()) {
 						try {
 							studyItemService.createStudyItem(file, subject, module, itemType, itemName);
-
 						} catch (IOException e) {
 							System.out.println(e.getMessage());
 						}

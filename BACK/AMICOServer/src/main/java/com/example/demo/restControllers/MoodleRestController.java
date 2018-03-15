@@ -8,7 +8,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.http.HttpResponse;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -96,10 +95,10 @@ public class MoodleRestController {
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
-	/* STUDY ITEMS */
+	/* STUDY ITEMS / PRACTICES */
 
 	/* GET */
-	/* Retrieves all the studyItems (not practices enouncements) from a subject */
+	/* Retrieves all the studyItems/practices from a subject */
 
 	@JsonView(StudyItem.BasicStudyItem.class)
 	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/{type}/all", method = RequestMethod.GET)
@@ -107,9 +106,8 @@ public class MoodleRestController {
 			@PathVariable String subjectInternalName, @PathVariable String type,
 			@RequestParam(value = "page", defaultValue = "0") int page) {
 
-		// User user = sessionUserComponent.getLoggedUser();
+		User user = sessionUserComponent.getLoggedUser();
 
-		User user = userRepository.findByInternalName("amico");
 		if (user != null) {
 			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
 			if (subject != null) {
@@ -137,8 +135,7 @@ public class MoodleRestController {
 			@PathVariable String courseInternalName, @PathVariable String subjectInternalName,
 			@PathVariable Integer module, @RequestParam(value = "page", defaultValue = "0") int page) {
 
-		// User user = sessionUserComponent.getLoggedUser();
-		User user = userRepository.findByInternalName("amico");
+		User user = sessionUserComponent.getLoggedUser();
 
 		if (user != null) {
 			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
@@ -150,26 +147,29 @@ public class MoodleRestController {
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
-	/* Retrieves only one studyItem from a subject */
+	/* Retrieves only one studyItem/practice from a subject */
 
 	interface StudyItemDetailed extends StudyItem.BasicStudyItem, StudyItem.Practice, StudyItem.SubjectOrigin,
 			Practices.Basic, Subject.SubjectsBasicInformation {
 	}
 
 	@JsonView(StudyItemDetailed.class)
-	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/studyItem/one/{studyItemID}", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/{type}/one/{studyItemID}", method = RequestMethod.GET)
 	public ResponseEntity<StudyItem> getOneStudyItem(@PathVariable String courseInternalName,
-			@PathVariable String subjectInternalName, @PathVariable Long studyItemID) {
+			@PathVariable String subjectInternalName, @PathVariable String type, @PathVariable Long studyItemID) {
 
-		// User user = sessionUserComponent.getLoggedUser();
-		User user = userRepository.findByInternalName("amico");
+		User user = sessionUserComponent.getLoggedUser();
 
 		if (user != null) {
 			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
 			if (subject != null) {
-				StudyItem studyItem = subjectService.getStudyItem(subject, studyItemID);
 
-				if (studyItem != null) {
+				StudyItem studyItem = subjectService.getStudyItem(subject, studyItemID);
+				
+				boolean isValidRequest = (studyItem != null && (type.equals("studyItem") && !studyItem.isPractice())
+						|| (type.equals("practice") && studyItem.isPractice()));
+
+				if (isValidRequest) {
 					return new ResponseEntity<>(studyItem, HttpStatus.OK);
 				}
 
@@ -178,27 +178,25 @@ public class MoodleRestController {
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
-	/* fileType can be or studyItem or practice */
+	/* type can be or studyItem or practice */
 	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/{type}/file/{studyItemID}", method = RequestMethod.GET)
 	public void getStudyItemFile(@PathVariable String courseInternalName, @PathVariable String subjectInternalName,
 			@PathVariable String type, @PathVariable Long studyItemID, HttpServletResponse response)
 			throws IOException {
 
-		// User user = sessionUserComponent.getLoggedUser();
-			User user = userRepository.findByInternalName("amico");
+		User user = sessionUserComponent.getLoggedUser();
 
 		if (user != null && (type != null && !type.isEmpty())) {
 			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
 			if (subject != null && studyItemID != null) {
-				StudyItem studyItem = studyItemRepository.findOne(studyItemID);
+				StudyItem studyItem = subjectService.getStudyItem(subject, studyItemID);
 
 				/*
-				 * If the filetype and the actual type of the studyItem/practiceEnouncement
-				 * match
+				 * If the type and the actual type of the studyItem/practiceEnouncement match
 				 */
-				boolean isValidRequest = ((type.equals("studyItem") && !studyItem.isPractice())
+				boolean isValidRequest = (studyItem != null && (type.equals("studyItem") && !studyItem.isPractice())
 						|| (type.equals("practice") && studyItem.isPractice()));
-				if (studyItem != null && isValidRequest) {
+				if (isValidRequest) {
 					Path pathFile = studyItemService.getStudyItemFile(subject.getCourse().getCourseID(),
 							subject.getSubjectID(), studyItemID);
 					try {
@@ -214,7 +212,8 @@ public class MoodleRestController {
 					}
 				} else {
 					String realType = studyItem.isPractice() ? "practice" : "studyItem";
-					String msg = "The file type is not the type you has requested. (You asked for a " + type+ " but the actual type of the file is " + realType;
+					String msg = "The file type is not the type you has requested. (You asked for a " + type
+							+ " but the actual type of the file is " + realType;
 					response.getWriter().println("Error 404 not found");
 					response.sendError(409, msg);
 				}
@@ -225,7 +224,9 @@ public class MoodleRestController {
 	}
 
 	/* POST */
+	
 	/* Creates a studyItem within a subject and a module */
+	@JsonView(StudyItemDetailed.class)
 	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/studyItem/module/{module}", method = RequestMethod.POST)
 	public ResponseEntity<StudyItem> createStudyItem(@PathVariable String courseInternalName,
 			@PathVariable String subjectInternalName, @PathVariable Integer module, @RequestParam String itemName,
@@ -233,7 +234,7 @@ public class MoodleRestController {
 
 		User user = sessionUserComponent.getLoggedUser();
 
-		if (!user.isStudent() && !itemName.isEmpty() && (module != null)) {
+		if (user != null && !user.isStudent() && !itemName.isEmpty() && (module != null)) {
 
 			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
 			if (subject != null) {
@@ -255,22 +256,20 @@ public class MoodleRestController {
 				}
 			}
 		}
-
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
-	/* UPDATE */
-
+	
+	/* Creates a practice within a subject */
 	@JsonView(StudyItemDetailed.class)
-	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/studyItem/{studyItemID}", method = RequestMethod.PUT)
-	public ResponseEntity<StudyItem> updateStudyItem(@PathVariable String courseInternalName,
-			@PathVariable String subjectInternalName, @PathVariable Integer module, @RequestParam String itemName,
+	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/practice", method = RequestMethod.POST)
+	public ResponseEntity<StudyItem> createPractice(@PathVariable String courseInternalName,
+			@PathVariable String subjectInternalName, @RequestParam String itemName,
 			@RequestParam String itemType, @RequestParam("itemFile") MultipartFile file) {
 
-		// User user = sessionUserComponent.getLoggedUser();
-		User user = userRepository.findByInternalName("amico");
+		User user = sessionUserComponent.getLoggedUser();
 
-		if (!user.isStudent() && !itemName.isEmpty() && (module != null)) {
+		if (!user.isStudent() && !itemName.isEmpty()) {
 
 			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
 			if (subject != null) {
@@ -281,7 +280,7 @@ public class MoodleRestController {
 
 					if (!file.isEmpty()) {
 						try {
-							StudyItem response = studyItemService.createStudyItem(file, subject, module, itemType,
+							StudyItem response = studyItemService.createStudyItem(file, subject, -1, itemType,
 									itemName);
 							return new ResponseEntity<>(response, HttpStatus.OK);
 						} catch (IOException e) {
@@ -289,6 +288,42 @@ public class MoodleRestController {
 						}
 					}
 
+				}
+			}
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+
+	/* UPDATE */
+
+	/* Updates a studyItem/practices */
+	@JsonView(StudyItemDetailed.class)
+	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/{type}/{studyItemID}", method = RequestMethod.PUT)
+	public ResponseEntity<StudyItem> updateStudyItem(@PathVariable String courseInternalName,
+			@PathVariable String subjectInternalName, @PathVariable String type, @PathVariable Long studyItemID, @RequestParam(required = false) String itemName,
+			@RequestParam(required = false) String itemType, @RequestParam(name="itemFile", required = false) MultipartFile file) throws IOException {
+
+		// User user = sessionUserComponent.getLoggedUser();
+		User user = userRepository.findByInternalName("amico");
+
+		if (user != null &&  !user.isStudent()) {
+
+			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
+			if (subject != null) {
+				if (subject.getTeachers().contains(user)) {
+					/* If the user is a teacher of the subject can upload the file */
+					/* File uploading control. If the file exists, it is overwritten */
+					
+					StudyItem studyItem = subjectService.getStudyItem(subject, studyItemID);
+					boolean isValidRequest = (studyItem != null && (type.equals("studyItem") && !studyItem.isPractice())
+							|| (type.equals("practice") && studyItem.isPractice()));
+					if (isValidRequest) {
+						
+						
+					
+					studyItemService.modifyStudyItem(file, subject, itemType, itemName, studyItem);
+					
+					}
 				}
 			}
 		}
@@ -298,7 +333,7 @@ public class MoodleRestController {
 
 	/* DELETE */
 
-	/* PRACTICES */
+	/* PRACTICES SUBMISSIONS */
 
 	/* GET */
 
