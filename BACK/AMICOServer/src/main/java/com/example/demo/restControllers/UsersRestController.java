@@ -18,6 +18,7 @@ import com.example.demo.user.SessionUserComponent;
 import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
 import com.example.demo.user.UserService;
+import com.fasterxml.jackson.annotation.JsonView;
 
 @RestController
 public class UsersRestController {
@@ -52,7 +53,7 @@ public class UsersRestController {
 	}
 
 	// ********************** PUT ********************
-	@RequestMapping(value = "/{userInternalName}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/api/users/{userInternalName}", method = RequestMethod.PUT)
 	public ResponseEntity<User> updateBook(@PathVariable String userInternalName, @RequestBody User updatedUser,
 
 			@RequestParam(value = "username", required = false) String username,
@@ -121,12 +122,13 @@ public class UsersRestController {
 
 	// ********************** RETURN ALL ********************
 
+	@JsonView(User.BasicUser.class)
 	@RequestMapping(value = "/api/users/all", method = RequestMethod.GET)
 	public ResponseEntity<Page<User>> allUsers(Pageable pages,
 			@RequestParam(value = "page", defaultValue = "0") int page,
 			@RequestParam(value = "isStudent", required = false) Boolean isStudent) {
 		Page<User> pageUser;
-		if (isStudent = null)
+		if (isStudent == null)
 			pageUser = repository.findAll(new PageRequest(page, 10));
 		else
 			pageUser = repository.findByIsStudent(isStudent, new PageRequest(page, 10));

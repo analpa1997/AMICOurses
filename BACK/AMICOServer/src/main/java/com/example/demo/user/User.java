@@ -25,53 +25,54 @@ import com.fasterxml.jackson.annotation.JsonView;
 @Table(name = "Users")
 public class User {
 
-	public interface BasicInformation {
+	/* Jackson Interfaces */
+	public interface BasicUser {
 	}
 
-	interface CourseInformation {
+	public interface CourseInformation {
 	}
 
-	interface TeachingInformation {
+	public interface TeachingInformation {
 	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@JsonView(BasicInformation.class)
+	@JsonView(BasicUser.class)
 	private long userID;
 
-	@JsonView(BasicInformation.class)
+	@JsonView(BasicUser.class)
 	private String username;
 
 	// TO DO: Convert the password using a hash function
 	@JsonIgnore
 	private String password;
 
-	@JsonView(BasicInformation.class)
+	@JsonView(BasicUser.class)
 	private String userMail;
 
-	@JsonView(BasicInformation.class)
+	@JsonView(BasicUser.class)
 	private String userFirstName;
 
-	@JsonView(BasicInformation.class)
+	@JsonView(BasicUser.class)
 	private String userLastName;
 
-	@JsonView(BasicInformation.class)
+	@JsonView(BasicUser.class)
 	private String userAddress;
 
-	@JsonView(BasicInformation.class)
+	@JsonView(BasicUser.class)
 	private String city;
 
-	@JsonView(BasicInformation.class)
+	@JsonView(BasicUser.class)
 	private String country;
 
-	@JsonView(BasicInformation.class)
+	@JsonView(BasicUser.class)
 	private int phoneNumber;
 
-	@JsonView(BasicInformation.class)
+	@JsonView(BasicUser.class)
 	@Column(length = Short.MAX_VALUE)
 	private String interests;
 
-	@JsonView(BasicInformation.class)
+	@JsonView(BasicUser.class)
 	private String urlProfileImage;
 
 	@JsonView(CourseInformation.class)

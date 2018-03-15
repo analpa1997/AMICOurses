@@ -38,7 +38,7 @@ public class CourseRestController {
 	interface CourseBasicInformation extends Course.BasicInformation {
 	}
 
-	interface CourseInformation extends Course.BasicInformation, Course.UserInformation, User.BasicInformation {
+	interface CourseInformation extends Course.BasicInformation, Course.UserInformation, User.BasicUser {
 	}
 
 	interface SubjectsDetail
