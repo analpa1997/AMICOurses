@@ -118,7 +118,7 @@ public class MoodleRestController {
 
 		User user = sessionUserComponent.getLoggedUser();
 
-		if (user != null) {
+		if (user != null ) {
 			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
 			if (subject != null) {
 				Page<StudyItem> studyItems = null;

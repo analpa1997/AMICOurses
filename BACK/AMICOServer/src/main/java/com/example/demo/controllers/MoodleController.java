@@ -316,10 +316,7 @@ public class MoodleController {
 						/* Delete the studyItem */
 						if (btnDelete != null) {
 							if (!studyItem.isPractice()) {
-								studyItem.setSubject(null);
-								subject.getStudyItemsList().remove(studyItem);
-								studyItemRepository.delete(studyItem);
-								// subjectRepository.save(subject);
+								studyItemService.deleteStudyItem(studyItem);
 							} else {
 								List<Practices> toRemove = new ArrayList<>();
 								for (Practices pract : studyItem.getPractices()) {
