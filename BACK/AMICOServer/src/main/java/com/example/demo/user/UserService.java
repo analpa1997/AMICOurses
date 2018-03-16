@@ -38,21 +38,34 @@ public class UserService {
 			return null;
 	}
 
-	public User updateUser(String userInternalName, String username, String password, String repeatPassword,
-			String userMail, String userFirstName, String userLastName, String userAddress, String city, String country,
-			Integer phoneNumber, String interests, String urlProfileImage) {
+	public User updateUser(String userInternalName, User user) {
 
 		User u = userRepository.findByInternalName(userInternalName);
 
 		if (u != null) {
+			String username = user.getUsername();
+			String password = user.getPassword();
+			String userMail = user.getUserMail();
+			String userFirstName = user.getUserFirstName();
+			String userLastName = user.getUserLastName();
+			String userAddress = user.getUserAddress();
+			String city = user.getCity();
+			String country = user.getCountry();
+			Integer phoneNumber = (Integer) user.getPhoneNumber();
+			String interests = user.getInterests();
+			String urlProfileImage = user.getUrlProfileImage();
 
 			if (username != null)
 				if (correctName(username) && (userRepository.findByUsername(username) == null))
 					u.setUsername(username);
 
-			if ((password != null) && (repeatPassword != null))
-				if (passwordMatch(password, repeatPassword))
-					u.setPassword(password);
+			if (password != null)
+				u.setPassword(password);
+
+			/*
+			 * if ((password != null) && (repeatPassword != null)) if
+			 * (passwordMatch(password, repeatPassword)) u.setPassword(password);
+			 */
 
 			if (userMail != null)
 				if (isValidEmailAddress(userMail))
@@ -79,8 +92,8 @@ public class UserService {
 					u.setCountry(country);
 
 			if (phoneNumber != null)
-				if (phoneNumber.toString().length() < LENGTHPHONE)
-					u.setPhoneNumber(phoneNumber);
+				if (phoneNumber.toString().length() == LENGTHPHONE)
+					u.setPhoneNumber((int) phoneNumber);
 
 			if (interests != null)
 				if (interests.length() < MAXLENGTHINTERESTS)

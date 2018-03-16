@@ -53,24 +53,11 @@ public class UsersRestController {
 	}
 
 	// ********************** PUT ********************
+	@JsonView(User.BasicUser.class)
 	@RequestMapping(value = "/api/users/{userInternalName}", method = RequestMethod.PUT)
-	public ResponseEntity<User> updateBook(@PathVariable String userInternalName, @RequestBody User updatedUser,
+	public ResponseEntity<User> updateBook(@PathVariable String userInternalName, @RequestBody User user) {
 
-			@RequestParam(value = "username", required = false) String username,
-			@RequestParam(value = "password", required = false) String password,
-			@RequestParam(value = "repeatPassword", required = false) String repeatPassword,
-			@RequestParam(value = "userMail", required = false) String userMail,
-			@RequestParam(value = "userFirstName", required = false) String userFirstName,
-			@RequestParam(value = "userLastName", required = false) String userLastName,
-			@RequestParam(value = "userAddress", required = false) String userAddress,
-			@RequestParam(value = "city", required = false) String city,
-			@RequestParam(value = "country", required = false) String country,
-			@RequestParam(value = "phoneNumber", required = false) Integer phoneNumber,
-			@RequestParam(value = "interests", required = false) String interests,
-			@RequestParam(value = "urlProfileImage", required = false) String urlProfileImage) {
-
-		updatedUser = userService.updateUser(userInternalName, username, password, repeatPassword, userMail,
-				userFirstName, userLastName, userAddress, city, country, phoneNumber, interests, urlProfileImage);
+		User updatedUser = userService.updateUser(userInternalName, user);
 
 		if (updatedUser != null) {
 			return new ResponseEntity<>(updatedUser, HttpStatus.OK);
@@ -80,6 +67,7 @@ public class UsersRestController {
 	}
 
 	// ********************** DELETE ********************
+	@JsonView(User.BasicUser.class)
 	@RequestMapping(value = "/api/users/{userInternalName}", method = RequestMethod.DELETE)
 	public ResponseEntity<User> delUser(@PathVariable String userInternalName) {
 
@@ -97,6 +85,7 @@ public class UsersRestController {
 	// ********************** FIND ********************
 
 	// Find user by internalName
+	@JsonView(User.BasicUser.class)
 	@RequestMapping(value = "/api/users/{userInternalName}", method = RequestMethod.GET)
 	public ResponseEntity<User> findUser(@PathVariable String userInternalName) {
 
@@ -108,6 +97,7 @@ public class UsersRestController {
 	}
 
 	// ********************** FIND IN COURSE ********************
+	@JsonView(User.BasicUser.class)
 	@RequestMapping(value = "/api/users/{courseID}/{userInternalName}", method = RequestMethod.GET)
 	public ResponseEntity<User> findUserInCourse(@PathVariable String userInternalName, @PathVariable Long courseID) {
 		User user = repository.findByInternalName(userInternalName);
