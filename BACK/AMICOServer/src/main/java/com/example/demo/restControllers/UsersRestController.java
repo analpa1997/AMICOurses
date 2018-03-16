@@ -57,13 +57,18 @@ public class UsersRestController {
 	@RequestMapping(value = "/api/users/{userInternalName}", method = RequestMethod.PUT)
 	public ResponseEntity<User> updateBook(@PathVariable String userInternalName, @RequestBody User user) {
 
-		User updatedUser = userService.updateUser(userInternalName, user);
+		if (userInternalName.equals(sessionUserComponent.getLoggedUser().getInternalName())) {
+			/* I can only modify the data of the logged user */
 
-		if (updatedUser != null) {
-			return new ResponseEntity<>(updatedUser, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
+			User updatedUser = userService.updateUser(userInternalName, user);
+
+			if (updatedUser != null) {
+				return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+		} else
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
 
 	// ********************** DELETE ********************
