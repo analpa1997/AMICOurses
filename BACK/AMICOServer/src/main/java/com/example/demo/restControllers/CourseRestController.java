@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,14 +34,17 @@ import com.fasterxml.jackson.annotation.JsonView;
 @RequestMapping(value = "/api/courses")
 public class CourseRestController {
 
-	interface CourseBasicInformation extends Course.BasicInformation {
+	interface CourseBasicInformation extends Course.BasicCourse {
 	}
 
-	interface CourseInformation extends Course.BasicInformation, Course.UserInformation, User.BasicUser {
+	interface CourseDetail extends Course.BasicCourse, Course.UserInformation, User.BasicUser {
+	}
+
+	interface SkillBasicInformation extends Skill.BasicSkill {
 	}
 
 	interface SubjectsDetail
-			extends Subject.SubjectsBasicInformation, Subject.CourseBasicInformation, Course.BasicInformation {
+			extends Subject.SubjectsBasicInformation, Subject.CourseBasicInformation, Course.BasicCourse {
 	}
 
 	@Autowired
@@ -131,9 +133,9 @@ public class CourseRestController {
 
 	}
 
-	@JsonView(CourseInformation.class)
+	@JsonView(CourseBasicInformation.class)
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ResponseEntity<List<Course>> allCourses(Pageable pages,
+	public ResponseEntity<Page<Course>> allCourses(Pageable pages,
 			@RequestParam(value = "page", defaultValue = "0") int page,
 			@RequestParam(value = "sort", defaultValue = "courseID") String nameField,
 			@RequestParam(value = "type", defaultValue = "all") String type,
@@ -201,25 +203,29 @@ public class CourseRestController {
 		else
 			pageCourse = courseRepository.findByTypeAndInternalNameContaining(type, nameCourse, new PageRequest(page,
 					10)); /* Return the page filtered by Type AND partial name, sorted by default */
-		if (pageCourse != null) {
-			List<Course> listCourse = pageCourse.getContent();
-			return new ResponseEntity<>(listCourse, HttpStatus.OK);
-		} else
-			return new ResponseEntity(HttpStatus.NOT_FOUND);
+		if (pageCourse != null)
+			return new ResponseEntity<>(pageCourse, HttpStatus.OK);
+		else
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
-	public Course createCourse(@RequestBody String newName, @RequestBody String newLanguage,
-			@RequestBody String newDescription, @RequestBody String newType,
-			@RequestBody(required = false) String newSkill1, @RequestBody(required = false) String newSkill2,
-			@RequestBody(required = false) String newSkill3, @RequestBody(required = false) Date startDate,
-			@RequestBody(required = false) Date endDate, @RequestBody(required = false) MultipartFile image) {
+	public Course createCourse(@RequestParam(value = "nameCourse", required = false) String newName,
+			@RequestParam(value = "language") String newLanguage, @RequestParam(value = "type") String newType,
+			@RequestParam(value = "description") String newDescription,
+			@RequestParam(value = "skill1") String newSkill1,
+			@RequestParam(value = "skill2", required = false) String newSkill2,
+			@RequestParam(value = "skill3", required = false) String newSkill3,
+			@RequestParam(value = "startDate", required = false) Date startDate,
+			@RequestParam(value = "endDate", required = false) Date endDate,
+			@RequestParam(value = "image", required = false) MultipartFile image) {
 		return courseService.createCourse(newName, newLanguage, newType, newSkill1, newSkill2, newSkill3, startDate,
 				endDate, newDescription, image);
+
 	}
 
-	@JsonView(CourseInformation.class)
+	@JsonView(CourseBasicInformation.class)
 	@RequestMapping(value = { "/id/{courseID}/", "/name/{internalName}/" }, method = RequestMethod.GET)
 	public ResponseEntity<Course> oneCourse(@PathVariable(required = false) Long courseID,
 			@PathVariable(required = false) String internalName) {
@@ -234,6 +240,7 @@ public class CourseRestController {
 			return new ResponseEntity(HttpStatus.NOT_FOUND);
 	}
 
+	@JsonView(SkillBasicInformation.class)
 	@RequestMapping(value = { "/id/{courseID}/skills/", "/name/{internalName}/skills/" }, method = RequestMethod.GET)
 	public ResponseEntity<List<Skill>> skills(@PathVariable(required = false) String internalName,
 			@PathVariable(required = false) Long courseID) {

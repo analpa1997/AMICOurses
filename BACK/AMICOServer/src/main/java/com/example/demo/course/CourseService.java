@@ -29,6 +29,25 @@ public class CourseService {
 	@Autowired
 	public SkillRepository skillRepository;
 
+	public Course createCourse(String newName, String newLanguage, String newType, String newDescription,
+			String newSkill1) {
+		Course course = null;
+		User user = sessionUserComponent.getLoggedUser();
+		if (user != null && user.isAdmin()) {
+			course = courseRepository.findByName(newName);
+			if (course == null)
+				if (!newName.isEmpty() && !newLanguage.isEmpty() && !newDescription.isEmpty() && !newType.isEmpty()
+						&& !newSkill1.isEmpty()) {
+					course = new Course(newName, newLanguage, newDescription, newType, "");
+					course.getInscribedUsers().add(user);
+					user.getInscribedCourses().add(course);
+					courseRepository.save(course);
+					userRepository.save(user);
+				}
+		}
+		return course;
+	}
+
 	public Course createCourse(String newName, String newLanguage, String newType, String newSkill1, String newSkill2,
 			String newSkill3, Date startDate, Date endDate, String newDescription, MultipartFile file) {
 		Course course = null;

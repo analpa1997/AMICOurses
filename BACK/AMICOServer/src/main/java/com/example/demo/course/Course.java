@@ -29,38 +29,38 @@ import com.fasterxml.jackson.annotation.JsonView;
 @Table(name = "Courses")
 public class Course {
 
-	public interface BasicInformation {
+	public interface BasicCourse {
 	}
 
-	public interface UserInformation extends BasicInformation {
+	public interface UserInformation {
 	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@JsonView(BasicInformation.class)
+	@JsonView(BasicCourse.class)
 	private long courseID;
-	@JsonView(BasicInformation.class)
+	@JsonView(BasicCourse.class)
 	private String name;
-	@JsonView(BasicInformation.class)
+	@JsonView(BasicCourse.class)
 	private String internalName;
-	@JsonView(BasicInformation.class)
+	@JsonView(BasicCourse.class)
 	private String courseLanguage;
-	@JsonView(BasicInformation.class)
+	@JsonView(BasicCourse.class)
 	private String type;
 
 	private Date startDate;
 
 	private Date endDate;
-	@JsonView(BasicInformation.class)
+	@JsonView(BasicCourse.class)
 	private String startDateString;
-	@JsonView(BasicInformation.class)
+	@JsonView(BasicCourse.class)
 	private String endDateString;
-	@JsonView(BasicInformation.class)
+	@JsonView(BasicCourse.class)
 	private int numberOfUsers;
-	@JsonView(BasicInformation.class)
+	@JsonView(BasicCourse.class)
 	@Column(length = Short.MAX_VALUE)
 	private String courseDescription;
-	@JsonView(BasicInformation.class)
+	@JsonView(BasicCourse.class)
 	private String originalName;
 
 	private boolean isCompleted;
