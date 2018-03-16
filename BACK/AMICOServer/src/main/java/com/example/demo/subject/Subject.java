@@ -94,7 +94,7 @@ public class Subject {
 
 		boolean sameObj = false;
 
-		if (obj2 != null && obj2 instanceof User)
+		if (obj2 != null && obj2 instanceof Subject)
 			sameObj = subjectID == ((Subject) obj2).subjectID;
 
 		return sameObj;

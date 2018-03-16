@@ -608,9 +608,10 @@ public class MoodleRestController {
 
 	/* UPDATE */
 	@JsonView(PraticesDetailed.class)
-	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/submissions/{practiceID}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/submissions/{practiceID}/{submissionID}", method = RequestMethod.PUT)
 	public ResponseEntity<Practices> EditPracticeSubmission(@PathVariable String courseInternalName,
-			@PathVariable String subjectInternalName, @PathVariable Long practiceID, @RequestBody Practices newPractice) {
+			@PathVariable String subjectInternalName, @PathVariable Long submissionID, @PathVariable Long practiceID,
+			@RequestBody Practices newPractice) {
 
 		User user = sessionUserComponent.getLoggedUser();
 
@@ -618,29 +619,28 @@ public class MoodleRestController {
 			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
 			if (subject != null) {
 				StudyItem studyItem = studyItemRepository.findOne(practiceID);
-				if (studyItem != null) {
-					if (studyItem.isPractice()) {
-						Practices oldPractice = practiceSubmissionRepository.findOne(practiceID);
+				Practices oldPractice = practiceSubmissionRepository.findOne(submissionID);
 
-						if (oldPractice.isPresented()) {
+				if (studyItem.getSubject().equals(subject) && (studyItem.getPractices().contains(oldPractice))) {
 
-							if (user.isStudent()) {
-								oldPractice.setPracticeName(newPractice.getPracticeName());
-							} else {
-								oldPractice.setCalification(newPractice.getCalification());
-								oldPractice.setCorrected(true);
-							}
+					if (oldPractice.isPresented()) {
 
-							newPractice = practiceSubmissionRepository.save(oldPractice);
-							return new ResponseEntity<>(newPractice, HttpStatus.OK);
+						if (user.isStudent()) {
+							oldPractice.setPracticeName(newPractice.getPracticeName());
 						} else {
-							return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+							oldPractice.setCalification(newPractice.getCalification());
+							oldPractice.setCorrected(true);
 						}
 
+						newPractice = practiceSubmissionRepository.save(oldPractice);
+						return new ResponseEntity<>(newPractice, HttpStatus.OK);
+					} else {
+						return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 					}
-				}
 
+				}
 			}
+
 		}
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
@@ -660,8 +660,8 @@ public class MoodleRestController {
 				StudyItem studyItem = studyItemRepository.findOne(practiceID);
 				if (studyItem != null) {
 					if (studyItem.isPractice()) {
-						Practices practice = practiceSubmissionRepository.findOne(practiceID);
-						if (practice != null && practice.getOwner().equals(user) && !practice.isPresented()) {
+						Practices practice = practiceSubmissionRepository.findOne(submissionID);
+						if (practice != null && practice.getOwner().equals(user)) {
 							practice = practicesSubmissionService.createSubmissionFile(user, studyItem, practice, file);
 							return new ResponseEntity<>(practice, HttpStatus.OK);
 						} else {
