@@ -66,12 +66,13 @@ public class PracticesService {
 
 
 	public Practices createSubmission(User user, StudyItem studyItem, Practices practice) {
-			
+		
 		practice.setOwner(user);
 		practice.setCalification(0);
 		practice.setCorrected(false);
 		practice.setPresented(true);
-		
+		practice.setStudyItem(studyItem);
+		practice.setOriginalName("Not Presented");
 		practice = practiceRepository.save(practice);
 		studyItem.getPractices().add(practice);
 		studyItemRepository.save(studyItem);

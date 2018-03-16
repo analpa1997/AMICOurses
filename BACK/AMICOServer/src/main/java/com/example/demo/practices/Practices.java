@@ -62,6 +62,14 @@ public class Practices {
 		this.presented = false;
 		this.setCorrected(false);
 	}
+	
+	public Practices (String practiceName) {
+		this.practiceName = practiceName;
+		this.originalName = "";
+		this.calification = 0d;
+		this.presented = false;
+		this.setCorrected(false);
+	}
 
 	/* Methods */
 
