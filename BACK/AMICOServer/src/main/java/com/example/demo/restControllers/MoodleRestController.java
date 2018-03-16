@@ -30,7 +30,9 @@ import com.example.demo.course.Course;
 import com.example.demo.course.CourseRepository;
 import com.example.demo.practices.Practices;
 import com.example.demo.practices.PracticesRepository;
+import com.example.demo.practices.PracticesService;
 import com.example.demo.studyItem.StudyItem;
+import com.example.demo.studyItem.StudyItem.Practice;
 import com.example.demo.studyItem.StudyItemRepository;
 import com.example.demo.studyItem.StudyItemService;
 import com.example.demo.subject.Subject;
@@ -55,6 +57,8 @@ public class MoodleRestController {
 	private SubjectService subjectService;
 	@Autowired
 	private StudyItemService studyItemService;
+	@Autowired
+	private PracticesService practicesSubmissionService;
 
 	@Autowired
 	private SessionUserComponent sessionUserComponent;
@@ -118,7 +122,7 @@ public class MoodleRestController {
 
 		User user = sessionUserComponent.getLoggedUser();
 
-		if (user != null ) {
+		if (user != null) {
 			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
 			if (subject != null) {
 				Page<StudyItem> studyItems = null;
@@ -160,7 +164,7 @@ public class MoodleRestController {
 	/* Retrieves only one studyItem/practice from a subject */
 
 	interface StudyItemDetailed extends StudyItem.BasicStudyItem, StudyItem.Practice, StudyItem.SubjectOrigin,
-			Practices.Basic, Subject.SubjectsBasicInformation {
+			Practices.BasicPractice, Subject.SubjectsBasicInformation {
 	}
 
 	@JsonView(StudyItemDetailed.class)
@@ -455,6 +459,64 @@ public class MoodleRestController {
 	/* PRACTICES SUBMISSIONS */
 
 	/* GET */
+
+	/*
+	 * Retrieves a practice submission. One if is the user is a student and all if
+	 * is teacher
+	 */
+	/* The practiceID is the id from the statement */
+	
+	interface PraticesDetailed extends Practices.BasicPractice, Practices.DetailedPractice, User.BasicUser, StudyItem.BasicStudyItem , StudyItem.SubjectOrigin,
+	Subject.SubjectsBasicInformation {
+}
+	@JsonView(PraticesDetailed.class)
+	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/submissions/{practiceID}", method = RequestMethod.GET)
+	public ResponseEntity<Page<Practices>> getPracticesSubmissions(Pageable pages,
+			@PathVariable String courseInternalName, @PathVariable String subjectInternalName,
+			@PathVariable Long practiceID, @RequestParam(value = "page", defaultValue = "0") int page) {
+
+		User user = sessionUserComponent.getLoggedUser();
+
+		if (user != null) {
+			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
+			if (subject != null) {
+				StudyItem studyItem = studyItemRepository.findOne(practiceID);
+				if (studyItem != null) {
+					if (studyItem.isPractice()) {
+						Page<Practices> response = practicesSubmissionService.getSubmissions(user, studyItem, page);
+						return new ResponseEntity<>(response, HttpStatus.OK);
+					} else {
+						return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+					}
+				}
+			}
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+	
+	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/submissions/{practiceID}/file/{submissionID}", method = RequestMethod.GET)
+	public ResponseEntity<Page<Practices>> getPracticeSubmissionFile(Pageable pages,
+			@PathVariable String courseInternalName, @PathVariable String subjectInternalName,
+			@PathVariable Long practiceID, @PathVariable Long submissionsID) {
+
+		User user = sessionUserComponent.getLoggedUser();
+
+		if (user != null) {
+			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
+			if (subject != null) {
+				StudyItem studyItem = studyItemRepository.findOne(practiceID);
+				if (studyItem != null) {
+					if (studyItem.isPractice()) {
+						//Page<Practices> response = practicesSubmissionService.getSubmissions(user, studyItem, page);
+						//return new ResponseEntity<>(response, HttpStatus.OK);
+					} else {
+						//return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+					}
+				}
+			}
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
 
 	/* POST */
 

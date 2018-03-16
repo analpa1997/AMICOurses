@@ -206,4 +206,12 @@ public class StudyItem {
 		}
 	}
 
+	@Override
+	public boolean equals(Object obj2) {
+		boolean sameObj = false;
+		if (obj2 != null && obj2 instanceof StudyItem)
+			sameObj = this.studyItemID == ((StudyItem) obj2).studyItemID;
+		return sameObj;
+	}
+
 }

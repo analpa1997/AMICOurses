@@ -15,49 +15,46 @@ import com.fasterxml.jackson.annotation.JsonView;
 @Entity
 @Table(name = "Practices")
 public class Practices {
-	
-	public interface Basic {}
-	public interface Detailed {}
 
-	@JsonView(Basic.class)
+	public interface BasicPractice {
+	}
+
+	public interface DetailedPractice {
+	}
+
+	@JsonView(BasicPractice.class)
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long practiceID;
 
-	@JsonView(Basic.class)
+	@JsonView(BasicPractice.class)
 	private String practiceName;
 
-	@JsonView(Basic.class)
+	@JsonView(BasicPractice.class)
 	private double calification;
 
-	@JsonView(Basic.class)
-	private String fileName;
-	
-	@JsonView(Basic.class)
-	private String internalName;
-	
-	@JsonView(Detailed.class)
+	@JsonView(DetailedPractice.class)
 	@ManyToOne
 	private StudyItem studyItem;
-	
-	@JsonView(Detailed.class)
+
+	@JsonView(DetailedPractice.class)
 	@ManyToOne
 	private User owner;
-	
-	@JsonView(Basic.class)
+
+	@JsonView(BasicPractice.class)
 	private String originalName;
-	
-	@JsonView(Basic.class)
+
+	@JsonView(BasicPractice.class)
 	private boolean presented;
-	
-	@JsonView(Basic.class)
+
+	@JsonView(BasicPractice.class)
 	private boolean corrected;
-	
-	
+
 	/* Constructors */
-	
-	public Practices () {}
-	
+
+	public Practices() {
+	}
+
 	public Practices(String practiceName, String originalName) {
 		this.practiceName = practiceName;
 		this.originalName = originalName;
@@ -97,21 +94,6 @@ public class Practices {
 	}
 
 
-	public String getInternalName() {
-		return internalName;
-	}
-
-	public void setInternalName(String internalName) {
-		this.internalName = internalName;
-	}
-
-	public String getFileName() {
-		return fileName;
-	}
-
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
 
 	public StudyItem getStudyItem() {
 		return studyItem;
@@ -153,7 +135,14 @@ public class Practices {
 		this.corrected = corriged;
 	}
 
-	
-	
+	@Override
+	public boolean equals(Object obj2) {
+		boolean sameObj = false;
+		if (obj2 != null && obj2 instanceof Practices) {
+			sameObj = this.practiceID == ((Practices) obj2).practiceID;
+			sameObj = sameObj && this.owner.equals(((Practices) obj2).owner);
+		}
+		return sameObj;
+	}
 
 }
