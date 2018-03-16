@@ -65,7 +65,7 @@ public class CourseInformationController {
 		model.addAttribute("error", error);	
 		error = false;
 
-		return "HTML/courseInformation/course";
+		return "HTML/CourseInformation/course";
 	}
 
 	// For course Subjects page description
@@ -80,6 +80,7 @@ public class CourseInformationController {
 		model.addAttribute("urlImage", course.getOriginalName());
 		model.addAttribute("courseID", course.getCourseID());
 		model.addAttribute("nameInternal", internalName);
+		
 		return "HTML/CourseInformation/subjects";
 	}
 
@@ -173,7 +174,7 @@ public class CourseInformationController {
 		} 
 		
 		// go to same page to show the message			
-		return new RedirectView ("/course/{internalName}");
+		return new RedirectView ("/course/{internalName}.html");
 		
 	}
 	
@@ -181,6 +182,7 @@ public class CourseInformationController {
 	@RequestMapping("/courses/img/{courseID}")
 	public void getCourseImage(@PathVariable Long courseID, HttpServletResponse res)
 			throws FileNotFoundException, IOException {
+		
 		Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"), "files/image/courses/" + courseID + "/");
 
 		Path image = FILES_FOLDER.resolve("course-" + courseID + ".jpg");
@@ -190,5 +192,6 @@ public class CourseInformationController {
 		FileCopyUtils.copy(Files.newInputStream(image), res.getOutputStream());
 
 	}
+	
 	
 }
