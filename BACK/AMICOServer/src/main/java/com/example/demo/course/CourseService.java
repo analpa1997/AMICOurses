@@ -29,6 +29,16 @@ public class CourseService {
 	@Autowired
 	public SkillRepository skillRepository;
 
+	public Course createCourse(Course course) {
+		Course courseAux = null;
+		courseAux = courseRepository.findByName(course.getName());
+		if (courseAux == null) {
+			courseAux = course;
+			courseRepository.save(courseAux);
+		}
+		return courseAux;
+	}
+
 	public Course createCourse(String newName, String newLanguage, String newType, String newDescription,
 			String newSkill1) {
 		Course course = null;

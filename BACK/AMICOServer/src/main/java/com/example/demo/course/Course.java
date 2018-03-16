@@ -79,6 +79,12 @@ public class Course {
 	public Course() {
 	}
 
+	public Course(String name, String description) {
+		super();
+		this.name = name;
+		courseDescription = description;
+	}
+
 	public Course(String name, String courseLanguage, Date startDate, Date endDate, String courseDescription,
 			String type, String urlImage) {
 		super();

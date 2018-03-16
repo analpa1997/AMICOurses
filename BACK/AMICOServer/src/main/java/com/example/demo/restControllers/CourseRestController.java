@@ -1,6 +1,5 @@
 package com.example.demo.restControllers;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,12 +12,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.course.Course;
 import com.example.demo.course.CourseRepository;
@@ -211,17 +210,8 @@ public class CourseRestController {
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
-	public Course createCourse(@RequestParam(value = "nameCourse", required = false) String newName,
-			@RequestParam(value = "language") String newLanguage, @RequestParam(value = "type") String newType,
-			@RequestParam(value = "description") String newDescription,
-			@RequestParam(value = "skill1") String newSkill1,
-			@RequestParam(value = "skill2", required = false) String newSkill2,
-			@RequestParam(value = "skill3", required = false) String newSkill3,
-			@RequestParam(value = "startDate", required = false) Date startDate,
-			@RequestParam(value = "endDate", required = false) Date endDate,
-			@RequestParam(value = "image", required = false) MultipartFile image) {
-		return courseService.createCourse(newName, newLanguage, newType, newSkill1, newSkill2, newSkill3, startDate,
-				endDate, newDescription, image);
+	public Course createCourse(@RequestBody Course course) {
+		return courseService.createCourse(course);
 
 	}
 
