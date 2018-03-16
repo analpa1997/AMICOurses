@@ -607,7 +607,7 @@ public class MoodleRestController {
 	/* UPDATE */
 
 	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/submissions/{practiceID}", method = RequestMethod.PUT)
-	public ResponseEntity<Practices> EditPracticeSubmission(Pageable pages, @PathVariable String courseInternalName,
+	public ResponseEntity<Practices> EditPracticeSubmission(@PathVariable String courseInternalName,
 			@PathVariable String subjectInternalName, @PathVariable Long practiceID, Practices newPractice) {
 
 		User user = sessionUserComponent.getLoggedUser();
@@ -637,9 +637,10 @@ public class MoodleRestController {
 
 					}
 				}
-				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+				
 			}
 		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 	/* Updloads a file within a practice submission */
