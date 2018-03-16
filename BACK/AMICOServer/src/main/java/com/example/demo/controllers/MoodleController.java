@@ -226,11 +226,7 @@ public class MoodleController {
 		User user = sessionUserComponent.getLoggedUser();
 
 		Course course = null;
-		for (Course courseAct : user.getInscribedCourses()) {
-			if (courseAct.getInternalName().equals(courseInternalName)) {
-				course = courseAct;
-			}
-		}
+		course = courseRepository.findByInternalName(courseInternalName);
 
 		if (course != null) {
 			Subject subject = null;
@@ -300,7 +296,7 @@ public class MoodleController {
 	private ModelAndView modifyStudyItem(@PathVariable String courseInternalName,
 			@PathVariable String subjectInternalName, @PathVariable Long studyItemID, @RequestParam String newName,
 			@RequestParam String newType, @RequestParam(required = false) String btnSave,
-			@RequestParam(required = false) String btnDelete) {
+			@RequestParam(required = false) String btnDelete) throws IOException {
 
 		User user = sessionUserComponent.getLoggedUser();
 
@@ -308,52 +304,36 @@ public class MoodleController {
 			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
 
 			if (subject != null) {
-				if (subject.getUsers().contains(user)) {
-					StudyItem studyItem = null;
-					for (StudyItem studyItemAct : subject.getStudyItemsList()) {
-						if (studyItemAct.getStudyItemID() == studyItemID.longValue()) {
-							studyItem = studyItemAct;
-						}
-					}
+				StudyItem studyItem = subjectService.getStudyItem(subject, studyItemID);
 
-					if (studyItem != null) {
+				if (studyItem != null) {
 
-						if (btnSave != null) {
-							/* Change the studyItem */
-							if (!newName.isEmpty()) {
-								studyItem.setName(newName);
-							}
-							if (!newType.isEmpty()) {
-								studyItem.setType(newType);
-								studyItem.setIcon(newType);
-							}
-							studyItemRepository.save(studyItem);
+					if (btnSave != null) {
+						/* Change the studyItem */
+						studyItemService.modifyStudyItem(studyItem, new StudyItem(newType, newName, null, null));
 
-						} else {
-							/* Delete the studyItem */
-							if (btnDelete != null) {
-								if (!studyItem.isPractice()) {
-									studyItem.setSubject(null);
-									subject.getStudyItemsList().remove(studyItem);
-									studyItemRepository.delete(studyItem);
-									// subjectRepository.save(subject);
-								} else {
-									List<Practices> toRemove = new ArrayList<>();
-									for (Practices pract : studyItem.getPractices()) {
-										pract.setStudyItem(null);
-										pract.setOwner(null);
-										toRemove.add(pract);
-									}
-									studyItem.getPractices().removeAll(toRemove);
-									studyItemRepository.delete(studyItem);
-									practicesRepository.delete(toRemove);
-
+					} else {
+						/* Delete the studyItem */
+						if (btnDelete != null) {
+							if (!studyItem.isPractice()) {
+								studyItemService.deleteStudyItem(studyItem);
+							} else {
+								List<Practices> toRemove = new ArrayList<>();
+								for (Practices pract : studyItem.getPractices()) {
+									pract.setStudyItem(null);
+									pract.setOwner(null);
+									toRemove.add(pract);
 								}
+								studyItem.getPractices().removeAll(toRemove);
+								studyItemRepository.delete(studyItem);
+								practicesRepository.delete(toRemove);
+
 							}
 						}
-
 					}
+
 				}
+
 			}
 		}
 
@@ -407,11 +387,7 @@ public class MoodleController {
 		if (user != null && user.isStudent() && !newName.isEmpty()) {
 
 			Course course = null;
-			for (Course courseAct : user.getInscribedCourses()) {
-				if (courseAct.getInternalName().equals(courseInternalName)) {
-					course = courseAct;
-				}
-			}
+			course = courseRepository.findByInternalName(courseInternalName);
 
 			if (course != null) {
 				Subject subject = null;

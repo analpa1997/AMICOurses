@@ -18,11 +18,16 @@ import com.fasterxml.jackson.annotation.JsonView;
 @Entity
 @Table(name = "StudyItems")
 public class StudyItem {
-	
+
 	/* Jackson Interfaces */
-	public interface BasicStudyItem{}
-	public interface Practice {}
-	public interface SubjectOrigin {}
+	public interface BasicStudyItem {
+	}
+
+	public interface Practice {
+	}
+
+	public interface SubjectOrigin {
+	}
 
 	@JsonView(BasicStudyItem.class)
 	@Id
@@ -34,41 +39,38 @@ public class StudyItem {
 
 	@JsonView(BasicStudyItem.class)
 	private String name;
-	
+
 	@JsonView(BasicStudyItem.class)
 	private String fileName;
-	
+
 	@JsonView(SubjectOrigin.class)
 	@ManyToOne
 	private Subject subject;
-	
+
 	@JsonView(BasicStudyItem.class)
-	private int module;
-	
-	@JsonView(BasicStudyItem.class)
-	private String internalName;
-	
+	private Integer module;
+
 	@JsonView(BasicStudyItem.class)
 	private String originalName;
-	
+
 	@JsonView(BasicStudyItem.class)
 	private String extension;
-	
+
 	@JsonView(BasicStudyItem.class)
 	private String icon;
-	
+
 	@JsonView(BasicStudyItem.class)
 	private boolean isPractice;
-	
+
 	@JsonView(Practice.class)
-	@OneToMany (mappedBy = "studyItem")
-	private List<Practices> practices = new ArrayList <> ();
+	@OneToMany(mappedBy = "studyItem")
+	private List<Practices> practices = new ArrayList<>();
 
 	/* Constructors */
-	public StudyItem () {}
-	
-	
-	public StudyItem(String type, String name, int module, String filename, String originalName) {
+	public StudyItem() {
+	}
+
+	public StudyItem(String type, String name, Integer module, String filename, String originalName) {
 		setIcon(type);
 		if (!type.isEmpty()) {
 			type = "-" + type;
@@ -80,12 +82,10 @@ public class StudyItem {
 		this.originalName = originalName;
 		this.isPractice = false;
 	}
-	
-	public StudyItem(String type, String name, int module, String originalName) {
+
+	public StudyItem(String type, String name, Integer module, String originalName) {
 		this(type, name, module, "", originalName);
 	}
-	
-	
 
 	/* Methods */
 
@@ -115,7 +115,7 @@ public class StudyItem {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public Subject getSubject() {
 		return subject;
 	}
@@ -132,12 +132,6 @@ public class StudyItem {
 		this.module = module;
 	}
 
-	public String getInternalName() {
-		return internalName;
-	}
-
-
-
 	public String getFileName() {
 		return fileName;
 	}
@@ -146,78 +140,70 @@ public class StudyItem {
 		this.fileName = fileName;
 	}
 
-
-
 	public String getOriginalName() {
 		return originalName;
 	}
-
-
 
 	public void setOriginalName(String originalName) {
 		this.originalName = originalName;
 	}
 
-
-
 	public String getExtension() {
 		return extension;
 	}
-
-
 
 	public void setExtension(String extension) {
 		this.extension = extension;
 	}
 
-
 	public String getIcon() {
 		return icon;
 	}
-
 
 	public void setIcon(String icon) {
 		this.icon = icon;
 	}
 
-
 	public boolean isPractice() {
 		return isPractice;
 	}
-
 
 	public void setPractice(boolean isPractice) {
 		this.isPractice = isPractice;
 	}
 
-
 	public List<Practices> getPractices() {
 		return practices;
 	}
 
-
 	public void setPractices(List<Practices> practices) {
 		this.practices = practices;
-	} 
-	
-
-	public void copy (StudyItem origin) {
-		this.type = origin.type;
-		this.name = origin.name;
-		this.fileName = origin.fileName;
-		this.subject = origin.subject;
-		this.module = origin.module;
-		this.internalName = origin.internalName;
-		this.originalName = origin.originalName;
-		this.extension = origin.extension;
-		this.icon = origin.icon;
-		this.isPractice = origin.isPractice;
-		this.practices = origin.practices;
-		
 	}
 
+	public void copy(StudyItem origin) {
 
-
-	
+		if (origin.name != null && !origin.name.isEmpty()) {
+			this.name = origin.name;
+		}
+		if (origin.fileName != null && !origin.fileName.isEmpty()) {
+			this.fileName = origin.fileName;
+		}
+		if (origin.module != null) {
+			this.module = origin.module;
+		}
+		if (origin.originalName != null && !origin.originalName.isEmpty()) {
+			this.originalName = origin.originalName;
+		}
+		if (origin.extension != null && !origin.extension.isEmpty()) {
+			this.extension = origin.extension;
+		}
+		if (origin.icon != null && !origin.icon.isEmpty()) {
+			this.icon = origin.icon;
+			this.type = "file-" + icon;
+		}
+		if (origin.practices != null && !origin.practices.isEmpty()) {
+			this.practices = origin.practices;
+		}
+	}
 
 }
