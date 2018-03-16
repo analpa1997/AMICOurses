@@ -31,6 +31,7 @@ import com.example.demo.course.Course;
 import com.example.demo.course.CourseRepository;
 import com.example.demo.practices.Practices;
 import com.example.demo.practices.PracticesRepository;
+import com.example.demo.practices.PracticesService;
 import com.example.demo.studyItem.StudyItem;
 import com.example.demo.studyItem.StudyItemRepository;
 import com.example.demo.studyItem.StudyItemService;
@@ -54,11 +55,14 @@ public class MoodleController {
 	private StudyItemRepository studyItemRepository;
 	@Autowired
 	private PracticesRepository practicesRepository;
+	
 
 	@Autowired
 	private SubjectService subjectService;
 	@Autowired
 	private StudyItemService studyItemService;
+	@Autowired 
+	private PracticesService practicesService;
 
 	@Autowired
 	private SessionUserComponent sessionUserComponent;
@@ -268,16 +272,7 @@ public class MoodleController {
 
 							if (practice != null
 									&& (!user.isStudent() || practice.getOwner().getUserID() == user.getUserID())) {
-								Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"),
-										"files/documents/" + course.getCourseID() + "/" + subject.getSubjectID()
-												+ "/studyItems/practices/");
-
-								String[] fileOriginal = studyItem.getOriginalName().split("[.]");
-								String extension = fileOriginal[fileOriginal.length - 1];
-
-								Path filePath = FILES_FOLDER
-										.resolve("practice-" + practice.getPracticeID() + "." + extension);
-
+								Path filePath = practicesService.getPracticeFile(studyItem, practice);
 								res.addHeader("Content-Disposition",
 										"attachment; filename = " + practice.getOriginalName());
 								res.setContentType("application/octet-stream");
@@ -422,24 +417,9 @@ public class MoodleController {
 
 							if (!file.isEmpty() && (practice != null)) {
 								try {
-									Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"),
-											"files/documents/" + course.getCourseID() + "/" + subject.getSubjectID()
-													+ "/studyItems/practices/");
-									if (!Files.exists(FILES_FOLDER)) {
-										Files.createDirectories(FILES_FOLDER);
-									}
-
-									practice.setOriginalName(file.getOriginalFilename());
-									practicesRepository.save(practice);
-
-									String[] fileOriginal = studyItem.getOriginalName().split("[.]");
-									String extension = fileOriginal[fileOriginal.length - 1];
-
-									String fileName = "practice-" + practice.getPracticeID() + "." + extension;
-
-									File uploadedFile = new File(FILES_FOLDER.toFile(), fileName);
-									file.transferTo(uploadedFile);
-
+									
+									practicesService.createSubmissionFile(user, studyItem, practice, file);
+								
 								} catch (IOException e) {
 									System.out.println(e.getMessage());
 								}

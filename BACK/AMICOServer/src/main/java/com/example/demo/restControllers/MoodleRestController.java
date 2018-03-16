@@ -52,6 +52,8 @@ public class MoodleRestController {
 	private StudyItemRepository studyItemRepository;
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private PracticesRepository practiceSubmissionRepository;
 
 	@Autowired
 	private SubjectService subjectService;
@@ -447,7 +449,6 @@ public class MoodleRestController {
 							pos++;
 						}
 					}
-
 					return new ResponseEntity<>(deletedStudyItems, HttpStatus.OK);
 				}
 			}
@@ -465,10 +466,11 @@ public class MoodleRestController {
 	 * is teacher
 	 */
 	/* The practiceID is the id from the statement */
-	
-	interface PraticesDetailed extends Practices.BasicPractice, Practices.DetailedPractice, User.BasicUser, StudyItem.BasicStudyItem , StudyItem.SubjectOrigin,
-	Subject.SubjectsBasicInformation {
-}
+
+	interface PraticesDetailed extends Practices.BasicPractice, Practices.DetailedPractice, User.BasicUser,
+			StudyItem.BasicStudyItem, StudyItem.SubjectOrigin, Subject.SubjectsBasicInformation {
+	}
+
 	@JsonView(PraticesDetailed.class)
 	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/submissions/{practiceID}", method = RequestMethod.GET)
 	public ResponseEntity<Page<Practices>> getPracticesSubmissions(Pageable pages,
@@ -493,11 +495,12 @@ public class MoodleRestController {
 		}
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
-	
+
+	/* Requests the file */
 	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/submissions/{practiceID}/file/{submissionID}", method = RequestMethod.GET)
-	public ResponseEntity<Page<Practices>> getPracticeSubmissionFile(Pageable pages,
-			@PathVariable String courseInternalName, @PathVariable String subjectInternalName,
-			@PathVariable Long practiceID, @PathVariable Long submissionsID) {
+	public void getPracticeSubmissionFile(Pageable pages, @PathVariable String courseInternalName,
+			@PathVariable String subjectInternalName, @PathVariable Long practiceID, @PathVariable Long submissionID,
+			HttpServletResponse response) throws IOException {
 
 		User user = sessionUserComponent.getLoggedUser();
 
@@ -507,10 +510,62 @@ public class MoodleRestController {
 				StudyItem studyItem = studyItemRepository.findOne(practiceID);
 				if (studyItem != null) {
 					if (studyItem.isPractice()) {
-						//Page<Practices> response = practicesSubmissionService.getSubmissions(user, studyItem, page);
-						//return new ResponseEntity<>(response, HttpStatus.OK);
+
+						for (Practices practice : studyItem.getPractices()) {
+
+							if (practice.getPracticeID() == submissionID
+									&& (!user.isStudent() || practice.getOwner().equals(user))) {
+
+								Path pathFile = practicesSubmissionService.getPracticeFile(studyItem, practice);
+								try {
+									response.addHeader("Content-Disposition",
+											"attachment; filename = " + studyItem.getOriginalName());
+									response.setContentType("application/octet-stream");
+									response.setContentLength((int) pathFile.toFile().length());
+									IOUtils.copy(Files.newInputStream(pathFile), response.getOutputStream());
+
+								} catch (IOException e) {
+									e.printStackTrace();
+									response.sendError(404);
+								}
+							}
+						}
+
+					}
+				}
+			}
+		}
+		response.sendError(404);
+	}
+
+	/* POST */
+	/* Adds a submission. Only an student can */
+	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/submissions/{practiceID}", method = RequestMethod.POST)
+	public ResponseEntity<Practices> PostPracticeSubmission(Pageable pages, @PathVariable String courseInternalName,
+			@PathVariable String subjectInternalName, @PathVariable Long practiceID, Practices practice) {
+
+		User user = sessionUserComponent.getLoggedUser();
+
+		if (user != null && user.isStudent()) {
+			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
+			if (subject != null) {
+				StudyItem studyItem = studyItemRepository.findOne(practiceID);
+				if (studyItem != null) {
+					if (studyItem.isPractice()) {
+						boolean presented = false;
+						for (Practices practiceAct : studyItem.getPractices()) {
+							if (practiceAct.getOwner().equals(user)) {
+								presented = true;
+							}
+						}
+						if (!presented) {
+							Practices response = practicesSubmissionService.createSubmission(user, studyItem, practice);
+							return new ResponseEntity<>(response, HttpStatus.OK);
+						} else {
+							return new ResponseEntity<>(HttpStatus.IM_USED);
+						}
 					} else {
-						//return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+						return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 					}
 				}
 			}
@@ -518,9 +573,105 @@ public class MoodleRestController {
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
-	/* POST */
+	/* Updloads a file within a practice submission */
+	@JsonView(StudyItemDetailed.class)
+	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/submissions/{practiceID}/file/{submissionID}", method = RequestMethod.POST)
+	public ResponseEntity<Practices> createPracticeSubmissionFile(@PathVariable String courseInternalName,
+			@PathVariable String subjectInternalName, @RequestParam Long practiceID, @RequestParam Long submissionID,
+			@RequestParam("itemFile") MultipartFile file) throws IOException {
+
+		User user = sessionUserComponent.getLoggedUser();
+
+		if (user != null && user.isStudent() && !file.isEmpty()) {
+			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
+			if (subject != null) {
+				StudyItem studyItem = studyItemRepository.findOne(practiceID);
+				if (studyItem != null) {
+					if (studyItem.isPractice()) {
+						Practices practice = practiceSubmissionRepository.findOne(practiceID);
+						if (practice != null && practice.getOwner().equals(user) && !practice.isPresented()) {
+							practice = practicesSubmissionService.createSubmissionFile(user, studyItem, practice, file);
+							return new ResponseEntity<>(practice, HttpStatus.OK);
+						} else {
+							return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+						}
+					} else {
+						return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+					}
+				}
+			}
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
 
 	/* UPDATE */
+
+	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/submissions/{practiceID}", method = RequestMethod.PUT)
+	public ResponseEntity<Practices> EditPracticeSubmission(Pageable pages, @PathVariable String courseInternalName,
+			@PathVariable String subjectInternalName, @PathVariable Long practiceID, Practices newPractice) {
+
+		User user = sessionUserComponent.getLoggedUser();
+
+		if (user != null) {
+			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
+			if (subject != null) {
+				StudyItem studyItem = studyItemRepository.findOne(practiceID);
+				if (studyItem != null) {
+					if (studyItem.isPractice()) {
+						Practices oldPractice = practiceSubmissionRepository.findOne(practiceID);
+
+						if (oldPractice.isPresented()) {
+
+							if (user.isStudent()) {
+								oldPractice.setPracticeName(newPractice.getPracticeName());
+							} else {
+								oldPractice.setCalification(newPractice.getCalification());
+								oldPractice.setCorrected(true);
+							}
+
+							newPractice = practiceSubmissionRepository.save(oldPractice);
+							return new ResponseEntity<>(newPractice, HttpStatus.OK);
+						} else {
+							return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+						}
+
+					}
+				}
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+		}
+	}
+
+	/* Updloads a file within a practice submission */
+	@JsonView(StudyItemDetailed.class)
+	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/submissions/{practiceID}/file/{submissionID}", method = RequestMethod.PUT)
+	public ResponseEntity<Practices> modifyPracticeSubmissionFile(@PathVariable String courseInternalName,
+			@PathVariable String subjectInternalName, @RequestParam Long practiceID, @RequestParam Long submissionID,
+			@RequestParam("itemFile") MultipartFile file) throws IOException {
+
+		User user = sessionUserComponent.getLoggedUser();
+
+		if (user != null && user.isStudent() && !file.isEmpty()) {
+			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
+			if (subject != null) {
+				StudyItem studyItem = studyItemRepository.findOne(practiceID);
+				if (studyItem != null) {
+					if (studyItem.isPractice()) {
+						Practices practice = practiceSubmissionRepository.findOne(practiceID);
+						if (practice != null && practice.getOwner().equals(user) && !practice.isPresented()) {
+							practice = practicesSubmissionService.createSubmissionFile(user, studyItem, practice, file);
+							return new ResponseEntity<>(practice, HttpStatus.OK);
+						} else {
+							return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+						}
+					} else {
+						return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+					}
+				}
+			}
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
 
 	/* DELETE */
 
