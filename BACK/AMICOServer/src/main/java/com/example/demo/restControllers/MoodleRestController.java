@@ -677,6 +677,36 @@ public class MoodleRestController {
 	}
 
 	/* DELETE */
+	
+	@JsonView(Practices.BasicPractice.class)
+	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/submissions/{practiceID}/{submissionID}", method = RequestMethod.DELETE)
+	public ResponseEntity<Practices> deletePracticeSubmission(@PathVariable String courseInternalName,
+			@PathVariable String subjectInternalName, @PathVariable Long practiceID, @PathVariable Long submissionID) {
+
+		User user = sessionUserComponent.getLoggedUser();
+
+		if (user != null && user.isStudent()) {
+			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
+			if (subject != null) {
+				StudyItem studyItem = studyItemRepository.findOne(practiceID);
+				if (studyItem != null) {
+					if (studyItem.isPractice()) {
+						Practices practice = practiceSubmissionRepository.findOne(submissionID);
+						if (practice != null && practice.getOwner().equals(user) && studyItem.getPractices().contains(practice)) {
+							practice = practicesSubmissionService.deletePracticeSubmission(studyItem, practice);
+							return new ResponseEntity<>(practice, HttpStatus.OK);
+						} else {
+							return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+						}
+					} else {
+						return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+					}
+				}
+			}
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+	
 
 	/* CONSULT MARKS */
 	/*

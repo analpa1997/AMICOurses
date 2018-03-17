@@ -104,6 +104,17 @@ public class PracticesService {
 	}
 
 
+	public Practices deletePracticeSubmission(StudyItem studyItem, Practices practice) {
+		studyItem.getPractices().remove(practice);
+		
+		studyItemRepository.save(studyItem);
+		
+		practiceRepository.delete(practice);
+		
+		return practice;
+	}
+
+
 
 
 	
