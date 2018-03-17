@@ -83,6 +83,19 @@ public class StudyItemService {
 		return studyItem;
 	}
 	
+	public StudyItem createStudyItem(Subject subject, StudyItem studyItem, boolean isPractice){
+
+		studyItem.setPractice(isPractice);
+		studyItem.setSubject(subject);
+		
+		studyItem = studyItemRepository.save(studyItem);
+		
+		subject.getStudyItemsList().add(studyItem);
+		subjectRepository.save(subject);
+
+		return studyItem;
+	}
+	
 	
 
 	public StudyItem modifyStudyItem(StudyItem studyItem, StudyItem newStudyItem) throws IOException {
