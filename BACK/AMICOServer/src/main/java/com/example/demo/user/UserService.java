@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.course.Course;
+import com.example.demo.practices.Practices;
+import com.example.demo.practices.PracticesRepository;
+import com.example.demo.practices.PracticesService;
 import com.example.demo.subject.Subject;
 
 @Service
@@ -26,6 +29,10 @@ public class UserService {
 
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	PracticesRepository practicesRepository;
+	@Autowired
+	private PracticesService practicesService;
 
 	public User checkUser(String username, String password, String repeatPassword, String userMail, boolean admin) {
 		if (passwordMatch(password, repeatPassword) && correctName(username) && isValidEmailAddress(userMail)
@@ -126,6 +133,10 @@ public class UserService {
 
 		userToRemove.getInscribedCourses().removeAll(coursesToRemove);
 		userToRemove.getCompletedCourses().removeAll(coursesToRemove);
+
+		List<Practices> practices = practicesRepository.findByOwner(userToRemove);
+		for (Practices p : practices)
+			practicesService.deletePracticeSubmission(p.getStudyItem(), p);
 		userRepository.delete(userToRemove);
 
 		return userToRemove;
