@@ -1,0 +1,231 @@
+
+# API REST DOCUMENTATION
+  ## Moodle
+
+  ### Modules (Only teachers can use them)
+  
+   #### Add Module
+
+Adds a new module within a subject
+
+  * ##### URL
+
+	< /moodle/{courseInternalName}/{subjectInternalName}/module >
+
+* ##### Method:
+
+	`POST`
+
+* ##### Params
+    * Required:
+    * `courseInternalName=[String]`
+    * `subjectInternalName=[String]`
+ 
+* ##### Success Response: 200 OK
+      {
+    "subjectID": 1,
+    "name": "History of AI",
+    "description": "A short history for the AI",
+    "internalName": "history-of-ai",
+    "numberModules": 4,
+    "users": [...]
+    }
+* ##### Error Response:
+
+	**Code:** 404 NOT FOUND
+
+ ### Delete Module
+
+Deletes a module from a subjec
+
+* ##### URL
+< /moodle/{courseInternalName}/{subjectInternalName}/module/{module} >
+
+* ##### Method:
+
+	`DELETE`
+
+* ##### Params
+  * Required:
+    * `courseInternalName=[String]`
+    * `subjectInternalName=[String]`
+    * `moduleNumber=[Integer]`
+ 
+* ##### Success Response: 200 OK
+     {
+    "subjectID": 1,
+    "name": "History of AI",
+    "description": "A short history for the AI",
+    "internalName": "history-of-ai",
+    "numberModules": 3,
+    "users" : [...]
+    }
+* ##### Error Response:
+
+	**Code:** 400 or 404
+	
+  ### StudyItems
+  
+  (Type can be studyItem or practice)
+  
+   #### Gets all the Items/practices from a subject
+
+  * ##### URL
+
+	< /moodle/{courseInternalName}/{subjectInternalName}/{type}/all >
+
+* ##### Method:
+
+	`GET`
+
+* ##### Params
+    * Required:
+    * `courseInternalName=[String]`
+    * `subjectInternalName=[String]`
+    * `type=[String]`
+ 
+* ##### Success Response: 200 OK
+	{
+    "content": [
+        {
+            "studyItemID": 1,
+            "type": "file-pdf",
+            "name": "Theme 1",
+            "fileName": "studyItem-1",
+            "module": 1,
+            "originalName": "theme-1.txt",
+            "extension": null,
+            "icon": "pdf",
+            "isPractice": false,
+            "practice": false
+        }, ... ],
+	    "last": true,
+    "totalPages": 1,
+    "totalElements": 9,
+    "size": 10,
+    "number": 0,
+    "sort": null,
+    "first": true,
+    "numberOfElements": 9
+}
+* ##### Error Response:
+
+	**Code:** 404 
+
+   #### Gets all the Items from a module of a subject
+
+  * ##### URL
+
+	< /moodle/{courseInternalName}/{subjectInternalName}/studyItem/module/{module} >
+
+* ##### Method:
+
+	`GET`
+
+* ##### Params
+      * Required:
+    * `courseInternalName=[String]`
+    * `subjectInternalName=[String]`
+    * `module=[Integer]`
+ 
+* ##### Success Response: 200 OK
+	{
+    "content": [
+        {
+            "studyItemID": 1,
+            "type": "file-pdf",
+            "name": "Theme 1",
+            "fileName": "studyItem-1",
+            "module": 1,
+            "originalName": "theme-1.txt",
+            "extension": null,
+            "icon": "pdf",
+            "isPractice": false,
+            "practice": false
+        }, {...}
+    ],
+    "last": true,
+    "totalPages": 1,
+    "totalElements": 5,
+    "size": 10,
+    "number": 0,
+    "sort": null,
+    "first": true,
+    "numberOfElements": 5
+}
+* ##### Error Response:
+
+	**Code:** 404 
+	
+	 #### Gets a studyItem/practice from a subject
+
+  * ##### URL
+
+	< /api/moodle/{courseInternalName}/{subjectInternalName}/{type}/one/{ID} >
+
+* ##### Method:
+
+	`GET`
+
+* ##### Params
+     * Required:
+    * `courseInternalName=[String]`
+    * `subjectInternalName=[String]`
+    * `type=[String]`
+    * `ID=[Long]`
+ 
+* ##### Success Response: 200 OK
+	{
+    "studyItemID": 1,
+    "type": "file-pdf",
+    "name": "Theme 1",
+    "fileName": "studyItem-1",
+    "subject": {
+        "subjectID": 1,
+        "name": "History of AI",
+        "description": "A short history for the AI",
+        "internalName": "history-of-ai",
+        "numberModules": 3,
+        "users": [...]
+    },
+    "module": 1,
+    "originalName": "theme-1.txt",
+    "extension": null,
+    "icon": "pdf",
+    "isPractice": false,
+    "practices": [],
+    "practice": false
+}
+* ##### Error Response:
+
+	**Code:** 404
+	
+		 #### Gets a studyItem/practice file from a subject
+
+  * ##### URL
+
+	< /api/moodle/{courseInternalName}/{subjectInternalName}/{type}/file/{ID} >
+
+* ##### Method:
+
+	`GET`
+
+* ##### Params
+     * Required:
+    * `courseInternalName=[String]`
+    * `subjectInternalName=[String]`
+    * `type=[String]`
+    * `ID=[Long]`
+ 
+* ##### Success Response: 200 OK
+	
+	The file
+
+* ##### Error Response:
+
+	**Code:** 404 409
+
+
+  
+  
+
