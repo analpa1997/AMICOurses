@@ -80,18 +80,21 @@ public class CourseRestController {
 		List<Course> cCompletedList = null;
 
 		// check if the visitor is registered
-		if (!sessionUserComponent.isLoggedUser())
+		if (!sessionUserComponent.isLoggedUser()) {
 			message = "To register for a course it is necessary to be logged into the system. Press AMICOURSES to return to the main screen and be able to register in the system ";
-		else { // registered. Get the user data
+			return new ResponseEntity<>(message, HttpStatus.NETWORK_AUTHENTICATION_REQUIRED);
+		} else { // registered. Get the user data
 			if (courseID == null)
 				course = courseRepository.findByInternalName(internalName);
 			else
 				course = courseRepository.getOne(courseID);
 			user = sessionUserComponent.getLoggedUser();
 
-			if (!user.isStudent())
+			if (!user.isStudent()) {
 				message = "Users who aren't students cannot be registered into a course";
-			else {
+				return new ResponseEntity<>(message, HttpStatus.UNAUTHORIZED);
+
+			} else {
 				if (course.getInscribedUsers().size() > 0)
 					uInscribedList = course.getInscribedUsers(); // get list of user subscribed to course
 				else
@@ -119,11 +122,13 @@ public class CourseRestController {
 						&& cCompletedList.get(courseCompletedCounter).getCourseID() != course.getCourseID())
 					courseCompletedCounter++;
 
-				if (courseCompletedCounter != cCompletedList.size())
+				if (courseCompletedCounter != cCompletedList.size()) {
 					message = "You have already completed the course " + course.getInternalName() + ".";
-				else if (courseInscribedCounter != cInscribedUsers.size())
+					return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+				} else if (courseInscribedCounter != cInscribedUsers.size()) {
 					message = "You are already registered in the course" + course.getInternalName() + ".";
-				else { // user can register in the course
+					return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+				} else { // user can register in the course
 
 					cInscribedUsers.add(course);
 					user.setInscribedCourses(cInscribedUsers);
@@ -137,12 +142,12 @@ public class CourseRestController {
 					// go to user profile
 
 					message = "User added successfully to course " + course.getInternalName() + ".";
+					return new ResponseEntity<>(message, HttpStatus.OK);
 				}
 			}
 		}
 
 		// go to same page to show the message
-		return new ResponseEntity<>(message, HttpStatus.OK);
 
 	}
 
@@ -217,7 +222,7 @@ public class CourseRestController {
 			pageCourse = courseRepository.findByTypeAndInternalNameContaining(type, nameCourse, new PageRequest(page,
 					10)); /* Return the page filtered by Type AND partial name, sorted by default */
 		if (pageCourse != null)
-			return new ResponseEntity<>(pageCourse, HttpStatus.OK);
+			return new ResponseEntity<>(pageCourse, HttpStatus.FOUND);
 		else
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
@@ -233,7 +238,9 @@ public class CourseRestController {
 	@RequestMapping(value = { "/id/{courseID}/", "/name/{internalName}/" }, method = RequestMethod.DELETE)
 	public ResponseEntity<Course> deleteCourse(@PathVariable(required = false) Long courseID,
 			@PathVariable(required = false) String internalName) {
-		if (!sessionUserComponent.isLoggedUser() || !sessionUserComponent.getLoggedUser().isAdmin())
+		if (!sessionUserComponent.isLoggedUser())
+			return new ResponseEntity<>(HttpStatus.NETWORK_AUTHENTICATION_REQUIRED);
+		else if (!sessionUserComponent.getLoggedUser().isAdmin())
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		else {
 			Course deletedCourse;
@@ -252,15 +259,39 @@ public class CourseRestController {
 	@JsonView(CourseBasicInformation.class)
 	@RequestMapping(value = "/", method = RequestMethod.PUT)
 	public ResponseEntity<Course> editCourse(@RequestBody Course newCourse) {
-		if (sessionUserComponent.isLoggedUser() && sessionUserComponent.getLoggedUser().isAdmin()) {
-			Course editedCourse = courseService.editCourse(newCourse);
-			if (editedCourse != null)
-				return new ResponseEntity<>(editedCourse, HttpStatus.OK);
-			else
-				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		} else
-			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		if (sessionUserComponent.isLoggedUser())
+			if (sessionUserComponent.getLoggedUser().isAdmin()) {
+				Course editedCourse = courseService.editCourse(newCourse);
+				if (editedCourse != null)
+					return new ResponseEntity<>(editedCourse, HttpStatus.OK);
+				else
+					return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			} else
+				return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		else
+			return new ResponseEntity<>(HttpStatus.NETWORK_AUTHENTICATION_REQUIRED);
 
+	}
+
+	/* Get profile photo */
+	@RequestMapping(value = "/img/{courseID}", method = RequestMethod.GET)
+	public void getProfilePhoto(@PathVariable Long courseID, HttpServletResponse res) throws IOException {
+
+		Course course = courseRepository.findOne(courseID);
+
+		if (course != null)
+			try {
+				Path image = courseService.getImgPath(course);
+				res.setContentType("image/jpeg");
+				res.setContentLength((int) image.toFile().length());
+				FileCopyUtils.copy(Files.newInputStream(image), res.getOutputStream());
+
+			} catch (IOException exception) {
+				res.sendError(404);
+				exception.printStackTrace();
+			}
+		else
+			res.sendError(404);
 	}
 
 	@JsonView(CourseBasicInformation.class)
@@ -273,7 +304,7 @@ public class CourseRestController {
 		else
 			course = courseRepository.findByInternalName(internalName);
 		if (course != null)
-			return new ResponseEntity<>(course, HttpStatus.OK);
+			return new ResponseEntity<>(course, HttpStatus.FOUND);
 		else
 			return new ResponseEntity(HttpStatus.NOT_FOUND);
 	}
@@ -321,29 +352,6 @@ public class CourseRestController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
-	/* Get profile photo */
-	@RequestMapping(value = "/img/{courseID}", method = RequestMethod.GET)
-	public void getProfilePhoto(@PathVariable Long courseID, HttpServletResponse res) throws IOException {
-
-		Course course = courseRepository.findOne(courseID);
-
-		if (course != null) {
-			try {
-				Path image = courseService.getImgPath(course);
-				res.setContentType("image/jpeg");
-				res.setContentLength((int) image.toFile().length());
-				FileCopyUtils.copy(Files.newInputStream(image), res.getOutputStream());
-
-			} catch (IOException exception) {
-				res.sendError(404);
-				exception.printStackTrace();
-			}
-
-		} else {
-			res.sendError(404);
-		}
-	}
-
 	/* Put a profile photo */
 	@JsonView(CourseBasicInformation.class)
 	@RequestMapping(value = "/img/{courseID}", method = RequestMethod.PUT)
@@ -354,17 +362,14 @@ public class CourseRestController {
 
 		if (user != null && user.isAdmin()) {
 			/* Image uploading controll. If a profile image exists, it is overwritten */
-			
 
 			Course course = courseRepository.findOne(courseID);
 			if (course != null) {
 				courseService.addImg(course, file);
 				return new ResponseEntity<>(course, HttpStatus.OK);
-			} else {
+			} else
 				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-			}
-		} else {
+		} else
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 	}
 }
