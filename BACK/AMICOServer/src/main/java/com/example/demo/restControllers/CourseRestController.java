@@ -223,6 +223,26 @@ public class CourseRestController {
 	}
 
 	@JsonView(CourseBasicInformation.class)
+	@RequestMapping(value = { "/id/{courseID}/", "/name/{internalName}/" }, method = RequestMethod.DELETE)
+	public ResponseEntity<Course> deleteCourse(@PathVariable(required = false) Long courseID,
+			@PathVariable(required = false) String internalName) {
+		if (!sessionUserComponent.isLoggedUser() || !sessionUserComponent.getLoggedUser().isAdmin())
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		else {
+			Course deletedCourse;
+			if (internalName == null)
+				deletedCourse = courseRepository.getOne(courseID);
+			else
+				deletedCourse = courseRepository.findByInternalName(internalName);
+			if (deletedCourse != null) {
+				courseService.deleteCourse(deletedCourse);
+				return new ResponseEntity<>(deletedCourse, HttpStatus.OK);
+			} else
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@JsonView(CourseBasicInformation.class)
 	@RequestMapping(value = "/", method = RequestMethod.PUT)
 	public ResponseEntity<Course> editCourse(@RequestBody Course newCourse) {
 		if (sessionUserComponent.isLoggedUser() && sessionUserComponent.getLoggedUser().isAdmin()) {
