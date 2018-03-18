@@ -27,7 +27,7 @@ Adds a new module within a subject
           "name":"History of AI",
           "description":"A short history for the AI",
           "internalName":"history-of-ai",
-	  "numberModules":4,
+          "numberModules":4,
           "users":[]
       }
 * ##### Error Response:
@@ -143,15 +143,15 @@ Deletes a module from a subjec
             "isPractice": false,
             "practice": false
         }, {...}
-    ],
-    "last": true,
-    "totalPages": 1,
-    "totalElements": 5,
-    "size": 10,
-    "number": 0,
-    "sort": null,
-    "first": true,
-    "numberOfElements": 5
+          ],
+          "last": true,
+          "totalPages": 1,
+          "totalElements": 5,
+          "size": 10,
+          "number": 0,
+          "sort": null,
+          "first": true,
+          "numberOfElements": 5
       }
 * ##### Error Response:
 
