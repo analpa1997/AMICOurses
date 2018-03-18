@@ -194,3 +194,14 @@ We created a Maven project and we imported in pom.xml all the dependencies we ne
 ## Phase IV
 
 <a href="https://www.getpostman.com/run-collection/:collection_id" target="_blank"><img src="https://run.pstmn.io/button.svg" alt="Run in Postman"></a>
+
+## Docker
+To deploy the application in docker it is necessary:
+
+Create the image of the web application - from the docker directory execute create_image.
+
+Optionally the image can be uploaded to docker hub. To upload the image to docker hub - from the docker directory run plublish_image
+
+Once the image is generated, from the docker directory, using docker-compose up, the containers are displayed. the application is available when "Tomcat started on port" appears
+
+to stop docker-compose using docker-compose stop from the docker directory

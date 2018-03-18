@@ -9,7 +9,7 @@ COPY ./docker/AMICOServer-0.0.1-SNAPSHOT.jar app.jar
 COPY ./docker/files files
 
 # Expose PORT
-EXPOSE 8080
+EXPOSE 8443
 
 # Start image
 ENTRYPOINT ["java", "-jar", "app.jar"]
