@@ -456,4 +456,82 @@ Deletes a module from a subjec
 * ##### Error Response:
 
 	**Code:** 404
+	
+  #### Delete a Practice/studyItem
+	
+* ##### URL
+
+	< /api/moodle/{courseInternalName}/{subjectInternalName}/{type}/{ID} >
+
+* ##### Method:
+
+	`DELETE`
+
+* ##### Params
+     * Required:
+    * `courseInternalName=[String]`
+    * `subjectInternalName=[String]`
+    * `type=[String]`
+    * `ID=[Long]`
+    
+ 
+* ##### Success Response: 200 OK
+{
+    "studyItemID": 1,
+    "type": "file-pdf",
+    "name": "Theme 1",
+    "fileName": "studyItem-1.txt",
+    "subject": null,
+    "module": 1,
+    "originalName": "hola.txt",
+    "extension": "txt",
+    "icon": "pdf",
+    "isPractice": false,
+    "practices": null,
+    "practice": false
+}
+
+* ##### Error Response:
+
+	**Code:** 404
+	
+	
+#### Deletes all studyItems of a module from a subject
+	
+* ##### URL
+
+	< /api/moodle/{courseInternalName}/{subjectInternalName}/studyItem/module/{module} >
+
+* ##### Method:
+
+	`DELETE`
+
+* ##### Params
+     * Required:
+    * `courseInternalName=[String]`
+    * `subjectInternalName=[String]`
+    * `module=[Integer]`
+    
+ 
+* ##### Success Response: 200 OK
+[
+    {
+        "studyItemID": 2,
+        "type": "file-pdf",
+        "name": "Theme 1 exercicies",
+        "fileName": "studyItem-2",
+        "module": 1,
+        "originalName": "theme-1 exercices.txt",
+        "extension": null,
+        "icon": "pdf",
+        "isPractice": false,
+        "practice": false
+    }, {...}
+]
+
+* ##### Error Response:
+
+	**Code:** 404
+	
+	
 
