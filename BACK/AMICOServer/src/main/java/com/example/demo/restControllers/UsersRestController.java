@@ -12,7 +12,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,6 +39,7 @@ public class UsersRestController {
 	private UserService userService;
 
 	// ********************** POST ********************
+	@JsonView(User.BasicUser.class)
 	@RequestMapping(value = "/api/users", method = RequestMethod.POST)
 	public ResponseEntity<User> newUser(@RequestParam String username, @RequestParam String password,
 			@RequestParam String repeatPassword, @RequestParam String userMail) { /* admin to add teachers */
@@ -58,26 +58,27 @@ public class UsersRestController {
 				return new ResponseEntity<>(newUser, HttpStatus.CREATED);
 		}
 		return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
-
 	}
 
 	// ********************** PUT ********************
-	@JsonView(User.BasicUser.class)
+	@JsonView(myProfile.class)
 	@RequestMapping(value = "/api/users/{userInternalName}", method = RequestMethod.PUT)
-	public ResponseEntity<User> updateBook(@PathVariable String userInternalName, @RequestBody User user) {
+	public ResponseEntity<User> updateUser(@PathVariable String userInternalName, @RequestBody User user) {
+		if (sessionUserComponent.isLoggedUser()) {
+			if (userInternalName.equals(sessionUserComponent.getLoggedUser().getInternalName())) {
+				/* I can only modify the data of the logged user */
 
-		if (userInternalName.equals(sessionUserComponent.getLoggedUser().getInternalName())) {
-			/* I can only modify the data of the logged user */
+				User updatedUser = userService.updateUser(userInternalName, user);
 
-			User updatedUser = userService.updateUser(userInternalName, user);
-
-			if (updatedUser != null) {
-				return new ResponseEntity<>(updatedUser, HttpStatus.OK);
-			} else {
-				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-			}
+				if (updatedUser != null) {
+					return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+				} else {
+					return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+				}
+			} else
+				return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		} else
-			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+			return new ResponseEntity<>(HttpStatus.NETWORK_AUTHENTICATION_REQUIRED);
 	}
 
 	// ********************** DELETE ********************
@@ -194,7 +195,6 @@ public class UsersRestController {
 
 		if (user != null && user.equals(loggedUser)) {
 			/* Image uploading controll. If a profile image exists, it is overwritten */
-			
 
 			user = userService.saveImg(file, user);
 			if (user != null) {
