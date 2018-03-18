@@ -22,14 +22,12 @@ Adds a new module within a subject
     * `subjectInternalName=[String]`
  
 * ##### Success Response: 200 OK
-      {
-    "subjectID": 1,
-    "name": "History of AI",
-    "description": "A short history for the AI",
-    "internalName": "history-of-ai",
-    "numberModules": 4,
-    "users": [...]
-    }
+      {"subjectID":1,
+      "name":"History of AI",
+      "description":"A short history for the AI",
+      "internalName":"history-of-ai",
+      "numberModules":4,
+      "users":[]}
 * ##### Error Response:
 
 	**Code:** 404 NOT FOUND
@@ -200,7 +198,8 @@ Deletes a module from a subjec
 
 	**Code:** 404
 	
-		 #### Gets a studyItem/practice file from a subject
+
+   #### Gets a studyItem/practice file from a subject
 
   * ##### URL
 
@@ -215,7 +214,9 @@ Deletes a module from a subjec
     * `courseInternalName=[String]`
     * `subjectInternalName=[String]`
     * `type=[String]`
-    * `ID=[Long]`
+    * JSON:
+    * `name=[String]`
+    * `type=[String]`
  
 * ##### Success Response: 200 OK
 	
@@ -224,6 +225,146 @@ Deletes a module from a subjec
 * ##### Error Response:
 
 	**Code:** 404 409
+	
+ #### Creates a studyItem
+	
+* ##### URL
+
+	< /api/moodle/{courseInternalName}/{subjectInternalName}/studyItem/module/{module} >
+
+* ##### Method:
+
+	`POST`
+
+* ##### Params
+     * Required:
+    * `courseInternalName=[String]`
+    * `subjectInternalName=[String]`
+    * `module=[Integer]`
+    
+    * `name=[String]`
+    * `type=[String]`
+ 
+* ##### Success Response: 200 OK
+	{
+    "studyItemID": 14,
+    "type": "file-pdf",
+    "name": "newOne",
+    "fileName": null,
+    "subject": {
+        "subjectID": 1,
+        "name": "History of AI",
+        "description": "A short history for the AI",
+        "internalName": "history-of-ai",
+        "numberModules": 3,
+        "users": [..]
+    },
+    "module": 1,
+    "originalName": null,
+    "extension": null,
+    "icon": null,
+    "isPractice": false,
+    "practices": [],
+    "practice": false
+}
+
+* ##### Error Response:
+
+	**Code:** 404
+	
+#### Creates a Practice
+	
+* ##### URL
+
+	< /api/moodle/{courseInternalName}/{subjectInternalName}/practice >
+
+* ##### Method:
+
+	`POST`
+
+* ##### Params
+     * Required:
+    * `courseInternalName=[String]`
+    * `subjectInternalName=[String]`
+    
+    * `name=[String]`
+    * `type=[String]`
+ 
+* ##### Success Response: 200 OK
+{
+    "studyItemID": 15,
+    "type": "file-pdf",
+    "name": "newOne",
+    "fileName": null,
+    "subject": {
+        "subjectID": 1,
+        "name": "History of AI",
+        "description": "A short history for the AI",
+        "internalName": "history-of-ai",
+        "numberModules": 3,
+        "users": [...]
+    },
+    "module": -3,
+    "originalName": null,
+    "extension": null,
+    "icon": null,
+    "isPractice": true,
+    "practices": [],
+    "practice": true
+}
+
+* ##### Error Response:
+
+	**Code:** 404
+	
+	
+	
+ #### Uploads a Practice/studyItem file
+	
+* ##### URL
+
+	< /api/moodle/{courseInternalName}/{subjectInternalName}/{type}/file/{studyItemID} >
+
+* ##### Method:
+
+	`POST`
+
+* ##### Params
+     * Required:
+    * `courseInternalName=[String]`
+    * `subjectInternalName=[String]`
+    * `type=[String]`
+    * `studyItemID=[Long]`
+    
+    * Data
+    * `itemFile=[MultipartFile]`
+ 
+* ##### Success Response: 200 OK
+	{
+    "studyItemID": 14,
+    "type": "file-pdf",
+    "name": "newOne",
+    "fileName": "studyItem-14.txt",
+    "subject": {
+        "subjectID": 1,
+        "name": "History of AI",
+        "description": "A short history for the AI",
+        "internalName": "history-of-ai",
+        "numberModules": 3,
+        "users": [..]
+    },
+    "module": 1,
+    "originalName": "new file.txt",
+    "extension": "txt",
+    "icon": null,
+    "isPractice": false,
+    "practices": [],
+    "practice": false
+}
+
+* ##### Error Response:
+
+	**Code:** 404
 
 
   
