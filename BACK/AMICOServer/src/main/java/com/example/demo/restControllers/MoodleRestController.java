@@ -1,7 +1,5 @@
 package com.example.demo.restControllers;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -272,7 +270,7 @@ public class MoodleRestController {
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
-	/* Submits a file to a studyItem within a subject and a module */
+	/* Submits a file to a studyItem */
 	@JsonView(StudyItemDetailed.class)
 	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/studyItem/file/{studyItemID}", method = RequestMethod.POST)
 	public ResponseEntity<StudyItem> createStudyItemFile(@PathVariable String courseInternalName,

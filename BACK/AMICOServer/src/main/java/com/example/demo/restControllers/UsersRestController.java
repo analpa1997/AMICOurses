@@ -1,17 +1,26 @@
 package com.example.demo.restControllers;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.course.Course;
 import com.example.demo.user.SessionUserComponent;
@@ -87,6 +96,23 @@ public class UsersRestController {
 			return new ResponseEntity(HttpStatus.UNAUTHORIZED);
 	}
 
+	// My profile
+	interface myProfile extends User.BasicUser, User.ExtendedUser, Course.BasicCourse {
+	}
+
+	@JsonView(myProfile.class)
+	@RequestMapping(value = "/api/users/myProfile", method = RequestMethod.GET)
+	public ResponseEntity<User> myProfile() {
+		if (sessionUserComponent.isLoggedUser()) {
+			User user = repository.findByInternalName(sessionUserComponent.getLoggedUser().getInternalName());
+			if (user != null)
+				return new ResponseEntity<>(user, HttpStatus.FOUND);
+			else
+				return new ResponseEntity(HttpStatus.NOT_FOUND);
+		} else
+			return new ResponseEntity(HttpStatus.NETWORK_AUTHENTICATION_REQUIRED);
+	}
+
 	// ********************** FIND ********************
 
 	// Find user by internalName
@@ -133,6 +159,52 @@ public class UsersRestController {
 		else
 			return new ResponseEntity(pageUser, HttpStatus.NOT_FOUND);
 
+	}
+
+	/* Get profile photo */
+	@RequestMapping(value = "/api/users/img/{userInternalName}", method = RequestMethod.GET)
+	public void getProfilePhoto(@PathVariable String userInternalName, HttpServletResponse res) throws IOException {
+		User user = repository.findByInternalName(userInternalName);
+		if (user != null) {
+
+			try {
+				Path image = userService.getImgPath(user);
+				res.setContentType("image/jpeg");
+				res.setContentLength((int) image.toFile().length());
+				FileCopyUtils.copy(Files.newInputStream(image), res.getOutputStream());
+
+			} catch (IOException exception) {
+				res.sendError(404);
+				exception.printStackTrace();
+			}
+
+		} else {
+			res.sendError(404);
+		}
+	}
+
+	/* Post a profile photo */
+	@JsonView(User.BasicUser.class)
+	@RequestMapping(value = "/api/users/img/{userInternalName}", method = RequestMethod.PUT)
+	public ResponseEntity<User> uploadProfilePhoto(User userUpdated, @PathVariable String userInternalName,
+			@RequestParam("profileImage") MultipartFile file) {
+
+		User user = repository.findByInternalName(userInternalName);
+		User loggedUser = sessionUserComponent.getLoggedUser();
+
+		if (user != null && user.equals(loggedUser)) {
+			/* Image uploading controll. If a profile image exists, it is overwritten */
+			
+
+			user = userService.saveImg(file, user);
+			if (user != null) {
+				return new ResponseEntity<>(user, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 
 }

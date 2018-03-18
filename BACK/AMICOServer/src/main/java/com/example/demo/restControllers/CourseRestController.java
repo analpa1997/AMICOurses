@@ -1,7 +1,12 @@
 package com.example.demo.restControllers;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.course.Course;
 import com.example.demo.course.CourseRepository;
@@ -223,6 +230,26 @@ public class CourseRestController {
 	}
 
 	@JsonView(CourseBasicInformation.class)
+	@RequestMapping(value = { "/id/{courseID}/", "/name/{internalName}/" }, method = RequestMethod.DELETE)
+	public ResponseEntity<Course> deleteCourse(@PathVariable(required = false) Long courseID,
+			@PathVariable(required = false) String internalName) {
+		if (!sessionUserComponent.isLoggedUser() || !sessionUserComponent.getLoggedUser().isAdmin())
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		else {
+			Course deletedCourse;
+			if (internalName == null)
+				deletedCourse = courseRepository.getOne(courseID);
+			else
+				deletedCourse = courseRepository.findByInternalName(internalName);
+			if (deletedCourse != null) {
+				courseService.deleteCourse(deletedCourse);
+				return new ResponseEntity<>(deletedCourse, HttpStatus.OK);
+			} else
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@JsonView(CourseBasicInformation.class)
 	@RequestMapping(value = "/", method = RequestMethod.PUT)
 	public ResponseEntity<Course> editCourse(@RequestBody Course newCourse) {
 		if (sessionUserComponent.isLoggedUser() && sessionUserComponent.getLoggedUser().isAdmin()) {
@@ -292,5 +319,52 @@ public class CourseRestController {
 			return new ResponseEntity<>(subjectsList, HttpStatus.OK);
 		} else
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+
+	/* Get profile photo */
+	@RequestMapping(value = "/img/{courseID}", method = RequestMethod.GET)
+	public void getProfilePhoto(@PathVariable Long courseID, HttpServletResponse res) throws IOException {
+
+		Course course = courseRepository.findOne(courseID);
+
+		if (course != null) {
+			try {
+				Path image = courseService.getImgPath(course);
+				res.setContentType("image/jpeg");
+				res.setContentLength((int) image.toFile().length());
+				FileCopyUtils.copy(Files.newInputStream(image), res.getOutputStream());
+
+			} catch (IOException exception) {
+				res.sendError(404);
+				exception.printStackTrace();
+			}
+
+		} else {
+			res.sendError(404);
+		}
+	}
+
+	/* Put a profile photo */
+	@JsonView(CourseBasicInformation.class)
+	@RequestMapping(value = "/img/{courseID}", method = RequestMethod.PUT)
+	public ResponseEntity<Course> uploadProfilePhoto(User userUpdated, @PathVariable Long courseID,
+			@RequestParam("courseImage") MultipartFile file) {
+
+		User user = sessionUserComponent.getLoggedUser();
+
+		if (user != null && user.isAdmin()) {
+			/* Image uploading controll. If a profile image exists, it is overwritten */
+			
+
+			Course course = courseRepository.findOne(courseID);
+			if (course != null) {
+				courseService.addImg(course, file);
+				return new ResponseEntity<>(course, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 }

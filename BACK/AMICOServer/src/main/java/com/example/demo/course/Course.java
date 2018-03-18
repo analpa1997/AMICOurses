@@ -47,9 +47,9 @@ public class Course {
 	private String courseLanguage;
 	@JsonView(BasicCourse.class)
 	private String type;
-
+	@JsonIgnore
 	private Date startDate;
-
+	@JsonIgnore
 	private Date endDate;
 	@JsonView(BasicCourse.class)
 	private String startDateString;
@@ -62,7 +62,7 @@ public class Course {
 	private String courseDescription;
 	@JsonView(BasicCourse.class)
 	private String originalName;
-
+	@JsonIgnore
 	private boolean isCompleted;
 
 	@JsonView(UserInformation.class)
