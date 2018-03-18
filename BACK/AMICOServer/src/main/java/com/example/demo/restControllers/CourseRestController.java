@@ -61,7 +61,8 @@ public class CourseRestController {
 	private String message;
 
 	@RequestMapping(value = { "/id/{courseID}/", "/name/{internalName}/" }, method = RequestMethod.PUT)
-	public ResponseEntity<String> addCourseToUser(Model model, @PathVariable String internalName) {
+	public ResponseEntity<String> addCourseToUser(Model model, @PathVariable(required = false) String internalName,
+			@PathVariable(required = false) Long courseID) {
 
 		Course course;
 		User user = null;
@@ -72,59 +73,65 @@ public class CourseRestController {
 		List<Course> cCompletedList = null;
 
 		// check if the visitor is registered
-		if (!sessionUserComponent.isLoggedUser()) { // not registered
+		if (!sessionUserComponent.isLoggedUser())
 			message = "To register for a course it is necessary to be logged into the system. Press AMICOURSES to return to the main screen and be able to register in the system ";
-			return new ResponseEntity<>(message, HttpStatus.OK);
-		} else { // registered. Get the user data
-			course = courseRepository.findByInternalName(internalName);
+		else { // registered. Get the user data
+			if (courseID == null)
+				course = courseRepository.findByInternalName(internalName);
+			else
+				course = courseRepository.getOne(courseID);
 			user = sessionUserComponent.getLoggedUser();
-		}
 
-		if (course.getInscribedUsers().size() > 0)
-			uInscribedList = course.getInscribedUsers(); // get list of user subscribed to course
-		else
-			uInscribedList = new ArrayList<>(); // initialize array to add user
+			if (!user.isStudent())
+				message = "Users who aren't students cannot be registered into a course";
+			else {
+				if (course.getInscribedUsers().size() > 0)
+					uInscribedList = course.getInscribedUsers(); // get list of user subscribed to course
+				else
+					uInscribedList = new ArrayList<>(); // initialize array to add user
 
-		if (user.getInscribedCourses().size() > 0)
-			cInscribedUsers = user.getInscribedCourses(); // get the list of courses to which the user is subscribed
-		else
-			cInscribedUsers = new ArrayList<>(); // initialize array to add users
+				if (user.getInscribedCourses().size() > 0)
+					cInscribedUsers = user.getInscribedCourses(); // get the list of courses to which the user is
+																	// subscribed
+				else
+					cInscribedUsers = new ArrayList<>(); // initialize array to add users
 
-		if (user.getCompletedCourses().size() > 0)
-			cCompletedList = user.getCompletedCourses(); // get the list of courses to which the user is subscribed
-		else
-			cCompletedList = new ArrayList<>(); // initialize array to add users
+				if (user.getCompletedCourses().size() > 0)
+					cCompletedList = user.getCompletedCourses(); // get the list of courses to which the user is
+																	// subscribed
+				else
+					cCompletedList = new ArrayList<>(); // initialize array to add users
 
-		courseInscribedCounter = 0;
-		while (courseInscribedCounter < cInscribedUsers.size()
-				&& cInscribedUsers.get(courseInscribedCounter).getCourseID() != course.getCourseID())
-			courseInscribedCounter++;
+				courseInscribedCounter = 0;
+				while (courseInscribedCounter < cInscribedUsers.size()
+						&& cInscribedUsers.get(courseInscribedCounter).getCourseID() != course.getCourseID())
+					courseInscribedCounter++;
 
-		courseCompletedCounter = 0;
-		while (courseCompletedCounter < cCompletedList.size()
-				&& cCompletedList.get(courseCompletedCounter).getCourseID() != course.getCourseID())
-			courseCompletedCounter++;
+				courseCompletedCounter = 0;
+				while (courseCompletedCounter < cCompletedList.size()
+						&& cCompletedList.get(courseCompletedCounter).getCourseID() != course.getCourseID())
+					courseCompletedCounter++;
 
-		if (courseCompletedCounter != cCompletedList.size())
-			message = "You have already completed this course.";
-		else if (courseInscribedCounter != cInscribedUsers.size())
-			message = "You are already registered in this course.";
-		else { // user can register in the course
+				if (courseCompletedCounter != cCompletedList.size())
+					message = "You have already completed the course " + course.getInternalName() + ".";
+				else if (courseInscribedCounter != cInscribedUsers.size())
+					message = "You are already registered in the course" + course.getInternalName() + ".";
+				else { // user can register in the course
 
-			cInscribedUsers.add(course);
-			user.setInscribedCourses(cInscribedUsers);
-			userRepository.save(user); // update user
+					cInscribedUsers.add(course);
+					user.setInscribedCourses(cInscribedUsers);
+					userRepository.save(user); // update user
 
-			uInscribedList.add(user);
-			course.setInscribedUsers(uInscribedList);
-			course.setNumberOfUsers(course.getNumberOfUsers() + 1);
-			courseRepository.save(course);// update courses
+					uInscribedList.add(user);
+					course.setInscribedUsers(uInscribedList);
+					course.setNumberOfUsers(course.getNumberOfUsers() + 1);
+					courseRepository.save(course);// update courses
 
-			// go to user profile
+					// go to user profile
 
-			message = "course Added";
-			return new ResponseEntity<>(message, HttpStatus.OK);
-
+					message = "User added successfully to course " + course.getInternalName() + ".";
+				}
+			}
 		}
 
 		// go to same page to show the message
@@ -212,6 +219,20 @@ public class CourseRestController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public Course createCourse(@RequestBody Course course) {
 		return courseService.createCourse(course);
+
+	}
+
+	@JsonView(CourseBasicInformation.class)
+	@RequestMapping(value = "/", method = RequestMethod.PUT)
+	public ResponseEntity<Course> editCourse(@RequestBody Course newCourse) {
+		if (sessionUserComponent.isLoggedUser() && sessionUserComponent.getLoggedUser().isAdmin()) {
+			Course editedCourse = courseService.editCourse(newCourse);
+			if (editedCourse != null)
+				return new ResponseEntity<>(editedCourse, HttpStatus.OK);
+			else
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} else
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
 	}
 
