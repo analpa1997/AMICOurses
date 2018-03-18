@@ -1,5 +1,10 @@
 package com.example.demo.user;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -9,6 +14,8 @@ import javax.mail.internet.InternetAddress;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.course.Course;
 import com.example.demo.practices.Practices;
@@ -159,6 +166,43 @@ public class UserService {
 			result = false;
 		}
 		return result;
+	}
+
+	public Path getImgPath(User user) {
+		Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"), "files/image/users/" + user.getUserID() + "/");
+
+		Path image = FILES_FOLDER.resolve(user.getUrlProfileImage());
+
+		if (!Files.exists(image)) {
+			image = Paths.get(System.getProperty("user.dir"), "files/image/users/default/default.jpg");
+		}
+
+		return image;
+	}
+
+	public User saveImg(MultipartFile file, User user) {
+		if (!file.isEmpty()) {
+			try {
+				Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"),
+						"files/image/users/" + user.getUserID() + "/");
+				if (!Files.exists(FILES_FOLDER)) {
+					Files.createDirectories(FILES_FOLDER);
+				}
+
+				String fileName = "profile-" + user.getUserID() + ".jpg";
+
+				File uploadedFile = new File(FILES_FOLDER.toFile(), fileName);
+				file.transferTo(uploadedFile);
+				user.setUrlProfileImage(fileName);
+				user = userRepository.save(user);
+				return user;
+
+			} catch (IOException e) {
+				System.out.println(e.getMessage());
+				return null;
+			}
+		}
+		return null;
 	}
 
 }

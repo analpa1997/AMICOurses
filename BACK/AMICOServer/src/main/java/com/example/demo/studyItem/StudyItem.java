@@ -86,6 +86,10 @@ public class StudyItem {
 	public StudyItem(String type, String name, Integer module, String originalName) {
 		this(type, name, module, "", originalName);
 	}
+	
+	public StudyItem(String type, String name) {
+		this(type, name, 0, "", "");
+	}
 
 	/* Methods */
 
