@@ -428,7 +428,7 @@ Paged from ten to ten.
 
 	**Code:** 404 NOT FOUND
 
-### PUT Profile Photo
+### GET Profile Photo
 
 * ##### URL
 
@@ -444,7 +444,7 @@ Paged from ten to ten.
 
 	**Code:** 404 NOT FOUND
 
-### GET Profile Photo
+### PUT Profile Photo
 
 * ##### URL
 
@@ -483,7 +483,7 @@ Paged from ten to ten.
   
    #### Add Module
 
-Adds a new module within a subject
+   Adds a new module within a subject
 
   * ##### URL
 
