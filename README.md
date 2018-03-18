@@ -190,3 +190,18 @@ The navigation diagram haven't changed since the last phase
 ### IDE Configuration
 
 We created a Maven project and we imported in pom.xml all the dependencies we needed to manage the application. For the database connection, we used JPA Repository interfaces, based on CRUD method, to manage the queries and the modifications into the BD
+
+## Phase IV
+
+<div class="postman-run-button"
+data-postman-action="collection/import"
+data-postman-var-1="58e84b6c089037be8b8f"></div>
+<script type="text/javascript">
+  (function (p,o,s,t,m,a,n) {
+    !p[s] && (p[s] = function () { (p[t] || (p[t] = [])).push(arguments); });
+    !o.getElementById(s+t) && o.getElementsByTagName("head")[0].appendChild((
+      (n = o.createElement("script")),
+      (n.id = s+t), (n.async = 1), (n.src = m), n
+    ));
+  }(window, document, "_pm", "PostmanRunObject", "https://run.pstmn.io/button.js"));
+</script>
