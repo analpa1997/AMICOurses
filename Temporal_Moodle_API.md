@@ -214,9 +214,6 @@ Deletes a module from a subjec
     * `courseInternalName=[String]`
     * `subjectInternalName=[String]`
     * `type=[String]`
-    * JSON:
-    * `name=[String]`
-    * `type=[String]`
  
 * ##### Success Response: 200 OK
 	
@@ -241,7 +238,7 @@ Deletes a module from a subjec
     * `courseInternalName=[String]`
     * `subjectInternalName=[String]`
     * `module=[Integer]`
-    
+    * JSON:
     * `name=[String]`
     * `type=[String]`
  
@@ -286,9 +283,9 @@ Deletes a module from a subjec
      * Required:
     * `courseInternalName=[String]`
     * `subjectInternalName=[String]`
-    
+    * JSON:
     * `name=[String]`
-    * `type=[String]`
+    * `icon=[String]`
  
 * ##### Success Response: 200 OK
 {
@@ -366,7 +363,97 @@ Deletes a module from a subjec
 
 	**Code:** 404
 
+#### Modifies a practice/studyItem
+	
+* ##### URL
 
+	< /api/moodle/{courseInternalName}/{subjectInternalName}/{type}/{ID} >
+
+* ##### Method:
+
+	`PUT`
+
+* ##### Params
+     * Required:
+    * `courseInternalName=[String]`
+    * `subjectInternalName=[String]`
+    * `type=[String]`
+    * `ID=[Long]`
+    * JSON
+    * `name=[String]`
+    * if studyItem : `type=[String]` if practice : `icon=[String]`
+ 
+* ##### Success Response: 200 OK
+{
+    "studyItemID": 12,
+    "type": "file-word",
+    "name": "newNam33e",
+    "fileName": "studyItem-12",
+    "subject": {
+        "subjectID": 1,
+        "name": "History of AI",
+        "description": "A short history for the AI",
+        "internalName": "history-of-ai",
+        "numberModules": 3,
+        "users": [...]
+	},
+    "module": -1,
+    "originalName": "Practice 1.txt",
+    "extension": null,
+    "icon": "word",
+    "isPractice": true,
+    "practices": [...],
+    "practice": true
+}
+
+* ##### Error Response:
+
+	**Code:** 404
   
-  
+ #### Modifies a Practice/studyItem file
+	
+* ##### URL
+
+	< /api/moodle/{courseInternalName}/{subjectInternalName}/{type}/file/{studyItemID} >
+
+* ##### Method:
+
+	`PUT`
+
+* ##### Params
+     * Required:
+    * `courseInternalName=[String]`
+    * `subjectInternalName=[String]`
+    * `type=[String]`
+    * `studyItemID=[Long]`
+    
+    * Data
+    * `itemFile=[MultipartFile]`
+ 
+* ##### Success Response: 200 OK
+	{
+    "studyItemID": 1,
+    "type": "file-pdf",
+    "name": "Theme 1",
+    "fileName": "studyItem-1.txt",
+    "subject": {
+        "subjectID": 1,
+        "name": "History of AI",
+        "description": "A short history for the AI",
+        "internalName": "history-of-ai",
+        "numberModules": 3,
+        "users": [...]
+    },
+    "module": 1,
+    "originalName": "hola.txt",
+    "extension": "txt",
+    "icon": "pdf",
+    "isPractice": false,
+    "practices": [],
+    "practice": false
+}
+
+* ##### Error Response:
+
+	**Code:** 404
 
