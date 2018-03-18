@@ -26,6 +26,7 @@ import com.example.demo.course.CourseRepository;
 import com.example.demo.user.SessionUserComponent;
 import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
+import com.example.demo.user.UserService;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -50,6 +51,9 @@ public class UserProfileController {
 
 	@Autowired
 	SessionUserComponent sessionUserComponent;
+
+	@Autowired
+	UserService userService;
 
 	@RequestMapping("/profile/{userInternalName}")
 	public String viewProfile(Model model, @PathVariable String userInternalName) {
@@ -88,41 +92,28 @@ public class UserProfileController {
 			@RequestParam("profileImage") MultipartFile file) {
 
 		User user = userRepository.findByInternalName(userInternalName);
+		User loggedUser = sessionUserComponent.getLoggedUser();
 
 		/* Image uploading controll. If a profile image exists, it is overwritten */
 		/* If there is not file the imageName wont change */
-		if (!file.isEmpty()) {
-			try {
-				Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"),
-						"files/image/users/" + user.getUserID() + "/");
-				if (!Files.exists(FILES_FOLDER)) {
-					Files.createDirectories(FILES_FOLDER);
-				}
 
-				String fileName = "profile-" + user.getUserID() + ".jpg";
+		if (user.equals(loggedUser)) {
+			user = userService.saveImg(file, user);
 
-				File uploadedFile = new File(FILES_FOLDER.toFile(), fileName);
-				file.transferTo(uploadedFile);
-				user.setUrlProfileImage(fileName);
+			/* End of the image upload section */
 
-			} catch (IOException e) {
-				System.out.println(e.getMessage());
-			}
+			user.setUserFirstName(userUpdated.getUserFirstName());
+			user.setUserLastName(userUpdated.getUserLastName());
+			user.setUsername(userUpdated.getUsername());
+			user.setUserMail(userUpdated.getUserMail());
+			user.setUserAddress(userUpdated.getUserAddress());
+			user.setCity(userUpdated.getCity());
+			user.setCountry(userUpdated.getCountry());
+			user.setPhoneNumber(userUpdated.getPhoneNumber());
+			user.setInterests(userUpdated.getInterests());
+
+			userRepository.save(user);
 		}
-
-		/* End of the image upload section */
-
-		user.setUserFirstName(userUpdated.getUserFirstName());
-		user.setUserLastName(userUpdated.getUserLastName());
-		user.setUsername(userUpdated.getUsername());
-		user.setUserMail(userUpdated.getUserMail());
-		user.setUserAddress(userUpdated.getUserAddress());
-		user.setCity(userUpdated.getCity());
-		user.setCountry(userUpdated.getCountry());
-		user.setPhoneNumber(userUpdated.getPhoneNumber());
-		user.setInterests(userUpdated.getInterests());
-
-		userRepository.save(user);
 
 		return new ModelAndView("redirect:/profile/" + user.getInternalName());
 	}
