@@ -9,15 +9,15 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - db-data:/var/lib/mysql
+      - ./code/db-data:/var/lib/mysql
     healthcheck:
      test: mysqladmin ping -h localhost
-     timeout: 3s
+     timeout: 5s
      retries: 100
 
   amicourses:
     container_name: amicoursesWEB
-    image: amico
+    image: mesteban96/amicoweb
     depends_on:
       mysql:
         condition: service_healthy
@@ -30,5 +30,5 @@ services:
       - SPRING_JPA_HIBERNATE_DDL-AUTO=create
     links:
       - mysql:mysql  
-volumes:
-  db-data:
+    
+  
