@@ -1,10 +1,8 @@
 package com.example.demo.restControllers;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -23,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.course.Course;
 import com.example.demo.user.SessionUserComponent;
@@ -99,6 +96,23 @@ public class UsersRestController {
 			return new ResponseEntity(HttpStatus.UNAUTHORIZED);
 	}
 
+	// My profile
+	interface myProfile extends User.BasicUser, User.ExtendedUser, Course.BasicCourse {
+	}
+
+	@JsonView(myProfile.class)
+	@RequestMapping(value = "/api/users/myProfile", method = RequestMethod.GET)
+	public ResponseEntity<User> myProfile() {
+		if (sessionUserComponent.isLoggedUser()) {
+			User user = repository.findByInternalName(sessionUserComponent.getLoggedUser().getInternalName());
+			if (user != null)
+				return new ResponseEntity<>(user, HttpStatus.FOUND);
+			else
+				return new ResponseEntity(HttpStatus.NOT_FOUND);
+		} else
+			return new ResponseEntity(HttpStatus.NETWORK_AUTHENTICATION_REQUIRED);
+	}
+
 	// ********************** FIND ********************
 
 	// Find user by internalName
@@ -149,8 +163,7 @@ public class UsersRestController {
 
 	/* Get profile photo */
 	@RequestMapping(value = "/api/users/img/{userInternalName}", method = RequestMethod.GET)
-	public void getProfilePhoto(@PathVariable String userInternalName,
-			HttpServletResponse res) throws IOException {
+	public void getProfilePhoto(@PathVariable String userInternalName, HttpServletResponse res) throws IOException {
 		User user = repository.findByInternalName(userInternalName);
 		if (user != null) {
 

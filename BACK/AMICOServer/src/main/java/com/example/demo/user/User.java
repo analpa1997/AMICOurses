@@ -29,6 +29,9 @@ public class User {
 	public interface BasicUser {
 	}
 
+	public interface ExtendedUser {
+	}
+
 	public interface CourseInformation {
 	}
 
@@ -56,23 +59,23 @@ public class User {
 	@JsonView(BasicUser.class)
 	private String userLastName;
 
-	@JsonView(BasicUser.class)
+	@JsonView(ExtendedUser.class)
 	private String userAddress;
 
-	@JsonView(BasicUser.class)
+	@JsonView(ExtendedUser.class)
 	private String city;
 
-	@JsonView(BasicUser.class)
+	@JsonView(ExtendedUser.class)
 	private String country;
 
-	@JsonView(BasicUser.class)
+	@JsonView(ExtendedUser.class)
 	private int phoneNumber;
 
-	@JsonView(BasicUser.class)
+	@JsonView(ExtendedUser.class)
 	@Column(length = Short.MAX_VALUE)
 	private String interests;
 
-	@JsonView(BasicUser.class)
+	@JsonView(ExtendedUser.class)
 	private String urlProfileImage;
 
 	@JsonView(CourseInformation.class)
@@ -134,6 +137,7 @@ public class User {
 		return city;
 	}
 
+	@JsonView(ExtendedUser.class)
 	public List<Course> getCompletedCourses() {
 		List<Course> completedCourses = new ArrayList<>();
 		for (Course course : inscribedCourses)
@@ -146,6 +150,7 @@ public class User {
 		return country;
 	}
 
+	@JsonView(ExtendedUser.class)
 	public List<Course> getCurrentCourses() {
 		List<Course> notCompletedCourses = new ArrayList<>();
 		for (Course course : inscribedCourses)
