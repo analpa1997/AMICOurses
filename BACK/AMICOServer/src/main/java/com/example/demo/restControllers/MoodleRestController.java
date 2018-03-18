@@ -471,9 +471,9 @@ public class MoodleRestController {
 	}
 
 	@JsonView(StudyItem.BasicStudyItem.class)
-	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/{type}/module/{module}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/studyItem/module/{module}", method = RequestMethod.DELETE)
 	public ResponseEntity<List<StudyItem>> deleteFromModuleStudyItems(@PathVariable String courseInternalName,
-			@PathVariable String subjectInternalName, @PathVariable String type, @PathVariable Integer module) {
+			@PathVariable String subjectInternalName, @PathVariable Integer module) {
 
 		User user = sessionUserComponent.getLoggedUser();
 
