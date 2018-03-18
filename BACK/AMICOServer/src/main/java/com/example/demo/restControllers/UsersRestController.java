@@ -186,7 +186,7 @@ public class UsersRestController {
 	/* Post a profile photo */
 	@JsonView(User.BasicUser.class)
 	@RequestMapping(value = "/api/users/img/{userInternalName}", method = RequestMethod.PUT)
-	public ResponseEntity<User> uploadProfilePhoto(Model model, User userUpdated, @PathVariable String userInternalName,
+	public ResponseEntity<User> uploadProfilePhoto(User userUpdated, @PathVariable String userInternalName,
 			@RequestParam("profileImage") MultipartFile file) {
 
 		User user = repository.findByInternalName(userInternalName);
@@ -194,7 +194,7 @@ public class UsersRestController {
 
 		if (user != null && user.equals(loggedUser)) {
 			/* Image uploading controll. If a profile image exists, it is overwritten */
-			/* If there is not file the imageName wont change */
+			
 
 			user = userService.saveImg(file, user);
 			if (user != null) {
@@ -203,7 +203,7 @@ public class UsersRestController {
 				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		} else {
-			return null;
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 

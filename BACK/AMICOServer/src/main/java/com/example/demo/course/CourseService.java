@@ -93,22 +93,27 @@ public class CourseService {
 						skillRepository.save(skill3);
 					}
 
-					if (!file.isEmpty())
-						try {
-							Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"),
-									"files/image/courses/" + course.getCourseID() + "/");
-							if (!Files.exists(FILES_FOLDER))
-								Files.createDirectories(FILES_FOLDER);
-
-							String fileName = "course-" + course.getCourseID() + ".jpg";
-
-							File uploadedFile = new File(FILES_FOLDER.toFile(), fileName);
-							file.transferTo(uploadedFile);
-						} catch (IOException e) {
-							System.out.println(e.getMessage());
-						}
+					this.addImg(course, file);
 				}
 		}
+		return course;
+	}
+
+	public Course addImg(Course course, MultipartFile file) {
+		if (!file.isEmpty())
+			try {
+				Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"),
+						"files/image/courses/" + course.getCourseID() + "/");
+				if (!Files.exists(FILES_FOLDER))
+					Files.createDirectories(FILES_FOLDER);
+
+				String fileName = "course-" + course.getCourseID() + ".jpg";
+
+				File uploadedFile = new File(FILES_FOLDER.toFile(), fileName);
+				file.transferTo(uploadedFile);
+			} catch (IOException e) {
+				System.out.println(e.getMessage());
+			}
 		return course;
 	}
 
@@ -158,6 +163,13 @@ public class CourseService {
 			courseAux = newCourse;
 		courseRepository.save(courseAux);
 		return courseAux;
+	}
+
+	public Path getImgPath(Course course) {
+		Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"),
+				"files/image/courses/" + course.getCourseID() + "/");
+		Path image = FILES_FOLDER.resolve("course-" + course.getCourseID() + ".jpg");
+		return image;
 	}
 
 }
