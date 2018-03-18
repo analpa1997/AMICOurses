@@ -1395,3 +1395,102 @@ A practice submission is what students submit to a practice statement
 
 	**Code:** 404 400 
 
+## Subjects
+All Subject queries are preceded by '/courses/{courseInternalName}'
+### New Subject
+Create a new subject within a course. Only the admin can add new subjects to a current course.
+
+* ##### URL
+
+	</subjects>
+	
+* ##### Method:
+
+	'POST'
+
+* ##### Params:
+   * Required:
+   	* `subjectName=[String]`
+
+* ##### Success Response: 201 CREATED
+
+* ##### Error response:
+	**Code:** 500 INTERNAL SERVER ERROR (if params are missed or incorrect)
+	**Code:** 401 UNAUTHORIZED
+
+### Delete Subject
+Delete a subject from given course. Only the admin can remove subjects from a current course.
+
+* ##### URL
+
+	</{subjectInternalName}>
+
+* ##### Method:
+
+	'DELETE'
+
+* ##### Success Response: 201 CREATED
+
+* ##### Error response:
+	**Code:** 404 NOT FOUND
+	**Code:** 401 UNAUTHORIZED
+	
+### Udate subject
+Modify subject information. Only the admin can modify this data.
+
+* ##### URL
+
+	</{subjectInternalName}>
+
+* ##### Method:
+
+	'PUT'
+
+* ##### Request Body:
+	{
+		"name":"History of AI"
+		"description":"A short history for the AI"
+	}
+* ##### Success Response: 200 OK
+
+* ##### Error response:
+	**Code:** 401 UNAUTHORIZED
+
+### Show all subjects
+Shows all the subjects that the current course have
+
+* ##### URL
+
+	</{subjectInternalName}/subjects/all>
+
+* ##### URL Params:
+
+	* `page=[int]`
+
+* ##### URL Example: `/api/courses/matematicas-para-gatos/subjects/all?page=1`
+
+* ##### Method:
+
+	`GET`
+	
+* ##### Success Response: 302 FOUND
+
+* ##### Error Response:
+
+	**Code:** 404 NOT FOUND
+
+### Show one subject
+Shows just the requested subject from the current course
+
+* ##### URL
+	</{subjectInternalName}>
+
+* ##### Method:
+
+	`GET`
+
+* ##### Success Response: 302 FOUND
+
+* ##### Error Response:
+
+	**Code:** 404 NOT FOUND
