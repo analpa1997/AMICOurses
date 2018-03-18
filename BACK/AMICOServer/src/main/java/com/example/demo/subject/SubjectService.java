@@ -22,12 +22,42 @@ public class SubjectService {
 	private StudyItemRepository studyItemRepository;
 	@Autowired
 	private CourseRepository courseRepository;
-
+	
+	public void createSubject(Course c, Subject s) {
+		if(c!=null && s!=null) {
+			s.setCourse(c);
+			subjectRepository.save(s);
+			c.getSubjects().add(s);
+		}
+	}
+	
+	public void deleteSubject(Subject s, Course c) {
+		int i = c.getSubjects().indexOf(s);
+		c.getSubjects().remove(i);
+		subjectRepository.delete(s);
+	}
+	
 	public void addModule(Subject subject) {
 		subject.addModule();
 		subjectRepository.save(subject);
 	}
 
+	public void updateSubject(Course c, Subject updSubj, Subject s) {
+		String name = s.getName();
+		String description = s.getDescription();
+		Course course = s.getCourse();
+		
+		if(name != null) {
+			updSubj.setName(name);
+		}
+		if(description != null) {
+			updSubj.setDescription(description);
+		}
+		if(course != null) {
+			updSubj.setCourse(course);
+		}
+	}
+	
 	public void deleteModule(Subject subject, int module) {
 		/* Get the studyItems of the module */
 		List<StudyItem> studyItemsToRemove = new ArrayList<>();
