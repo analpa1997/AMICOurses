@@ -22,12 +22,14 @@ Adds a new module within a subject
     * `subjectInternalName=[String]`
  
 * ##### Success Response: 200 OK
-      {"subjectID":1,
-      "name":"History of AI",
-      "description":"A short history for the AI",
-      "internalName":"history-of-ai",
-      "numberModules":4,
-      "users":[]}
+      {
+          "subjectID":1,
+          "name":"History of AI",
+          "description":"A short history for the AI",
+          "internalName":"history-of-ai",
+	  "numberModules":4,
+          "users":[]
+      }
 * ##### Error Response:
 
 	**Code:** 404 NOT FOUND
@@ -50,14 +52,14 @@ Deletes a module from a subjec
     * `moduleNumber=[Integer]`
  
 * ##### Success Response: 200 OK
-     {
-    "subjectID": 1,
-    "name": "History of AI",
-    "description": "A short history for the AI",
-    "internalName": "history-of-ai",
-    "numberModules": 3,
-    "users" : [...]
-    }
+      {
+        "subjectID": 1,
+        "name": "History of AI",
+        "description": "A short history for the AI",
+        "internalName": "history-of-ai",
+        "numberModules": 3,
+        "users" : [...]
+      }
 * ##### Error Response:
 
 	**Code:** 400 or 404
@@ -83,29 +85,29 @@ Deletes a module from a subjec
     * `type=[String]`
  
 * ##### Success Response: 200 OK
-	{
-    "content": [
-        {
-            "studyItemID": 1,
-            "type": "file-pdf",
-            "name": "Theme 1",
-            "fileName": "studyItem-1",
-            "module": 1,
-            "originalName": "theme-1.txt",
-            "extension": null,
-            "icon": "pdf",
-            "isPractice": false,
-            "practice": false
-        }, ... ],
-	    "last": true,
-    "totalPages": 1,
-    "totalElements": 9,
-    "size": 10,
-    "number": 0,
-    "sort": null,
-    "first": true,
-    "numberOfElements": 9
-}
+      {
+          "content": [
+             {
+                "studyItemID": 1,
+                "type": "file-pdf",
+                "name": "Theme 1",
+                "fileName": "studyItem-1",
+                "module": 1,
+                "originalName": "theme-1.txt",
+                "extension": null,
+                "icon": "pdf",
+                "isPractice": false,
+                "practice": false
+            }, ... ],
+            "last": true,
+            "totalPages": 1,
+            "totalElements": 9,
+            "size": 10,
+            "number": 0,
+            "sort": null,
+            "first": true,
+            "numberOfElements": 9
+      }
 * ##### Error Response:
 
 	**Code:** 404 
@@ -127,8 +129,8 @@ Deletes a module from a subjec
     * `module=[Integer]`
  
 * ##### Success Response: 200 OK
-	{
-    "content": [
+      {
+        "content": [
         {
             "studyItemID": 1,
             "type": "file-pdf",
@@ -150,7 +152,7 @@ Deletes a module from a subjec
     "sort": null,
     "first": true,
     "numberOfElements": 5
-}
+      }
 * ##### Error Response:
 
 	**Code:** 404 
@@ -173,27 +175,27 @@ Deletes a module from a subjec
     * `ID=[Long]`
  
 * ##### Success Response: 200 OK
-	{
-    "studyItemID": 1,
-    "type": "file-pdf",
-    "name": "Theme 1",
-    "fileName": "studyItem-1",
-    "subject": {
-        "subjectID": 1,
-        "name": "History of AI",
-        "description": "A short history for the AI",
-        "internalName": "history-of-ai",
-        "numberModules": 3,
-        "users": [...]
-    },
-    "module": 1,
-    "originalName": "theme-1.txt",
-    "extension": null,
-    "icon": "pdf",
-    "isPractice": false,
-    "practices": [],
-    "practice": false
-}
+      {
+          "studyItemID": 1,
+          "type": "file-pdf",
+          "name": "Theme 1",
+          "fileName": "studyItem-1",
+          "subject": {
+              "subjectID": 1,
+              "name": "History of AI",
+              "description": "A short history for the AI",
+              "internalName": "history-of-ai",
+              "numberModules": 3,
+              "users": [...]
+          },
+          "module": 1,
+          "originalName": "theme-1.txt",
+          "extension": null,
+          "icon": "pdf",
+          "isPractice": false,
+          "practices": [],
+          "practice": false
+      }
 * ##### Error Response:
 
 	**Code:** 404
@@ -243,27 +245,27 @@ Deletes a module from a subjec
     * `type=[String]`
  
 * ##### Success Response: 200 OK
-	{
-    "studyItemID": 14,
-    "type": "file-pdf",
-    "name": "newOne",
-    "fileName": null,
-    "subject": {
-        "subjectID": 1,
-        "name": "History of AI",
-        "description": "A short history for the AI",
-        "internalName": "history-of-ai",
-        "numberModules": 3,
-        "users": [..]
-    },
-    "module": 1,
-    "originalName": null,
-    "extension": null,
-    "icon": null,
-    "isPractice": false,
-    "practices": [],
-    "practice": false
-}
+      {
+          "studyItemID": 14,
+          "type": "file-pdf",
+          "name": "newOne",
+          "fileName": null,
+          "subject": {
+              "subjectID": 1,
+              "name": "History of AI",
+              "description": "A short history for the AI",
+              "internalName": "history-of-ai",
+              "numberModules": 3,
+              "users": [..]
+          },
+          "module": 1,
+          "originalName": null,
+          "extension": null,
+          "icon": null,
+          "isPractice": false,
+          "practices": [],
+          "practice": false
+      }
 
 * ##### Error Response:
 
@@ -288,27 +290,27 @@ Deletes a module from a subjec
     * `icon=[String]`
  
 * ##### Success Response: 200 OK
-{
-    "studyItemID": 15,
-    "type": "file-pdf",
-    "name": "newOne",
-    "fileName": null,
-    "subject": {
-        "subjectID": 1,
-        "name": "History of AI",
-        "description": "A short history for the AI",
-        "internalName": "history-of-ai",
-        "numberModules": 3,
-        "users": [...]
-    },
-    "module": -3,
-    "originalName": null,
-    "extension": null,
-    "icon": null,
-    "isPractice": true,
-    "practices": [],
-    "practice": true
-}
+      {
+          "studyItemID": 15,
+          "type": "file-pdf",
+          "name": "newOne",
+          "fileName": null,
+          "subject": {
+              "subjectID": 1,
+              "name": "History of AI",
+              "description": "A short history for the AI",
+              "internalName": "history-of-ai",
+              "numberModules": 3,
+              "users": [...]
+          },
+          "module": -3,
+          "originalName": null,
+          "extension": null,
+          "icon": null,
+          "isPractice": true,
+          "practices": [],
+          "practice": true
+      }
 
 * ##### Error Response:
 
@@ -337,27 +339,27 @@ Deletes a module from a subjec
     * `itemFile=[MultipartFile]`
  
 * ##### Success Response: 200 OK
-	{
-    "studyItemID": 14,
-    "type": "file-pdf",
-    "name": "newOne",
-    "fileName": "studyItem-14.txt",
-    "subject": {
-        "subjectID": 1,
-        "name": "History of AI",
-        "description": "A short history for the AI",
-        "internalName": "history-of-ai",
-        "numberModules": 3,
-        "users": [..]
-    },
-    "module": 1,
-    "originalName": "new file.txt",
-    "extension": "txt",
-    "icon": null,
-    "isPractice": false,
-    "practices": [],
-    "practice": false
-}
+      {
+          "studyItemID": 14,
+          "type": "file-pdf",
+          "name": "newOne",
+          "fileName": "studyItem-14.txt",
+          "subject": {
+              "subjectID": 1,
+              "name": "History of AI",
+              "description": "A short history for the AI",
+              "internalName": "history-of-ai",
+              "numberModules": 3,
+              "users": [..]
+          },
+          "module": 1,
+          "originalName": "new file.txt",
+          "extension": "txt",
+          "icon": null,
+          "isPractice": false,
+          "practices": [],
+          "practice": false
+      }
 
 * ##### Error Response:
 
@@ -384,27 +386,27 @@ Deletes a module from a subjec
     * if studyItem : `type=[String]` if practice : `icon=[String]`
  
 * ##### Success Response: 200 OK
-{
-    "studyItemID": 12,
-    "type": "file-word",
-    "name": "newNam33e",
-    "fileName": "studyItem-12",
-    "subject": {
-        "subjectID": 1,
-        "name": "History of AI",
-        "description": "A short history for the AI",
-        "internalName": "history-of-ai",
-        "numberModules": 3,
-        "users": [...]
-	},
-    "module": -1,
-    "originalName": "Practice 1.txt",
-    "extension": null,
-    "icon": "word",
-    "isPractice": true,
-    "practices": [...],
-    "practice": true
-}
+      {
+          "studyItemID": 12,
+          "type": "file-word",
+          "name": "newNam33e",
+          "fileName": "studyItem-12",
+          "subject": {
+              "subjectID": 1,
+              "name": "History of AI",
+              "description": "A short history for the AI",
+              "internalName": "history-of-ai",
+              "numberModules": 3,
+              "users": [...]
+           },
+          "module": -1,
+          "originalName": "Practice 1.txt",
+          "extension": null,
+          "icon": "word",
+          "isPractice": true,
+          "practices": [...],
+          "practice": true
+      }
 
 * ##### Error Response:
 
@@ -431,27 +433,27 @@ Deletes a module from a subjec
     * `itemFile=[MultipartFile]`
  
 * ##### Success Response: 200 OK
-	{
-    "studyItemID": 1,
-    "type": "file-pdf",
-    "name": "Theme 1",
-    "fileName": "studyItem-1.txt",
-    "subject": {
-        "subjectID": 1,
-        "name": "History of AI",
-        "description": "A short history for the AI",
-        "internalName": "history-of-ai",
-        "numberModules": 3,
-        "users": [...]
-    },
-    "module": 1,
-    "originalName": "hola.txt",
-    "extension": "txt",
-    "icon": "pdf",
-    "isPractice": false,
-    "practices": [],
-    "practice": false
-}
+      {
+          "studyItemID": 1,
+          "type": "file-pdf",
+          "name": "Theme 1",
+          "fileName": "studyItem-1.txt",
+          "subject": {
+              "subjectID": 1,
+              "name": "History of AI",
+              "description": "A short history for the AI",
+              "internalName": "history-of-ai",
+              "numberModules": 3,
+              "users": [...]
+          },
+          "module": 1,
+          "originalName": "hola.txt",
+          "extension": "txt",
+          "icon": "pdf",
+          "isPractice": false,
+          "practices": [],
+          "practice": false
+      }
 
 * ##### Error Response:
 
@@ -476,20 +478,20 @@ Deletes a module from a subjec
     
  
 * ##### Success Response: 200 OK
-{
-    "studyItemID": 1,
-    "type": "file-pdf",
-    "name": "Theme 1",
-    "fileName": "studyItem-1.txt",
-    "subject": null,
-    "module": 1,
-    "originalName": "hola.txt",
-    "extension": "txt",
-    "icon": "pdf",
-    "isPractice": false,
-    "practices": null,
-    "practice": false
-}
+      {
+          "studyItemID": 1,
+          "type": "file-pdf",
+          "name": "Theme 1",
+          "fileName": "studyItem-1.txt",
+          "subject": null,
+          "module": 1,
+          "originalName": "hola.txt",
+          "extension": "txt",
+          "icon": "pdf",
+          "isPractice": false,
+          "practices": null,
+          "practice": false
+      }
 
 * ##### Error Response:
 
@@ -514,20 +516,20 @@ Deletes a module from a subjec
     
  
 * ##### Success Response: 200 OK
-[
-    {
-        "studyItemID": 2,
-        "type": "file-pdf",
-        "name": "Theme 1 exercicies",
-        "fileName": "studyItem-2",
-        "module": 1,
-        "originalName": "theme-1 exercices.txt",
-        "extension": null,
-        "icon": "pdf",
-        "isPractice": false,
-        "practice": false
-    }, {...}
-]
+      [
+          {
+              "studyItemID": 2,
+              "type": "file-pdf",
+              "name": "Theme 1 exercicies",
+              "fileName": "studyItem-2",
+              "module": 1,
+              "originalName": "theme-1 exercices.txt",
+              "extension": null,
+              "icon": "pdf",
+              "isPractice": false,
+              "practice": false
+          }, {...}
+      ]
 
 * ##### Error Response:
 
@@ -554,73 +556,74 @@ A practice submission is what students submit to a practice statement
     
  
 * ##### Success Response: 200 OK
-    "content": [
-        {
-            "practiceID": 1,
-            "practiceName": "practice 1",
-            "calification": 7.3,
-            "studyItem": {
-                "studyItemID": 12,
-                "type": "file-word",
-                "name": "newNam33e",
-                "fileName": "studyItem-12",
-                "subject": { ... },
-            "owner": {
-                "userID": 51,
-                "username": "amico",
-                "userMail": "amicourses@mail.com",
-                "userFirstName": "Amico",
-                "userLastName": "Fernandez",
-                "internalName": "amico",
-                "roles": [
-                    "ROLE_USER"
-                ],
-                "admin": false,
-                "student": true
-            },
-            "originalName": "practice-1.txt",
-            "presented": true,
-            "corrected": true,
-            "subject": { ...}
-        },
-        {
-            "practiceID": 2,
-            "practiceName": "practice 1",
-            "calification": 5.25,
-            "studyItem": {
-                "studyItemID": 12,
-                "type": "file-word",
-                "name": "newNam33e",
-                "fileName": "studyItem-12",
-                "subject": { ... },
-            "owner": {
-                "userID": 6,
-                "username": "student-5",
-                "userMail": "user5@mail.com",
-                "userFirstName": "",
-                "userLastName": "",
-                "internalName": "student-5",
-                "roles": [
-                    "ROLE_USER"
-                ],
-                "admin": false,
-                "student": true
-            },
-            "originalName": "practice-2.txt",
-            "presented": true,
-            "corrected": true,
-            "subject": { ... }
-        }
-    ],
-    "last": true,
-    "totalElements": 2,
-    "totalPages": 1,
-    "size": 10,
-    "number": 0,
-    "sort": null,
-    "first": true,
-    "numberOfElements": 2
-}
+      {
+          "content": [
+              {
+                  "practiceID": 1,
+                  "practiceName": "practice 1",
+                  "calification": 7.3,
+                  "studyItem": {
+                      "studyItemID": 12,
+                      "type": "file-word",
+                      "name": "newNam33e",
+                      "fileName": "studyItem-12",
+                      "subject": { ... },
+                  "owner": {
+                      "userID": 51,
+                      "username": "amico",
+                      "userMail": "amicourses@mail.com",
+                      "userFirstName": "Amico",
+                      "userLastName": "Fernandez",
+                      "internalName": "amico",
+                      "roles": [
+                          "ROLE_USER"
+                      ],
+                      "admin": false,
+                      "student": true
+                  },
+                  "originalName": "practice-1.txt",
+                  "presented": true,
+                  "corrected": true,
+                  "subject": { ...}
+              },
+              {
+                  "practiceID": 2,
+                  "practiceName": "practice 1",
+                  "calification": 5.25,
+                  "studyItem": {
+                      "studyItemID": 12,
+                      "type": "file-word",
+                      "name": "newNam33e",
+                      "fileName": "studyItem-12",
+                      "subject": { ... },
+                  "owner": {
+                      "userID": 6,
+                      "username": "student-5",
+                      "userMail": "user5@mail.com",
+                      "userFirstName": "",
+                      "userLastName": "",
+                      "internalName": "student-5",
+                      "roles": [
+                          "ROLE_USER"
+                      ],
+                      "admin": false,
+                      "student": true
+                  },
+                  "originalName": "practice-2.txt",
+                  "presented": true,
+                  "corrected": true,
+                  "subject": { ... }
+              }
+          ],
+          "last": true,
+          "totalElements": 2,
+          "totalPages": 1,
+          "size": 10,
+          "number": 0,
+          "sort": null,
+          "first": true,
+          "numberOfElements": 2
+      }
 
 * ##### Error Response:
 
@@ -673,41 +676,40 @@ A practice submission is what students submit to a practice statement
     * `practiceName=[String]`
  
 * ##### Success Response: 200 OK
-    
-    {
-    "practiceID": 4,
-    "practiceName": "New Practice",
-    "calification": 0,
-    "studyItem": {
-        "studyItemID": 13,
-        "type": "file-pdf",
-        "name": "Practice 2",
-        "fileName": "studyItem-13",
-        "subject": { ... },
-        "module": -1,
-        "originalName": "Practice 2.txt",
-        "extension": null,
-        "icon": "pdf",
-        "isPractice": true,
-        "practice": true
-    },     "owner": {
-        "userID": 51,
-        "username": "amico",
-        "userMail": "amicourses@mail.com",
-        "userFirstName": "Amico",
-        "userLastName": "Fernandez",
-        "internalName": "amico",
-        "roles": [
-            "ROLE_USER"
-        ],
-        "admin": false,
-        "student": true
-    },
-    "originalName": "Not Presented",
-    "presented": true,
-    "corrected": false,
-    "subject" : {...}
-   }
+      {
+          "practiceID": 4,
+          "practiceName": "New Practice",
+          "calification": 0,
+          "studyItem": {
+              "studyItemID": 13,
+              "type": "file-pdf",
+              "name": "Practice 2",
+              "fileName": "studyItem-13",
+              "subject": { ... },
+              "module": -1,
+              "originalName": "Practice 2.txt",
+              "extension": null,
+              "icon": "pdf",
+              "isPractice": true,
+              "practice": true
+          },     "owner": {
+              "userID": 51,
+              "username": "amico",
+              "userMail": "amicourses@mail.com",
+              "userFirstName": "Amico",
+              "userLastName": "Fernandez",
+              "internalName": "amico",
+              "roles": [
+                  "ROLE_USER"
+              ],
+              "admin": false,
+              "student": true
+          },
+          "originalName": "Not Presented",
+          "presented": true,
+          "corrected": false,
+          "subject" : {...}
+         }
 
 * ##### Error Response:
 
@@ -735,15 +737,15 @@ A practice submission is what students submit to a practice statement
     * `file=[MultipartFile]`
  
 * ##### Success Response: 200 OK
-    
-        "practiceID": 4,
-    "practiceName": "New Practice",
-    "calification": 0,
-    "originalName": "hola.txt",
-    "presented": true,
-    "corrected": false,
-    "subject": {...}
-   }
+      {
+          "practiceID": 4,
+          "practiceName": "New Practice",
+          "calification": 0,
+          "originalName": "hola.txt",
+          "presented": true,
+          "corrected": false,
+          "subject": {...}
+      }
 
 * ##### Error Response:
 
@@ -770,41 +772,41 @@ A practice submission is what students submit to a practice statement
     * if user is student `practiceName=[String]` else if user is teacher `calification=[Double]`
  
 * ##### Success Response: 200 OK
-    {
-    "practiceID": 4,
-    "practiceName": "New Practice",
-    "calification": 3.2,
-    "studyItem": {
-        "studyItemID": 13,
-        "type": "file-pdf",
-        "name": "Practice 2",
-        "fileName": "studyItem-13",
-	"module": -1,
-        "originalName": "Practice 2.txt",
-        "extension": null,
-        "icon": "pdf",
-        "isPractice": true,
-        "practice": true
-	"subject" : {...}
-    },
-    "owner": {
-        "userID": 51,
-        "username": "amico",
-        "userMail": "amicourses@mail.com",
-        "userFirstName": "Amico",
-        "userLastName": "Fernandez",
-        "internalName": "amico",
-        "roles": [
-            "ROLE_USER"
-        ],
-        "admin": false,
-        "student": true
-    },
-    "originalName": "hola.txt",
-    "presented": true,
-    "corrected": true,
-    "subject": { ... }
-    }
+      {
+          "practiceID": 4,
+          "practiceName": "New Practice",
+          "calification": 3.2,
+          "studyItem": {
+              "studyItemID": 13,
+              "type": "file-pdf",
+              "name": "Practice 2",
+              "fileName": "studyItem-13",
+              "module": -1,
+              "originalName": "Practice 2.txt",
+              "extension": null,
+              "icon": "pdf",
+              "isPractice": true,
+              "practice": true
+              "subject" : {...}
+          },
+          "owner": {
+              "userID": 51,
+              "username": "amico",
+              "userMail": "amicourses@mail.com",
+              "userFirstName": "Amico",
+              "userLastName": "Fernandez",
+              "internalName": "amico",
+              "roles": [
+                  "ROLE_USER"
+              ],
+              "admin": false,
+              "student": true
+          },
+          "originalName": "hola.txt",
+          "presented": true,
+          "corrected": true,
+          "subject": { ... }
+      }
 
 * ##### Error Response:
 
@@ -831,16 +833,15 @@ A practice submission is what students submit to a practice statement
     * `itemFile=[MultipartFile]`
  
 * ##### Success Response: 200 OK
-    {
-    
-    "practiceID": 4,
-    "practiceName": "New Practice",
-    "calification": 3.2,
-    "originalName": "hola.txt",
-    "presented": true,
-    "corrected": true,
-    "subject": { ... }
-    }
+      {
+          "practiceID": 4,
+          "practiceName": "New Practice",
+          "calification": 3.2,
+          "originalName": "hola.txt",
+          "presented": true,
+          "corrected": true,
+          "subject": { ... }
+      }
 
 * ##### Error Response:
 
@@ -864,15 +865,15 @@ A practice submission is what students submit to a practice statement
     * `submissionID=[Long]`
  
 * ##### Success Response: 200 OK
-{
-    "practiceID": 1,
-    "practiceName": "practice 1",
-    "calification": 7.3,
-    "originalName": "practice-1.txt",
-    "presented": true,
-    "corrected": true,
-    "subject": { ... }
-    }
+      {
+          "practiceID": 1,
+          "practiceName": "practice 1",
+          "calification": 7.3,
+          "originalName": "practice-1.txt",
+          "presented": true,
+          "corrected": true,
+          "subject": { ... }
+      }
 
 * ##### Error Response:
 
@@ -894,24 +895,24 @@ A practice submission is what students submit to a practice statement
     * `subjectInternalName=[String]`
  
 * ##### Success Response: 200 OK
-[
-    [
-        "newNam33e",
-        0
-    ],
-    [
-        "Practice 2",
-        3.2
-    ],
-    [
-        "newOne",
-        0
-    ],
-    [
-        "newOne",
-        0
-    ]
-]
+      [
+          [
+              "newNam33e",
+              0
+          ],
+          [
+              "Practice 2",
+              3.2
+          ],
+          [
+              "newOne",
+              0
+          ],
+          [
+              "newOne",
+              0
+          ]
+      ]
 
 * ##### Error Response:
 
