@@ -832,7 +832,7 @@ A practice submission is what students submit to a practice statement
  
 * ##### Success Response: 200 OK
     {
-    {
+    
     "practiceID": 4,
     "practiceName": "New Practice",
     "calification": 3.2,
@@ -845,5 +845,77 @@ A practice submission is what students submit to a practice statement
 * ##### Error Response:
 
 	**Code:** 404 400 
+	
+ #### Deletes a practice submission of a practice.
+
+* ##### URL
+
+	< moodle/{courseInternalName}/{subjectInternalName}/submissions/{practiceID}/{submissionID} >
+
+* ##### Method:
+
+	`DELETE`
+
+* ##### Params
+     * Required:
+    * `courseInternalName=[String]`
+    * `subjectInternalName=[String]`
+    * `practiceID=[Long]`
+    * `submissionID=[Long]`
+ 
+* ##### Success Response: 200 OK
+{
+    "practiceID": 1,
+    "practiceName": "practice 1",
+    "calification": 7.3,
+    "originalName": "practice-1.txt",
+    "presented": true,
+    "corrected": true,
+    "subject": { ... }
+    }
+
+* ##### Error Response:
+
+	**Code:** 404 400 
+
+#### Gets the marks from every practice of the subject. If user is a teacher it gets the mean calification per practice and if user the calification
+
+* ##### URL
+
+	< /api/moodle/practicesMarks/{courseInternalName}/{subjectInternalName}/practices/ >
+
+* ##### Method:
+
+	`GET`
+
+* ##### Params
+     * Required:
+    * `courseInternalName=[String]`
+    * `subjectInternalName=[String]`
+ 
+* ##### Success Response: 200 OK
+[
+    [
+        "newNam33e",
+        0
+    ],
+    [
+        "Practice 2",
+        3.2
+    ],
+    [
+        "newOne",
+        0
+    ],
+    [
+        "newOne",
+        0
+    ]
+]
+
+* ##### Error Response:
+
+	**Code:** 404 400 
+
 
 
