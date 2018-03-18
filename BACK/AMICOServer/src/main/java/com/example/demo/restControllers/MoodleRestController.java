@@ -308,16 +308,16 @@ public class MoodleRestController {
 	@JsonView(StudyItemDetailed.class)
 	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/practice", method = RequestMethod.POST)
 	public ResponseEntity<StudyItem> createPractice(@PathVariable String courseInternalName,
-			@PathVariable String subjectInternalName, @PathVariable Integer module,
+			@PathVariable String subjectInternalName,
 			@RequestBody StudyItem newPractice) {
 
 		User user = sessionUserComponent.getLoggedUser();
 
-		if (user != null && !user.isStudent() && (module != null)) {
+		if (user != null && !user.isStudent()){
 
 			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
 			if (subject != null) {
-				if (subject.getTeachers().contains(user) && module <= subject.getNumberModules()) {
+				if (subject.getTeachers().contains(user)) {
 					/* If the user is a teacher of the subject can upload the file */
 
 					/* File uploading control. If the file exists, it is overwritten */
