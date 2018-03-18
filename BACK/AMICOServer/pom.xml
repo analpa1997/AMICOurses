@@ -83,6 +83,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			
+			<!-- docker maven plugin -->
 			<plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
@@ -94,7 +95,7 @@
                         <imageTag>${project.version}</imageTag>
                     </imageTags>
                    <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
-                    
+                   <!-- copy image to the container root dir -->
                     <resources>
                         <resource>
                             <targetPath>/</targetPath>
@@ -105,6 +106,7 @@
                 </configuration>
             </plugin>
            
+           <!-- Copy jar to docker dir -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
