@@ -181,7 +181,7 @@ public class UserService {
 	}
 
 	public User saveImg(MultipartFile file, User user) {
-		if (!file.isEmpty()) {
+		if (file != null && !file.isEmpty()) {
 			try {
 				Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"),
 						"files/image/users/" + user.getUserID() + "/");

@@ -58,7 +58,7 @@ public class Course {
 	@JsonView(BasicCourse.class)
 	private int numberOfUsers;
 	@JsonView(BasicCourse.class)
-	@Column(length = Short.MAX_VALUE)
+	@Column(length = 1500)
 	private String courseDescription;
 	@JsonView(BasicCourse.class)
 	private String originalName;

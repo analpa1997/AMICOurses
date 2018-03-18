@@ -72,7 +72,7 @@ public class User {
 	private int phoneNumber;
 
 	@JsonView(ExtendedUser.class)
-	@Column(length = Short.MAX_VALUE)
+	@Column(length = 1500)
 	private String interests;
 
 	@JsonView(ExtendedUser.class)

@@ -98,7 +98,9 @@ public class UserProfileController {
 		/* If there is not file the imageName wont change */
 
 		if (user.equals(loggedUser)) {
-			user = userService.saveImg(file, user);
+			if (!file.isEmpty()) {
+				user = userService.saveImg(file, user);
+			}
 
 			/* End of the image upload section */
 
