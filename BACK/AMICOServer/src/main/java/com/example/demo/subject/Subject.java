@@ -30,7 +30,7 @@ public class Subject {
 
 	public interface SubjectsBasicInformation {
 	}
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 

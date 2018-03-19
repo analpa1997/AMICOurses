@@ -10,8 +10,13 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.course.Course;
 import com.example.demo.course.CourseRepository;
+import com.example.demo.exam.Exam;
+import com.example.demo.exam.ExamRepository;
+import com.example.demo.practices.Practices;
+import com.example.demo.practices.PracticesRepository;
 import com.example.demo.studyItem.StudyItem;
 import com.example.demo.studyItem.StudyItemRepository;
+import com.example.demo.studyItem.StudyItemService;
 import com.example.demo.user.User;
 
 @Service
@@ -22,6 +27,14 @@ public class SubjectService {
 	private StudyItemRepository studyItemRepository;
 	@Autowired
 	private CourseRepository courseRepository;
+	@Autowired
+	private StudyItemService studyItemService;
+	@Autowired
+	private PracticesRepository practiceSubmissionRepository;
+	@Autowired
+	private ExamRepository examRepository;
+	@Autowired
+	private PracticesRepository practicesRepository;
 	
 	public void createSubject(Course c, Subject s) {
 		if(c!=null && s!=null) {
@@ -32,8 +45,16 @@ public class SubjectService {
 	}
 	
 	public void deleteSubject(Subject s, Course c) {
-		int i = c.getSubjects().indexOf(s);
-		c.getSubjects().remove(i);
+		for(Exam ex : s.getExams()) {
+			examRepository.delete(ex);
+		}
+		for(StudyItem sT : s.getStudyItemsList()) {
+			for(Practices prac : sT.getPractices()) {
+				practicesRepository.delete(prac);
+			}
+			studyItemRepository.delete(sT);
+		}
+		c.getSubjects().remove(s);
 		subjectRepository.delete(s);
 	}
 	
@@ -56,6 +77,7 @@ public class SubjectService {
 		if(course != null) {
 			updSubj.setCourse(course);
 		}
+		subjectRepository.save(updSubj);
 	}
 	
 	public void deleteModule(Subject subject, int module) {

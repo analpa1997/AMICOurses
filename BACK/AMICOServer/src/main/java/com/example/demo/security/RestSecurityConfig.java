@@ -40,10 +40,10 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/moodle/**").hasRole("USER");
 		http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/moodle/**").hasRole("USER");
 		// Subjets (PENDING)
-		http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/subjets/**").hasRole("USER");
-		http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/subjets/**").hasRole("USER");
-		http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/subjets/**").hasRole("USER");
-		http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/subjets/**").hasRole("USER");
+		http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/subjets/**").hasRole("ADMIN");
+		http.authorizeRequests().antMatchers(HttpMethod.PUT, "/api/subjets/**").hasRole("ADMIN");
+		http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/subjets/**").hasAnyRole("USER", "ADMIN");
+		http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/subjets/**").hasRole("ADMIN");
 
 		// Other URLs can be accessed without authentication
 		http.authorizeRequests().anyRequest().permitAll();
