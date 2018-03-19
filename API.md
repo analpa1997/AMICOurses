@@ -1494,3 +1494,318 @@ Shows just the requested subject from the current course
 * ##### Error Response:
 
 	**Code:** 404 NOT FOUND
+
+---
+
+## Courses
+All User queries are preceded `/courses`
+### New course
+
+Create a new course. Only admin can create it.
+
+* ##### URL
+
+	< / >
+
+* ##### Method:
+
+	`POST`
+
+* ##### Body
+  * Required:
+    * `course=Course`
+ 
+* ##### Success Response: 201 CREATED
+      {
+      "userID": 60,
+      "username": "pepito",
+      "userMail": "pepito@hotmail.com",
+      "userFirstName": "",
+      "userLastName": "",
+      "internalName": "pepito",
+      "roles": [
+          "ROLE_USER"
+      ],
+      "admin": false,
+      "student": true
+      }
+* ##### Error Responses:
+
+	**Code:** 511 NETWORK AUTHENTICATION REQUIRED (if you aren't authenticated yet in the application)
+	**Code:** 401 UNAUTHORIZED (if you are authenticated but you haven't got permissions to do that action)
+	**Code:** 415 UNSUPPORTED MEDIA TYPE (if JSON course request body format are incorrect)
+	**Code:** 201 CREATED (if the course is created successfully)
+	**Code:** 500 INTERNAL SERVER ERROR (if params are incorrect)
+
+### Update Course
+
+Edit an existing course. Only admin can do it.
+
+* ##### URL
+
+	< / >
+
+* ##### Method:
+
+	`PUT`
+
+* ##### Body
+  * Required:
+    * `course=Course`
+ 
+* ##### Success Response: 201 CREATED
+      {
+      "userID": 60,
+      "username": "pepito",
+      "userMail": "pepito@hotmail.com",
+      "userFirstName": "",
+      "userLastName": "",
+      "internalName": "pepito",
+      "roles": [
+          "ROLE_USER"
+      ],
+      "admin": false,
+      "student": true
+      }
+* ##### Error Responses:
+
+	**Code:** 511 NETWORK AUTHENTICATION REQUIRED (if you aren't authenticated yet in the application)
+	**Code:** 401 UNAUTHORIZED (if you are authenticated but you haven't got permissions to do that action)
+	**Code:** 415 UNSUPPORTED MEDIA TYPE (if JSON course request body format are incorrect)
+	**Code:** 200 OK (if the course is edited successfully)
+	**Code:** 404 NOT FOUND (if the course that you want to edit doesn't exist in the BD)
+	**Code:** 500 INTERNAL SERVER ERROR (if params are incorrect)
+	
+### Add user to a Course
+
+The user who is logged into the application is added into the course. Only students can be added.
+
+* ##### URL
+
+	< /id/{courseID} >
+	< /name/{internalName} >
+
+* ##### Method:
+
+	`PUT`
+
+* ##### Path Variables
+  * Required (only one):
+    * `courseID=Long`
+    * `internalName=String`
+ 
+* ##### Success Response: 201 CREATED
+      {
+      "userID": 60,
+      "username": "pepito",
+      "userMail": "pepito@hotmail.com",
+      "userFirstName": "",
+      "userLastName": "",
+      "internalName": "pepito",
+      "roles": [
+          "ROLE_USER"
+      ],
+      "admin": false,
+      "student": true
+      }
+* ##### Error Responses:
+
+	**Code:** 511 NETWORK AUTHENTICATION REQUIRED (if you aren't authenticated yet in the application)
+	**Code:** 401 UNAUTHORIZED (if you are authenticated but you haven't got permissions to do that action)
+	**Code:** 415 UNSUPPORTED MEDIA TYPE (if JSON course request body format are incorrect)
+	**Code:** 200 OK (if the course is edited successfully)
+	**Code:** 404 NOT FOUND (if the course that you want to edit doesn't exist in the BD)
+	**Code:** 500 INTERNAL SERVER ERROR (if params are incorrect)
+	**Code:** BAD REQUEST (if the user is already inscribed in the course or the user had completed the course before)
+
+### Delete one course
+
+Delete one course to the BD. Only Admin can do that action
+
+* ##### URL
+
+	< /id/{courseID} >
+	< /name/{internalName} >
+	
+* ##### Method:
+
+	`DELETE`
+
+* ##### Path Variables
+  * Required (only one):
+    * `courseID=Long`
+    * `internalName=String`
+ 
+* ##### Success Response: 201 CREATED
+      {
+      "userID": 60,
+      "username": "pepito",
+      "userMail": "pepito@hotmail.com",
+      "userFirstName": "",
+      "userLastName": "",
+      "internalName": "pepito",
+      "roles": [
+          "ROLE_USER"
+      ],
+      "admin": false,
+      "student": true
+      }
+* ##### Error Responses:
+
+	**Code:** 302 FOUND (if the courses are found successfully)
+	**Code:** 404 NOT FOUND (if no courses are found)
+	**Code:** 500 INTERNAL SERVER ERROR (if params are incorrect)
+	
+
+### Get one Course
+
+Get the information of one course into the BD.
+
+* ##### URL
+
+	< /id/{courseID} >
+	< /name/{internalName} >
+
+* ##### Method:
+
+	`GET`
+
+* ##### Path Variables
+  * Required (only one):
+    * `courseID=Long`
+    * `internalName=String`
+ 
+* ##### Success Response: 302 FOUND
+      {
+      "userID": 60,
+      "username": "pepito",
+      "userMail": "pepito@hotmail.com",
+      "userFirstName": "",
+      "userLastName": "",
+      "internalName": "pepito",
+      "roles": [
+          "ROLE_USER"
+      ],
+      "admin": false,
+      "student": true
+      }
+* ##### Error Responses:
+
+	**Code:** 302 FOUND (if the course is found successfully)
+	**Code:** 404 NOT FOUND (if the course that you want to see doesn't exist in the BD)
+	**Code:** 500 INTERNAL SERVER ERROR (if params are incorrect)
+	
+### Get All Courses
+
+Get the information of all courses into the BD.
+
+* ##### URL
+
+	< / >
+
+* ##### Method:
+
+	`GET`
+
+* ##### Path Variables
+  * Required:
+    * `page=int (defaultValue=0)`
+    * `sort=String (defaultValue='courseID')`
+    * `type=String (defaultValue='all')`
+    * `name=String (defaultValue='')`
+ 
+* ##### Success Response: 201 CREATED
+      {
+      "userID": 60,
+      "username": "pepito",
+      "userMail": "pepito@hotmail.com",
+      "userFirstName": "",
+      "userLastName": "",
+      "internalName": "pepito",
+      "roles": [
+          "ROLE_USER"
+      ],
+      "admin": false,
+      "student": true
+      }
+* ##### Error Responses:
+
+	**Code:** 302 FOUND (if the courses are found successfully)
+	**Code:** 404 NOT FOUND (if no courses are found)
+	**Code:** 500 INTERNAL SERVER ERROR (if params are incorrect)
+	
+### Get Course Subjects
+
+Get the information of all courses into the BD.
+
+* ##### URL
+
+	< /id/{courseID}/subjects/ >
+	< /name/{internalName}/subjects/ >
+
+* ##### Method:
+
+	`GET`
+
+* ##### Path Variables
+  * Required (only one):
+    * `courseID=Long`
+    * `internalName=String`
+ 
+* ##### Success Response: 201 CREATED
+      {
+      "userID": 60,
+      "username": "pepito",
+      "userMail": "pepito@hotmail.com",
+      "userFirstName": "",
+      "userLastName": "",
+      "internalName": "pepito",
+      "roles": [
+          "ROLE_USER"
+      ],
+      "admin": false,
+      "student": true
+      }
+* ##### Error Responses:
+
+	**Code:** 302 FOUND (if the courses are found successfully)
+	**Code:** 404 NOT FOUND (if no courses are found)
+	**Code:** 500 INTERNAL SERVER ERROR (if params are incorrect)
+	
+### Get Course Skills
+
+Get the information of all courses into the BD.
+
+* ##### URL
+
+	< /id/{courseID}/skills/ >
+	< /name/{internalName}/skills/ >
+
+* ##### Method:
+
+	`GET`
+
+* ##### Path Variables
+  * Required (only one):
+    * `courseID=Long`
+    * `internalName=String`
+ 
+* ##### Success Response: 201 CREATED
+      {
+      "userID": 60,
+      "username": "pepito",
+      "userMail": "pepito@hotmail.com",
+      "userFirstName": "",
+      "userLastName": "",
+      "internalName": "pepito",
+      "roles": [
+          "ROLE_USER"
+      ],
+      "admin": false,
+      "student": true
+      }
+* ##### Error Responses:
+
+	**Code:** 302 FOUND (if the courses are found successfully)
+	**Code:** 404 NOT FOUND (if no courses are found)
+	**Code:** 500 INTERNAL SERVER ERROR (if params are incorrect)
