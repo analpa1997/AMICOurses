@@ -222,7 +222,7 @@ public class CourseRestController {
 			pageCourse = courseRepository.findByTypeAndInternalNameContaining(type, nameCourse, new PageRequest(page,
 					10)); /* Return the page filtered by Type AND partial name, sorted by default */
 		if (pageCourse != null)
-			return new ResponseEntity<>(pageCourse, HttpStatus.FOUND);
+			return new ResponseEntity<>(pageCourse, HttpStatus.OK);
 		else
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
