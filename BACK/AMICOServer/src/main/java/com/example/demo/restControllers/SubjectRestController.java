@@ -53,7 +53,7 @@ public class SubjectRestController {
 		}
 		return new ResponseEntity(HttpStatus.UNAUTHORIZED);
 	}
-	
+	@JsonView(Subject.SubjectsBasicInformation.class)
 	@RequestMapping(value="/api/subjects/{courseInternalName}/{subjectInternalName}", method = RequestMethod.DELETE)
 	public ResponseEntity<Subject> deleteSubject(@PathVariable String courseInternalName, @PathVariable String subjectInternalName){
 		User u = sessionUserComponent.getLoggedUser();
@@ -73,6 +73,7 @@ public class SubjectRestController {
 	}
 	
 	//PUT
+	@JsonView(Subject.SubjectsBasicInformation.class)
 	@RequestMapping(value="/api/subjects/{courseInternalName}/{subjectInternalName}", method = RequestMethod.PUT)
 	public ResponseEntity<Subject> updateSubject(@PathVariable String courseInternalName, @PathVariable String subjectInternalName,
 				@RequestBody Subject subject){
@@ -92,6 +93,7 @@ public class SubjectRestController {
 	}
 	
 	//FIND ALL SUBJECTS IN A COURSE
+	@JsonView(Subject.SubjectsBasicInformation.class)
 	@RequestMapping(value = "/api/subjects/{courseInternalName}/subjects/all", method = RequestMethod.GET)
 	public ResponseEntity<Page<Subject>> allSubjects(Pageable pages, @PathVariable String courseInternalName,
 			@RequestParam(value = "page", defaultValue = "0") int page){
@@ -108,6 +110,7 @@ public class SubjectRestController {
 	}
 	
 	//FIND A SUBJECT WITHIN A COURSE
+	@JsonView(Subject.SubjectsBasicInformation.class)
 	@RequestMapping(value="/api/subjects/{courseInternalName}/{subjectInternalName}", method = RequestMethod.GET)
 	public ResponseEntity<Subject> findSubject(@PathVariable String courseInternalName, @PathVariable String subjectInternalName){
 		Subject subject = subjectRepository.findByInternalName(subjectInternalName);
