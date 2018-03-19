@@ -195,3 +195,7 @@ We created a Maven project and we imported in pom.xml all the dependencies we ne
 
 <a href="https://www.getpostman.com/run-collection/:collection_id" target="_blank"><img src="https://run.pstmn.io/button.svg" alt="Run in Postman"></a>
 <a href="https://https://github.com/analpa1997/AMICOurses/blob/master/API.md" target="_blank"><img src="https://run.pstmn.io/button.svg" alt="Documentation API REST"></a>
+
+### Updated Component Diagram
+
+![Component Diagram List](https://i.imgur.com/Tlzoau6.png)
