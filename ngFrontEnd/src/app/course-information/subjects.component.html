@@ -1,0 +1,45 @@
+<!-- Page Header -->
+<header class="masthead" style="background-image: url('/courses/img/{{courseID}}')">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="site-heading">
+          <h1>Subjects</h1>
+          <span class="subheading">This are the subjects for {{courseName}}</span>
+          <!--<span class="meta">Posted by
+            <a href="#">Start Bootstrap</a>
+            on August 24, 2018</span>-->
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container">
+    <h2>Subjects</h2>
+    <div class="table-responsive">
+
+      <table class="table" id=courseSubjects>
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Description</th>
+        </tr>
+        </thead>
+        {{#subjects}}
+        <tbody>
+        <tr>
+          <td>{{-index}}</td>
+          <td>{{name}}</td>
+          <td>{{description}}</td>
+        </tr>
+
+        </tbody>
+        {{/subjects}}
+      </table>
+    </div>
+  </div>
+</article>

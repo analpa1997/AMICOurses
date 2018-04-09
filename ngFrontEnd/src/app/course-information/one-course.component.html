@@ -1,0 +1,29 @@
+<!-- Main Content -->
+<div class="container">
+  <div class="row" id=courseInformation>
+    <div class="col-lg-8 col-md-10 mx-auto">
+      <div class="post-preview">
+        <h2 class="post-title">
+          Description
+        </h2>
+
+        <p class="post-subtitle">{{courseDescription}}</p>
+        <a href="/course/{{internalName}}/add" class="btn btn-info">Add Course</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br>
+
+{{#error}}
+<div class="col-xs-12 col-sm-12 col-md-12 " align=center>
+  <div class="alert alert-info alert-dismissible fade show" role="alert">
+    <strong>{{message}}</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+</div>
+{{/error}}
+

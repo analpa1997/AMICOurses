@@ -1,0 +1,39 @@
+<!-- Page Header -->
+<header class="masthead" style="background-image: url('/courses/img/{{courseID}}')">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="page-heading">
+          <h1>Skills</h1>
+          <span class="subheading">This is what I`m going to learn.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <h2>Skills</h2>
+  <div class="table-responsive">
+
+    <table class="table" id=courseSkills>
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+      </thead>
+      {{#skills}}
+      <tbody>
+      <tr>
+        <td>{{-index}}</td>
+        <td>{{skillName}}</td>
+        <td>{{skillDescription}}</td>
+      </tr>
+      </tbody>
+      {{/skills}}
+    </table>
+  </div>
+</div>
