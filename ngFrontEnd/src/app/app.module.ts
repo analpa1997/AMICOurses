@@ -10,6 +10,7 @@ import { CourseService } from './course-information/course.service';
 import { OneCourseComponent } from './course-information/one-course.component';
 import { SkillsComponent } from './course-information/skills.component';
 import { SubjectsComponent } from './course-information/subjects.component';
+import { routing } from './app.routing';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, FooterComponent, OneCourseComponent, SkillsComponent, SubjectsComponent],
