@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './course-information/header.component';
@@ -11,11 +11,11 @@ import { OneCourseComponent } from './course-information/one-course.component';
 import { SkillsComponent } from './course-information/skills.component';
 import { SubjectsComponent } from './course-information/subjects.component';
 import { routing } from './app.routing';
+import { IndexPageComponent } from './indexPage/indexPage.component'
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, FooterComponent, OneCourseComponent, SkillsComponent, SubjectsComponent],
-  imports: [BrowserModule, routing, HttpClientModule
-  ],
+  declarations: [AppComponent, HeaderComponent, FooterComponent, OneCourseComponent, SkillsComponent, SubjectsComponent, IndexPageComponent],
+  imports: [BrowserModule, routing, HttpClientModule, NgbModule.forRoot()],
   providers: [CourseService],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,29 @@
+<div class="container">
+    <div *ngFor="let course of courses" >
+              <div class="col-lg-6 col-md-12 col-sm-12 col-12">
+                  <div class="p-3" align=center>
+                      <a id = "link-course" href="./course/{{course?.internalName}}.html">
+                      <h2 class="display-4">{{course?.name}}</h2>
+                      </a>
+                      <p class="lead">{{course.courseDescription}}</p>
+                      <div class="container">
+                          <a href="./course/{{course.internalName}}.html">
+                          <img class="img-fluid rounded-circle imgCourse" src="{{URL}}/courses/img/{{course.courseID}}" alt=" Course photo" >
+                          </a>
+                          <div class="mt-3 &nbsp"></div>
+                          <div class ="row">
+                                <div class="col-md-6 col-sm-12 col-12">
+                                    <div>Start date: {{course?.startDateString}}</div>
+                                  <div>End date: {{course?.endDateString}}</div>
+                              </div>
+                              <div class="col-md-6 col-sm-12 col-12">
+                                     <div>Number of users</div>
+                                  <div>{{course?.numberOfUsers}}</div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+        
+     </div>
+ </div>
