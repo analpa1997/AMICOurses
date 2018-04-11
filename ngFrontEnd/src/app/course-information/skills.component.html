@@ -13,29 +13,28 @@
   </div>
 </header>
 
-<!-- <div class="container">
+<div class="container">
   <h2>Skills</h2>
   <div class="table-responsive">
-
-    <table class="table" id=courseSkills>
-      <thead>
-      <tr>
-        <th>#</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-      </thead>
-      {{#skills}}
-      <tbody>
-      <tr>
-        <td>{{-index}}</td>
-        <td>{{skillName}}</td>
-        <td>{{skillDescription}}</td>
-      </tr>
-      </tbody>
-      {{/skills}}
-    </table>
+    <div class="skills" *ngIf="skills">
+      <table class="table" id=courseSkills>
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Description</th>
+        </tr>
+        </thead>
+        <!-- {{#skills}} -->
+        <tbody>
+        <tr>
+          <td>{{-index}}</td>
+          <td>{{skills.skillName}}</td>
+          <td>{{skills.skillDescription}}</td>
+        </tr>
+        </tbody>
+        <!--{{/skills}}-->
+      </table>
+    </div>
   </div>
 </div>
-
--->
