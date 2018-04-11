@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/Rx';
 import {User} from '../model/user.model';
 
 export interface User {
@@ -12,23 +11,23 @@ export interface User {
 
 const URL = 'https://localhost:8443/api/users/';
 @Injectable()
-export class BookService {
+export class UserService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: Http) { }
 
-  getBooks() {
+  getUsers() {
     return this.http.get(URL, { withCredentials: true })
       .map(response => response.json())
       .catch(error => this.handleError(error));
   }
 
-  getBook(id: number | string) {
+  getUser(id: number | string) {
     return this.http.get(URL + id, { withCredentials: true })
       .map(response => response.json())
       .catch(error => this.handleError(error));
   }
 
-  saveBook(user: User) {
+  newUser(user: User) {
 
     const body = JSON.stringify(user);
     const headers = new Headers({
@@ -48,7 +47,7 @@ export class BookService {
     }
   }
 
-  removeBook(user: User) {
+  removeUser(user: User) {
 
     const headers = new Headers({
       'X-Requested-With': 'XMLHttpRequest'
@@ -56,11 +55,11 @@ export class BookService {
     const options = new RequestOptions({ withCredentials: true, headers });
 
     return this.http.delete(URL + user.id, options)
-      .map(response => undefined)
+      .map(response => response.undefined)
       .catch(error => this.handleError(error));
   }
 
-  updateBook(user: User) {
+  updateUser(user: User) {
 
     const body = JSON.stringify(user);
     const headers = new Headers({
