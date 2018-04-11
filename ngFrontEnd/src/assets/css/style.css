@@ -1,0 +1,241 @@
+body {
+    font-family: Lato
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: Catamaran;
+    font-weight: 800!important
+}
+
+.btn-xl {
+    text-transform: uppercase;
+    padding: 1.5rem 3rem;
+    font-size: .9rem;
+    font-weight: 700;
+    letter-spacing: .1rem
+}
+
+.bg-black {
+    background-color: #000!important
+}
+
+.rounded-pill {
+    border-radius: 5rem
+}
+
+.navbar-custom {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background-color: rgba(0, 0, 0, 0.9)
+}
+
+.navbar-custom .navbar-brand {
+    text-transform: uppercase;
+    font-size: 1rem;
+    letter-spacing: .1rem;
+    font-weight: 700
+}
+
+.navbar-custom .navbar-nav .nav-item .nav-link {
+    text-transform: uppercase;
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .1rem
+}
+
+header.masthead {
+    position: relative;
+    overflow: hidden;
+    padding-top: calc(7rem + 72px);
+    padding-bottom: 7rem;
+    background: linear-gradient(0deg, #ff6d00 0, #ee0979 100%);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: scroll;
+    background-size: cover
+}
+
+header.masthead .masthead-content {
+    z-index: 1;
+    position: relative
+}
+
+header.masthead .masthead-content .masthead-heading {
+    font-size: 4rem
+}
+
+header.masthead .masthead-content .masthead-subheading {
+    font-size: 2rem
+}
+
+header.masthead .bg-circle {
+    z-index: 0;
+    position: absolute;
+    border-radius: 100%;
+    background: linear-gradient(0deg, #ee0979 0, #ff6a00 100%)
+}
+
+header.masthead .bg-circle-1 {
+    height: 90rem;
+    width: 90rem;
+    bottom: -55rem;
+    left: -55rem
+}
+
+header.masthead .bg-circle-2 {
+    height: 50rem;
+    width: 50rem;
+    top: -25rem;
+    right: -25rem
+}
+
+header.masthead .bg-circle-3 {
+    height: 20rem;
+    width: 20rem;
+    bottom: -10rem;
+    right: 5%
+}
+
+header.masthead .bg-circle-4 {
+    height: 30rem;
+    width: 30rem;
+    top: -5rem;
+    right: 35%
+}
+
+.bg-primary {
+    background-color: #ee0979!important
+}
+
+.masthead-content .btn-primary {
+    background-color: #ee0979;
+    border-color: #ee0979
+}
+
+.btn-primary:focus {
+    box-shadow: 0 0 0 .2rem rgba(238, 9, 121, .5)
+}
+
+.btn-secondary {
+    background-color: #ff6a00;
+    border-color: #ff6a00
+}
+
+.btn-secondary:active,
+.btn-secondary:focus,
+.btn-secondary:hover {
+    background-color: #c50!important;
+    border-color: #c50!important
+}
+
+.btn-secondary:focus {
+    box-shadow: 0 0 0 .2rem rgba(255, 106, 0, .5)
+}
+
+.rounded-circle {
+    border: 1px solid black;
+}
+
+.rounded-circle:hover {
+    transform: scale(1.10, 1.10);
+}
+
+#btnMoreCourses:hover {
+    background-color: #407f75!important;
+    border-color: #407f75;
+}
+
+#btnMoreCourses:focus {
+    background-color: #407f75!important;
+    border-color: #407f75;
+}
+
+#btnMoreCourses {
+    background-color: #667f7b;
+    border-color: #667f7b;
+}
+
+hr {
+    height: 5px;
+    background-color: #000000!important;
+}
+
+
+.col-lg-6 {
+    padding-bottom: 1pc;
+    border-bottom: 10px solid rgba(211, 211, 211, 0.5);
+}
+
+#newbtn {
+    background-color: #52B252;
+    border-color: #52B252;
+}
+
+#newbtn:hover {
+    background-color: #62D462;
+    border-color: #62D462;
+}
+
+#trendbtn:hover {
+    background-color: #C76A97;
+    border-color: #C76A97;
+}
+
+#trendbtn {
+    background-color: #B25F87;
+    border-color: #B25F87;
+}
+
+#searchbtn {
+    background-color: #9EB7E8;
+    border-color: #9EB7E8;
+}
+
+#searchbtn:hover {
+    background-color: #8EA5D1;
+    border-color: #8EA5D1;
+}
+
+#searchCourses {
+    vertical-align: middle;
+}
+
+.carousel-inner > .carousel-item > img {
+    margin: auto;
+    width: 15vmax;
+    height: 15vmax;
+}
+
+.carousel {
+    height: 18vmax;
+}
+
+.carousel-indicators .active {
+    background-color: red!important;
+}
+
+.carousel-indicators > li {
+    background-color: black!important;
+}
+
+.carousel-control-next {
+    background-color: black;
+}
+
+.carousel-control-prev {
+    background-color: black;
+}
+
+.carousel-control-next > .sr-only {
+    color: black;
+}
+
+#link-course {
+    text-decoration: none;
+    color :inherit;
+}

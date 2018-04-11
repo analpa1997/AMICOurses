@@ -7,6 +7,7 @@ import { CourseService } from '../course-information/course.service';
 @Component({
   selector: 'router-outlet',
   templateUrl: './indexPage.component.html',
+  styleUrls : ['../../assets/css/style.css']
 })
 
 
