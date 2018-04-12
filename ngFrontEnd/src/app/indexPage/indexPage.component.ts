@@ -5,7 +5,6 @@ import { CourseService } from '../course-information/course.service';
 
 
 @Component({
-  selector: 'router-outlet',
   templateUrl: './indexPage.component.html',
   styleUrls : ['../../assets/css/style.css']
 })
@@ -22,6 +21,7 @@ export class IndexPageComponent implements OnInit {
   constructor(private router: Router, private courseService: CourseService, activatedRoute: ActivatedRoute) {
     this.URL = "https://localhost:8443";
   }
+
   ngOnInit() {
     this.courseService.getCourses(undefined, undefined).subscribe(
       response => {

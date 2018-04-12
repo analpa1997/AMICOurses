@@ -3,6 +3,7 @@ import {Course } from '../model/course.model';
 import { HttpClient } from '@angular/common/http';
 import {Skill} from '../model/skill.model';
 import {Subject} from '../model/subject.model';
+import { Observable } from 'rxjs/Observable';
 
 const URL = 'https://localhost:8443/api/courses/';
 
@@ -21,5 +22,18 @@ export class CourseService {
     return this.http.get<Subject>(URL + id + '/subjects');
   }
 
-  getCourses
+  getCourses(page : number, order : string) {
+    let pageReq = "";
+    let pageOrd = "";
+    pageReq ="page=" + ((page) ? page : 0);
+    pageOrd = "sort=" + ((order) ? order : "courseID");
+    let reqUrl = URL + "?" + pageReq + "&" + pageOrd ;
+    
+    return this.http.get(reqUrl, { withCredentials: true })
+  }
+
+  private handleError(error: any) {
+    console.error(error);
+    return Observable.throw('Server error (' + error.status + '): ' + error.text());
+  }
 }
