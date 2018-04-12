@@ -8,8 +8,8 @@ import { IndexPageComponent } from './indexPage/indexPage.component'
 const appRoutes = [
   { path : 'index', component : IndexPageComponent, useAsDefault: true },
   { path: 'oneCourse/:id', component: OneCourseComponent },
-  { path: 'skills/:id/skills', component: SkillsComponent },
-  { path: 'subjects/:id/subjects', component: SubjectsComponent},
+  { path: 'oneCourse/:id/skills', component: SkillsComponent },
+  { path: 'oneCourse/:id/subjects', component: SubjectsComponent},
   { path: '', redirectTo: 'index', pathMatch: 'full'},
 ];
 

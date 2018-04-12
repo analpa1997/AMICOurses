@@ -1,3 +1,31 @@
+<app-course-information-header></app-course-information-header>
+<!--<header class="masthead" style="background-image: url('/courses/img/{{courseID}}')">-->
+<header class="masthead" style="background-image: url('/courses/img/{{courseID}}')">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="site-heading">
+          <h1>{{course.name}}</h1>
+          <span class="subheading">A course to learn...</span><br>
+          <!-- <h3 class="post-title"> Course Start and End dates </h3> -->
+          <div class="table-responsive">
+            <table class="table">
+              <tbody>
+              <tr>
+                <td>  From </td>
+                <td>{{course.startDateString}}</td>
+                <td>  To  </td>
+                <td>{{course.endDateString}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
 <!-- Main Content -->
 <div class="container">
   <div class="row" id=courseInformation>
@@ -14,7 +42,7 @@
     </div>
   </div>
 </div>
-
+<app-course-information-footer></app-course-information-footer>
 <br>
 <!--
 {{#error}}

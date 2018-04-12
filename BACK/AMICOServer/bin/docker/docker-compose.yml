@@ -1,0 +1,33 @@
+version: '2.3'
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:5.6
+    environment:
+      MYSQL_ROOT_PASSWORD: amico
+      MYSQL_DATABASE: amicourses
+    ports:
+      - 3306:3306
+    volumes:
+      - ./code/db-data:/var/lib/mysql
+    healthcheck:
+     test: mysqladmin ping -h localhost
+     timeout: 3s
+     retries: 100
+
+  amicourses:
+    container_name: amicoursesWEB
+    image: mesteban96/amicoweb
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - 8443:8443 
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/amicourses?useJDBCCompliantTimezoneShift=true&useSSL=false
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=amico
+      - SPRING_JPA_HIBERNATE_DDL-AUTO=create
+    
+    
+  
