@@ -304,7 +304,7 @@ public class CourseRestController {
 		else
 			course = courseRepository.findByInternalName(internalName);
 		if (course != null)
-			return new ResponseEntity<>(course, HttpStatus.FOUND);
+			return new ResponseEntity<>(course, HttpStatus.OK);
 		else
 			return new ResponseEntity(HttpStatus.NOT_FOUND);
 	}

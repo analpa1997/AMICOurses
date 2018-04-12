@@ -12,7 +12,7 @@ export class CourseService {
   constructor(private http: HttpClient) {}
 
    oneCourse(id: number | string) {
-    return this.http.get<Course>(URL + id);
+    return this.http.get<Course>(URL +"id/" + id + "/");
   }
   skills(id: number | string) {
     return this.http.get<Skill>(URL + id + '/skills');
