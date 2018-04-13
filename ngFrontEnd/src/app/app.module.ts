@@ -17,11 +17,13 @@ import { CourseIndexComponent } from './indexPage/courseIndex.component';
 import { LoginComponent } from './login/login.component';
 import { LoginService } from './login/login.service';
 import { HttpModule } from '@angular/http';
+import { MoodleComponent } from './moodle/moodle.component';
+import { MoodleService } from './moodle/moodle.service';
 
 @NgModule({declarations: [AppComponent, HeaderComponent, FooterComponent, OneCourseComponent,
-    SkillsComponent, SubjectsComponent, IndexPageComponent, HeaderGeneralComponent, CourseIndexComponent, LoginComponent],
+    SkillsComponent, SubjectsComponent, IndexPageComponent, HeaderGeneralComponent, CourseIndexComponent, LoginComponent, MoodleComponent],
   imports: [BrowserModule, routing, HttpClientModule,  HttpModule  ,NgbModule.forRoot()],
-  providers: [CourseService, LoginService],
+  providers: [CourseService, LoginService, MoodleService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
