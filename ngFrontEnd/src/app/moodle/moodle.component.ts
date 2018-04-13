@@ -10,7 +10,7 @@ import { LoginService } from '../login/login.service';
 
 @Component({
   templateUrl: './moodlePage.component.html',
-  styleUrls : ['../../assets/css/style.css']
+  styleUrls : ['../../assets/css/student-subject.css']
 })
 
 
@@ -21,24 +21,26 @@ export class MoodleComponent implements OnInit {
   courseName : string;
   subjectName : string;
   URL: string;
+  teachers : string;
 
-  constructor(private router: Router, activatedRoute: ActivatedRoute, private loginServie: LoginService, private moodleService : MoodleService) {
+  constructor(private router: Router, activatedRoute: ActivatedRoute, private loginService: LoginService, private moodleService : MoodleService) {
     this.URL = environment.URL;
     this.courseName = activatedRoute.snapshot.params['courseName'];
     this.subjectName = activatedRoute.snapshot.params['subjectName'];
-
+    this.teachers = "";
   }
 
   ngOnInit() {
     this.moodleService.getSubject(this.courseName, this.subjectName).subscribe(
       response => {
-        console.log(response["subject"]);
+        console.log(response);
+        this.teachers = this.loginService.isStudent ? "Teachers" : "Students";
         this.subject = response;
       },
       error => {
         console.log("Error " + error.status);
         if (error.status==401) {
-          this.router.navigate(['/error404']); //Must be a forbidden error
+          this.router.navigate(['/login']); //Forbidden
         }
 
         if (error.status == 500) {

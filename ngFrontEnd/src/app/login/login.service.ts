@@ -11,14 +11,11 @@ export class LoginService {
 
     isLogged = false;
     isAdmin = false;
+    isStudent = false;
     user: User;
 
     constructor(private http: Http) {
         this.reqIsLogged();
-    }
-
-    getIsLogged():boolean {
-        return this.isLogged
     }
 
     reqIsLogged() {
@@ -44,6 +41,7 @@ export class LoginService {
         this.isLogged = true;
         this.user = response.json();
         this.isAdmin = this.user.roles.indexOf('ROLE_ADMIN') !== -1;
+        this.isStudent = this.user.isStudent;
     }
 
     logIn(user: string, pass: string) {
