@@ -14,13 +14,7 @@ import { environment } from '../../environments/environment';
 
 export class Error404  {
 
-  courses: Course [];
-  page : number;
-  lastPage : boolean;
-  URL: string;
-
   constructor(private router: Router, private courseService: CourseService, activatedRoute: ActivatedRoute) {
-    this.URL = environment.URL;
   }
 
 }

@@ -17,6 +17,10 @@ export class LoginService {
         this.reqIsLogged();
     }
 
+    getIsLogged():boolean {
+        return this.isLogged
+    }
+
     reqIsLogged() {
 
         const headers = new Headers({

@@ -4,6 +4,8 @@ import { Course } from '../model/course.model';
 import { CourseService } from '../course-information/course.service';
 import { environment } from '../../environments/environment';
 import { Subject } from '../model/subject.model';
+import { MoodleService } from './moodle.service';
+import { LoginService } from '../login/login.service';
 
 
 @Component({
@@ -20,15 +22,34 @@ export class MoodleComponent implements OnInit {
   subjectName : string;
   URL: string;
 
-  constructor(private router: Router, activatedRoute: ActivatedRoute) {
+  constructor(private router: Router, activatedRoute: ActivatedRoute, private loginServie: LoginService, private moodleService : MoodleService) {
     this.URL = environment.URL;
     this.courseName = activatedRoute.snapshot.params['courseName'];
     this.subjectName = activatedRoute.snapshot.params['subjectName'];
+
   }
 
   ngOnInit() {
-    
-    
+    this.moodleService.getSubject(this.courseName, this.subjectName).subscribe(
+      response => {
+        console.log(response["subject"]);
+        this.subject = response;
+      },
+      error => {
+        console.log("Error " + error.status);
+        if (error.status==401) {
+          this.router.navigate(['/error404']); //Must be a forbidden error
+        }
+
+        if (error.status == 500) {
+          this.router.navigate(['/error404']); //Must be a 500 error
+        }
+
+        this.router.navigate(['/error404']);
+
+      },
+    );
+  
   }
 
 }
