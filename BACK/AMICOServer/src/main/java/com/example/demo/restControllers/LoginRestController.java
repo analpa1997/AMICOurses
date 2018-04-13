@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.user.SessionUserComponent;
 import com.example.demo.user.User;
+import com.fasterxml.jackson.annotation.JsonView;
 
 /**
  * This class is used to provide REST endpoints to logIn and logOut to the
@@ -26,7 +27,8 @@ public class LoginRestController {
 
 	@Autowired
 	private SessionUserComponent userComponent;
-
+	
+	@JsonView(User.BasicUser.class)
 	@RequestMapping("/api/logIn")
 	public ResponseEntity<User> logIn() {
 

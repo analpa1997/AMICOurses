@@ -14,11 +14,14 @@ import { routing } from './app.routing';
 import { IndexPageComponent } from './indexPage/indexPage.component';
 import { HeaderGeneralComponent } from './headerGeneral/headerGeneral.component';
 import { CourseIndexComponent } from './indexPage/courseIndex.component';
+import { LoginComponent } from './login/login.component';
+import { LoginService } from './login/login.service';
+import { HttpModule } from '@angular/http';
 
 @NgModule({declarations: [AppComponent, HeaderComponent, FooterComponent, OneCourseComponent,
-    SkillsComponent, SubjectsComponent, IndexPageComponent, HeaderGeneralComponent, CourseIndexComponent],
-  imports: [BrowserModule, routing, HttpClientModule, NgbModule.forRoot()],
-  providers: [CourseService],
+    SkillsComponent, SubjectsComponent, IndexPageComponent, HeaderGeneralComponent, CourseIndexComponent, LoginComponent],
+  imports: [BrowserModule, routing, HttpClientModule,  HttpModule  ,NgbModule.forRoot()],
+  providers: [CourseService, LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
