@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { LoginService } from './login.service';
 
 @Component({
+  selector: 'login',
   styleUrls : ['../../assets/css/csslogin.css'],
   templateUrl: './login.component.html'
 })
@@ -15,8 +16,15 @@ export class LoginComponent {
     event.preventDefault();
 
     this.loginService.logIn(user, pass).subscribe(
-      u => {console.log(u)},
-      error => alert('Invalid user or password ')
+      u => console.log(u),
+      error => alert('Invalid user or password')
+    );
+  }
+
+  logOut() {
+    this.loginService.logOut().subscribe(
+      response => { },
+      error => console.log('Error when trying to log out: ' + error)
     );
   }
 

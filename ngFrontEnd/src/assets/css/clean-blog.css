@@ -87,7 +87,8 @@ img::-moz-selection {
 
 #mainNav .navbar-brand {
   font-weight: 800;
-  color: #343a40;
+  /* color: #343a40; */
+  color: #fffeff;
 }
 
 #mainNav .navbar-toggler {
@@ -95,7 +96,8 @@ img::-moz-selection {
   font-weight: 800;
   padding: 13px;
   text-transform: uppercase;
-  color: #343a40;
+  /* color: #343a40; */
+  color: #fffeff;
 }
 
 #mainNav .navbar-nav > li.nav-item > a {
@@ -174,7 +176,8 @@ img::-moz-selection {
 header.masthead {
   margin-bottom: 50px;
   background: no-repeat center center;
-  background-color: #868e96;
+  /* background-color: #868e96; */
+  background-color: #fffeff;
   background-attachment: scroll;
   position: relative;
   -webkit-background-size: cover;
