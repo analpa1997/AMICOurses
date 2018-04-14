@@ -12,14 +12,14 @@ export class CourseService {
   constructor(private http: HttpClient) {}
 
    oneCourse(id: number | string) {
-    return this.http.get<Course>(URL +"id/" + id + "/");
+    return this.http.get<Course>(URL +"id/" + id + "/", { withCredentials: true });
   }
   skills(id: number | string) {
-    return this.http.get<Skill>(URL + id + '/skills');
+    return this.http.get<Skill[]>(URL + id + '/skills', { withCredentials: true });
   }
 
   subjects(id: number | string) {
-    return this.http.get<Subject>(URL + id + '/subjects');
+    return this.http.get<Subject[]>(URL + id + '/subjects', { withCredentials: true });
   }
 
   getCourses(page : number, order : string) {
@@ -28,7 +28,7 @@ export class CourseService {
     pageReq ="page=" + ((page) ? page : 0);
     pageOrd = "sort=" + ((order) ? order : "courseID");
     let reqUrl = URL + "?" + pageReq + "&" + pageOrd ;
-    
+
     return this.http.get(reqUrl, { withCredentials: true })
   }
 

@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './course-information/header.component';
@@ -22,8 +23,9 @@ import { MoodleService } from './moodle/moodle.service';
 import { Error404 } from './error/error404.component';
 
 @NgModule({declarations: [AppComponent, HeaderComponent, FooterComponent, OneCourseComponent,
-    SkillsComponent, SubjectsComponent, IndexPageComponent, HeaderGeneralComponent, CourseIndexComponent, LoginComponent, MoodleComponent, Error404],
-  imports: [BrowserModule, routing, HttpClientModule,  HttpModule  ,NgbModule.forRoot()],
+                          SkillsComponent, SubjectsComponent, IndexPageComponent, HeaderGeneralComponent, 
+                          CourseIndexComponent, LoginComponent, MoodleComponent, Error404, ],
+  imports: [BrowserModule, routing, HttpClientModule,  HttpModule  , NgbModule.forRoot(), AngularFontAwesomeModule],
   providers: [CourseService, LoginService, MoodleService],
   bootstrap: [AppComponent]
 })
