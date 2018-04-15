@@ -11,15 +11,15 @@ const URL = 'https://localhost:8443/api/courses/';
 export class CourseService {
   constructor(private http: HttpClient) {}
 
-   oneCourse(id: number | string) {
-    return this.http.get<Course>(URL +"id/" + id + "/", { withCredentials: true });
+  oneCourse(id: number | string) {
+    return this.http.get<Course>(URL  + 'id/' + id + '/', { withCredentials: true });
   }
   skills(id: number | string) {
-    return this.http.get<Skill[]>(URL + id + '/skills', { withCredentials: true });
+    return this.http.get<Skill[]>(URL + 'id/' + id + '/skills/', { withCredentials: true });
   }
 
   subjects(id: number | string) {
-    return this.http.get<Subject[]>(URL + id + '/subjects', { withCredentials: true });
+    return this.http.get<Subject[]>(URL + 'id/' + id + '/subjects/', { withCredentials: true });
   }
 
   getCourses(page : number, order : string) {

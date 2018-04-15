@@ -26,11 +26,11 @@
         </tr>
         </thead>
         <!-- {{#skills}} -->
-        <tbody>
+        <tbody *ngFor="let skill of skills">
         <tr>
           <td>{{-index}}</td>
-          <td>{{skills.skillName}}</td>
-          <td>{{skills.skillDescription}}</td>
+          <td>{{skill.skillName}}</td>
+          <td>{{skill.skillDescription}}</td>
         </tr>
         </tbody>
         <!--{{/skills}}-->

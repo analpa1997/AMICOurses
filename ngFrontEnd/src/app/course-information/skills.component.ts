@@ -12,18 +12,17 @@ import { Skill } from '../model/skill.model';
 export class SkillsComponent implements OnInit {
 
 
-  public skill: Skill[];
-
+  skills: Skill[];
+  courseID: number;
   constructor(private router: Router, private courseService: CourseService, private activatedRoute: ActivatedRoute) {
 
-    const courseID = activatedRoute.snapshot.params['id'];
-    this.courseService.skills(courseID).subscribe(data => {
-      this.skill = data;
-    },
-      error => console.error(error));
   }
 
   ngOnInit() {
+    this.courseID = this.activatedRoute.snapshot.params['id'];
+    this.courseService.skills(this.courseID).subscribe(skills => this.skills = skills,
+      error => console.log(error));
   }
 }
+
 

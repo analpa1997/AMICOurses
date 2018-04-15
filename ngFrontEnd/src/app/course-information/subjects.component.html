@@ -6,7 +6,7 @@
       <div class="col-lg-8 col-md-10 mx-auto">
         <div class="site-heading">
           <h1>Subjects</h1>
-          <span class="subheading">This are the subjects for {{subjects.course.name}}</span>
+          <span class="subheading">This are the subjects for {{subjects.name}}</span>
           <!--<span class="meta">Posted by
             <a href="#">Start Bootstrap</a>
             on August 24, 2018</span>-->
@@ -30,11 +30,11 @@
           </tr>
           </thead>
           <!--{{#subjects}}-->
-          <tbody>
+          <tbody *ngFor="let subject of subjects">
           <tr>
             <td>{{-index}}</td>
-            <td>{{subjects.name}}</td>
-            <td>{{subjects.description}}</td>
+            <td>{{subject.name}}</td>
+            <td>{{subject.description}}</td>
           </tr>
           </tbody>
           <!--{{/subjects}}-->

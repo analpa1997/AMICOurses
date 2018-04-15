@@ -6,21 +6,26 @@
       Menu
       <i class="fa fa-bars"></i>
     </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="/#/">Description</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/#/">Skills</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/#/">Subjects</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-<!-- Page Header -->
+    <div class="container">
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/oneCourse', id]" routerLinkActive="active">Description</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/oneCourse', id, 'skills']" routerLinkActive="active">Skills</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/oneCourse', id, 'subjects']" routerLinkActive="active">Subjects</a>
+            </li>
+          </ul>
 
+      </div>
+  </div>
+  </div>
+
+</nav>
+
+
+<!-- Page Header -->
 

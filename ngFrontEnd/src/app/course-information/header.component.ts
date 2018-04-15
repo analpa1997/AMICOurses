@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from '../model/course.model';
 
@@ -8,25 +8,19 @@ import { Course } from '../model/course.model';
   templateUrl: './header.component.html',
   styleUrls: ['./clean-blog.component.css']
 })
-export class HeaderComponent {
+
+export class HeaderComponent implements OnInit {
 
   @Input()
-  private course: Course ;
+  id?: Number;
+
 
   constructor(private router: Router) {
+
   }
 
-  goDescription () {
-    this.router.navigate(['oneCourse', this.course.courseID]);
+  ngOnInit () {
+
   }
 
-  goSkills () {
-
-    this.router.navigate(['oneCourse', this.course.courseID, 'skills']);
-  }
-
-  goSubjects () {
-
-    this.router.navigate(['oneCourse', this.course.courseID, 'subjects']);
-  }
 }
