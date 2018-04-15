@@ -1,6 +1,6 @@
 /*Level 1 tabs */
 
-.nav-link.active.level-1 {
+/*.nav-link.active.level-1 {
     background-color: rgba(15, 100, 180, 0.4);
     border-color: rgba(0, 0, 0, 0.2);
     border-bottom: 0;
@@ -25,6 +25,13 @@
     border-color: rgba(0, 0, 0, 0.2);
     border-bottom-color: rgba(255, 255, 255, 0);
 }
+*/
+
+::host >>> #contents, #evaluation, #progress, #teachers {
+    background-color: #18BC9C;
+    border-color: #18BC9C;
+}
+
  /* level 2 tabs */
 
 .nav-link.active.level-2 {

@@ -21,10 +21,11 @@ import { HttpModule } from '@angular/http';
 import { MoodleComponent } from './moodle/moodle.component';
 import { MoodleService } from './moodle/moodle.service';
 import { Error404 } from './error/error404.component';
+import { MoodleContentsComponent } from './moodle/moodleContents.component';
 
 @NgModule({declarations: [AppComponent, HeaderComponent, FooterComponent, OneCourseComponent,
                           SkillsComponent, SubjectsComponent, IndexPageComponent, HeaderGeneralComponent, 
-                          CourseIndexComponent, LoginComponent, MoodleComponent, Error404, ],
+                          CourseIndexComponent, LoginComponent, MoodleComponent, Error404, MoodleContentsComponent ],
   imports: [BrowserModule, routing, HttpClientModule,  HttpModule  , NgbModule.forRoot(), AngularFontAwesomeModule],
   providers: [CourseService, LoginService, MoodleService],
   bootstrap: [AppComponent]
