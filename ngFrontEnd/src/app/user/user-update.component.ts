@@ -23,36 +23,21 @@ import { User, UserService } from './user.service';
   </p>
   </div>`
 })
-export class BookFormComponent {
+export class UserUpdateComponent {
 
-  newBook: boolean;
-  book: Book;
+  userUpdated: boolean;
+  user: User;
+  private service: UserService;
 
-  constructor(
-    private _router: Router,
-    activatedRoute: ActivatedRoute,
-    private service: BookService) {
 
-    const id = activatedRoute.snapshot.params['id'];
-    if (id) {
-      service.getBook(id).subscribe(
-        book => this.book = book,
-        error => console.error(error)
-      );
-      this.newBook = false;
-    } else {
-      this.book = { title: '', description: '' };
-      this.newBook = true;
-    }
-  }
 
   cancel() {
     window.history.back();
   }
 
   save() {
-    this.service.saveBook(this.book).subscribe(
-      book => { },
+    this.service.updateUser(this.user).subscribe(
+      user => { },
       error => console.error('Error creating new book: ' + error)
     );
     window.history.back();

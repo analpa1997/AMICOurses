@@ -3,10 +3,11 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import {User} from '../model/user.model';
 
-export interface User {
+export class User  {
   id?: number;
-  title: string;
-  description: string;
+  username: string;
+  UserMail: string;
+  password: string;
 }
 
 const URL = 'https://localhost:8443/api/users/';
@@ -21,7 +22,7 @@ export class UserService {
       .catch(error => this.handleError(error));
   }
 
-  getUser(id: number | string) {
+  getUser(id: number) {
     return this.http.get(URL + id, { withCredentials: true })
       .map(response => response.json())
       .catch(error => this.handleError(error));
