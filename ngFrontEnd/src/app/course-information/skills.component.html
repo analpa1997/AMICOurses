@@ -1,5 +1,30 @@
 <!-- Page Header -->
-<header class="masthead" style="background-image: url('/courses/img/{{courseID}}')">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">AMICOURSES</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="container">
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['../']" routerLinkActive="active">Description</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['.']" routerLinkActive="active">Skills</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['../subjects']" routerLinkActive="active">Subjects</a>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+</nav>
+<header class="masthead" style="background-image: url('https://localhost:8443/courses/img/{{id}}')">
   <div class="overlay"></div>
   <div class="container">
     <div class="row">
@@ -26,9 +51,9 @@
         </tr>
         </thead>
         <!-- {{#skills}} -->
-        <tbody *ngFor="let skill of skills">
+        <tbody *ngFor="let skill of skills; let i = index">
         <tr>
-          <td>{{-index}}</td>
+          <td>{{i+1}}</td>
           <td>{{skill.skillName}}</td>
           <td>{{skill.skillDescription}}</td>
         </tr>
@@ -38,3 +63,4 @@
     </div>
   </div>
 </div>
+<app-course-information-footer></app-course-information-footer>

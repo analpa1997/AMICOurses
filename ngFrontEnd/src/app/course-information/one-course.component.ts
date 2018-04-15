@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from '../model/course.model';
 import { CourseService } from './course.service';
+import {environment} from '../../environments/environment';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 @Component({
@@ -14,9 +16,15 @@ export class OneCourseComponent  implements OnInit {
 
   id: number;
   course: Course;
-  url: String;
+  imageURL: string;
 
-  constructor(private router: Router, private courseService: CourseService, private activatedRoute: ActivatedRoute) { }
+constructor(private router: Router, private courseService: CourseService, private activatedRoute: ActivatedRoute, private _sanitizer: DomSanitizer) {
+    this.imageURL = environment.URL;
+  }
+
+  public sanitizeImage(image: string) {
+    return this._sanitizer.bypassSecurityTrustStyle(`url(${image}`);
+  }
 
   ngOnInit () {
     this.id = this.activatedRoute.snapshot.params['id'];

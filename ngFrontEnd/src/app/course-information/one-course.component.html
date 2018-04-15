@@ -1,8 +1,28 @@
-<app-course-information-header></app-course-information-header>
-
-
-<header class="masthead" style="background-image: url('{{imageURL}}/courses/img/{{course.courseID}}')">
-
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">AMICOURSES</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="container">
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/oneCourse', id]" routerLinkActive="active">Description</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/oneCourse', id, 'skills']" routerLinkActive="active">Skills</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/oneCourse', id, 'subjects']" routerLinkActive="active">Subjects</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+<header class="masthead"> background-image: url("https://localhost:8443/courses/img/{{course.courseID}}">
   <div class="overlay"></div>
   <div class="container">
     <div class="row">
@@ -45,7 +65,6 @@
   </div>
 </div>
 <app-course-information-footer></app-course-information-footer>
-<router-outlet></router-outlet>
 <br>
 <!--
 {{#error}}
