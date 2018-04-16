@@ -58,4 +58,8 @@ export class MoodleComponent implements AfterViewInit  {
   
   }
 
+  getContents($event){
+    this.contentsTab.generateContent(this.subject.numberModules);
+  }
+
 }

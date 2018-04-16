@@ -2,14 +2,26 @@
 
 
 <span class="pl-3 py-1 tab-title"> Contents:</span>
-<ngb-tabset justify="fill">
+<ngb-tabset justify="fill" >
     <ngb-tab *ngFor="let module of modules; let i = index"   title="Mod {{i}}" >
         <ng-template ngbTabContent>
 
+            <span *ngIf="loginService.isStudent">
                 <a *ngFor="let studyItem of studyItems[i]" class="item-content" href="/moodle/download/studyItem/{{courseInternalName}}/{{subjectInternalName}}/{{studyItem?.studyItemID}}">
                     <li  class="list-group-item"><span
                         class="item-icon fa fa-{{studyItem?.type}} pl-5"></span> {{studyItem?.name}}</li>
                 </a> 
+            </span>
+
+
+            <span *ngIf="!loginService.isStudent">
+                <a *ngFor="let studyItem of studyItems[i]" class="item-content" href="/moodle/download/studyItem/{{courseInternalName}}/{{subjectInternalName}}/{{studyItem?.studyItemID}}">
+                    <li  class="list-group-item"><span
+                        class="item-icon fa fa-{{studyItem?.type}} pl-5"></span> {{studyItem?.name}}</li>
+                </a> 
+            </span>
+
+
         </ng-template>
     </ngb-tab>
 

@@ -15,7 +15,7 @@
             <div class="col-md-9 col-12" id="contents-tab">
             
 
-                <ngb-tabset justify="fill">
+                <ngb-tabset justify="fill" (tabChange)="getContents($event)"  [destroyOnHide]="false">
                     <ngb-tab id = "contents" title="Contents">
                         <ng-template ngbTabContent>
                             
