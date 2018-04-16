@@ -12,8 +12,8 @@ const appRoutes = [
   { path : 'index', component : IndexPageComponent,  useAsDefault: true },
   { path: 'login', component: LoginComponent},
   { path: 'oneCourse/:id', component: OneCourseComponent },
-  { path: 'skills/:id/skills', component: SkillsComponent },
-  { path: 'subjects/:id/subjects', component: SubjectsComponent},
+  { path: 'oneCourse/:id/skills', component: SkillsComponent },
+  { path: 'oneCourse/:id/subjects', component: SubjectsComponent},
   { path: 'moodle/:courseName/:subjectName', component: MoodleComponent},
   { path: 'error404', component: Error404},
 
