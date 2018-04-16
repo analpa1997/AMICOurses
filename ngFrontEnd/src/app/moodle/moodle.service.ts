@@ -22,6 +22,12 @@ export class MoodleService {
     return this.http.get(reqUrl, { withCredentials: true })
   }
 
+  getStudyItemFile(courseName : string, subjectName : string, studyItemId : number) {
+    let reqUrl = URL + "moodle/" + courseName + "/" + subjectName + "/studyItem/file/" + studyItemId;
+    console.log(reqUrl);
+    return this.http.get(reqUrl, { withCredentials: true, responseType : 'blob' });
+  }
+
   private handleError(error: any) {
     console.error(error);
     return Observable.throw(error.status);

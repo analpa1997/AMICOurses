@@ -7,7 +7,10 @@ import { Subject } from '../model/subject.model';
 import { MoodleService } from './moodle.service';
 import { LoginService } from '../login/login.service';
 import { Studyitem } from '../model/studyitem.model';
-import { checkAndUpdateView } from '@angular/core/src/view/view';
+import {saveAs as importedSaveAs} from "file-saver";
+
+
+
 
 
 @Component({
@@ -39,10 +42,7 @@ export class MoodleContentsComponent{
     this.studyItemsAreMore = Array(1).fill(false);
   }
 
-
-
   generateContent(numberModules : number) {
-    console.log(numberModules);
     this.modules  = Array(numberModules).fill(0);
     this.studyItems = Array(numberModules);
     this.studyItemsPage = Array(numberModules).fill(0);
@@ -57,18 +57,32 @@ export class MoodleContentsComponent{
         },
         error => {
           console.log("Error " + error.status);
-          if (error.status==401) {
-            this.router.navigate(['/login']); //Forbidden
-          }
-  
-          if (error.status == 500) {
-            this.router.navigate(['/error404']); //Must be a 500 error
-          }
-  
-          this.router.navigate(['/error404']);
-  
-        },
+          this.errorHandler(error);
+        }
       );
     }
+  }
+
+  getStudyItemFile(studyItem : Studyitem){
+
+    this.moodleService.getStudyItemFile(this.courseName, this.subjectName, studyItem.studyItemID).subscribe(
+      res => {
+          importedSaveAs(res, studyItem.originalName);   
+      },
+
+      error => console.log
+    );
+  }
+
+  errorHandler (error: any){
+    if (error.status==401) {
+      this.router.navigate(['/login']); //Forbidden
+    }
+
+    if (error.status == 500) {
+      this.router.navigate(['/error404']); //Must be a 500 error
+    }
+
+    this.router.navigate(['/error404']);
   }
 }
