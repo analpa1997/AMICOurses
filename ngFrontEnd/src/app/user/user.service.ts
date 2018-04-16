@@ -3,12 +3,7 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import {User} from '../model/user.model';
 
-export class User  {
-  id?: number;
-  username: string;
-  UserMail: string;
-  password: string;
-}
+
 
 const URL = 'https://localhost:8443/api/users/';
 @Injectable()
@@ -37,12 +32,12 @@ export class UserService {
     });
     const options = new RequestOptions({ withCredentials: true, headers });
 
-    if (!user.id) {
+    if (!user.userID) {
       return this.http.post(URL, body, options)
         .map(response => response.json())
         .catch(error => this.handleError(error));
     } else {
-      return this.http.put(URL + user.id, body, options)
+      return this.http.put(URL + user.userID, body, options)
         .map(response => response.json())
         .catch(error => this.handleError(error));
     }
@@ -55,7 +50,7 @@ export class UserService {
     });
     const options = new RequestOptions({ withCredentials: true, headers });
 
-    return this.http.delete(URL + user.id, options)
+    return this.http.delete(URL + user.userID, options)
       .map(response => response.undefined)
       .catch(error => this.handleError(error));
   }
@@ -69,7 +64,7 @@ export class UserService {
     });
     const options = new RequestOptions({ withCredentials: true, headers });
 
-    return this.http.put(URL + user.id, body, options)
+    return this.http.put(URL + user.userID, body, options)
       .map(response => response.json())
       .catch(error => this.handleError(error));
   }

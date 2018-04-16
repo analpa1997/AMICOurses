@@ -5,34 +5,30 @@
     <h3 class="text-center">Sign Up Now</h3>
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 login-sec" align=center>
-        <form action="/registered" method="post" class="login-form">
           <div class="form-group">
-            <label for="exampleInputUsername1" class="text-uppercase">username</label>
-            <input name="username" type="text" class="col-lg-8 text-center form-control" placeholder="John_Smith85">
+            <label class="text-uppercase">username</label>
+            <input name="username" [(ngModel)]="user.username" type="text" class="col-lg-8 text-center form-control" placeholder="John_Smith85">
           </div>
           <div class="form-group">
-            <label for="exampleInputEmail1" class="text-uppercase">email</label>
-            <input name="userMail" type="text" class="col-lg-8  text-center  form-control" placeholder="johnsmith@hotmail.com">
+            <label class="text-uppercase">email</label>
+            <input name="userMail" [(ngModel)]="user.userMail" type="text" class="col-lg-8  text-center  form-control" placeholder="johnsmith@hotmail.com">
           </div>
 
           <div class="form-group">
-            <label for="exampleInputPassword1" class="text-uppercase">password</label>
-            <input name="password" type="password" class="col-lg-8  text-center form-control" placeholder="">
+            <label class="text-uppercase">password</label>
+            <input name="password" [(ngModel)]="user.password" type="password" class="col-lg-8  text-center form-control" placeholder="">
           </div>
           <div class="form-group">
-            <label for="exampleInputPassword1" class="text-uppercase">repeat password</label>
-            <input name="repeatPassword" type="password" class="col-lg-8  text-center form-control" placeholder="">
+            <label class="text-uppercase">repeat password</label>
+            <input name="repeatPassword" [(ngModel)]="repeatPassword" type="password" class="col-lg-8  text-center form-control" placeholder="">
           </div>
-          {{#wrongData}}
-          <div>
-            <p style="color:red">{{errorMessage}}, try again</p>
+          <div *ngIf="errorSign">
+            <p style="color:red">{{valError}}, try again</p>
           </div>
-          {{/wrongData}}
 
           <div class="col-xs-12 col-sm-12 col-md-12 form-check">
-            <button type="submit" class="btn btn-login float-right">Sign Up!</button>
+            <button type="submit" (click)="save()"class="btn btn-login float-right">Sign Up!</button>
           </div>
-        </form>
       </div>
     </div>
   </div>
