@@ -22,12 +22,16 @@ export class CourseService {
     return this.http.get<Subject[]>(URL + 'id/' + id + '/subjects/', { withCredentials: true });
   }
 
-  getCourses(page : number, order : string) {
+  getCourses(page : number, name : string, type : string, order : string) {
     let pageReq = "";
     let pageOrd = "";
+    let nameCourses = "";
+    let typeCourses = "";
     pageReq ="page=" + ((page) ? page : 0);
     pageOrd = "sort=" + ((order) ? order : "courseID");
-    let reqUrl = URL + "?" + pageReq + "&" + pageOrd ;
+    nameCourses = "name=" + ((name) ? name : "");
+    typeCourses = "type=" + ((type) ? type : "all");
+    let reqUrl = URL + "?" + pageReq + "&" + nameCourses + "&" + typeCourses + "&" + pageOrd;
 
     return this.http.get(reqUrl, { withCredentials: true })
   }
