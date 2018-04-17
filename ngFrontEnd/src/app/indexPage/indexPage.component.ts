@@ -54,7 +54,32 @@ export class IndexPageComponent implements OnInit {
       },
       error => console.log(error),
     );
+  }
 
+  byTrend() {
+    this.courseService.getCourses(0, this.name, this.type, "numberOfUsers").subscribe(
+      response => {
+        this.courses = response["content"];
+        this.page = response["number"];
+        this.lastPage = response["last"];
+        this.sort = "numberOfUsers";
+        this.emptyContent = this.courses.length === 0;
+      },
+      error => console.log(error),
+    );
+  }
+
+  byType() {
+    this.courseService.getCourses(0, this.name, this.type, "numberOfUsers").subscribe(
+      response => {
+        this.courses = response["content"];
+        this.page = response["number"];
+        this.lastPage = response["last"];
+        this.sort = "numberOfUsers";
+        this.emptyContent = this.courses.length === 0;
+      },
+      error => console.log(error),
+    );
   }
 
   showMoreCourses() {
