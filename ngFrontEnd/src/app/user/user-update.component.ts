@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { User, UserService } from './user.service';
+import { UserService } from './user.service';
+import {User} from '../model/user.model';
 
 @Component({
   template: `
@@ -36,7 +37,7 @@ export class UserUpdateComponent {
   }
 
   save() {
-    this.service.updateUser(this.user).subscribe(
+    this.service.newUser(this.user).subscribe(
       user => { },
       error => console.error('Error creating new book: ' + error)
     );

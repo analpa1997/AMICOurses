@@ -12,7 +12,7 @@ export class SignupComponent {
   newUser: boolean;
   user: User;
   errorSign: boolean;
-  repeatPassword: boolean;
+  repeatPassword: string;
   valError: string;
 
   constructor(
@@ -23,31 +23,31 @@ export class SignupComponent {
     const id = activatedRoute.snapshot.params['id'];
     if (id) {
       service.getUser(id).subscribe(
-        book => this.user = book,
+        user => this.user = user,
         error => console.error(error)
       );
       this.newUser = false;
     } else {
-      this.user = { username: '', userMail: '' };
+      // this.user = { username: '', userMail: '' };
       this.newUser = true;
     }
   }
 
-  cancel() {
-    window.history.back();
-  }
-
   save() {
-    this.service.newUser(this.user).subscribe(
-      user => { },
-      error => console.error('Error creating new user: ' + error)
-    );
-    window.history.back();
+    if (this.check()) {
+      this.service.newUser(this.user).subscribe(
+        user => {
+        },
+        error => console.error('Error creating new user: ' + error)
+      );
+    }
   }
 
   check() {
-    if (this.service.checkUser(this.user.username, this.user.password, this.repeatPassword, this.user.userMail, false) != null) {
-      this.errorSign = false;
+    const errors: boolean[] = this.service.checkUser(this.user.username, this.user.username, this.user.username, this.user.username, true);
+    if (errors[0] && errors[1] && errors[2] && errors[3] && errors[4]) {
+      this.errorSign = true;
+      return true;
     } else {
       this.valError = '';
       if (this.user.username = '') {
@@ -56,28 +56,27 @@ export class SignupComponent {
         this.valError = 'The password can not be empty';
       } else if (this.user.userMail = '') {
         this.valError = 'The userMail can not be empty';
-      } else if (!this.service.passwordMatch(this.user.password, this.repeatPassword)) {
-        if (!this.user.password === this.repeatPassword) {
+      } else if (!errors[0]) { // Password Match
+        if (!(this.user.password === this.repeatPassword)) {
           this.valError = 'The passwords are different';
         } else if (this.user.password.length <= 7) {
           this.valError = 'The password is too short';
         } else if (this.user.password.length >= 15) {
           this.valError = 'The password is too long';
-      }} else if (!this.service.correctName(this.user.username)) {
+      }} else if (!errors[1]) { // Correct Name
         if (this.user.username.length <= 4) {
           this.valError = 'The username is too short';
       } else if (this.user.username.length >= 16) {
           this.valError = 'The username is too long';
-        } else if (!this.user.username.match('^[a-zA-Z0-9_-]*$")')) {
-          this.valError = 'The username only can contains letters, numbers, - or _.';
-      }} else if (!this.service.isValidEmailAddress(this.user.userMail)) {
+      }} else if (!errors[2]) { // Is Valid Email
         this.valError = 'The email address is not correct';
-      } else if (userRepository.findByUsername(this.user.username) != null) {
+      } else if (!errors[3]) { // Username in use
         this.valError = 'There is another user with that username';
-      } else if (userRepository.findByUserMail(this.user.userMail) != null) {
+      } else if (!errors[4]) { // Email in use
         this.valError = 'There is another user with that email address';
       }
       this.errorSign = true;
+      return true;
     }
   }
 }

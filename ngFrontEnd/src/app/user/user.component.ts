@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
-import { User, UserService } from './user.service';
+import { UserService } from './user.service';
 import { LoginService } from '../login/login.service';
+import {User} from '../model/user.model';
 
 @Component({
   template: `
@@ -44,7 +44,7 @@ export class UserComponent {
   }
 
   updateUser() {
-    this.router.navigate(['/user/update', this.user.id]);
+    this.router.navigate(['/user/update', this.user.userID]);
   }
 
   gotoUsers() {

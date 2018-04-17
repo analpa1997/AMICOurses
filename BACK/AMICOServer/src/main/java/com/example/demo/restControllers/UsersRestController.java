@@ -38,6 +38,19 @@ public class UsersRestController {
 	@Autowired
 	private UserService userService;
 
+	// ********************** GET ********************
+	@JsonView(User.BasicUser.class)
+	@RequestMapping(value = "/api/users/request/?", method = RequestMethod.GET)
+	public boolean[] response(@RequestParam String username, @RequestParam String userMail) {
+		boolean errors[] = { false, false };
+		if (repository.findByUsername(username) == null)
+			errors[0] = true;
+		if (repository.findByUserMail(userMail) == null)
+			errors[1] = true;
+
+		return errors;
+	}
+
 	// ********************** POST ********************
 	@JsonView(User.BasicUser.class)
 	@RequestMapping(value = "/api/users", method = RequestMethod.POST)

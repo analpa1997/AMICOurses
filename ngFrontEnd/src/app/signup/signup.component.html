@@ -11,7 +11,10 @@
           </div>
           <div class="form-group">
             <label class="text-uppercase">email</label>
-            <input name="userMail" [(ngModel)]="user.userMail" type="text" class="col-lg-8  text-center  form-control" placeholder="johnsmith@hotmail.com">
+            <input name="userMail" [(ngModel)]="user.userMail" email="true" #prmEmail="ngModel" type="text" class="col-lg-8  text-center  form-control" placeholder="johnsmith@hotmail.com">
+            <div *ngIf="prmEmail.errors?.email">
+              Email not valid.
+            </div>
           </div>
 
           <div class="form-group">
