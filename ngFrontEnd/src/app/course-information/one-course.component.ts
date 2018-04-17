@@ -3,8 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from '../model/course.model';
 import { CourseService } from './course.service';
 import {environment} from '../../environments/environment';
-import { DomSanitizer } from '@angular/platform-browser';
-
+import { LoginService} from '../login/login.service';
 
 @Component({
   selector: 'app-one-course',
@@ -18,12 +17,9 @@ export class OneCourseComponent  implements OnInit {
   course: Course;
   imageURL: string;
 
-constructor(private router: Router, private courseService: CourseService, private activatedRoute: ActivatedRoute, private _sanitizer: DomSanitizer) {
+constructor(private router: Router, private loginService: LoginService, private courseService: CourseService,
+            private activatedRoute: ActivatedRoute) {
     this.imageURL = environment.URL;
-  }
-
-  public sanitizeImage(image: string) {
-    return this._sanitizer.bypassSecurityTrustStyle(`url(${image}`);
   }
 
   ngOnInit () {

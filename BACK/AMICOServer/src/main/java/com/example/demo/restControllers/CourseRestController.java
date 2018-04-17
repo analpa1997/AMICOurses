@@ -68,7 +68,7 @@ public class CourseRestController {
 	private String message;
 
 	@RequestMapping(value = { "/id/{courseID}/", "/name/{internalName}/" }, method = RequestMethod.PUT)
-	public ResponseEntity<String> addCourseToUser(Model model, @PathVariable(required = false) String internalName,
+	public ResponseEntity<String> addCourseToUser(@PathVariable(required = false) String internalName,
 			@PathVariable(required = false) Long courseID) {
 
 		Course course;

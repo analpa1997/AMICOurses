@@ -22,6 +22,10 @@ export class CourseService {
     return this.http.get<Subject[]>(URL + 'id/' + id + '/subjects/', { withCredentials: true });
   }
 
+  addCourseToUser(id: number | string) {
+    return this.http.put(URL + 'id/' + id + '/add', null, {withCredentials: true});
+  }
+
   getCourses(page : number, name : string, type : string, order : string) {
     let pageReq = "";
     let pageOrd = "";
