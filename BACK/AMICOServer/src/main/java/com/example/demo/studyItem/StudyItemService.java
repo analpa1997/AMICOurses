@@ -87,7 +87,7 @@ public class StudyItemService {
 
 		studyItem.setPractice(isPractice);
 		studyItem.setSubject(subject);
-		
+		studyItem.setIcon(studyItem.getType());
 		studyItem = studyItemRepository.save(studyItem);
 		
 		subject.getStudyItemsList().add(studyItem);

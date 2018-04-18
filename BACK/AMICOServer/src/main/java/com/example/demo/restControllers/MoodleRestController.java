@@ -164,7 +164,7 @@ public class MoodleRestController {
 	/* Retrieves only one studyItem/practice from a subject */
 
 	interface StudyItemDetailed extends StudyItem.BasicStudyItem, StudyItem.Practice, StudyItem.SubjectOrigin,
-			Practices.BasicPractice, Subject.SubjectsBasicInformation {
+			Practices.BasicPractice{
 	}
 
 	@JsonView(StudyItemDetailed.class)
@@ -304,7 +304,7 @@ public class MoodleRestController {
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
-	/* Creates a studyItem within a subject and a module */
+	/* Creates a practice within a subject */
 	@JsonView(StudyItemDetailed.class)
 	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/practice", method = RequestMethod.POST)
 	public ResponseEntity<StudyItem> createPractice(@PathVariable String courseInternalName,

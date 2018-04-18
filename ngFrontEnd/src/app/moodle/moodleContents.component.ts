@@ -103,6 +103,25 @@ export class MoodleContentsComponent{
     )
   }
 
+  createStudyItem (name : string, type: string, file : any, module : number){
+    if (file.files[0] && name.length>0 && type.length>0){
+      let studyItem = new Studyitem();
+      studyItem.name = name;
+      studyItem.type = type;
+      this.moodleService.createStudyItem(this.courseName, this.subjectName, module+1, studyItem,).subscribe(
+        res => {
+          this.moodleService.uploadFile(this.courseName, this.subjectName, res , file.files[0]).subscribe(
+            res => this.studyItems[module].push(res),
+            error => this.errorHandler(error),
+          );
+        }, error => this.errorHandler(error)
+      )
+    } else {
+      alert ("There are empty parameters");
+    }
+  }
+
+
   errorHandler (error: any){
     if (error.status==401) {
       this.router.navigate(['/login']); //Forbidden

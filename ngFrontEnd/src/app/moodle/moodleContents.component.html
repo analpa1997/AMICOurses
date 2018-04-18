@@ -1,6 +1,6 @@
 <span class="pl-3 py-1 tab-title"> Contents:</span>
 <ngb-tabset justify="fill">
-    <ngb-tab *ngFor="let module of modules; let i = index" title="Mod {{i}}">
+    <ngb-tab *ngFor="let module of modules; let i = index" title="Mod {{i+1}}">
         <ng-template ngbTabContent>
 
             <!-- Students -->
@@ -35,6 +35,17 @@
 
 
                 </li>
+
+                <li class = "item-content list-group-item col-12">
+                        <span class = "col-12">
+                            <label class = "col-md-1">New:</label>
+                            <input class = "col-md-2" type = "text" #itemName placeholder = "Name:">
+                            <input class = "col-md-3" type = "text" #itemType placeholder = "Icon: (pdf, word, video...)">
+                            <input class = "col-md-4" type = "file" #itemFile>
+                            <button class = "col-md-1" (click)="createStudyItem(itemName.value, itemType.value, itemFile, i)">Create</button>
+                        </span>
+                </li> 
+
             </span>
 
 
