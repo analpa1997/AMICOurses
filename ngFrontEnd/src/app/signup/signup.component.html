@@ -7,30 +7,30 @@
       <div class="col-xs-12 col-sm-12 col-md-12 login-sec" align=center>
           <div class="form-group">
             <label class="text-uppercase">username</label>
-            <input name="username" [(ngModel)]="user.username" type="text" class="col-lg-8 text-center form-control" placeholder="John_Smith85">
+            <input #username name="username" type="text" class="col-lg-8 text-center form-control" placeholder="John_Smith85">
           </div>
           <div class="form-group">
             <label class="text-uppercase">email</label>
-            <input name="userMail" [(ngModel)]="user.userMail" email="true" #prmEmail="ngModel" type="text" class="col-lg-8  text-center  form-control" placeholder="johnsmith@hotmail.com">
-            <div *ngIf="prmEmail.errors?.email">
+            <input #mail name="userMail"  email="true" type="text" class="col-lg-8  text-center  form-control" placeholder="johnsmith@hotmail.com">
+            <div *ngIf="mail.errors?.email">
               Email not valid.
             </div>
           </div>
 
           <div class="form-group">
             <label class="text-uppercase">password</label>
-            <input name="password" [(ngModel)]="user.password" type="password" class="col-lg-8  text-center form-control" placeholder="">
+            <input #pass name="password" type="password" class="col-lg-8  text-center form-control" placeholder="">
           </div>
           <div class="form-group">
             <label class="text-uppercase">repeat password</label>
-            <input name="repeatPassword" [(ngModel)]="repeatPassword" type="password" class="col-lg-8  text-center form-control" placeholder="">
+            <input #Rpass name="repeatPassword" type="password" class="col-lg-8  text-center form-control" placeholder="">
           </div>
           <div *ngIf="errorSign">
             <p style="color:red">{{valError}}, try again</p>
           </div>
 
           <div class="col-xs-12 col-sm-12 col-md-12 form-check">
-            <button type="submit" (click)="save()"class="btn btn-login float-right">Sign Up!</button>
+            <button type="submit" (click)="save($event, username.value, mail.value, pass.value, Rpass.value)"class="btn btn-login float-right">Sign Up!</button>
           </div>
       </div>
     </div>

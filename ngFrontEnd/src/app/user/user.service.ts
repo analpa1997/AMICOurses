@@ -5,7 +5,7 @@ import {User} from '../model/user.model';
 
 
 
-const URL = 'https://localhost:8443/api/users';
+const URL = 'https://localhost:8443/api/users/';
 @Injectable()
 export class UserService {
 
@@ -17,8 +17,8 @@ export class UserService {
       .catch(error => this.handleError(error));
   }
 
-  getUser(id: number) {
-    return this.http.get(URL + id, { withCredentials: true })
+  getUser(internal: string) {
+    return this.http.get(URL + internal, { withCredentials: true })
       .map(response => response.json())
       .catch(error => this.handleError(error));
   }
@@ -51,7 +51,7 @@ export class UserService {
     const options = new RequestOptions({ withCredentials: true, headers });
 
     return this.http.delete(URL + user.userID, options)
-      .map(response => response.undefined)
+      .map(rensponse => undefined)
       .catch(error => this.handleError(error));
   }
 
@@ -77,7 +77,7 @@ export class UserService {
   checkUser(username: string, password: string, repeatPassword: string, userMail: string, admin: boolean) {
     const usernameR = 'username=' + username;
     const userMailR = '&userMail=' + userMail;
-    const URLRequest = '/request/?';
+    const URLRequest = 'request/?';
     const errors: boolean[] = [false, false, false, false, false]; // All true if there aren't errors
 
     this.http.get(URL + URLRequest + usernameR + userMailR).subscribe(

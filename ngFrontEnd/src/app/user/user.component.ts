@@ -26,8 +26,8 @@ export class UserComponent {
   constructor(private router: Router, activatedRoute: ActivatedRoute, public service: UserService,
               public loginService: LoginService) {
 
-    const id = activatedRoute.snapshot.params['id'];
-    service.getUser(id).subscribe(
+    const userInternalName = activatedRoute.snapshot.params['userInternalName'];
+    service.getUser(userInternalName).subscribe(
       user => this.user = user,
       error => console.error(error)
     );
@@ -37,7 +37,7 @@ export class UserComponent {
     const okResponse = window.confirm('Do you want to remove this user?');
     if (okResponse) {
       this.service.removeUser(this.user).subscribe(
-        _ => this.router.navigate(['/users']),
+        _ => this.router.navigate(['/admin']),
         error => console.error(error)
       );
     }
@@ -45,9 +45,5 @@ export class UserComponent {
 
   updateUser() {
     this.router.navigate(['/user/update', this.user.userID]);
-  }
-
-  gotoUsers() {
-    this.router.navigate(['/users']);
   }
 }

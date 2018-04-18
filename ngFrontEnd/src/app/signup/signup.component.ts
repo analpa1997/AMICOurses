@@ -4,8 +4,9 @@ import {UserService } from '../user/user.service';
 import {User} from '../model/user.model';
 
 @Component({
-  templateUrl: './signup.component.html',
-  styleUrls : ['../../assets/css/login.css']
+  selector:'signup',
+  styleUrls : ['../../assets/css/csslogin.css'],
+  templateUrl: './signup.component.html'
 })
 export class SignupComponent {
 
@@ -33,8 +34,11 @@ export class SignupComponent {
     }
   }
 
-  save() {
-    if (this.check()) {
+  save(event: any, username: string, mail: string, pass: string, Rpass: string) {
+
+    event.preventDefault();
+
+    if (this.check(username, mail, pass, Rpass)) {
       this.service.newUser(this.user).subscribe(
         user => {
         },
@@ -43,8 +47,8 @@ export class SignupComponent {
     }
   }
 
-  check() {
-    const errors: boolean[] = this.service.checkUser(this.user.username, this.user.username, this.user.username, this.user.username, true);
+  check(username: string, mail: string, pass: string, Rpass: string) {
+    const errors: boolean[] = this.service.checkUser(username, pass, Rpass, mail, true);
     if (errors[0] && errors[1] && errors[2] && errors[3] && errors[4]) {
       this.errorSign = true;
       return true;
