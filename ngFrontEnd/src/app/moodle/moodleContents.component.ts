@@ -33,27 +33,27 @@ export class MoodleContentsComponent{
   private modules: number [];
   private studyItems : Studyitem [][];
   private studyItemsPage : number [];
-  private studyItemsAreMore : boolean []
+  private studyItemsisLast : boolean []
 
   constructor(private router: Router, activatedRoute: ActivatedRoute, private loginService: LoginService, private moodleService : MoodleService) {
     this.modules  = Array(1).fill(0);
     this.studyItems = Array(1);
     this.studyItemsPage = Array(1).fill(0);
-    this.studyItemsAreMore = Array(1).fill(false);
+    this.studyItemsisLast = Array(1).fill(false);
   }
 
   generateContent(numberModules : number) {
     this.modules  = Array(numberModules).fill(0);
     this.studyItems = Array(numberModules);
     this.studyItemsPage = Array(numberModules).fill(0);
-    this.studyItemsAreMore = Array(numberModules).fill(false);
+    this.studyItemsisLast = Array(numberModules).fill(false);
 
     for (let i = 0; i < this.modules.length; i++){
       this.moodleService.getStudyItemsFromModule(this.courseName, this.subjectName, i+1).subscribe(
         response => {
           this.studyItems[i] = response['content'];
           this.studyItemsPage[i] = response["number"];
-          this.studyItemsAreMore[i] = response["last"];
+          this.studyItemsisLast[i] = response["last"];
         },
         error => {
           console.log("Error " + error.status);
@@ -72,6 +72,35 @@ export class MoodleContentsComponent{
 
       error => console.log
     );
+  }
+
+  modifyStudyItem(newName : string, newType : string, module: number, index :number){
+    console.log(newName + " " + newType + " " + module + " "  +  index);
+
+    this.studyItems[module][index].name = newName;
+    this.studyItems[module][index].icon = newType;
+
+    this.moodleService.modifyStudyItem(this.courseName, this.subjectName, this.studyItems[module][index]).subscribe(
+      res => {
+        this.studyItems[module][index].name = res.name;
+        this.studyItems[module][index].type = res.type;
+        this.studyItems[module][index].icon = res.icon;
+      },
+
+      error => {
+        if (error.status == 400) {
+          alert("Incorrect params. Revise that there is not an empty field");
+        } else 
+        this.errorHandler(error)
+      },
+    )
+  }
+
+  deleteStudyItem(module : number, index : number) {
+    this.moodleService.deleteStudyItem(this.courseName, this.subjectName, this.studyItems[module][index]).subscribe(
+      res => this.studyItems[module].splice(index,1),
+      error => this.errorHandler(error),
+    )
   }
 
   errorHandler (error: any){

@@ -28,6 +28,21 @@ export class MoodleService {
     return this.http.get(reqUrl, { withCredentials: true, responseType : 'blob' });
   }
 
+  modifyStudyItem (courseName : string, subjectName : string, studyItem : Studyitem) {
+    let type = studyItem.isPractice ? "practice" : "studyItem";
+    let reqUrl = URL + "moodle/" + courseName + "/" + subjectName + "/" + type + "/" + studyItem.studyItemID;
+
+    return this.http.put<Studyitem>(reqUrl, studyItem,  { withCredentials: true });
+  }
+
+
+  deleteStudyItem (courseName : string, subjectName : string, studyItem : Studyitem) {
+    let type = studyItem.isPractice ? "practice" : "studyItem";
+    let reqUrl = URL + "moodle/" + courseName + "/" + subjectName + "/" + type + "/" + studyItem.studyItemID;
+
+    return this.http.delete<Studyitem>(reqUrl, { withCredentials: true });
+  }
+
   private handleError(error: any) {
     console.error(error);
     return Observable.throw(error.status);
