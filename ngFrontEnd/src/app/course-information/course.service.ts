@@ -26,6 +26,10 @@ export class CourseService {
     return this.http.put(URL + 'id/' + id + '/add', null, {withCredentials: true});
   }
 
+  getTypes(){
+    return this.http.get<string[]>(URL + 'types/', { withCredentials: true });
+  }
+
   getCourses(page : number, name : string, type : string, order : string) {
     let pageReq = "";
     let pageOrd = "";

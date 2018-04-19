@@ -15,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -84,9 +83,9 @@ public class CourseRestController {
 			message = "To register for a course it is necessary to be logged into the system. Press AMICOURSES to return to the main screen and be able to register in the system ";
 			return new ResponseEntity<>(message, HttpStatus.NETWORK_AUTHENTICATION_REQUIRED);
 		} else { // registered. Get the user data
-			
-			//System.out.println ("adding a new course to a user");
-			
+
+			// System.out.println ("adding a new course to a user");
+
 			if (courseID == null)
 				course = courseRepository.findByInternalName(internalName);
 			else
@@ -141,8 +140,8 @@ public class CourseRestController {
 					course.setInscribedUsers(uInscribedList);
 					course.setNumberOfUsers(course.getNumberOfUsers() + 1);
 					courseRepository.save(course);// update courses
-					
-					//System.out.println ("course added");
+
+					// System.out.println ("course added");
 
 					// go to user profile
 
@@ -297,6 +296,15 @@ public class CourseRestController {
 			}
 		else
 			res.sendError(404);
+	}
+
+	@RequestMapping(value = "/types/", method = RequestMethod.GET)
+	public ResponseEntity<List<String>> getTypes() {
+		List<String> result = new ArrayList<>();
+		for (Course c : courseRepository.findAll())
+			if (!result.contains(c.getType()))
+				result.add(c.getType());
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@JsonView(CourseBasicInformation.class)
