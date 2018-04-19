@@ -21,7 +21,7 @@
   </div>
 </nav>
 <!-- Page Header -->
-<header class="masthead" style="background-image: url('/courses/img/{{courseID}}')">
+<header class="masthead" [ngStyle]="{'background-image': 'url(https://localhost:8443/courses/img/' + courseID + ')'}">
   <div class="overlay"></div>
   <div class="container">
     <div class="row">
