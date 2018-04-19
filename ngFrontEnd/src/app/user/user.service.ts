@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/Rx';
 import {User} from '../model/user.model';
 
 
 
-const URL = 'https://localhost:8443/api/users/';
+const URL = 'https://localhost:8443/api/users';
 @Injectable()
 export class UserService {
 
@@ -31,16 +32,9 @@ export class UserService {
       'X-Requested-With': 'XMLHttpRequest'
     });
     const options = new RequestOptions({ withCredentials: true, headers });
-
-    if (!user.userID) {
       return this.http.post(URL, body, options)
         .map(response => response.json())
         .catch(error => this.handleError(error));
-    } else {
-      return this.http.put(URL + user.userID, body, options)
-        .map(response => response.json())
-        .catch(error => this.handleError(error));
-    }
   }
 
   removeUser(user: User) {
@@ -77,7 +71,7 @@ export class UserService {
   checkUser(username: string, password: string, repeatPassword: string, userMail: string, admin: boolean) {
     const usernameR = 'username=' + username;
     const userMailR = '&userMail=' + userMail;
-    const URLRequest = 'request/?';
+    const URLRequest = '/request?';
     const errors: boolean[] = [false, false, false, false, false]; // All true if there aren't errors
 
     this.http.get(URL + URLRequest + usernameR + userMailR).subscribe(

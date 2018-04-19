@@ -40,8 +40,9 @@ public class UsersRestController {
 
 	// ********************** GET ********************
 	@JsonView(User.BasicUser.class)
-	@RequestMapping(value = "/api/users/request/?", method = RequestMethod.GET)
-	public boolean[] response(@RequestParam String username, @RequestParam String userMail) {
+	@RequestMapping(value = "/api/users/request", method = RequestMethod.GET)
+	public boolean[] response(@RequestParam(value = "username", required = true) String username,
+			@RequestParam(value = "userMail", required = true) String userMail) {
 		boolean errors[] = { false, false };
 		if (repository.findByUsername(username) == null)
 			errors[0] = true;

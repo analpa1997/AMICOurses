@@ -21,7 +21,7 @@ export class SignupComponent {
     activatedRoute: ActivatedRoute,
     private service: UserService) {
 
-    const id = activatedRoute.snapshot.params['id'];
+    /*const id = activatedRoute.snapshot.params['id'];
     if (id) {
       service.getUser(id).subscribe(
         user => this.user = user,
@@ -31,7 +31,7 @@ export class SignupComponent {
     } else {
       // this.user = { username: '', userMail: '' };
       this.newUser = true;
-    }
+    }*/
   }
 
   save(event: any, username: string, mail: string, pass: string, Rpass: string) {
@@ -54,23 +54,23 @@ export class SignupComponent {
       return true;
     } else {
       this.valError = '';
-      if (this.user.username = '') {
+      if (username = '') {
         this.valError = 'The username can not be empty';
-      } else if (this.user.password = '') {
+      } else if (pass = '') {
         this.valError = 'The password can not be empty';
-      } else if (this.user.userMail = '') {
+      } else if (mail = '') {
         this.valError = 'The userMail can not be empty';
       } else if (!errors[0]) { // Password Match
-        if (!(this.user.password === this.repeatPassword)) {
+        if (!(pass === Rpass)) {
           this.valError = 'The passwords are different';
-        } else if (this.user.password.length <= 7) {
+        } else if (pass.length <= 7) {
           this.valError = 'The password is too short';
-        } else if (this.user.password.length >= 15) {
+        } else if (pass.length >= 15) {
           this.valError = 'The password is too long';
       }} else if (!errors[1]) { // Correct Name
-        if (this.user.username.length <= 4) {
+        if (username.length <= 4) {
           this.valError = 'The username is too short';
-      } else if (this.user.username.length >= 16) {
+      } else if (username.length >= 16) {
           this.valError = 'The username is too long';
       }} else if (!errors[2]) { // Is Valid Email
         this.valError = 'The email address is not correct';
