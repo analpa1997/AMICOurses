@@ -8,7 +8,7 @@ import { LoginService} from '../login/login.service';
 @Component({
   selector: 'app-one-course',
   templateUrl: './one-course.component.html',
-  styleUrls: ['./clean-blog.component.css']
+  styleUrls: ['./clean-blog.component.css', './clean-blog.min.component.css']
 
 })
 export class OneCourseComponent  implements OnInit {

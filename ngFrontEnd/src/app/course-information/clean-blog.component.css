@@ -176,8 +176,7 @@ img::-moz-selection {
 header.masthead {
   margin-bottom: 50px;
   background: no-repeat center center;
-  /* background-color: #868e96; */
-  background-color: #fffeff;
+  background-color: #868e96;
   background-attachment: scroll;
   position: relative;
   -webkit-background-size: cover;
@@ -275,7 +274,10 @@ header.masthead .post-heading .meta a {
     font-size: 30px;
   }
 }
-
+header.imgeCourse{
+  margin: auto;
+  width: 100%;
+}
 .post-preview > a {
   color: #212529;
 }
@@ -421,3 +423,4 @@ footer .copyright {
   font-size: 16px;
   padding: 25px 35px;
 }
+

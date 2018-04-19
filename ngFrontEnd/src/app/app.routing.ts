@@ -8,6 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { MoodleComponent } from './moodle/moodle.component';
 import { Error404 } from './error/error404.component';
 import {SignupComponent} from './signup/signup.component';
+import { AddCourseToUserComponent} from './course-information/addCourse-toUser.component';
 
 const appRoutes = [
   { path : 'index', component : IndexPageComponent,  useAsDefault: true },
@@ -18,6 +19,7 @@ const appRoutes = [
   { path: 'moodle/:courseName/:subjectName', component: MoodleComponent},
   { path: 'error404', component: Error404},
   { path: 'signup', component: SignupComponent},
+  { path: 'oneCourse/:id/add', component: AddCourseToUserComponent},
 
   { path: '', redirectTo: 'index', pathMatch: 'full'},
 ];

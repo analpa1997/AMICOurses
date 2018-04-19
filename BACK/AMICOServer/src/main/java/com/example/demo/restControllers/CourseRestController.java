@@ -67,7 +67,7 @@ public class CourseRestController {
 
 	private String message;
 
-	@RequestMapping(value = { "/id/{courseID}/", "/name/{internalName}/" }, method = RequestMethod.PUT)
+	@RequestMapping(value = { "/id/{courseID}/add", "/name/{internalName}/add" }, method = RequestMethod.PUT)
 	public ResponseEntity<String> addCourseToUser(@PathVariable(required = false) String internalName,
 			@PathVariable(required = false) Long courseID) {
 
@@ -84,6 +84,9 @@ public class CourseRestController {
 			message = "To register for a course it is necessary to be logged into the system. Press AMICOURSES to return to the main screen and be able to register in the system ";
 			return new ResponseEntity<>(message, HttpStatus.NETWORK_AUTHENTICATION_REQUIRED);
 		} else { // registered. Get the user data
+			
+			//System.out.println ("adding a new course to a user");
+			
 			if (courseID == null)
 				course = courseRepository.findByInternalName(internalName);
 			else
@@ -138,6 +141,8 @@ public class CourseRestController {
 					course.setInscribedUsers(uInscribedList);
 					course.setNumberOfUsers(course.getNumberOfUsers() + 1);
 					courseRepository.save(course);// update courses
+					
+					//System.out.println ("course added");
 
 					// go to user profile
 
