@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from '../model/course.model';
 import { CourseService } from '../course-information/course.service';
@@ -14,34 +14,53 @@ import {saveAs as importedSaveAs} from "file-saver";
 
 
 @Component({
-  selector: 'moodle-contents-component',
-  templateUrl: './moodleContents.component.html',
+  selector: 'moodle-evaluation-component',
+  templateUrl: './moodleEvaluation.component.html',
   styleUrls : ['../../assets/css/student-subject.css']
 })
 
 
 
-export class MoodleContentsComponent{
-
-   
+export class MoodleEvaluationComponent implements AfterViewInit{
 
   @Input()
   private subjectName : string;
   @Input()
   private courseName : string;
 
-  private modules: number [];
-  private studyItems : Studyitem [][];
-  private studyItemsPage : number [];
-  private studyItemsisLast : boolean []
+  practices: Studyitem [];
+
+
+  private hasMoreSubmissions: boolean [];
+  private isLastPractice : boolean;
 
   constructor(private router: Router, activatedRoute: ActivatedRoute, private loginService: LoginService, private moodleService : MoodleService) {
-    this.modules  = Array(1).fill(0);
-    this.studyItems = Array(1);
-    this.studyItemsPage = Array(1).fill(0);
-    this.studyItemsisLast = Array(1).fill(false);
+
   }
 
+  ngAfterViewInit() {
+    this.getPractices()
+  }
+
+
+  getPractices() {
+    this.moodleService.getStudyItemsPractices(this.courseName, this.subjectName).subscribe(
+      res => {
+        this.practices = res['content'];
+        let i = 0;
+        for (let practice of this.practices){
+          this.moodleService.getPracticesResponse(this.courseName, this.subjectName, practice).subscribe(
+            res => this.practices[i].practices = res['content'],
+          );
+        }
+      },
+      error => this.moodleService.errorHandler(error),
+
+    );
+}
+
+
+  /*
   generateContent(numberModules : number) {
     this.modules  = Array(numberModules).fill(0);
     this.studyItems = Array(numberModules);
@@ -121,4 +140,5 @@ export class MoodleContentsComponent{
     }
   }
 
+  */
 }

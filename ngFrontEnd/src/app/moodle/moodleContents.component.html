@@ -28,7 +28,7 @@
                                 <input class="form-control col-md-1" type="text" #newType size="2" value="{{studyItem.icon}}">
                                 <label class="ml-1 col-md-4 text-left">File : {{studyItem?.originalName}} </label>
                                 <button class="ml-1" name="btnSave" (click)="modifyStudyItem(newName.value, newType.value, i, j)"> Save </button>
-                                <button class="ml-1"  name="btnDelete"(click)="deleteStudyItem(i, j)"> Delete </button>
+                                <button class="ml-1" name="btnDelete" (click)="deleteStudyItem(i, j)"> Delete </button>
                             </div>
                         </span>
                     </span>
@@ -36,15 +36,15 @@
 
                 </li>
 
-                <li class = "item-content list-group-item col-12">
-                        <span class = "col-12">
-                            <label class = "col-md-1">New:</label>
-                            <input class = "col-md-2" type = "text" #itemName placeholder = "Name:">
-                            <input class = "col-md-3" type = "text" #itemType placeholder = "Icon: (pdf, word, video...)">
-                            <input class = "col-md-4" type = "file" #itemFile>
-                            <button class = "col-md-1" (click)="createStudyItem(itemName.value, itemType.value, itemFile, i)">Create</button>
-                        </span>
-                </li> 
+                <li class="item-content list-group-item col-12">
+                    <span class="col-12">
+                        <label class="col-md-1">New:</label>
+                        <input class="col-md-2" type="text" #itemName placeholder="Name:">
+                        <input class="col-md-3" type="text" #itemType placeholder="Icon: (pdf, word, video...)">
+                        <input class="col-md-4" type="file" #itemFile>
+                        <button class="col-md-1" (click)="createStudyItem(itemName.value, itemType.value, itemFile, i)">Create</button>
+                    </span>
+                </li>
 
             </span>
 

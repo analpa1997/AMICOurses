@@ -3,40 +3,39 @@
 <br>
 <div class="mt-5"> </div>
 <nav class="breadcrumb">
-    <a href="/course-overview/{{courseInternalName}}"
-        class="breadcrumb-item">{{courseName}}</a> <span
-        class="breadcrumb-item active">{{subjectName}}</span>
+    <a href="/course-overview/{{courseInternalName}}" class="breadcrumb-item">{{courseName}}</a>
+    <span class="breadcrumb-item active">{{subjectName}}</span>
 </nav>
 
 <section>
     <div class="container-fluid ">
         <div class="row">
-            <!-- Contents -->
             <div class="col-md-9 col-12" id="contents-tab">
-            
+                <ngb-tabset justify="fill" (tabChange)="getContents($event)" [destroyOnHide]="false">
 
-                <ngb-tabset justify="fill" (tabChange)="getContents($event)"  [destroyOnHide]="false">
-                    <ngb-tab id = "contents" title="Contents">
+                    <!-- Contents -->
+                    <ngb-tab id="contents" title="Contents">
                         <ng-template ngbTabContent>
-                            
+
                             <moodle-contents-component [courseName]='courseName' [subjectName]='subjectName'></moodle-contents-component>
 
                         </ng-template>
                     </ngb-tab>
 
-                    <ngb-tab id = "evaluation" title="Evaluation">
+                    <!-- Evaluation  -->
+                    <ngb-tab id="evaluation" title="Evaluation" >
                         <ng-template ngbTabContent>
-                            Evaluation
+                                <moodle-evaluation-component [courseName]='courseName' [subjectName]='subjectName'></moodle-evaluation-component>
                         </ng-template>
                     </ngb-tab>
 
-                    <ngb-tab id = "progress" title="Progress">
+                    <ngb-tab id="progress" title="Progress">
                         <ng-template ngbTabContent>
                             Progress
                         </ng-template>
                     </ngb-tab>
 
-                    <ngb-tab id = "teachers" title="{{teachers}}">
+                    <ngb-tab id="teachers" title="{{teachersPanel}}">
                         <ng-template ngbTabContent>
                             Teachers
                         </ng-template>
@@ -45,7 +44,7 @@
                 </ngb-tabset>
             </div>
 
-             <!-- Mail and forum tab -->
+            <!-- Mail and forum tab -->
             <div class="col" id="lateral-pane">
                 <!-- Mail -->
                 <div class="border text-center lateral-item">
@@ -72,12 +71,12 @@
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </div>
 
 
 
-   
+
 
 </section>

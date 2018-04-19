@@ -1,0 +1,53 @@
+<div class="container-fluid">
+    <div class="pl-3 py-1 tab-title"> Practices: </div>
+    <div div *ngFor="let practice of practices; let i = index">
+        <div class="pl-3 py-1 tab-title ml-2"> {{practice.name}}: </div>
+        <ul class="list-group mx-2">
+            <!-- submission -->
+            <li class="item-content list-group-item col-12">
+                <span class="row">
+                    <a class="item-content col-md-2" href="download">
+                        <span>{{i+1}}.- </span>
+                        <span class="item-icon fa fa-{{practice.type}}-o pl-3 pr-3"></span>{{practice.name}} 
+                    
+                    
+                    
+                    
+                    
+                    </a>
+
+                    <div *ngIf="!loginService.isStudent" class="col-md-10 row">
+                        <label class="ml-1 col-md-1">Rename: </label>
+                        <input class="form-control col-md-4" type="text" name="newName" value="{{practice.name}}">
+                        <label class="ml-1 col-md-1"> Type: </label>
+                        <input class="form-control col-md-1" type="text" name="newType" size="2" value={{practice.icon}}>
+                        <label class="ml-1 col-md-col-md-4 text-left">File : {{practice.originalName}} </label>
+                        <button class="ml-1 col-md-1" type="submit" name="btnSave" value="save"> Save </button>
+                        <button class="ml-1 col-md-1" type="submit" name="btnDelete" value="delete"> Delete </button>
+                    </div>
+
+
+                </span>
+            </li>
+            <!-- Every practice from every student -->
+
+            <li *ngFor="let practiceSubmission of practice.practices" class="item-content list-group-item col-11 offset-1">
+                <span class="row ml-3">
+                    <span class="col-md-2">Username : {{practiceSubmission.owner.username}} </span>
+                    <span class="col-md-3">File :
+                        <a class="item-content col-md-2" href="/moodle/download/studyItem/{{courseInternalName}}/{{subjectInternalName}}/{{studyItemID}}/{{practiceID}}">{{practiceSubmission.practiceName}}</a>
+                    </span>
+                    <span class="col-md-7">
+                        <div class="form-inline">
+                            <label class="mr-2">Calification: </label>
+                            <input class="form-control" type="number" name="newCalification" value="{{practiceSubmission.calification}}" min="0" max="10"
+                                step="any">
+                            <button class="ml-3" type="submit" name="btnSave" value="save"> Save </button>
+                        </div>
+                    </span>
+                </span>
+            </li>
+        </ul>
+    </div>
+
+</div>

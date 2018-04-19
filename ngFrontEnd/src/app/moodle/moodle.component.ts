@@ -7,6 +7,7 @@ import { Subject } from '../model/subject.model';
 import { MoodleService } from './moodle.service';
 import { LoginService } from '../login/login.service';
 import { MoodleContentsComponent } from './moodleContents.component';
+import { Studyitem } from '../model/studyitem.model';
 
 
 @Component({
@@ -23,7 +24,8 @@ export class MoodleComponent implements AfterViewInit  {
   courseName : string;
   subjectName : string;
   URL: string;
-  teachers : string;
+  teachersPanel : string;
+
 
    @ViewChild(MoodleContentsComponent) contentsTab: MoodleContentsComponent;
 
@@ -31,28 +33,19 @@ export class MoodleComponent implements AfterViewInit  {
     this.URL = environment.URL;
     this.courseName = activatedRoute.snapshot.params['courseName'];
     this.subjectName = activatedRoute.snapshot.params['subjectName'];
-    this.teachers = "";
+    this.teachersPanel = "";
   }
 
   ngAfterViewInit() {
     this.moodleService.getSubject(this.courseName, this.subjectName).subscribe(
       response => {
-        this.teachers = this.loginService.isStudent ? "Teachers" : "Students";
+        this.teachersPanel = this.loginService.isStudent ? "Teachers" : "Students";
         this.subject = response;
+        /* Retrieve the contents */
         this.contentsTab.generateContent(this.subject.numberModules);
       },
       error => {
-        console.log("Error " + error.status);
-        if (error.status==401) {
-          this.router.navigate(['/login']); //Forbidden
-        }
-
-        if (error.status == 500) {
-          this.router.navigate(['/error404']); //Must be a 500 error
-        }
-
-        this.router.navigate(['/error404']);
-
+        this.moodleService.errorHandler(error);
       },
     );
   
@@ -61,5 +54,7 @@ export class MoodleComponent implements AfterViewInit  {
   getContents($event){
     this.contentsTab.generateContent(this.subject.numberModules);
   }
+
+  
 
 }

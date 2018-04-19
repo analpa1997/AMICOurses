@@ -26,12 +26,13 @@ import { MoodleContentsComponent } from './moodle/moodleContents.component';
 import { AddCourseToUserComponent } from './course-information/addCourse-toUser.component';
 import { SignupComponent } from './signup/signup.component';
 import {UserService} from './user/user.service';
+import { MoodleEvaluationComponent } from './moodle/moodleEvaluation.component';
 
 
 @NgModule({declarations: [AppComponent, HeaderComponent, FooterComponent, OneCourseComponent,
                           SkillsComponent, SubjectsComponent, IndexPageComponent, HeaderGeneralComponent,
                           CourseIndexComponent, LoginComponent, MoodleComponent, Error404, MoodleContentsComponent,
-                          AddCourseToUserComponent, SignupComponent],
+                          AddCourseToUserComponent, SignupComponent, MoodleEvaluationComponent],
   imports: [BrowserModule, routing, HttpClientModule,  HttpModule  , NgbModule.forRoot(), AngularFontAwesomeModule],
   providers: [CourseService, LoginService, MoodleService, UserService],
   bootstrap: [AppComponent]

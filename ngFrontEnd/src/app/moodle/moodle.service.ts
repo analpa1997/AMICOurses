@@ -5,19 +5,24 @@ import {Skill} from '../model/skill.model';
 import {Subject} from '../model/subject.model';
 import { Observable } from 'rxjs/Observable';
 import { Studyitem } from '../model/studyitem.model';
+import { Router } from '@angular/router';
+import { Practices } from '../model/practices.model';
 
 const URL = 'https://localhost:8443/api/';
 
 @Injectable()
 export class MoodleService {
 
-  constructor(private http: HttpClient) {}
 
+  constructor(private http: HttpClient, private router: Router) {}
+
+  /* Main */
   getSubject(courseName : string, subjectName : string) {
     const reqUrl = URL + "subjects/" + courseName + "/" + subjectName ;
     return this.http.get<Subject>(reqUrl, { withCredentials: true })
   }
 
+  /* Contents tab */
   getStudyItemsFromModule(courseName : string, subjectName : string, module : number) {
     const reqUrl = URL + "moodle/" + courseName + "/" + subjectName + "/studyItem/module/" + module;
     return this.http.get(reqUrl, { withCredentials: true })
@@ -61,10 +66,26 @@ export class MoodleService {
 
   }
 
+  /* Practices tab */
+  getStudyItemsPractices(courseName : string, subjectName : string) {
+    const reqUrl = URL + "moodle/" + courseName + "/" + subjectName + "/practice/all";
+    return this.http.get(reqUrl, { withCredentials: true })
+  }
 
+  getPracticesResponse(courseName: string, subjectName: string, practice: Studyitem) {
+    const reqUrl = URL + "moodle/" + courseName + "/" + subjectName + "/submissions/" + practice.studyItemID;
+    return this.http.get(reqUrl, { withCredentials: true });
+  }
 
-  private handleError(error: any) {
-    console.error(error);
-    return Observable.throw(error.status);
+  errorHandler (error: any){
+    if (error.status==401) {
+      this.router.navigate(['/login']); //Forbidden
+    }
+
+    if (error.status == 500) {
+      this.router.navigate(['/error404']); //Must be a 500 error
+    }
+
+    this.router.navigate(['/error404']);
   }
 }
