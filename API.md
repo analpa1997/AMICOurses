@@ -1211,7 +1211,7 @@ A practice submission is what students submit to a practice statement
     * `submissionID=[Long]`
     
     * DATA 
-    * `file=[MultipartFile]`
+    * `itemFile=[MultipartFile]`
  
 * ##### Success Response: 200 OK
       {
