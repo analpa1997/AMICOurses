@@ -64,7 +64,7 @@ export class MoodleContentsComponent{
 
   getStudyItemFile(studyItem : Studyitem){
 
-    this.moodleService.downloadStudyItemFile(this.courseName, this.subjectName, studyItem);
+    this.moodleService.downloadFile(this.courseName, this.subjectName, studyItem);
  
   }
 

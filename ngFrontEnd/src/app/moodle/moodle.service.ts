@@ -28,14 +28,20 @@ export class MoodleService {
     return this.http.get(reqUrl, { withCredentials: true })
   }
 
-  downloadStudyItemFile(courseName: string, subjectName: string, studyItem: Studyitem) {
+  downloadFile(courseName: string, subjectName: string, studyItem: Studyitem, practiceSubmission?: Practices) {
 
-    let type = studyItem.isPractice ? "practice" : "studyItem";
-    const reqUrl = URL + "moodle/" + courseName + "/" + subjectName + "/" + type + "/file/" + studyItem.studyItemID;
-    console.log(reqUrl);
+    let reqUrl, fileName;
+    if (!practiceSubmission) {
+      let type = studyItem.isPractice ? "practice" : "studyItem";
+      reqUrl = URL + "moodle/" + courseName + "/" + subjectName + "/" + type + "/file/" + studyItem.studyItemID;
+      fileName = studyItem.originalName;
+    } else {
+      reqUrl = URL + "moodle/" + courseName + "/" + subjectName + "/submissions/" + studyItem.studyItemID + "/file/" + practiceSubmission.practiceID;
+      fileName = practiceSubmission.originalName;
+    }
     return this.http.get(reqUrl, { withCredentials: true, responseType: 'blob' }).subscribe(
       res => {
-        importedSaveAs(res, studyItem.originalName);
+        importedSaveAs(res, fileName);
       },
       error => console.log
     );
@@ -62,7 +68,7 @@ export class MoodleService {
     return this.http.post<Studyitem>(reqUrl, studyItem, { withCredentials: true })
   }
 
-  uploadFile(courseName: string, subjectName: string, studyItem: Studyitem, file: File, practiceSubmission?: Practices, update? : boolean): Observable<any> {
+  uploadFile(courseName: string, subjectName: string, studyItem: Studyitem, file: File, practiceSubmission?: Practices, update?: boolean): Observable<any> {
     let reqUrl;
     let formData = new FormData();
     formData.append('itemFile', file)
