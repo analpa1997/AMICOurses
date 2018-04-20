@@ -22,7 +22,7 @@ import { Practices } from '../model/practices.model';
 
 
 
-export class MoodleEvaluationComponent implements AfterViewInit{
+export class MoodleEvaluationComponent implements OnInit{
 
   @Input()
   private subjectName : string;
@@ -39,7 +39,7 @@ export class MoodleEvaluationComponent implements AfterViewInit{
 
   }
 
-  ngAfterViewInit() {
+  ngOnInit() {
     this.getPractices()
   }
 
@@ -49,11 +49,12 @@ export class MoodleEvaluationComponent implements AfterViewInit{
       res => {
         this.practices = res['content'];
         let i = 0;
-        for (let practice of this.practices){
+        let practice;
+        this.practices.forEach((practice, i) => {
           this.moodleService.getPracticesResponse(this.courseName, this.subjectName, practice).subscribe(
-            res => this.practices[i].practices = res['content'],
+            res =>{console.log(i); this.practices[i].practices = res['content']},
           );
-        }
+        });
       },
       error => this.moodleService.errorHandler(error),
 
@@ -74,6 +75,24 @@ modifyCalification(practice : Studyitem, practiceSubmission : Practices, newCali
 
     error => this.moodleService.errorHandler(error),
   );
+}
+
+createPractice (name : string, type: string, file : any){
+  if (file.files[0] && name.length>0 && type.length>0){
+    let practice = new Studyitem();
+    practice.name = name;
+    practice.type = type;
+    this.moodleService.createPractice(this.courseName, this.subjectName, practice).subscribe(
+      res => {
+        this.moodleService.uploadFile(this.courseName, this.subjectName, res , file.files[0]).subscribe(
+          res => this.practices.push(res),
+          error => this.moodleService.errorHandler(error),
+        );
+      }, error => this.moodleService.errorHandler(error)
+    )
+  } else {
+    alert ("There are empty parameters");
+  }
 }
 
   /*

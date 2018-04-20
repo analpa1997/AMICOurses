@@ -18,7 +18,7 @@
 
                     <div *ngIf="!loginService.isStudent" class="col-md-10 row">
                         <label class="ml-1 col-md-1">Rename: </label>
-                        <input class="form-control col-md-4" type="text" name="newName" value="{{practice.name}}">
+                        <input class="form-control col-md-3" type="text" name="newName" value="{{practice.name}}">
                         <label class="ml-1 col-md-1"> Type: </label>
                         <input class="form-control col-md-1" type="text" name="newType" size="2" value={{practice.icon}}>
                         <label class="ml-1 col-md-col-md-4 text-left">File : {{practice.originalName}} </label>
@@ -33,14 +33,14 @@
 
             <li *ngFor="let practiceSubmission of practice.practices; let j = index" class="item-content list-group-item col-11 offset-1">
                 <span class="row ml-3">
-                    <span class="col-md-2">Username : {{practiceSubmission.owner.username}} </span>
+                    <span class="col-md-2">Username : {{practiceSubmission?.owner.username}} </span>
                     <span class="col-md-3">File :
                         <a class="item-content col-md-2" href="/moodle/download/studyItem/{{courseInternalName}}/{{subjectInternalName}}/{{studyItemID}}/{{practiceID}}">{{practiceSubmission.practiceName}}</a>
                     </span>
                     <span class="col-md-7">
                         <div class="form-inline">
                             <label class="mr-2">Calification: </label>
-                            <div *ngIf="loginService.isStudent">{{practiceSubmission.calification}}</div>
+                            <div *ngIf="loginService.isStudent">{{practiceSubmission?.calification}}</div>
                             <span *ngIf="!loginService.isStudent">
                                 <input class="form-control" type="number" #newCalification value="{{practiceSubmission.calification}}" min="0" max="10" step="any">
                                 <button class="ml-3" name="btnSave" value="save" (click)="modifyCalification(practice, practiceSubmission, newCalification.value, i, j)">
@@ -50,6 +50,17 @@
                     </span>
                 </span>
             </li>
+
+            <div *ngIf="!loginService.isStudent">
+            <div  class="pl-3 py-1 tab-title ml-2"> New Practice: </div>
+            <li class="item-content list-group-item col-12">
+                    <label class="col-md-1">New:</label>
+                    <input class="col-md-2" type="text" #itemName placeholder="Name:">
+                    <input class="col-md-3" type="text" #itemType placeholder="Icon: (pdf, word, video...)">
+                    <input class="col-md-4" type="file" #itemFile>
+                    <button class="col-md-1" type="submit" (click)="createPractice(itemName.value, itemType.value, itemFile)" >Create</button>
+            </li>
+            </div>
         </ul>
     </div>
 

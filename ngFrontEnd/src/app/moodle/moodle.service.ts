@@ -91,6 +91,12 @@ export class MoodleService {
     return this.http.put<Practices>(reqUrl, practiceSubmission, { withCredentials: true });
   }
 
+  createPractice(courseName : string, subjectName : string, practice : Studyitem) {
+
+    const reqUrl = URL + "moodle/" + courseName + "/" + subjectName + "/practice";
+    return this.http.post<Studyitem>(reqUrl, practice, { withCredentials: true })
+  }
+
 
   /* Error handling */
   errorHandler (error: any){
