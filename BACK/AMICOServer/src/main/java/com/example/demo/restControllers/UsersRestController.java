@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -41,9 +42,9 @@ public class UsersRestController {
 	// ********************** GET ********************
 	@JsonView(User.BasicUser.class)
 	@RequestMapping(value = "/api/users/request", method = RequestMethod.GET)
-	public boolean[] response(@RequestParam(value = "username", required = true) String username,
+	public Boolean[] response(@RequestParam(value = "username", required = true) String username,
 			@RequestParam(value = "userMail", required = true) String userMail) {
-		boolean errors[] = { false, false };
+		Boolean errors[] = { false, false };
 		if (repository.findByUsername(username) == null)
 			errors[0] = true;
 		if (repository.findByUserMail(userMail) == null)
@@ -52,26 +53,35 @@ public class UsersRestController {
 		return errors;
 	}
 
+	/*
+	 * @JsonView(User.BasicUser.class)
+	 * 
+	 * @RequestMapping(value = "/api/users", method = RequestMethod.POST) public
+	 * ResponseEntity<User> newUser(@RequestParam String username, @RequestParam
+	 * String password,
+	 * 
+	 * @RequestParam String repeatPassword, @RequestParam String userMail) {
+	 * 
+	 * Boolean admin = null;
+	 * 
+	 * User user = sessionUserComponent.getLoggedUser(); if (user == null) admin =
+	 * false; else if (user.isAdmin()) admin = true; if (admin != null) {
+	 * 
+	 * User newUser = userService.checkUser(username, password, repeatPassword,
+	 * userMail, admin); if (newUser != null) return new ResponseEntity<>(newUser,
+	 * HttpStatus.CREATED); } return new
+	 * ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR); }
+	 */
 	// ********************** POST ********************
 	@JsonView(User.BasicUser.class)
 	@RequestMapping(value = "/api/users", method = RequestMethod.POST)
-	public ResponseEntity<User> newUser(@RequestParam String username, @RequestParam String password,
-			@RequestParam String repeatPassword, @RequestParam String userMail) { /* admin to add teachers */
+	@ResponseStatus(HttpStatus.CREATED)
+	public User newUser(@RequestBody User user) { /* admin to add teachers */
 
-		Boolean admin = null;
+		User newUser = new User(user);
+		repository.save(newUser);
 
-		User user = sessionUserComponent.getLoggedUser();/* Only for admin */
-		if (user == null)
-			admin = false;
-		else if (user.isAdmin())
-			admin = true;
-		if (admin != null) {
-
-			User newUser = userService.checkUser(username, password, repeatPassword, userMail, admin);
-			if (newUser != null)
-				return new ResponseEntity<>(newUser, HttpStatus.CREATED);
-		}
-		return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+		return newUser;
 	}
 
 	// ********************** PUT ********************

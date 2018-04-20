@@ -34,11 +34,19 @@ export class SignupComponent {
     }*/
   }
 
-  save(event: any, username: string, mail: string, pass: string, Rpass: string) {
-
+  checkUM(event: any, username: string, mail: string, pass: string, Rpass: string) {
     event.preventDefault();
-
-    if (this.check(username, mail, pass, Rpass)) {
+    this.service.checkUsernameAndMail(username, mail).subscribe(
+      response => this.save(response[0], response[1], username, mail, pass, Rpass),
+          error => console.error('Error creating new user: ' + error));
+  }
+  save(userB: boolean, mailB: boolean, username: string, mail: string, pass: string, Rpass: string) {
+    if (!userB) {// Username in use
+      this.valError = 'There is another user with that username';
+    } else if (!mailB) { // Email in use
+      this.valError = 'There is another user with that email address';
+    } else if (this.check(username, mail, pass, Rpass)) {
+      this.user = <User>{username: username, password: pass, userMail: mail, student: true};
       this.service.newUser(this.user).subscribe(
         user => {
         },
@@ -49,7 +57,7 @@ export class SignupComponent {
 
   check(username: string, mail: string, pass: string, Rpass: string) {
     const errors: boolean[] = this.service.checkUser(username, pass, Rpass, mail, true);
-    if (errors[0] && errors[1] && errors[2] && errors[3] && errors[4]) {
+    if (errors[0] && errors[1] && errors[2]) {
       this.errorSign = true;
       return true;
     } else {
@@ -74,10 +82,6 @@ export class SignupComponent {
           this.valError = 'The username is too long';
       }} else if (!errors[2]) { // Is Valid Email
         this.valError = 'The email address is not correct';
-      } else if (!errors[3]) { // Username in use
-        this.valError = 'There is another user with that username';
-      } else if (!errors[4]) { // Email in use
-        this.valError = 'There is another user with that email address';
       }
       this.errorSign = true;
       return true;

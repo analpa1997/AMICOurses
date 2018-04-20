@@ -37,10 +37,10 @@ export class UserUpdateComponent {
   }
 
   save() {
-    this.service.newUser(this.user).subscribe(
+    /*this.service.newUser(this.user).subscribe(
       user => { },
       error => console.error('Error creating new book: ' + error)
     );
-    window.history.back();
+    window.history.back();*/
   }
 }

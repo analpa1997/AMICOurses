@@ -25,13 +25,12 @@ export class UserService {
   }
 
   newUser(user: User) {
-
-    const body = JSON.stringify(user);
     const headers = new Headers({
       'Content-Type': 'application/json',
       'X-Requested-With': 'XMLHttpRequest'
     });
     const options = new RequestOptions({ withCredentials: true, headers });
+    const body = JSON.stringify(user);
       return this.http.post(URL, body, options)
         .map(response => response.json())
         .catch(error => this.handleError(error));
@@ -68,21 +67,17 @@ export class UserService {
     return Observable.throw('Server error (' + error.status + '): ' + error.text());
   }
 
-  checkUser(username: string, password: string, repeatPassword: string, userMail: string, admin: boolean) {
+  checkUsernameAndMail(username: string, userMail: string) {
     const usernameR = 'username=' + username;
     const userMailR = '&userMail=' + userMail;
     const URLRequest = '/request?';
-    const errors: boolean[] = [false, false, false, false, false]; // All true if there aren't errors
 
-    this.http.get(URL + URLRequest + usernameR + userMailR).subscribe(
-      response => {
-        const res = response.json();
-        errors[3] = res[0];
-        errors[4] = res[1];
-      },
-        error => console.error(error)
-      );
-
+    return this.http.get(URL + URLRequest + usernameR + userMailR)
+      .map(response => response.json())
+      .catch(error => this.handleError(error));
+  }
+  checkUser(username: string, password: string, repeatPassword: string, userMail: string, admin: boolean) {
+    const errors: boolean[] = [false, false, false]; // All true if there aren't errors
     function passwordMatch() {
       return (password === repeatPassword && password.length > 7 && password.length < 15);
     }

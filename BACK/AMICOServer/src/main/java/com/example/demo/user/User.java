@@ -121,6 +121,24 @@ public class User {
 		roles = new ArrayList<>(Arrays.asList("ROLE_USER"));
 	}
 
+	public User(User user) {
+		super();
+		this.username = user.username;
+		this.password = new BCryptPasswordEncoder().encode(user.password);
+		this.userMail = user.userMail;
+		this.isStudent = user.isStudent;
+		urlProfileImage = "null";
+		internalName = username.replaceAll(" ", "-").toLowerCase();
+
+		userFirstName = "";
+		userLastName = "";
+		userAddress = "";
+		city = "";
+		country = "";
+		phoneNumber = 00000000;
+		interests = "";
+		roles = new ArrayList<>(Arrays.asList("ROLE_USER"));
+	}
 	/* Methods */
 
 	@Override
