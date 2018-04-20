@@ -163,8 +163,8 @@ public class MoodleRestController {
 
 	/* Retrieves only one studyItem/practice from a subject */
 
-	interface StudyItemDetailed extends StudyItem.BasicStudyItem, StudyItem.Practice, StudyItem.SubjectOrigin,
-			Practices.BasicPractice{
+	interface StudyItemDetailed
+			extends StudyItem.BasicStudyItem, StudyItem.Practice, StudyItem.SubjectOrigin, Practices.BasicPractice {
 	}
 
 	@JsonView(StudyItemDetailed.class)
@@ -308,12 +308,11 @@ public class MoodleRestController {
 	@JsonView(StudyItemDetailed.class)
 	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/practice", method = RequestMethod.POST)
 	public ResponseEntity<StudyItem> createPractice(@PathVariable String courseInternalName,
-			@PathVariable String subjectInternalName,
-			@RequestBody StudyItem newPractice) {
+			@PathVariable String subjectInternalName, @RequestBody StudyItem newPractice) {
 
 		User user = sessionUserComponent.getLoggedUser();
 
-		if (user != null && !user.isStudent()){
+		if (user != null && !user.isStudent()) {
 
 			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
 			if (subject != null) {
@@ -330,7 +329,7 @@ public class MoodleRestController {
 		}
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
-	
+
 	/* Submits a file to a studyItem within a subject and a module */
 	@JsonView(StudyItemDetailed.class)
 	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/practice/file/{practiceID}", method = RequestMethod.POST)
@@ -363,8 +362,6 @@ public class MoodleRestController {
 		}
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
-
-
 
 	/* UPDATE */
 
@@ -520,8 +517,8 @@ public class MoodleRestController {
 	 */
 	/* The practiceID is the id from the statement */
 
-	interface PraticesDetailed extends Practices.BasicPractice, Practices.DetailedPractice,
-			StudyItem.BasicStudyItem {
+	interface PraticesDetailed
+			extends Practices.BasicPractice, Practices.DetailedPractice, StudyItem.BasicStudyItem, User.BasicUser {
 	}
 
 	@JsonView(PraticesDetailed.class)
@@ -610,14 +607,14 @@ public class MoodleRestController {
 						boolean presented = false;
 						for (Practices practiceAct : studyItem.getPractices()) {
 							if (practiceAct.getOwner().equals(user)) {
-								presented = true;
+								presented = practiceAct.isPresented();
 							}
 						}
 						if (!presented) {
 							Practices response = practicesSubmissionService.createSubmission(user, studyItem, practice);
 							return new ResponseEntity<>(response, HttpStatus.OK);
 						} else {
-							return new ResponseEntity<>(HttpStatus.IM_USED);
+							return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 						}
 					} else {
 						return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -633,10 +630,9 @@ public class MoodleRestController {
 	@RequestMapping(value = "/api/moodle/{courseInternalName}/{subjectInternalName}/submissions/{practiceID}/file/{submissionID}", method = RequestMethod.POST)
 	public ResponseEntity<Practices> createPracticeSubmissionFile(@PathVariable String courseInternalName,
 			@PathVariable String subjectInternalName, @PathVariable Long practiceID, @PathVariable Long submissionID,
-			@RequestParam MultipartFile file) throws IOException {
+			@RequestParam("itemFile") MultipartFile file) throws IOException {
 
 		User user = sessionUserComponent.getLoggedUser();
-
 		if (user != null && user.isStudent() && !file.isEmpty()) {
 			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
 			if (subject != null) {
@@ -709,6 +705,7 @@ public class MoodleRestController {
 
 		if (user != null && user.isStudent() && !file.isEmpty()) {
 			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
+
 			if (subject != null) {
 				StudyItem studyItem = studyItemRepository.findOne(practiceID);
 				if (studyItem != null) {

@@ -114,5 +114,6 @@ export class MoodleContentsComponent{
       alert ("There are empty parameters");
     }
   }
+  
 
 }
