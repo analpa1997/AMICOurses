@@ -7,7 +7,6 @@ import { Subject } from '../model/subject.model';
 import { MoodleService } from './moodle.service';
 import { LoginService } from '../login/login.service';
 import { Studyitem } from '../model/studyitem.model';
-import {saveAs as importedSaveAs} from "file-saver";
 
 
 
@@ -65,13 +64,8 @@ export class MoodleContentsComponent{
 
   getStudyItemFile(studyItem : Studyitem){
 
-    this.moodleService.getStudyItemFile(this.courseName, this.subjectName, studyItem.studyItemID).subscribe(
-      res => {
-          importedSaveAs(res, studyItem.originalName);   
-      },
-
-      error => console.log
-    );
+    this.moodleService.downloadStudyItemFile(this.courseName, this.subjectName, studyItem);
+ 
   }
 
   modifyStudyItem(newName : string, newType : string, module: number, index :number){

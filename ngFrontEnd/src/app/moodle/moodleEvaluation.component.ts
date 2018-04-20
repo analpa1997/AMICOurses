@@ -8,6 +8,7 @@ import { MoodleService } from './moodle.service';
 import { LoginService } from '../login/login.service';
 import { Studyitem } from '../model/studyitem.model';
 import {saveAs as importedSaveAs} from "file-saver";
+import { Practices } from '../model/practices.model';
 
 
 
@@ -59,6 +60,21 @@ export class MoodleEvaluationComponent implements AfterViewInit{
     );
 }
 
+getPracticeFile(practice : Studyitem){
+    this.moodleService.downloadStudyItemFile(this.courseName, this.subjectName, practice);
+}
+
+modifyCalification(practice : Studyitem, practiceSubmission : Practices, newCalification : number, index : number, practiceSub: number) {
+  practiceSubmission.calification = newCalification;
+  console.log(newCalification);
+  this.moodleService.modifyPracticeSubmission(this.courseName, this.subjectName, practice, practiceSubmission).subscribe(
+    res => {
+      this.practices[index].practices[practiceSub].calification = res.calification;
+    },
+
+    error => this.moodleService.errorHandler(error),
+  );
+}
 
   /*
   generateContent(numberModules : number) {

@@ -3,17 +3,17 @@
     <div div *ngFor="let practice of practices; let i = index">
         <div class="pl-3 py-1 tab-title ml-2"> {{practice.name}}: </div>
         <ul class="list-group mx-2">
-            <!-- submission -->
+            <!-- StudyItem-Practice -->
             <li class="item-content list-group-item col-12">
                 <span class="row">
-                    <a class="item-content col-md-2" href="download">
+                    <a class="item-content col-md-2" (click)="getPracticeFile(practice)">
                         <span>{{i+1}}.- </span>
-                        <span class="item-icon fa fa-{{practice.type}}-o pl-3 pr-3"></span>{{practice.name}} 
-                    
-                    
-                    
-                    
-                    
+                        <span class="item-icon fa fa-{{practice.type}}-o pl-3 pr-3"></span>{{practice.name}}
+
+
+
+
+
                     </a>
 
                     <div *ngIf="!loginService.isStudent" class="col-md-10 row">
@@ -31,7 +31,7 @@
             </li>
             <!-- Every practice from every student -->
 
-            <li *ngFor="let practiceSubmission of practice.practices" class="item-content list-group-item col-11 offset-1">
+            <li *ngFor="let practiceSubmission of practice.practices; let j = index" class="item-content list-group-item col-11 offset-1">
                 <span class="row ml-3">
                     <span class="col-md-2">Username : {{practiceSubmission.owner.username}} </span>
                     <span class="col-md-3">File :
@@ -40,9 +40,12 @@
                     <span class="col-md-7">
                         <div class="form-inline">
                             <label class="mr-2">Calification: </label>
-                            <input class="form-control" type="number" name="newCalification" value="{{practiceSubmission.calification}}" min="0" max="10"
-                                step="any">
-                            <button class="ml-3" type="submit" name="btnSave" value="save"> Save </button>
+                            <div *ngIf="loginService.isStudent">{{practiceSubmission.calification}}</div>
+                            <span *ngIf="!loginService.isStudent">
+                                <input class="form-control" type="number" #newCalification value="{{practiceSubmission.calification}}" min="0" max="10" step="any">
+                                <button class="ml-3" name="btnSave" value="save" (click)="modifyCalification(practice, practiceSubmission, newCalification.value, i, j)">
+                                    Save </button>
+                            </span>
                         </div>
                     </span>
                 </span>

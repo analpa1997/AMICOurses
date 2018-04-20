@@ -7,12 +7,12 @@ import { Observable } from 'rxjs/Observable';
 import { Studyitem } from '../model/studyitem.model';
 import { Router } from '@angular/router';
 import { Practices } from '../model/practices.model';
+import {saveAs as importedSaveAs} from "file-saver";
 
 const URL = 'https://localhost:8443/api/';
 
 @Injectable()
 export class MoodleService {
-
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -28,10 +28,17 @@ export class MoodleService {
     return this.http.get(reqUrl, { withCredentials: true })
   }
 
-  getStudyItemFile(courseName : string, subjectName : string, studyItemId : number) {
-    const reqUrl = URL + "moodle/" + courseName + "/" + subjectName + "/studyItem/file/" + studyItemId;
+  downloadStudyItemFile(courseName : string, subjectName : string, studyItem : Studyitem) {
+
+    let type = studyItem.isPractice ? "practice" : "studyItem";
+    const reqUrl = URL + "moodle/" + courseName + "/" + subjectName + "/" + type + "/file/" + studyItem.studyItemID;
     console.log(reqUrl);
-    return this.http.get(reqUrl, { withCredentials: true, responseType : 'blob' });
+    return this.http.get(reqUrl, { withCredentials: true, responseType : 'blob' }).subscribe(
+      res => {
+      importedSaveAs(res, studyItem.originalName);   
+      },
+      error => console.log
+    );
   }
 
   modifyStudyItem (courseName : string, subjectName : string, studyItem : Studyitem) {
@@ -77,6 +84,15 @@ export class MoodleService {
     return this.http.get(reqUrl, { withCredentials: true });
   }
 
+  modifyPracticeSubmission(courseName: string, subjectName: string, practice: Studyitem, practiceSubmission : Practices) {
+    const reqUrl = URL + "moodle/" + courseName + "/" + subjectName + "/submissions/" + practice.studyItemID + "/" + practiceSubmission.practiceID;
+    console.log("HOLAAAAA");
+    console.log(practiceSubmission);
+    return this.http.put<Practices>(reqUrl, practiceSubmission, { withCredentials: true });
+  }
+
+
+  /* Error handling */
   errorHandler (error: any){
     if (error.status==401) {
       this.router.navigate(['/login']); //Forbidden

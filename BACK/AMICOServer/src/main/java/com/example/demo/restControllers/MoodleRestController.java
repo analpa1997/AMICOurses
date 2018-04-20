@@ -520,8 +520,8 @@ public class MoodleRestController {
 	 */
 	/* The practiceID is the id from the statement */
 
-	interface PraticesDetailed extends Practices.BasicPractice, Practices.DetailedPractice, User.BasicUser,
-			StudyItem.BasicStudyItem, StudyItem.SubjectOrigin, Subject.SubjectsBasicInformation {
+	interface PraticesDetailed extends Practices.BasicPractice, Practices.DetailedPractice,
+			StudyItem.BasicStudyItem {
 	}
 
 	@JsonView(PraticesDetailed.class)
