@@ -5,8 +5,9 @@ import { CourseService } from './course.service';
 import { LoginService } from '../login/login.service';
 import { environment } from '../../environments/environment';
 
+
 @Component({
-  selector: 'app-add-course-to-User',
+  selector: 'app-addCourse-toUser',
   templateUrl: './one-course.component.html',
   styleUrls: ['./clean-blog.component.css']
 
@@ -25,8 +26,16 @@ export class AddCourseToUserComponent  implements OnInit {
   ngOnInit () {
     this.id = this.activatedRoute.snapshot.params['id'];
 
-    this.courseService.addCourseToUser(this.id).subscribe(course => {},
-      error => alert(error)
+    this.courseService.addCourseToUser(this.id).subscribe(
+      _ => {
+        window.alert('Trying ....'),
+        this.router.navigate(['/profile', this.loginService.user.internalName]);
+      },
+          error => { window.history.back(),
+                          window.alert('You are already registered in this course');
+          }
     );
   }
+
+
 }

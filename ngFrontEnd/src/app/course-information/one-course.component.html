@@ -56,7 +56,7 @@
         </h2>
         <div class="course-description" *ngIf="course">
           <p class="post-subtitle">{{course.courseDescription}}</p>
-          <a  *ngIf="loginService.isLogged" [routerLink]="['/oneCourse', id, 'add']" class="btn btn-info">Add Course</a>
+          <a  *ngIf="loginService.isLogged && loginService.isStudent" [routerLink]="['/oneCourse', id, 'add']" class="btn btn-info">Add Course</a>
         </div>
       </div>
     </div>

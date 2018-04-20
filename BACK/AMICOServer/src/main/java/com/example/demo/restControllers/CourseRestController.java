@@ -146,7 +146,7 @@ public class CourseRestController {
 					// go to user profile
 
 					message = "User added successfully to course " + course.getInternalName() + ".";
-					return new ResponseEntity<>(message, HttpStatus.OK);
+					return new ResponseEntity<>(HttpStatus.OK);
 				}
 			}
 		}
