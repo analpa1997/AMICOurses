@@ -3,6 +3,8 @@ package com.example.demo.restControllers;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -78,10 +81,20 @@ public class UsersRestController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public User newUser(@RequestBody User user) { /* admin to add teachers */
 
-		User newUser = new User(user);
-		repository.save(newUser);
+		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+		user.setUrlProfileImage("null");
+		user.setUserFirstName("");
+		user.setUserLastName("");
+		user.setUserAddress("");
+		user.setCity("");
+		user.setCountry("");
+		user.setPhoneNumber(00000000);
+		user.setInterests("");
+		user.setRoles(new ArrayList<>(Arrays.asList("ROLE_USER")));
 
-		return newUser;
+		repository.save(user);
+
+		return user;
 	}
 
 	// ********************** PUT ********************

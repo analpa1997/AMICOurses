@@ -18,7 +18,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.example.demo.course.Course;
 import com.example.demo.subject.Subject;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
@@ -47,7 +46,7 @@ public class User {
 	private String username;
 
 	// TO DO: Convert the password using a hash function
-	@JsonIgnore
+	// @JsonIgnore
 	private String password;
 
 	@JsonView(BasicUser.class)
@@ -121,24 +120,6 @@ public class User {
 		roles = new ArrayList<>(Arrays.asList("ROLE_USER"));
 	}
 
-	public User(User user) {
-		super();
-		this.username = user.username;
-		this.password = new BCryptPasswordEncoder().encode(user.password);
-		this.userMail = user.userMail;
-		this.isStudent = user.isStudent;
-		urlProfileImage = "null";
-		internalName = username.replaceAll(" ", "-").toLowerCase();
-
-		userFirstName = "";
-		userLastName = "";
-		userAddress = "";
-		city = "";
-		country = "";
-		phoneNumber = 00000000;
-		interests = "";
-		roles = new ArrayList<>(Arrays.asList("ROLE_USER"));
-	}
 	/* Methods */
 
 	@Override

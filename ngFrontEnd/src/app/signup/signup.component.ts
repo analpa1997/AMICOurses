@@ -10,10 +10,8 @@ import {User} from '../model/user.model';
 })
 export class SignupComponent {
 
-  newUser: boolean;
   user: User;
   errorSign: boolean;
-  repeatPassword: string;
   valError: string;
 
   constructor(
@@ -41,15 +39,24 @@ export class SignupComponent {
           error => console.error('Error creating new user: ' + error));
   }
   save(userB: boolean, mailB: boolean, username: string, mail: string, pass: string, Rpass: string) {
+    console.log(userB);
+    console.log(mailB);
+    console.log(username);
+    console.log(mail);
+    console.log(pass);
+    console.log(Rpass);
     if (!userB) {// Username in use
+      this.errorSign = true;
       this.valError = 'There is another user with that username';
     } else if (!mailB) { // Email in use
+      this.errorSign = true;
       this.valError = 'There is another user with that email address';
     } else if (this.check(username, mail, pass, Rpass)) {
-      this.user = <User>{username: username, password: pass, userMail: mail, student: true};
-      this.service.newUser(this.user).subscribe(
-        user => {
-        },
+      let newUser: User;
+      const internalName = username.replace(' ', '-').toLowerCase();
+      newUser = <User>{username: username, password: pass, userMail: mail, student: true, internalName: internalName};
+      this.service.newUser(newUser).subscribe(
+        user => this._router.navigate(['/index']),
         error => console.error('Error creating new user: ' + error)
       );
     }
@@ -58,7 +65,7 @@ export class SignupComponent {
   check(username: string, mail: string, pass: string, Rpass: string) {
     const errors: boolean[] = this.service.checkUser(username, pass, Rpass, mail, true);
     if (errors[0] && errors[1] && errors[2]) {
-      this.errorSign = true;
+      this.errorSign = false;
       return true;
     } else {
       this.valError = '';
@@ -71,9 +78,9 @@ export class SignupComponent {
       } else if (!errors[0]) { // Password Match
         if (!(pass === Rpass)) {
           this.valError = 'The passwords are different';
-        } else if (pass.length <= 7) {
+        } else if (pass.length > 7) {
           this.valError = 'The password is too short';
-        } else if (pass.length >= 15) {
+        } else if (pass.length < 15) {
           this.valError = 'The password is too long';
       }} else if (!errors[1]) { // Correct Name
         if (username.length <= 4) {
