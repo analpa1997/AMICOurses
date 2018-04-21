@@ -2,7 +2,7 @@
 <ngb-tabset justify="fill" (tabChange)="tabChangeEvent($event)">
     <ngb-tab *ngFor="let module of modules; let i = index" title="Mod {{i+1}}">
         <ng-template ngbTabContent>
-
+                <span *ngIf="!loginService.isStudent" class = "offset-md-10" (click)="deleteModule(i)"><a class = "btn btn-warning" > Delete Module {{i+1}} </a></span>
             <!-- Students -->
             <span *ngIf="loginService.isStudent">
                 <a *ngFor="let studyItem of studyItems[i]" class="item-content" (click)="getStudyItemFile(studyItem)">

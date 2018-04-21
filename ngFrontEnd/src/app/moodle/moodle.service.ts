@@ -14,6 +14,7 @@ const URL = 'https://localhost:8443/api/';
 @Injectable()
 export class MoodleService {
 
+
   constructor(private http: HttpClient, private router: Router) { }
 
   /* Main */
@@ -133,7 +134,12 @@ export class MoodleService {
 
   addModule(courseName : string, subjectName : string): any {
     const reqUrl = URL + "moodle/" + courseName + "/" + subjectName + "/module";
-    return this.http.post(reqUrl, {hola : "hola"},{ withCredentials: true });
+    return this.http.post(reqUrl, {},{ withCredentials: true });
+  }
+
+  deleteModule(courseName : string, subjectName : string, module : number): any {
+    const reqUrl = URL + "moodle/" + courseName + "/" + subjectName + "/module/" + module;
+    return this.http.delete(reqUrl,{ withCredentials: true });
   }
 
 

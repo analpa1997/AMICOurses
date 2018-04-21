@@ -120,6 +120,13 @@ export class MoodleContentsComponent {
     }
   }
 
+  deleteModule(module: number) {
+    this.moodleService.deleteModule(this.courseName, this.subjectName, module).subscribe(
+      res => this.refreshSubject.next(),
+      error => this.moodleService.errorHandler(error),
+    );
+  }
+
   tabChangeEvent($event) {;
     if ($event.nextId == "newMod") {
       this.moodleService.addModule(this.courseName, this.subjectName).subscribe(
