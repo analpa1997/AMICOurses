@@ -20,7 +20,7 @@
                         <input class="form-control col-md-1" type="text" #newType size="2" value={{practice.icon}}>
                         <label class="ml-1 col-md-col-md-4 text-left">File : {{practice.originalName}} </label>
                         <button class="ml-1 col-md-1" (click) ="modifyPractice(practice, newName.value, newType.value)" name="btnSave" value="save"> Save </button>
-                        <button class="ml-1 col-md-1" (click)="deletePractice()" name="btnDelete" value="delete"> Delete </button>
+                        <button class="ml-1 col-md-1" (click)="deletePractice(practice)" name="btnDelete" value="delete"> Delete </button>
                     </div>
 
 

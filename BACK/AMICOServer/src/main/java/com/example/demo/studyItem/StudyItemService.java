@@ -114,13 +114,15 @@ public class StudyItemService {
 
 		/* The practices part */
 		if (studyItem.isPractice()) {
+			List toRemove = new ArrayList<>();
 			for (Practices practice : studyItem.getPractices()) {
+				toRemove.add(practice);
 				practice.setStudyItem(null);
 				practice.setOwner(null);
 				practiceRepository.delete(practice);
-				studyItem.getPractices().remove(practice);
 			}
 		}
+		
 		studyItem.setPractices(null);
 		studyItemRepository.delete(studyItem);
 

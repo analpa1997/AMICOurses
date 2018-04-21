@@ -81,8 +81,11 @@ export class MoodleEvaluationComponent implements OnInit {
       );
   }
 
-  deletePractice() {
-
+  deletePractice(practice : Studyitem) {
+    this.moodleService.deleteStudyItem(this.courseName, this.subjectName, practice).subscribe(
+      res => this.getPractices(),
+      error => this.moodleService.errorHandler(error),
+    );
   }
   getPracticeFile(practice: Studyitem) {
     this.moodleService.downloadFile(this.courseName, this.subjectName, practice);

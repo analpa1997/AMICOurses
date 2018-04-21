@@ -148,7 +148,6 @@ public class Practices {
 		boolean sameObj = false;
 		if (obj2 != null && obj2 instanceof Practices) {
 			sameObj = this.practiceID == ((Practices) obj2).practiceID;
-			sameObj = sameObj && this.owner.equals(((Practices) obj2).owner);
 		}
 		return sameObj;
 	}
