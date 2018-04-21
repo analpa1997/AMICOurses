@@ -19,6 +19,7 @@ export class IndexPageComponent implements OnInit {
   name: string;
   type: string;
   allTypes: string [];
+  images : Array<string>;
   sort: string;
   lastPage: boolean;
   URL: string;
@@ -48,6 +49,10 @@ export class IndexPageComponent implements OnInit {
         this.type = 'all';
         this.sort = 'courseID';
         this.emptyContent = this.courses.length === 0;
+        this.images = new Array<string>();
+        this.images.concat('../../../../FRONT/img/05.png');
+        this.images.concat('../../../../FRONT/img/urjc.png');
+        this.images.concat('../../../../FRONT/img/06.png');
         this.allTypes = new Array();
         this.initTypes();
         console.log(this.allTypes);
@@ -109,6 +114,12 @@ export class IndexPageComponent implements OnInit {
       },
       error => console.log(error),
     );
+
+  }
+  next(){
+
+  }
+  prev(){
 
   }
 }

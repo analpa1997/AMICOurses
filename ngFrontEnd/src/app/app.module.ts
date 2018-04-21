@@ -28,12 +28,13 @@ import { SignupComponent } from './signup/signup.component';
 import {UserService} from './user/user.service';
 import { MoodleEvaluationComponent } from './moodle/moodleEvaluation.component';
 import { MoodleProgressComponent } from './moodle/moodleProgress.component';
+import {NgbdCarouselBasic} from './indexPage/carousel-basic';
 
 
 @NgModule({declarations: [AppComponent, HeaderComponent, FooterComponent, OneCourseComponent,
                           SkillsComponent, SubjectsComponent, IndexPageComponent, HeaderGeneralComponent,
                           CourseIndexComponent, LoginComponent, MoodleComponent, Error404, MoodleContentsComponent,
-                          AddCourseToUserComponent, SignupComponent, MoodleEvaluationComponent, MoodleProgressComponent],
+                          AddCourseToUserComponent, SignupComponent, MoodleEvaluationComponent, MoodleProgressComponent, NgbdCarouselBasic],
   imports: [BrowserModule, routing, HttpClientModule,  HttpModule  , NgbModule.forRoot(), AngularFontAwesomeModule, ChartsModule],
   providers: [CourseService, LoginService, MoodleService, UserService],
   bootstrap: [AppComponent]

@@ -230,8 +230,8 @@ hr {
 }
 
 .carousel-control-prev {
-    background-color: black;
-}
+    background-color: black
+};
 
 .carousel-control-next > .sr-only {
     color: black;
