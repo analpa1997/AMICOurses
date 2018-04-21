@@ -3,7 +3,7 @@
 <br>
 <div class="mt-5"> </div>
 <nav class="breadcrumb">
-    <a href="/course-overview/{{courseInternalName}}" class="breadcrumb-item">{{courseName}}</a>
+    <a [routerLink]="['/course-overview/',courseName]" class="breadcrumb-item">{{courseName}}</a>
     <span class="breadcrumb-item active">{{subjectName}}</span>
 </nav>
 

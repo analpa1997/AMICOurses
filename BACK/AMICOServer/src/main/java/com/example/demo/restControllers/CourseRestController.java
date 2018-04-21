@@ -321,6 +321,22 @@ public class CourseRestController {
 		else
 			return new ResponseEntity(HttpStatus.NOT_FOUND);
 	}
+	
+	interface FullCourse extends Course.BasicCourse, Course.ExtendedCourse, Subject.SubjectsBasicInformation, User.BasicUser {}
+	@JsonView(FullCourse.class)
+	@RequestMapping(value = { "/id/{courseID}/full", "/name/{internalName}/full" }, method = RequestMethod.GET)
+	public ResponseEntity<Course> oneCourseFull(@PathVariable(required = false) Long courseID,
+			@PathVariable(required = false) String internalName) {
+		Course course;
+		if (internalName == null)
+			course = courseRepository.findOne(courseID);
+		else
+			course = courseRepository.findByInternalName(internalName);
+		if (course != null)
+			return new ResponseEntity<>(course, HttpStatus.OK);
+		else
+			return new ResponseEntity(HttpStatus.NOT_FOUND);
+	}
 
 	@JsonView(SkillBasicInformation.class)
 	@RequestMapping(value = { "/id/{courseID}/skills/", "/name/{internalName}/skills/" }, method = RequestMethod.GET)
