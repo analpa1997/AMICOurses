@@ -72,6 +72,18 @@ export class MoodleEvaluationComponent implements OnInit {
     );
   }
 
+  modifyPractice(practice : Studyitem, name : string, type : string){
+    practice.name = name;
+    practice.icon = type;
+      this.moodleService.modifyStudyItem(this.courseName, this.subjectName, practice).subscribe(
+        res => {this.getPractices()},
+        error => this.moodleService.errorHandler(error),
+      );
+  }
+
+  deletePractice() {
+
+  }
   getPracticeFile(practice: Studyitem) {
     this.moodleService.downloadFile(this.courseName, this.subjectName, practice);
   }
@@ -92,7 +104,7 @@ export class MoodleEvaluationComponent implements OnInit {
     if (file.files[0] && name.length > 0 && type.length > 0) {
       let practice = new Studyitem();
       practice.name = name;
-      practice.type = type;
+      practice.icon = type;
       this.moodleService.createPractice(this.courseName, this.subjectName, practice).subscribe(
         res => {
           this.moodleService.uploadFile(this.courseName, this.subjectName, res, file.files[0]).subscribe(

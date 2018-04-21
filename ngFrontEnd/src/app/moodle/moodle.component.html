@@ -17,7 +17,7 @@
                     <ngb-tab id="contents" title="Contents">
                         <ng-template ngbTabContent>
 
-                            <moodle-contents-component [courseName]='courseName' [subjectName]='subjectName'></moodle-contents-component>
+                            <moodle-contents-component [courseName]='courseName' [subjectName]='subjectName' (refreshSubject)="generatePage()"></moodle-contents-component>
 
                         </ng-template>
                     </ngb-tab>

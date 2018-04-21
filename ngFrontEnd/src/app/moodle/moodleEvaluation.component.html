@@ -15,12 +15,12 @@
 
                     <div *ngIf="!loginService.isStudent" class="col-md-10 row">
                         <label class="ml-1 col-md-1">Rename: </label>
-                        <input class="form-control col-md-3" type="text" name="newName" value="{{practice.name}}">
+                        <input class="form-control col-md-3" type="text" #newName value="{{practice.name}}">
                         <label class="ml-1 col-md-1"> Type: </label>
-                        <input class="form-control col-md-1" type="text" name="newType" size="2" value={{practice.icon}}>
+                        <input class="form-control col-md-1" type="text" #newType size="2" value={{practice.icon}}>
                         <label class="ml-1 col-md-col-md-4 text-left">File : {{practice.originalName}} </label>
-                        <button class="ml-1 col-md-1" type="submit" name="btnSave" value="save"> Save </button>
-                        <button class="ml-1 col-md-1" type="submit" name="btnDelete" value="delete"> Delete </button>
+                        <button class="ml-1 col-md-1" (click) ="modifyPractice(practice, newName.value, newType.value)" name="btnSave" value="save"> Save </button>
+                        <button class="ml-1 col-md-1" (click)="deletePractice()" name="btnDelete" value="delete"> Delete </button>
                     </div>
 
 

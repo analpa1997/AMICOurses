@@ -51,7 +51,7 @@ export class MoodleService {
     const type = studyItem.isPractice ? "practice" : "studyItem";
     const reqUrl = URL + "moodle/" + courseName + "/" + subjectName + "/" + type + "/" + studyItem.studyItemID;
 
-    return this.http.put<Studyitem>(reqUrl, studyItem, { withCredentials: true });
+    return this.http.put<Studyitem>(reqUrl, {name : studyItem.name, icon : studyItem.icon}, { withCredentials: true });
   }
 
 
@@ -129,6 +129,12 @@ export class MoodleService {
     return this.http.get<any>(reqUrl, { withCredentials: true });
   }
 
+  /* Module add / delete */
+
+  addModule(courseName : string, subjectName : string): any {
+    const reqUrl = URL + "moodle/" + courseName + "/" + subjectName + "/module";
+    return this.http.post(reqUrl, {hola : "hola"},{ withCredentials: true });
+  }
 
 
   /* Error handling */

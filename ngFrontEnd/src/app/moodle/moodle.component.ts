@@ -44,6 +44,10 @@ export class MoodleComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
+    this.generatePage();
+  }
+
+  generatePage() {
     this.moodleService.getSubject(this.courseName, this.subjectName).subscribe(
       response => {
         this.teachersPanel = this.loginService.isStudent ? "Teachers" : "Students";
@@ -56,7 +60,6 @@ export class MoodleComponent implements AfterViewInit {
         this.moodleService.errorHandler(error);
       },
     );
-
   }
 
   generateListUsers () {
@@ -74,8 +77,6 @@ export class MoodleComponent implements AfterViewInit {
         }
       });
     }
-
-    console.log(this.listUsers);
   }
 
   getContents($event) {
