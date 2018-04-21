@@ -114,7 +114,10 @@ public class SubjectRestController {
 	}
 
 	// FIND A SUBJECT WITHIN A COURSE
-	@JsonView(Subject.SubjectsBasicInformation.class)
+	
+	interface ExtendedSubject extends Subject.SubjectsBasicInformation, User.BasicUser {};
+	
+	@JsonView(ExtendedSubject.class)
 	@RequestMapping(value = "/api/subjects/{courseInternalName}/{subjectInternalName}", method = RequestMethod.GET)
 	public ResponseEntity<Subject> findSubject(@PathVariable String courseInternalName,
 			@PathVariable String subjectInternalName) {

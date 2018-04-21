@@ -10,6 +10,7 @@ import { MoodleContentsComponent } from './moodleContents.component';
 import { Studyitem } from '../model/studyitem.model';
 import { MoodleEvaluationComponent } from './moodleEvaluation.component';
 import { MoodleProgressComponent } from './moodleProgress.component';
+import { User } from '../model/user.model';
 
 
 @Component({
@@ -27,6 +28,8 @@ export class MoodleComponent implements AfterViewInit {
   subjectName: string;
   URL: string;
   teachersPanel: string;
+
+  listUsers : User [];
 
 
   @ViewChild(MoodleContentsComponent)  contentsTab: MoodleContentsComponent;
@@ -47,13 +50,32 @@ export class MoodleComponent implements AfterViewInit {
         this.subject = response;
         /* Retrieve the contents */
         this.contentsTab.generateContent(this.subject.numberModules);
-        console.log(this.subject);
+        this.generateListUsers();
       },
       error => {
         this.moodleService.errorHandler(error);
       },
     );
 
+  }
+
+  generateListUsers () {
+    this.listUsers = [];
+    if (this.loginService.isStudent){
+      this.subject.teachers.forEach(teacher => {
+        if (!teacher.roles.includes("ROLE_ADMIN")){
+          this.listUsers.push(teacher);
+        }
+      });
+    } else {
+      this.subject.users.forEach(student => {
+        if (student.student){
+          this.listUsers.push(student);
+        }
+      });
+    }
+
+    console.log(this.listUsers);
   }
 
   getContents($event) {
@@ -72,22 +94,6 @@ export class MoodleComponent implements AfterViewInit {
         break;
       }
 
-      case "evaluation": {
-        //statements; 
-        break;
-      }
-
-      default: {
-        //statements; 
-        break;
-      }
     }
-
-
-
-
   }
-
-
-
 }

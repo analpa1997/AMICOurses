@@ -115,5 +115,8 @@ export class MoodleContentsComponent{
     }
   }
   
+  tabChangeEvent($event) {
+    console.log($event);
+  }
 
 }

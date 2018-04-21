@@ -56,7 +56,7 @@ public class Subject {
 	@JsonIgnore
 	@OneToMany(mappedBy = "subject")
 	private List<Message> messages = new ArrayList<>();
-	@JsonIgnore
+	@JsonView(SubjectsBasicInformation.class)
 	@ManyToMany
 	private List<User> teachers = new ArrayList<>();
 

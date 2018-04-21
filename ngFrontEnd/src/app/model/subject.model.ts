@@ -16,4 +16,5 @@ export class Subject {
   teachers: User[];
   internalName: string;
   numberModules: number;
+  users : User [];
 }
