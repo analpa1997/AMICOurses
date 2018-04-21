@@ -122,6 +122,14 @@ export class MoodleService {
     return this.http.post<Practices>(reqUrl, practiceSubmission, { withCredentials: true });
   }
 
+  /* Chart data */
+
+  getChartData(courseName : string, subjectName : string) {
+    let reqUrl = URL + "moodle/practicesMarks/" + courseName + "/" + subjectName + "/practices/";
+    return this.http.get<any>(reqUrl, { withCredentials: true });
+  }
+
+
 
   /* Error handling */
   errorHandler(error: any) {

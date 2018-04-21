@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
-
+import { ChartsModule } from 'ng2-charts';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './course-information/header.component';
@@ -27,13 +27,14 @@ import { AddCourseToUserComponent } from './course-information/addCourse-toUser.
 import { SignupComponent } from './signup/signup.component';
 import {UserService} from './user/user.service';
 import { MoodleEvaluationComponent } from './moodle/moodleEvaluation.component';
+import { MoodleProgressComponent } from './moodle/moodleProgress.component';
 
 
 @NgModule({declarations: [AppComponent, HeaderComponent, FooterComponent, OneCourseComponent,
                           SkillsComponent, SubjectsComponent, IndexPageComponent, HeaderGeneralComponent,
                           CourseIndexComponent, LoginComponent, MoodleComponent, Error404, MoodleContentsComponent,
-                          AddCourseToUserComponent, SignupComponent, MoodleEvaluationComponent],
-  imports: [BrowserModule, routing, HttpClientModule,  HttpModule  , NgbModule.forRoot(), AngularFontAwesomeModule],
+                          AddCourseToUserComponent, SignupComponent, MoodleEvaluationComponent, MoodleProgressComponent],
+  imports: [BrowserModule, routing, HttpClientModule,  HttpModule  , NgbModule.forRoot(), AngularFontAwesomeModule, ChartsModule],
   providers: [CourseService, LoginService, MoodleService, UserService],
   bootstrap: [AppComponent]
 })

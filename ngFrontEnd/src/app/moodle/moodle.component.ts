@@ -8,30 +8,34 @@ import { MoodleService } from './moodle.service';
 import { LoginService } from '../login/login.service';
 import { MoodleContentsComponent } from './moodleContents.component';
 import { Studyitem } from '../model/studyitem.model';
+import { MoodleEvaluationComponent } from './moodleEvaluation.component';
+import { MoodleProgressComponent } from './moodleProgress.component';
 
 
 @Component({
   templateUrl: './moodle.component.html',
-  styleUrls : ['../../assets/css/student-subject.css']
+  styleUrls: ['../../assets/css/student-subject.css']
 })
 
 
 
-export class MoodleComponent implements AfterViewInit  {
+export class MoodleComponent implements AfterViewInit {
 
 
   subject: Subject;
-  courseName : string;
-  subjectName : string;
+  courseName: string;
+  subjectName: string;
   URL: string;
-  teachersPanel : string;
+  teachersPanel: string;
 
 
-   @ViewChild(MoodleContentsComponent) contentsTab: MoodleContentsComponent;
+  @ViewChild(MoodleContentsComponent)  contentsTab: MoodleContentsComponent;
+  @ViewChild(MoodleEvaluationComponent)  evaluationTab: MoodleEvaluationComponent;
+  @ViewChild(MoodleProgressComponent) progressTab: MoodleProgressComponent;
 
-  constructor(private router: Router, activatedRoute: ActivatedRoute, private loginService: LoginService, private moodleService : MoodleService) {
+  constructor(private router: Router, activatedRoute: ActivatedRoute, private loginService: LoginService, private moodleService: MoodleService) {
     this.URL = environment.URL;
-    this.courseName = activatedRoute.snapshot.params['courseName'];
+    this.courseName  =  activatedRoute.snapshot.params['courseName'];
     this.subjectName = activatedRoute.snapshot.params['subjectName'];
     this.teachersPanel = "";
   }
@@ -43,18 +47,47 @@ export class MoodleComponent implements AfterViewInit  {
         this.subject = response;
         /* Retrieve the contents */
         this.contentsTab.generateContent(this.subject.numberModules);
+        console.log(this.subject);
       },
       error => {
         this.moodleService.errorHandler(error);
       },
     );
-  
+
   }
 
-  getContents($event){
-    this.contentsTab.generateContent(this.subject.numberModules);
+  getContents($event) {
+
+    switch ($event.nextId) {
+      case "contents": {
+        this.contentsTab.generateContent(this.subject.numberModules);
+        break;
+      }
+      case "evaluation": {
+        this.evaluationTab.getPractices();
+        break;
+      }
+      case "progress": {
+          this.progressTab.getChartData();
+        break;
+      }
+
+      case "evaluation": {
+        //statements; 
+        break;
+      }
+
+      default: {
+        //statements; 
+        break;
+      }
+    }
+
+
+
+
   }
 
-  
+
 
 }
