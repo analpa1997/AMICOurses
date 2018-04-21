@@ -34,6 +34,8 @@ public class Course {
 
 	public interface UserInformation {
 	}
+	
+	public interface ExtendedCourse {}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -65,10 +67,10 @@ public class Course {
 	@JsonIgnore
 	private boolean isCompleted;
 
-	@JsonView(UserInformation.class)
+	@JsonView(ExtendedCourse.class)
 	@ManyToMany(mappedBy = "inscribedCourses", fetch = FetchType.LAZY)
 	private List<User> inscribedUsers = new ArrayList<>();
-	@JsonIgnore
+	@JsonView(ExtendedCourse.class)
 	@OneToMany(mappedBy = "course")
 	private List<Subject> subjects = new ArrayList<>();
 	@JsonIgnore

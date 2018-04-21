@@ -28,14 +28,16 @@ import { SignupComponent } from './signup/signup.component';
 import {UserService} from './user/user.service';
 import { MoodleEvaluationComponent } from './moodle/moodleEvaluation.component';
 import { MoodleProgressComponent } from './moodle/moodleProgress.component';
+import { SubjectListComponent } from './subjectList/subjectList.component';
+import { SubjectListService } from './subjectList/subjectList.service';
 
 
 @NgModule({declarations: [AppComponent, HeaderComponent, FooterComponent, OneCourseComponent,
                           SkillsComponent, SubjectsComponent, IndexPageComponent, HeaderGeneralComponent,
                           CourseIndexComponent, LoginComponent, MoodleComponent, Error404, MoodleContentsComponent,
-                          AddCourseToUserComponent, SignupComponent, MoodleEvaluationComponent, MoodleProgressComponent],
+                          AddCourseToUserComponent, SignupComponent, MoodleEvaluationComponent, MoodleProgressComponent, SubjectListComponent],
   imports: [BrowserModule, routing, HttpClientModule,  HttpModule  , NgbModule.forRoot(), AngularFontAwesomeModule, ChartsModule],
-  providers: [CourseService, LoginService, MoodleService, UserService],
+  providers: [CourseService, LoginService, MoodleService, UserService, SubjectListService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
