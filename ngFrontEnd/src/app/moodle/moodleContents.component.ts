@@ -122,7 +122,7 @@ export class MoodleContentsComponent {
 
   deleteModule(module: number) {
     this.moodleService.deleteModule(this.courseName, this.subjectName, module).subscribe(
-      res => this.refreshSubject.next(),
+      res => this.refreshSubject.next(), 
       error => this.moodleService.errorHandler(error),
     );
   }
