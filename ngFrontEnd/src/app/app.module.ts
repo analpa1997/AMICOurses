@@ -29,21 +29,28 @@ import {UserService} from './user/user.service';
 import { MoodleEvaluationComponent } from './moodle/moodleEvaluation.component';
 import { MoodleProgressComponent } from './moodle/moodleProgress.component';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import {NgbdCarouselBasic} from './indexPage/carousel-basic';
 =======
 import { SubjectListComponent } from './subjectList/subjectList.component';
 import { SubjectListService } from './subjectList/subjectList.service';
 >>>>>>> 9f22707b0c76846fb5d587e3a60ad8d699955e9e
+=======
+>>>>>>> parent of d99c5e4... Carousel of the index works
 
 
 @NgModule({declarations: [AppComponent, HeaderComponent, FooterComponent, OneCourseComponent,
                           SkillsComponent, SubjectsComponent, IndexPageComponent, HeaderGeneralComponent,
                           CourseIndexComponent, LoginComponent, MoodleComponent, Error404, MoodleContentsComponent,
 <<<<<<< HEAD
+<<<<<<< HEAD
                           AddCourseToUserComponent, SignupComponent, MoodleEvaluationComponent, MoodleProgressComponent, NgbdCarouselBasic],
 =======
                           AddCourseToUserComponent, SignupComponent, MoodleEvaluationComponent, MoodleProgressComponent, SubjectListComponent],
 >>>>>>> 9f22707b0c76846fb5d587e3a60ad8d699955e9e
+=======
+                          AddCourseToUserComponent, SignupComponent, MoodleEvaluationComponent, MoodleProgressComponent],
+>>>>>>> parent of d99c5e4... Carousel of the index works
   imports: [BrowserModule, routing, HttpClientModule,  HttpModule  , NgbModule.forRoot(), AngularFontAwesomeModule, ChartsModule],
   providers: [CourseService, LoginService, MoodleService, UserService, SubjectListService],
   bootstrap: [AppComponent]
