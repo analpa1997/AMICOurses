@@ -2,6 +2,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import 'rxjs/Rx';
 import { User } from '../model/user.model';
+import { Router } from '@angular/router';
 
 const URL = 'https://localhost:8443/api';
 
@@ -14,7 +15,7 @@ export class LoginService {
     isStudent;
     user: User;
 
-    constructor(private http: Http) {
+    constructor(private http: Http, private router: Router) {
         this.reqIsLogged();
     }
 
@@ -32,7 +33,7 @@ export class LoginService {
                 if (error.status !== 401) {
                     console.error('Error when asking if logged: ' +
                         JSON.stringify(error));
-                }
+                } 
             }
         );
     }
@@ -59,7 +60,12 @@ export class LoginService {
             response => {
                 this.processLogInResponse(response);
                 return this.user;
-            }
+            },
+            error => {
+                if (error.status == 401) {
+                    this.router.navigate(['/login']); //Forbidden
+                }
+            },
         );
     }
 

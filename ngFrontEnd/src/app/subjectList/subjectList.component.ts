@@ -27,7 +27,7 @@ export class SubjectListComponent implements OnInit {
 
   allTeachers: User[];
 
-  selectedOptions : Boolean [][];
+  selectedOptions: Boolean[][];
 
   URL: string;
 
@@ -39,7 +39,7 @@ export class SubjectListComponent implements OnInit {
 
   ngOnInit() {
     this.generatePage();
-   
+
   }
 
   generatePage() {
@@ -75,17 +75,29 @@ export class SubjectListComponent implements OnInit {
     );
   }
 
-  changeTeachers(index : number){
+  changeSubjectInformation(subject, name: string, description: string) {
+    if (name.length > 0) {
+      let subj = { internalName: subject.internalName, name: name, description: description };
+      this.subjectListService.modifySubject(this.courseName, subj).subscribe(
+        res => this.generatePage(),
+        error => this.subjectListService.errorHandler(error),
+      );
+    } else {
+      alert("Subject name cannot be empty");
+    }
+  }
+
+  changeTeachers(index: number) {
     let newTeachers = [];
-    this.selectedOptions[index].forEach((option, i )=> {
+    this.selectedOptions[index].forEach((option, i) => {
       if (option) {
         newTeachers.push(this.allTeachers[i]);
       }
     });
 
-    let subject = {internalName : this.course.subjects[index].internalName, teachers : newTeachers};
+    let subject = { internalName: this.course.subjects[index].internalName, teachers: newTeachers };
     this.subjectListService.modifySubject(this.courseName, subject).subscribe(
-      res =>this.generatePage(),
+      res => this.generatePage(),
       error => this.subjectListService.errorHandler(error),
     );
 
@@ -97,7 +109,7 @@ export class SubjectListComponent implements OnInit {
     for (let i = 0; i < selectElement.options.length; i++) {
       arr[i] = selectElement.options[i].selected;
     }
-  
+
     this.selectedOptions[index] = arr;
   }
 
