@@ -49,7 +49,6 @@ export class SubjectListComponent implements OnInit {
         this.course = res;
         if (!this.loginService.isStudent && !this.loginService.isAdmin) {
           let subjects = [];
-
           this.course.subjects.forEach(subject => {
             let isTeacher = false
             subject.teachers.forEach(teacher => {
@@ -66,6 +65,20 @@ export class SubjectListComponent implements OnInit {
           if (this.loginService.isAdmin) {
             this.selectedOptions = new Array(this.course.subjects.length);
             this.selectedOptions.fill([]);
+
+            for (let subject of this.course.subjects){
+              let i = 0;
+              let pos = -1;
+              for(let teacher of subject.teachers){
+                if (teacher.roles.indexOf('ROLE_ADMIN') !== -1){
+                  pos = i;
+                }
+                i++;
+              }
+              if (pos >= 0){
+                subject.teachers.splice(pos, 1);
+              }
+            }
           }
         }
 
