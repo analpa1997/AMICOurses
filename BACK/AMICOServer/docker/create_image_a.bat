@@ -1,21 +1,16 @@
-$var = $(get-item ${PWD}).parent.FullName
-$pathProjectAngular = $var + "..\ngFrontEnd"
-$pathProject = $var
-$pathJar = $pathProject + "\target"
+#Create angular-cli
+docker run -it --rm --name amicourses-angular -v "/Users/Miguel/Documents/GitHub/AMICOurses/ngFrontEnd":/otp/back -w /otp/back teracy/angular-cli ng build --base-href /new/
 
-#Create Angular
-docker run -it --rm --name amicourses-angular -v ${pathProjectAngular}:/otp/amicourses -w /otp/amicourses teracy/angular-cli ng build --base-href /new/
+#Move angular files to Back
+rm /Users/Miguel/Documents/GitHub/AMICOurses/BACK/AMICOServer/src/main/resources/static/new/*
+cp - /Users/Miguel/Documents/GitHub/AMICOurses/ngFrontEnd/dist/* /Users/Miguel/Documents/GitHub/AMICOurses/BACK/AMICOServer/src/main/resources/static/new
 
-#Move angular files to amicourses
-rm ${pathProject}\src\main\resources\static\new\*
-cp ${pathProjectAngular}\dist\* ${pathProject}\src\main\resources\static\new
 
-#Create jar amicourses
-docker run -it --rm --name amicourses -v ${pathProject}:/usr/src/mymaven -w /usr/src/mymaven maven mvn package
+docker run -it --rm --name back -v "/Users/Miguel/Documents/GitHub/AMICOurses/BACK/AMICOServer":/usr/src/mymaven -w /usr/src/mymaven maven mvn package -DskipTests
 
 #Move jar to actual directory
-cp ${pathProject}/files . 
-mv ${pathJar}/AMICOServer-0.0.1-SNAPSHOT.jar .
+mv /Users/Miguel/Documents/GitHub/AMICOurses/BACK/AMICOServer/target/AMICOServer-0.0.1-SNAPSHOT.jar .
+cp /Users/Miguel/Documents/GitHub/AMICOurses/BACK/AMICOServer/files .
 
-#Create image
-docker build -t mesteban96/amicoweb_angular .
+#Create image 
+docker build -t mesteban96/amico_angular .
