@@ -57,19 +57,15 @@
             </div>
 
         </div>
-        <!--         {{/admin}} {{/subjects}} 
         
-        {{#admin}}
-        <div class="mt-2">
+        <div></div>
+        <div *ngIf="loginService.isAdmin" class="mt-4">
             <h4>
-                <form class="subject ml-2 pl-4 border col-10" action="/course/{{courseInternalName}}/create-subject" method="post">
                     <label>New Subject: </label>
-                    <input type="text" class="col-md-5" name="subjectName">
-                    <button type="submit" class="form-controll">Create</button>
+                    <input type="text" class="col-md-5" #subjectName>
+                    <button  class="form-controll" (click)="createSubject(subjectName.value)">Create</button>
 
-                </form>
             </h4>
-            {{/admin}}
         </div>
 
         <!-- End Subjects -->

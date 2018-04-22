@@ -59,7 +59,7 @@ export class MoodleContentsComponent {
         },
         error => {
           console.log("Error " + error.status);
-          this.moodleService.errorHandler(error);
+          this.loginService.errorHandler(error);
         }
       );
     }
@@ -89,7 +89,7 @@ export class MoodleContentsComponent {
         if (error.status == 400) {
           alert("Incorrect params. Revise that there is not an empty field");
         } else
-          this.moodleService.errorHandler(error)
+          this.loginService.errorHandler(error)
       },
     )
   }
@@ -97,7 +97,7 @@ export class MoodleContentsComponent {
   deleteStudyItem(module: number, index: number) {
     this.moodleService.deleteStudyItem(this.courseName, this.subjectName, this.studyItems[module][index]).subscribe(
       res => this.studyItems[module].splice(index, 1),
-      error => this.moodleService.errorHandler(error),
+      error => this.loginService.errorHandler(error),
     )
   }
 
@@ -111,9 +111,9 @@ export class MoodleContentsComponent {
           console.log(res);
           this.moodleService.uploadFile(this.courseName, this.subjectName, res, file.files[0]).subscribe(
             res => this.studyItems[module].push(res),
-            error => this.moodleService.errorHandler(error),
+            error => this.loginService.errorHandler(error),
           );
-        }, error => this.moodleService.errorHandler(error)
+        }, error => this.loginService.errorHandler(error)
       )
     } else {
       alert("There are empty parameters");
@@ -123,7 +123,7 @@ export class MoodleContentsComponent {
   deleteModule(module: number) {
     this.moodleService.deleteModule(this.courseName, this.subjectName, module).subscribe(
       res => this.refreshSubject.next(), 
-      error => this.moodleService.errorHandler(error),
+      error => this.loginService.errorHandler(error),
     );
   }
 
@@ -133,7 +133,7 @@ export class MoodleContentsComponent {
         res => {
           this.refreshSubject.next();
         },
-        error => this.moodleService.errorHandler(error),
+        error => this.loginService.errorHandler(error),
       );
 
       $event.preventDefault();

@@ -70,7 +70,7 @@ export class SubjectListComponent implements OnInit {
         }
 
       },
-      error => this.subjectListService.errorHandler(error),
+      error => this.loginService.errorHandler(error),
     );
 
     let page = 0;
@@ -100,7 +100,7 @@ export class SubjectListComponent implements OnInit {
       let subj = { internalName: subject.internalName, name: name, description: description };
       this.subjectListService.modifySubject(this.courseName, subj).subscribe(
         res => this.generatePage(),
-        error => this.subjectListService.errorHandler(error),
+        error => this.loginService.errorHandler(error),
       );
     } else {
       alert("Subject name cannot be empty");
@@ -118,7 +118,7 @@ export class SubjectListComponent implements OnInit {
     let subject = { internalName: this.course.subjects[index].internalName, teachers: newTeachers };
     this.subjectListService.modifySubject(this.courseName, subject).subscribe(
       res => this.generatePage(),
-      error => this.subjectListService.errorHandler(error),
+      error => this.loginService.errorHandler(error),
     );
 
   }
@@ -131,6 +131,13 @@ export class SubjectListComponent implements OnInit {
     }
 
     this.selectedOptions[index] = arr;
+  }
+
+  createSubject(name : string) {
+    this.subjectListService.createSubject(this.courseName, name).subscribe(
+      res => this.generatePage(),
+      error => this.loginService.errorHandler(error),
+    );
   }
 
 

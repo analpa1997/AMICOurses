@@ -39,8 +39,10 @@ public class SubjectService {
 	public void createSubject(Course c, Subject s) {
 		if(c!=null && s!=null) {
 			s.setCourse(c);
-			subjectRepository.save(s);
+			s =subjectRepository.save(s);
+			
 			c.getSubjects().add(s);
+			courseRepository.save(c);
 		}
 	}
 	

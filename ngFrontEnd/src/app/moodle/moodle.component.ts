@@ -57,7 +57,7 @@ export class MoodleComponent implements AfterViewInit {
         this.generateListUsers();
       },
       error => {
-        this.moodleService.errorHandler(error);
+        this.loginService.errorHandler(error);
       },
     );
   }
