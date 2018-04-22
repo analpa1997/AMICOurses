@@ -193,10 +193,9 @@ public class UsersRestController {
 			pageUser = repository.findByIsStudent(isStudent, new PageRequest(page, 10));
 
 		if (pageUser != null)
-			return new ResponseEntity(pageUser, HttpStatus.FOUND);
+			return new ResponseEntity(pageUser, HttpStatus.OK);
 		else
 			return new ResponseEntity(pageUser, HttpStatus.NOT_FOUND);
-
 	}
 
 	/* Get profile photo */

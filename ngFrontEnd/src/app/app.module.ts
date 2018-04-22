@@ -32,6 +32,7 @@ import { MoodleProgressComponent } from './moodle/moodleProgress.component';
 import {NgbdCarouselBasic} from './indexPage/carousel-basic';
 import { SubjectListComponent } from './subjectList/subjectList.component';
 import { SubjectListService } from './subjectList/subjectList.service';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -39,7 +40,7 @@ import { SubjectListService } from './subjectList/subjectList.service';
                           SkillsComponent, SubjectsComponent, IndexPageComponent, HeaderGeneralComponent,
                           CourseIndexComponent, LoginComponent, MoodleComponent, Error404, MoodleContentsComponent,
                           AddCourseToUserComponent, SignupComponent, MoodleEvaluationComponent, MoodleProgressComponent, NgbdCarouselBasic, SubjectListComponent],
-  imports: [BrowserModule, routing, HttpClientModule,  HttpModule  , NgbModule.forRoot(), AngularFontAwesomeModule, ChartsModule],
+  imports: [BrowserModule, routing, HttpClientModule,  HttpModule  , NgbModule.forRoot(), AngularFontAwesomeModule, ChartsModule, FormsModule],
   providers: [CourseService, LoginService, MoodleService, UserService, SubjectListService],
   bootstrap: [AppComponent]
 })

@@ -77,6 +77,10 @@ public class SubjectService {
 		if(course != null) {
 			updSubj.setCourse(course);
 		}
+		
+		if (s.getTeachers() != null) {
+			updSubj.setTeachers(s.getTeachers());
+		}
 		subjectRepository.save(updSubj);
 	}
 	

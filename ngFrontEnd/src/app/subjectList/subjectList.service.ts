@@ -8,14 +8,16 @@ import { Studyitem } from '../model/studyitem.model';
 import { Router } from '@angular/router';
 import { Practices } from '../model/practices.model';
 import { saveAs as importedSaveAs } from "file-saver";
+import { User } from '../model/user.model';
 
 const URL = 'https://localhost:8443/api/';
 
 @Injectable()
 export class SubjectListService {
 
+  constructor(private http: HttpClient, private router: Router) {
 
-  constructor(private http: HttpClient, private router: Router) { }
+  }
 
   /* Main */
   getSubject(courseName: string, subjectName: string) {
@@ -26,6 +28,17 @@ export class SubjectListService {
   getCourse(courseName: string){
     const reqUrl = URL + "courses/name/" + courseName + "/full";
     return this.http.get<Course>(reqUrl, { withCredentials: true });
+  }
+
+  getTeachers(page=0) {
+    const reqUrl = URL + "users/all?isStudent=false&page=" + page;
+    return this.http.get<any>(reqUrl, { withCredentials: true });
+  }
+
+  modifySubject(courseName: string, subject : any): any {
+    const reqUrl = URL + "subjects/" + courseName + "/" + subject.internalName;
+    console.log(subject);
+    return this.http.put<any>(reqUrl, subject, { withCredentials: true });
   }
 
   /* Error handling */

@@ -11,54 +11,55 @@
         <div class="list-title mt-1">
             <h2>Subjects:</h2>
         </div>
-        
-        
-        <a *ngFor="let subject of course?.subjects" [routerLink]="['/moodle/',course?.internalName, subject?.internalName]" class="subject m-2 col-lg-10 col-md-10 col-sm-10 col-xs-10  btn btn-link row text-left border pl-5"
-            role='button'>
-            <span class="subject-name pt-2">{{subject?.name}}</span>
-        </a>
-<!-- 
-        {{#admin}}
-        <div class="row">
-            <div class="col-md-4">
-                <form action="/course/{{courseInternalName}}/update-subject/{{internalName}}" method="post">
+
+        <div *ngFor="let subject of course?.subjects; let subI = index">
+
+            <a [routerLink]="['/moodle/',course?.internalName, subject?.internalName]" class="subject m-2 col-lg-10 col-md-10 col-sm-10 col-xs-10  btn btn-link row text-left border pl-5"
+                role='button'>
+                <span class="subject-name pt-2">{{subject?.name}}</span>
+            </a>
+
+
+
+            <div *ngIf="loginService.isAdmin" class="row">
+                <div class="col-md-4">
+
                     <label>Rename: </label>
-                    <input type="text" placeholder="{{name}}" name="subjectName">
+                    <input type="text" placeholder="{{subject?.name}}" name="subjectName" #newName>
                     <label>Description: </label>
-                    <textarea class="form-control" id="exampleTextarea" name="description" rows="3">{{description}}</textarea>
-                    <button type="submit">Confirm</button>
-                </form>
+                    <textarea class="form-control" id="exampleTextarea" #newDescription name="description" rows="3">{{subject?.description}}</textarea>
+                    <button (click)="changeSubjectInformation(subject, newName.value, newDescription.value)">Confirm</button>
 
-            </div>
+                </div>
 
-            <div class="col-md-4">
-                <form>
+                <div class="col-md-4">
+
                     <label class="col-md-4">Teachers: </label>
                     <select class="col-md-8" size="3" multiple="multiple" tabindex="1">
                         <option disabled="true"> Teaching:</option>
-                        {{#teachers}}
-                        <option value="11" disabled="true">{{username}}</option>
-                        {{/teachers}}
+                        <option *ngFor="let teacher of subject?.teachers" value="11" disabled="true">{{teacher?.username}}</option>
                     </select>
-                </form>
-                <form action="/course/{{courseInternalName}}/updateTeachers-subject/{{internalName}}" method="post">
-                    <select class="col-md-8" name="selectTeachers" size="" multiple="multiple" tabindex="1">
-                        <option disabled="true"> New Teachers:</option>
-                        {{#allTeachers}}
-                        <option value="{{username}}">{{username}}</option>
-                        {{/allTeachers}}
-                    </select>
-                    <button class="col-md-3" type="submit">Save</button>
-                </form>
-            </div>
-            <div class="col-md-2">
 
-                <form action="/course/{{courseInternalName}}/delete-subject/{{internalName}}" method="post">
-                    <button type="submit">Delete Subject</button>
-                </form>
+                    <select multiple  class="col-md-8" size="" tabindex="1" #selectedTeachersArr (change)="setSelected($event.target, subI)">
+                        <option *ngFor="let teacherS of allTeachers" [(value)]="teacherS.username">{{teacherS?.username}}</option>
+                    </select>
+                    <button class="col-md-3" (click)="changeTeachers(subI)">Save</button>
+                </div>
+
+
+                <div class="col-md-2">
+                    <!--
+                    <form action="/course/{{courseInternalName}}/delete-subject/{{internalName}}" method="post">
+                        <button type="submit">Delete Subject</button>
+                    </form>-->
+                </div>
+
             </div>
+
         </div>
-        {{/admin}} {{/subjects}} {{#admin}}
+        <!--         {{/admin}} {{/subjects}} 
+        
+        {{#admin}}
         <div class="mt-2">
             <h4>
                 <form class="subject ml-2 pl-4 border col-10" action="/course/{{courseInternalName}}/create-subject" method="post">
@@ -72,7 +73,7 @@
         </div>
 
         <!-- End Subjects -->
-    -->
+        -->
     </div>
 
 </section>

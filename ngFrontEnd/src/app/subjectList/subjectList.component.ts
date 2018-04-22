@@ -8,6 +8,7 @@ import { LoginService } from '../login/login.service';
 import { Studyitem } from '../model/studyitem.model';
 import { User } from '../model/user.model';
 import { SubjectListService } from './subjectList.service';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
@@ -20,27 +21,85 @@ import { SubjectListService } from './subjectList.service';
 export class SubjectListComponent implements OnInit {
 
 
-  subjects: Subject [];
-  course : Course;
+  subjects: Subject[];
+  course: Course;
   courseName: string;
-  
+
+  allTeachers: User[];
+
+  selectedOptions : Boolean [][];
+
   URL: string;
 
-  constructor(private router: Router, activatedRoute: ActivatedRoute, private loginService: LoginService, private subjectListService : SubjectListService) {
+  constructor(private router: Router, activatedRoute: ActivatedRoute, private loginService: LoginService, private subjectListService: SubjectListService) {
     this.URL = environment.URL;
-    this.courseName  =  activatedRoute.snapshot.params['courseName'];
+    this.courseName = activatedRoute.snapshot.params['courseName'];
+    this.allTeachers = [];
   }
 
   ngOnInit() {
     this.generatePage();
+   
   }
 
   generatePage() {
-      this.subjectListService.getCourse(this.courseName).subscribe(
-          res => {this.course = res; console.log(this.course)},
-          error => this.subjectListService.errorHandler(error),
-      );
+    this.allTeachers = [];
+    this.subjectListService.getCourse(this.courseName).subscribe(
+      res => {
+        this.course = res;
+        this.selectedOptions = new Array(this.course.subjects.length);
+        this.selectedOptions.fill([]);
+      },
+      error => this.subjectListService.errorHandler(error),
+    );
+
+    let page = 0;
+    this.getTeachers(page);
   }
 
+  getTeachers(page: number) {
+    this.subjectListService.getTeachers(page).subscribe(
+      res => {
+        console.log(this.allTeachers);
+        res['content'].forEach(teacher => {
+          if (!teacher.roles.includes("ROLE_ADMIN")) {
+            this.allTeachers.push(teacher);
+          }
+        });
+        if (!res['last']) {
+          page++;
+          this.getTeachers(page);
+        }
+      },
+      //error => this.subjectListService.errorHandler(error),
+    );
+  }
+
+  changeTeachers(index : number){
+    let newTeachers = [];
+    this.selectedOptions[index].forEach((option, i )=> {
+      if (option) {
+        newTeachers.push(this.allTeachers[i]);
+      }
+    });
+
+    let subject = {internalName : this.course.subjects[index].internalName, teachers : newTeachers};
+    this.subjectListService.modifySubject(this.courseName, subject).subscribe(
+      res =>this.generatePage(),
+      error => this.subjectListService.errorHandler(error),
+    );
+
+  }
+
+  setSelected(selectElement, index) {
+    let arr = new Array(selectElement.options.length);
+
+    for (let i = 0; i < selectElement.options.length; i++) {
+      arr[i] = selectElement.options[i].selected;
+    }
   
+    this.selectedOptions[index] = arr;
+  }
+
+
 }

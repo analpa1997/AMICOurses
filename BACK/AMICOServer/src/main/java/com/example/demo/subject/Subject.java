@@ -75,7 +75,7 @@ public class Subject {
 	public Subject(String name, String description) {
 		this.name = name;
 		this.description = description;
-		internalName = name.replaceAll(" ", "-").toLowerCase();
+		this.setInternalName(name);
 		setNumberModules(0);
 	}
 
@@ -157,7 +157,7 @@ public class Subject {
 	}
 
 	public void setInternalName(String internalName) {
-		this.internalName = internalName;
+		this.internalName = internalName.replaceAll(" ", "-").toLowerCase();
 	}
 
 	public void setMessages(List<Message> messages) {
@@ -166,6 +166,7 @@ public class Subject {
 
 	public void setName(String name) {
 		this.name = name;
+		this.setInternalName(name);
 	}
 
 	public void setNumberModules(int numberModules) {
