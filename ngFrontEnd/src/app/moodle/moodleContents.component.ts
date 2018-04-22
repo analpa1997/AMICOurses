@@ -127,15 +127,6 @@ export class MoodleContentsComponent {
     );
   }
 
-  tabChangeEvent($event) {
-
-    console.log("newe mod");
-    /*if ($event.nextId == "newMod") {
-      this.createModule()
-      $event.preventDefault();
-    }*/
-  }
-
   createModule() {
     this.moodleService.addModule(this.courseName, this.subjectName).subscribe(
       res => {

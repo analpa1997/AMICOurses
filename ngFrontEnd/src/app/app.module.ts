@@ -21,7 +21,6 @@ import { LoginService } from './login/login.service';
 import { HttpModule } from '@angular/http';
 import { MoodleComponent } from './moodle/moodle.component';
 import { MoodleService } from './moodle/moodle.service';
-import { Error404 } from './error/error404.component';
 import { MoodleContentsComponent } from './moodle/moodleContents.component';
 import { AddCourseToUserComponent } from './course-information/addCourse-toUser.component';
 import { SignupComponent } from './signup/signup.component';
@@ -35,12 +34,13 @@ import { SubjectListService } from './subjectList/subjectList.service';
 import { FormsModule } from '@angular/forms';
 import {UserComponent} from './user/user.component';
 import {UserUpdateComponent} from './user/user-update.component';
+import { ErrorPage } from './error/errorPage.component';
 
 
 
 @NgModule({declarations: [AppComponent, HeaderComponent, FooterComponent, OneCourseComponent,
                           SkillsComponent, SubjectsComponent, IndexPageComponent, HeaderGeneralComponent,
-                          CourseIndexComponent, LoginComponent, MoodleComponent, Error404, MoodleContentsComponent,
+                          CourseIndexComponent, LoginComponent, MoodleComponent, ErrorPage, MoodleContentsComponent,
                           AddCourseToUserComponent, SignupComponent, MoodleEvaluationComponent, MoodleProgressComponent, NgbdCarouselBasic,
     SubjectListComponent, UserComponent, UserUpdateComponent],
   imports: [BrowserModule, routing, HttpClientModule,  HttpModule  , NgbModule.forRoot(), AngularFontAwesomeModule, ChartsModule,

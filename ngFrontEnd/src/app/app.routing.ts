@@ -6,7 +6,7 @@ import { SubjectsComponent } from './course-information/subjects.component';
 import { IndexPageComponent } from './indexPage/indexPage.component'
 import { LoginComponent } from './login/login.component';
 import { MoodleComponent } from './moodle/moodle.component';
-import { Error404 } from './error/error404.component';
+import { ErrorPage } from './error/errorPage.component';
 import {SignupComponent} from './signup/signup.component';
 import { AddCourseToUserComponent} from './course-information/addCourse-toUser.component';
 import { SubjectListComponent } from './subjectList/subjectList.component';
@@ -21,7 +21,7 @@ const appRoutes = [
   { path: 'oneCourse/:id/subjects', component: SubjectsComponent},
   { path: 'moodle/:courseName/:subjectName', component: MoodleComponent},
   { path: 'course-overview/:courseName', component : SubjectListComponent},
-  { path: 'error404', component: Error404},
+  { path: 'error/:error', component: ErrorPage},
   { path: 'signup', component: SignupComponent},
   { path: 'oneCourse/:id/add', component: AddCourseToUserComponent},
   { path: 'users/profile', component: UserComponent},
