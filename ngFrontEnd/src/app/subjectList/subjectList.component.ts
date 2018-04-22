@@ -65,7 +65,7 @@ export class SubjectListComponent implements OnInit {
           if (this.loginService.isAdmin) {
             this.selectedOptions = new Array(this.course.subjects.length);
             this.selectedOptions.fill([]);
-
+            /* To remove admin from the list of teachers */
             for (let subject of this.course.subjects){
               let i = 0;
               let pos = -1;
@@ -148,6 +148,13 @@ export class SubjectListComponent implements OnInit {
 
   createSubject(name : string) {
     this.subjectListService.createSubject(this.courseName, name).subscribe(
+      res => this.generatePage(),
+      error => this.loginService.errorHandler(error),
+    );
+  }
+
+  deleteSubject(subject : Subject){
+    this.subjectListService.deleteSubject(this.courseName, subject.internalName).subscribe(
       res => this.generatePage(),
       error => this.loginService.errorHandler(error),
     );
