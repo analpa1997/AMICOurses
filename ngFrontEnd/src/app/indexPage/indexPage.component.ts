@@ -21,6 +21,7 @@ export class IndexPageComponent implements OnInit {
   allTypes: string [];
   images : Array<string>;
   selectedType : string;
+  selectedName: string;
   sort: string;
   lastPage: boolean;
   URL: string;
@@ -99,7 +100,19 @@ export class IndexPageComponent implements OnInit {
         this.lastPage = response['last'];
         this.type = this.selectedType === '' ? 'all' : this.selectedType;
         this.emptyContent = this.courses.length === 0;
-        console.log(this.selectedType);
+      },
+      error => console.log(error),
+    );
+  }
+
+  byNameLike() {
+    this.courseService.getCourses(0, this.selectedName, this.type, this.sort).subscribe(
+      response => {
+        this.courses = response['content'];
+        this.page = response['number'];
+        this.lastPage = response['last'];
+        this.name = this.selectedName;
+        this.emptyContent = this.courses.length === 0;
       },
       error => console.log(error),
     );
