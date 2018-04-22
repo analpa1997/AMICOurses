@@ -51,24 +51,15 @@
                     <span class="dropdown">
                         <form class="form-inline" >
                             <label class="mr-sm-2" for="inlineFormCustomSelect">Type of the course</label>
-                            <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="selectedType" ng-model="type" >
-                                <option value="all">all</option>
-                                <option ng-repeat="type in allTypes" value="{{type}}">{{type}}</option>
-                                <!--{{#typeList}}
-                                <option value="{{.}}">{{.}}</option>
-                                {{/typeList}} -->
+                            <select [(ngModel)]="selectedType" class="custom-select mb-2 mr-sm-2 mb-sm-0" id="selectedType"  [ngModelOptions]="{standalone: true}" >
+                              <option  [ngValue]="">all
+                              <option  *ngFor="let type of allTypes" [ngValue]="type.valueOf()">{{type}}
                             </select>
                         </form>
-                      <form class="form-inline">
-                        <select ng-model="selectedType">
-                          <option value="all">all
-                          <option *ngFor="let type of allTypes" value="{{type}}">{{type}>
-                        </select>
-                      </form>
                     </span>
                 </span>
                 <span class="col-md-6 col-sm-12 col-12 text-center ">
-                    <button class="btn btn-primary btn-xl rounded-pill" id="typebtn" onClick="showByType();">Course Type</button>
+                    <button class="btn btn-primary btn-xl rounded-pill" id="typebtn" (click)="byType();">Course Type</button>
                 </span>
             </div>
         </div>
