@@ -121,24 +121,28 @@ export class MoodleContentsComponent {
   }
 
   deleteModule(module: number) {
-    this.moodleService.deleteModule(this.courseName, this.subjectName, module).subscribe(
+    this.moodleService.deleteModule(this.courseName, this.subjectName, module+1).subscribe(
       res => this.refreshSubject.next(), 
       error => this.loginService.errorHandler(error),
     );
   }
 
-  tabChangeEvent($event) {;
-    if ($event.nextId == "newMod") {
-      this.moodleService.addModule(this.courseName, this.subjectName).subscribe(
-        res => {
-          this.refreshSubject.next();
-        },
-        error => this.loginService.errorHandler(error),
-      );
+  tabChangeEvent($event) {
 
+    console.log("newe mod");
+    /*if ($event.nextId == "newMod") {
+      this.createModule()
       $event.preventDefault();
-    }
+    }*/
   }
 
+  createModule() {
+    this.moodleService.addModule(this.courseName, this.subjectName).subscribe(
+      res => {
+        this.refreshSubject.next();
+      },
+      error => this.loginService.errorHandler(error),
+    );
+  }
 
 }
