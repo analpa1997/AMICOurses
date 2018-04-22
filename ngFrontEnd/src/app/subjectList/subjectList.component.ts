@@ -47,8 +47,28 @@ export class SubjectListComponent implements OnInit {
     this.subjectListService.getCourse(this.courseName).subscribe(
       res => {
         this.course = res;
-        this.selectedOptions = new Array(this.course.subjects.length);
-        this.selectedOptions.fill([]);
+        if (!this.loginService.isStudent && !this.loginService.isAdmin) {
+          let subjects = [];
+
+          this.course.subjects.forEach(subject => {
+            let isTeacher = false
+            subject.teachers.forEach(teacher => {
+              if (teacher.userID == this.loginService.user.userID) {
+                isTeacher = true;
+              }
+            })
+            if (isTeacher) {
+              subjects.push(subject);
+            }
+          });
+          this.course.subjects = subjects;
+        } else {
+          if (this.loginService.isAdmin) {
+            this.selectedOptions = new Array(this.course.subjects.length);
+            this.selectedOptions.fill([]);
+          }
+        }
+
       },
       error => this.subjectListService.errorHandler(error),
     );
