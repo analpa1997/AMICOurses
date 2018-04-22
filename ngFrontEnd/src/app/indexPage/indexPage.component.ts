@@ -15,6 +15,7 @@ import { environment } from '../../environments/environment';
 export class IndexPageComponent implements OnInit {
 
   courses: Course [];
+  auxCourses: Course [];
   page: number;
   name: string;
   type: string;
@@ -122,7 +123,10 @@ export class IndexPageComponent implements OnInit {
     this.courseService.getCourses((this.page + 1), this.name, this.type, this.sort).subscribe(
       response => {
         this.emptyContent = this.courses.length === 0;
-        this.courses.concat(response['content']);
+        this.auxCourses = response['content'];
+        for (let c of this.auxCourses){
+          this.courses.push(c);
+        }
         this.page = response['number'];
         this.lastPage = response['last'];
 
