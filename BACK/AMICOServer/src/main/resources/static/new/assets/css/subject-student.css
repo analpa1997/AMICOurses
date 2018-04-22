@@ -1,0 +1,67 @@
+.banner {
+    background-color: lightgray;
+    height: 2.5rem;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 3rem;
+    font-family: Catamaran;
+    font-weight: 800;
+    font-size: 1.5rem;
+}
+
+#headerCourse {
+    color: black;
+    font-size: 1.5vmax;
+}
+
+.card-img-top {
+    margin: auto;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    width: 10rem;
+    height: 13rem;
+}
+
+.card-text {
+    margin: auto;
+    width: 10rem;
+    height: 10rem;
+}
+
+#textButton {
+    color: white;
+}
+
+.info {
+    color: white;
+}
+
+#innerCard {
+    padding: 0.75rem;
+}
+
+.modules > li > a {
+    margin-top: 1px;
+    height: 2.35vmax;
+
+}
+
+ul {
+    list-style: none;
+}
+
+.fa-file-pdf {
+    color: red;
+}
+
+.fa-file-word {
+    color: blue;
+}
+
+.fa-file-excel {
+    color: green;
+}
+
+.fa-file-powerpoint {
+    color: orange;
+}
