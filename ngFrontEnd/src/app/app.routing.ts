@@ -24,8 +24,8 @@ const appRoutes = [
   { path: 'error/:error', component: ErrorPage},
   { path: 'signup', component: SignupComponent},
   { path: 'oneCourse/:id/add', component: AddCourseToUserComponent},
-  { path: 'users/profile', component: UserComponent},
-  { path: 'users/profile/update', component: UserUpdateComponent},
+  { path: 'users/:internalName/profile', component: UserComponent},
+  { path: 'users/:internalName/profile/update', component: UserUpdateComponent},
 
   { path: '', redirectTo: 'index', pathMatch: 'full'},
 ];
