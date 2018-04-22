@@ -33,6 +33,8 @@ import {NgbdCarouselBasic} from './indexPage/carousel-basic';
 import { SubjectListComponent } from './subjectList/subjectList.component';
 import { SubjectListService } from './subjectList/subjectList.service';
 import { FormsModule } from '@angular/forms';
+import {UserComponent} from './user/user.component';
+import {UserUpdateComponent} from './user/user-update.component';
 
 
 
