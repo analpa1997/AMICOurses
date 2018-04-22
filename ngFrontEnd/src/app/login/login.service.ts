@@ -83,14 +83,14 @@ export class LoginService {
     /* Error handling */
     errorHandler(error: any) {
         if (error.status == 401) {
-            this.router.navigate(['/error, 401']); //Forbidden
+            this.router.navigate(['/error', '401']); //Forbidden
         }
 
         if (error.status == 500) {
-            this.router.navigate(['/error, 500']); //Must be a 500 error
+            this.router.navigate(['/error', '500']); //Must be a 500 error
         }
 
-        this.router.navigate(['/error, 404']);
+        this.router.navigate(['/error', '404']);
     }
 }
 
