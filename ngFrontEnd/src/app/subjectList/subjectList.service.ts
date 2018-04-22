@@ -37,20 +37,12 @@ export class SubjectListService {
 
   modifySubject(courseName: string, subject : any): any {
     const reqUrl = URL + "subjects/" + courseName + "/" + subject.internalName;
-    console.log(subject);
     return this.http.put<any>(reqUrl, subject, { withCredentials: true });
   }
 
-  /* Error handling */
-  errorHandler(error: any) {
-    if (error.status == 401) {
-      this.router.navigate(['/login']); //Forbidden
-    }
-
-    if (error.status == 500) {
-      this.router.navigate(['/error404']); //Must be a 500 error
-    }
-
-    this.router.navigate(['/error404']);
+  createSubject(courseName : string, name : string): any {
+    const reqUrl = URL + "subjects/" + courseName + "/subjects?subjectName=" + name;
+    return this.http.post<Subject>(reqUrl, {},{ withCredentials: true });
   }
+
 }

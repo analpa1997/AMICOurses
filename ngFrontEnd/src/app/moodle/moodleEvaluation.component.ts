@@ -67,7 +67,7 @@ export class MoodleEvaluationComponent implements OnInit {
           );
         });
       },
-      error => this.moodleService.errorHandler(error),
+      error => this.loginService.errorHandler(error),
 
     );
   }
@@ -77,14 +77,14 @@ export class MoodleEvaluationComponent implements OnInit {
     practice.icon = type;
       this.moodleService.modifyStudyItem(this.courseName, this.subjectName, practice).subscribe(
         res => {this.getPractices()},
-        error => this.moodleService.errorHandler(error),
+        error => this.loginService.errorHandler(error),
       );
   }
 
   deletePractice(practice : Studyitem) {
     this.moodleService.deleteStudyItem(this.courseName, this.subjectName, practice).subscribe(
       res => this.getPractices(),
-      error => this.moodleService.errorHandler(error),
+      error => this.loginService.errorHandler(error),
     );
   }
   getPracticeFile(practice: Studyitem) {
@@ -99,7 +99,7 @@ export class MoodleEvaluationComponent implements OnInit {
         this.practices[index].practices[practiceSub].calification = res.calification;
       },
 
-      error => this.moodleService.errorHandler(error),
+      error => this.loginService.errorHandler(error),
     );
   }
 
@@ -112,9 +112,9 @@ export class MoodleEvaluationComponent implements OnInit {
         res => {
           this.moodleService.uploadFile(this.courseName, this.subjectName, res, file.files[0]).subscribe(
             res => this.practices.push(res),
-            error => this.moodleService.errorHandler(error),
+            error => this.loginService.errorHandler(error),
           );
-        }, error => this.moodleService.errorHandler(error)
+        }, error => this.loginService.errorHandler(error)
       )
     } else {
       alert("There are empty parameters");
@@ -130,10 +130,10 @@ export class MoodleEvaluationComponent implements OnInit {
           console.log(res);
           this.moodleService.uploadFile(this.courseName, this.subjectName, this.practices[index], file.files[0], res, update).subscribe(
             res => { this.practices[index].practices[practiceSub] = res; },
-            error => this.moodleService.errorHandler(error),
+            error => this.loginService.errorHandler(error),
           );
         },
-        error => this.moodleService.errorHandler(error),
+        error => this.loginService.errorHandler(error),
       );
 
     } else {

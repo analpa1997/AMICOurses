@@ -33,7 +33,7 @@ export class LoginService {
                 if (error.status !== 401) {
                     console.error('Error when asking if logged: ' +
                         JSON.stringify(error));
-                } 
+                }
             }
         );
     }
@@ -78,6 +78,19 @@ export class LoginService {
                 return response;
             }
         );
+    }
+
+    /* Error handling */
+    errorHandler(error: any) {
+        if (error.status == 401) {
+            this.router.navigate(['/login']); //Forbidden
+        }
+
+        if (error.status == 500) {
+            this.router.navigate(['/error404']); //Must be a 500 error
+        }
+
+        this.router.navigate(['/error404']);
     }
 }
 

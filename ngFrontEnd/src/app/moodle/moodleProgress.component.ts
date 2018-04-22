@@ -72,7 +72,7 @@ export class MoodleProgressComponent implements OnInit {
         this.chartLabels = practicesLabels;
         this.chartData[0].label = 'Scores';
       },
-      error => this.moodleService.errorHandler(error),
+      error => this.loginService.errorHandler(error),
     );
   }
 
