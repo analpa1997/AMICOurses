@@ -20,7 +20,7 @@ export class UserService {
   }
 
   getUser(internal: string) {
-    return this.http.get(URL + internal, { withCredentials: true })
+    return this.http.get(URL + '/' + internal, { withCredentials: true })
       .map(response => response.json())
       .catch(error => this.handleError(error));
   }

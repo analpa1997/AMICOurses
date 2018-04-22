@@ -49,7 +49,6 @@ export class SubjectListComponent implements OnInit {
         this.course = res;
         if (!this.loginService.isStudent && !this.loginService.isAdmin) {
           let subjects = [];
-
           this.course.subjects.forEach(subject => {
             let isTeacher = false
             subject.teachers.forEach(teacher => {
@@ -66,6 +65,20 @@ export class SubjectListComponent implements OnInit {
           if (this.loginService.isAdmin) {
             this.selectedOptions = new Array(this.course.subjects.length);
             this.selectedOptions.fill([]);
+            /* To remove admin from the list of teachers */
+            for (let subject of this.course.subjects){
+              let i = 0;
+              let pos = -1;
+              for(let teacher of subject.teachers){
+                if (teacher.roles.indexOf('ROLE_ADMIN') !== -1){
+                  pos = i;
+                }
+                i++;
+              }
+              if (pos >= 0){
+                subject.teachers.splice(pos, 1);
+              }
+            }
           }
         }
 
@@ -115,6 +128,7 @@ export class SubjectListComponent implements OnInit {
       }
     });
 
+    newTeachers.push(this.loginService.user);
     let subject = { internalName: this.course.subjects[index].internalName, teachers: newTeachers };
     this.subjectListService.modifySubject(this.courseName, subject).subscribe(
       res => this.generatePage(),
@@ -135,6 +149,18 @@ export class SubjectListComponent implements OnInit {
 
   createSubject(name : string) {
     this.subjectListService.createSubject(this.courseName, name).subscribe(
+      res => {
+        this.subjectListService.modifySubject(this.courseName, {internalName : res.internalName, teachers : [this.loginService.user]}).subscribe(
+          res => this.generatePage(),
+          error => this.loginService.errorHandler(error)
+        );
+      },
+      error => this.loginService.errorHandler(error),
+    );
+  }
+
+  deleteSubject(subject : Subject){
+    this.subjectListService.deleteSubject(this.courseName, subject.internalName).subscribe(
       res => this.generatePage(),
       error => this.loginService.errorHandler(error),
     );

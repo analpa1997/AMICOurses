@@ -40,7 +40,7 @@
                         <option *ngFor="let teacher of subject?.teachers" value="11" disabled="true">{{teacher?.username}}</option>
                     </select>
 
-                    <select multiple  class="col-md-8" size="" tabindex="1" #selectedTeachersArr (change)="setSelected($event.target, subI)">
+                    <select multiple class="col-md-8" size="" tabindex="1" #selectedTeachersArr (change)="setSelected($event.target, subI)">
                         <option *ngFor="let teacherS of allTeachers" [(value)]="teacherS.username">{{teacherS?.username}}</option>
                     </select>
                     <button class="col-md-3" (click)="changeTeachers(subI)">Save</button>
@@ -48,28 +48,26 @@
 
 
                 <div class="col-md-2">
-                    <!--
-                    <form action="/course/{{courseInternalName}}/delete-subject/{{internalName}}" method="post">
-                        <button type="submit">Delete Subject</button>
-                    </form>-->
+
+                    <button (click)="deleteSubject(subject)">Delete Subject</button>
                 </div>
 
             </div>
 
         </div>
-        
+
         <div></div>
-        <div *ngIf="loginService.isAdmin" class="mt-4">
+        <div *ngIf="loginService.isAdmin" class="mt-4 subject">
             <h4>
-                    <label>New Subject: </label>
-                    <input type="text" class="col-md-5" #subjectName>
-                    <button  class="form-controll" (click)="createSubject(subjectName.value)">Create</button>
+                <label>New Subject: </label>
+                <input type="text" class="col-md-5" #subjectName>
+                <button class="form-controll" (click)="createSubject(subjectName.value)">Create</button>
 
             </h4>
         </div>
 
         <!-- End Subjects -->
-        
+
     </div>
 
 </section>

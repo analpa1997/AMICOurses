@@ -79,9 +79,10 @@ public class MoodleRestController {
 				subjectService.addModule(subject);
 				return new ResponseEntity<>(subject, HttpStatus.OK);
 			}
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		/* If program reaches here is that there has been an error */
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
 
 	/* DELETE */
@@ -104,9 +105,10 @@ public class MoodleRestController {
 				}
 
 			}
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
 
 	/* STUDY ITEMS / PRACTICES */
@@ -138,8 +140,9 @@ public class MoodleRestController {
 					return new ResponseEntity<>(studyItems, HttpStatus.OK);
 				}
 			}
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
 
 	/* Retrieves all the studyItems from a module from a subject */
@@ -157,8 +160,9 @@ public class MoodleRestController {
 				Page<StudyItem> studyItems = subjectService.getStudyItems(subject, module, new PageRequest(page, 10));
 				return new ResponseEntity<>(studyItems, HttpStatus.OK);
 			}
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
 
 	/* Retrieves only one studyItem/practice from a subject */
@@ -188,8 +192,9 @@ public class MoodleRestController {
 				}
 
 			}
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
 
 	/* type can be or studyItem or practice */
@@ -237,7 +242,7 @@ public class MoodleRestController {
 				}
 			}
 		} else {
-			response.sendError(404);
+			response.sendError(401);
 		}
 	}
 
@@ -252,22 +257,24 @@ public class MoodleRestController {
 
 		User user = sessionUserComponent.getLoggedUser();
 
-		if (user != null && !user.isStudent() && (module != null)) {
+		if (user != null && !user.isStudent()) {
+			if ((module != null)) {
 
-			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
-			if (subject != null) {
-				if (subject.getTeachers().contains(user) && module <= subject.getNumberModules()) {
-					/* If the user is a teacher of the subject can upload the file */
+				Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
+				if (subject != null) {
+					if (subject.getTeachers().contains(user) && module <= subject.getNumberModules()) {
+						/* If the user is a teacher of the subject can upload the file */
 
-					/* File uploading control. If the file exists, it is overwritten */
-					newStudyItem.setModule(module);
-					newStudyItem = studyItemService.createStudyItem(subject, newStudyItem, false);
-					return new ResponseEntity<>(newStudyItem, HttpStatus.OK);
+						/* File uploading control. If the file exists, it is overwritten */
+						newStudyItem.setModule(module);
+						newStudyItem = studyItemService.createStudyItem(subject, newStudyItem, false);
+						return new ResponseEntity<>(newStudyItem, HttpStatus.OK);
+					}
 				}
-
 			}
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
 
 	/* Submits a file to a studyItem */
@@ -300,8 +307,9 @@ public class MoodleRestController {
 					}
 				}
 			}
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
 
 	/* Creates a practice within a subject */
@@ -326,8 +334,9 @@ public class MoodleRestController {
 				}
 
 			}
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
 
 	/* Submits a file to a studyItem within a subject and a module */
@@ -359,8 +368,9 @@ public class MoodleRestController {
 
 				}
 			}
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
 
 	/* UPDATE */
@@ -396,9 +406,10 @@ public class MoodleRestController {
 					}
 				}
 			}
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
 
 	@JsonView(StudyItemDetailed.class)
@@ -428,9 +439,10 @@ public class MoodleRestController {
 					}
 				}
 			}
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
 
 	/* DELETE */
@@ -462,9 +474,10 @@ public class MoodleRestController {
 					}
 				}
 			}
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
 
 	@JsonView(StudyItem.BasicStudyItem.class)
@@ -502,9 +515,10 @@ public class MoodleRestController {
 					return new ResponseEntity<>(deletedStudyItems, HttpStatus.OK);
 				}
 			}
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
 
 	/* PRACTICES SUBMISSIONS */
@@ -542,8 +556,9 @@ public class MoodleRestController {
 					}
 				}
 			}
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
 
 	/* Requests the file */
@@ -583,9 +598,10 @@ public class MoodleRestController {
 
 					}
 				}
+				response.sendError(404);
 			}
 		} else {
-			response.sendError(404);
+			response.sendError(401);
 		}
 	}
 
@@ -621,8 +637,10 @@ public class MoodleRestController {
 					}
 				}
 			}
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
 		}
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
 
 	/* Updloads a file within a practice submission */
@@ -633,26 +651,30 @@ public class MoodleRestController {
 			@RequestParam("itemFile") MultipartFile file) throws IOException {
 
 		User user = sessionUserComponent.getLoggedUser();
-		if (user != null && user.isStudent() && !file.isEmpty()) {
-			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
-			if (subject != null) {
-				StudyItem studyItem = studyItemRepository.findOne(practiceID);
-				if (studyItem != null) {
-					if (studyItem.isPractice()) {
-						Practices practice = practiceSubmissionRepository.findOne(submissionID);
-						if (practice != null && practice.getOwner().equals(user) && practice.isPresented()) {
-							practice = practicesSubmissionService.createSubmissionFile(user, studyItem, practice, file);
-							return new ResponseEntity<>(practice, HttpStatus.OK);
+		if (user != null && user.isStudent()) {
+			if (!file.isEmpty()) {
+				Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
+				if (subject != null) {
+					StudyItem studyItem = studyItemRepository.findOne(practiceID);
+					if (studyItem != null) {
+						if (studyItem.isPractice()) {
+							Practices practice = practiceSubmissionRepository.findOne(submissionID);
+							if (practice != null && practice.getOwner().equals(user) && practice.isPresented()) {
+								practice = practicesSubmissionService.createSubmissionFile(user, studyItem, practice,
+										file);
+								return new ResponseEntity<>(practice, HttpStatus.OK);
+							} else {
+								return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+							}
 						} else {
 							return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 						}
-					} else {
-						return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 					}
 				}
 			}
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
 
 	/* UPDATE */
@@ -689,9 +711,9 @@ public class MoodleRestController {
 
 				}
 			}
-
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
 
 	/* Updloads a file within a practice submission */
@@ -703,27 +725,32 @@ public class MoodleRestController {
 
 		User user = sessionUserComponent.getLoggedUser();
 
-		if (user != null && user.isStudent() && !file.isEmpty()) {
-			Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
+		if (user != null && user.isStudent()) {
 
-			if (subject != null) {
-				StudyItem studyItem = studyItemRepository.findOne(practiceID);
-				if (studyItem != null) {
-					if (studyItem.isPractice()) {
-						Practices practice = practiceSubmissionRepository.findOne(submissionID);
-						if (practice != null && practice.getOwner().equals(user)) {
-							practice = practicesSubmissionService.createSubmissionFile(user, studyItem, practice, file);
-							return new ResponseEntity<>(practice, HttpStatus.OK);
+			if (!file.isEmpty()) {
+				Subject subject = subjectService.checkForSubject(user, courseInternalName, subjectInternalName);
+
+				if (subject != null) {
+					StudyItem studyItem = studyItemRepository.findOne(practiceID);
+					if (studyItem != null) {
+						if (studyItem.isPractice()) {
+							Practices practice = practiceSubmissionRepository.findOne(submissionID);
+							if (practice != null && practice.getOwner().equals(user)) {
+								practice = practicesSubmissionService.createSubmissionFile(user, studyItem, practice,
+										file);
+								return new ResponseEntity<>(practice, HttpStatus.OK);
+							} else {
+								return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+							}
 						} else {
 							return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 						}
-					} else {
-						return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 					}
 				}
 			}
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
 
 	/* DELETE */
@@ -754,8 +781,9 @@ public class MoodleRestController {
 					}
 				}
 			}
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
 
 	/* CONSULT MARKS */
@@ -807,9 +835,10 @@ public class MoodleRestController {
 				}
 				return new ResponseEntity<>(listPractices, HttpStatus.OK);
 			}
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		/* If program reaches here is that there has been an error */
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
 
 }

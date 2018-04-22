@@ -1,36 +1,28 @@
-import { Component } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from './user.service';
 import { LoginService } from '../login/login.service';
 import {User} from '../model/user.model';
+import {Course} from '../model/course.model';
 
 @Component({
-  template: `
-  <div *ngIf="book">
-  <h2>Book "{{book.title}}"</h2>
-  <div>
-    <p>{{book.description}}</p>
-  </div>
-  <p>
-    <button *ngIf="loginService.isLogged && loginService.isAdmin" (click)="removeBook()">Remove</button>
-    <button *ngIf="loginService.isLogged" (click)="editBook()">Edit</button>
-    <br>
-    <button (click)="gotoBooks()">All Books</button>
-  </p>
-  </div>`
+  templateUrl: './user.component.html',
+  styleUrls : ['../../assets/css/resume.min.css']
 })
-export class UserComponent {
 
-  user: User;
 
-  constructor(private router: Router, activatedRoute: ActivatedRoute, public service: UserService,
+export class UserComponent implements OnInit {
+  internalName: string;
+  private user: User;
+  isTheProfileUser: boolean;
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, public service: UserService,
               public loginService: LoginService) {
 
-    const userInternalName = activatedRoute.snapshot.params['userInternalName'];
+    /*const userInternalName = activatedRoute.snapshot.params['userInternalName'];
     service.getUser(userInternalName).subscribe(
       user => this.user = user,
       error => console.error(error)
-    );
+    );*/
   }
 
   removeUser() {
@@ -45,5 +37,20 @@ export class UserComponent {
 
   updateUser() {
     this.router.navigate(['/user/update', this.user.userID]);
+  }
+  ngOnInit() {
+    this.internalName = this.activatedRoute.snapshot.params['internalName'];
+    console.log(this.internalName);
+    console.log(this.loginService.user.internalName);
+
+    if (this.internalName === this.loginService.user.internalName) {
+      console.log(this.internalName);
+      this.isTheProfileUser = true;
+      this.user = this.loginService.user;
+    } else {
+      this.isTheProfileUser = false;
+      this.service.getUser(this.internalName).subscribe(user => this.user = user,
+        error => console.log(error));
+    }
   }
 }

@@ -17,20 +17,7 @@ export class SignupComponent {
   constructor(
     private _router: Router,
     activatedRoute: ActivatedRoute,
-    private service: UserService) {
-
-    /*const id = activatedRoute.snapshot.params['id'];
-    if (id) {
-      service.getUser(id).subscribe(
-        user => this.user = user,
-        error => console.error(error)
-      );
-      this.newUser = false;
-    } else {
-      // this.user = { username: '', userMail: '' };
-      this.newUser = true;
-    }*/
-  }
+    private service: UserService) {}
 
   checkUM(event: any, username: string, mail: string, pass: string, Rpass: string) {
     event.preventDefault();

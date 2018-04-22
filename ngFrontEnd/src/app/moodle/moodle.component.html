@@ -42,7 +42,7 @@
                             <ul class="list-group">
                                     
                                         <!-- Item -->
-                                        <a *ngFor="let user of listUsers" class="item-content" href="/profile/{{internalName}}">
+                                        <a *ngFor="let user of listUsers" class="item-content" class="nav-link" [routerLink]="['/users',user.internalName,'profile']">
                                             <li class="list-group-item">
                                             <img class="img-fluid img-profile rounded-circle mx-auto mb-2 offset-md-2" style="width:64px;height:64px" src="{{URL}}/profileimg/{{user.internalName}}" alt="profileImg"> 
                                             <span class = "ml-5">User : {{user.username}}</span> 

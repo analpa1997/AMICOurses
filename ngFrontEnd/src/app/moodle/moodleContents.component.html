@@ -1,8 +1,10 @@
 <span class="pl-3 py-1 tab-title"> Contents:</span>
-<ngb-tabset justify="fill" (tabChange)="tabChangeEvent($event)">
+<ngb-tabset justify="fill">
     <ngb-tab *ngFor="let module of modules; let i = index" title="Mod {{i+1}}">
         <ng-template ngbTabContent>
-                <span *ngIf="!loginService.isStudent" class = "offset-md-10" (click)="deleteModule(i)"><a class = "btn btn-warning" > Delete Module {{i+1}} </a></span>
+            <span *ngIf="!loginService.isStudent" class="offset-md-10" (click)="deleteModule(i)">
+                <a class="btn btn-warning"> Delete Module {{i+1}} </a>
+            </span>
             <!-- Students -->
             <span *ngIf="loginService.isStudent">
                 <a *ngFor="let studyItem of studyItems[i]" class="item-content" (click)="getStudyItemFile(studyItem)">
@@ -52,8 +54,10 @@
         </ng-template>
     </ngb-tab>
 
-    <ngb-tab *ngIf="!loginService.isStudent" id="newMod" title="New Mod +">
-
+    <ngb-tab *ngIf="!loginService.isStudent" id="newMod">
+        <ng-template ngbTabTitle>
+            <div (click)="createModule()" >New Mod +</div>
+        </ng-template>
     </ngb-tab>
 
 </ngb-tabset>

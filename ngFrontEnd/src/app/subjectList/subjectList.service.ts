@@ -45,4 +45,9 @@ export class SubjectListService {
     return this.http.post<Subject>(reqUrl, {},{ withCredentials: true });
   }
 
+  deleteSubject(courseName : string, subjectName : string): any {
+    const reqUrl = URL + "subjects/" + courseName + "/" + subjectName;
+    return this.http.delete<Subject>(reqUrl, { withCredentials: true });
+  }
+
 }
