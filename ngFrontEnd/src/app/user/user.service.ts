@@ -3,6 +3,7 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 import {User} from '../model/user.model';
+import { LoginService } from '../login/login.service';
 
 
 
@@ -10,7 +11,7 @@ const URL = 'https://localhost:8443/api/users';
 @Injectable()
 export class UserService {
 
-  constructor(private http: Http) { }
+  constructor(private http: Http, private login: LoginService) { }
 
   getUsers() {
     return this.http.get(URL, { withCredentials: true })
@@ -55,9 +56,10 @@ export class UserService {
       'Content-Type': 'application/json',
       'X-Requested-With': 'XMLHttpRequest'
     });
+    const internal = this.login.user.internalName;
     const options = new RequestOptions({ withCredentials: true, headers });
 
-    return this.http.put(URL + user.userID, body, options)
+    return this.http.put(URL + '/' + internal, body, options)
       .map(response => response.json())
       .catch(error => this.handleError(error));
   }

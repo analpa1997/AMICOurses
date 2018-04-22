@@ -14,7 +14,6 @@ import javax.mail.internet.InternetAddress;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.course.Course;
@@ -70,9 +69,10 @@ public class UserService {
 			String urlProfileImage = user.getUrlProfileImage();
 
 			if (username != null)
-				if (correctName(username) && (userRepository.findByUsername(username) == null))
+				if (correctName(username) && (userRepository.findByUsername(username) == null)) {
 					u.setUsername(username);
-
+					u.setInternalName(username.replaceAll(" ", "-").toLowerCase());
+				}
 			if (password != null)
 				u.setPassword(password);
 

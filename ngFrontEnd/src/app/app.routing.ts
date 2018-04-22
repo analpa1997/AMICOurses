@@ -10,6 +10,8 @@ import { Error404 } from './error/error404.component';
 import {SignupComponent} from './signup/signup.component';
 import { AddCourseToUserComponent} from './course-information/addCourse-toUser.component';
 import { SubjectListComponent } from './subjectList/subjectList.component';
+import {UserComponent} from './user/user.component';
+import {UserUpdateComponent} from './user/user-update.component';
 
 const appRoutes = [
   { path : 'index', component : IndexPageComponent,  useAsDefault: true },
@@ -22,6 +24,8 @@ const appRoutes = [
   { path: 'error404', component: Error404},
   { path: 'signup', component: SignupComponent},
   { path: 'oneCourse/:id/add', component: AddCourseToUserComponent},
+  { path: 'users/profile', component: UserComponent},
+  { path: 'users/profile/update', component: UserUpdateComponent},
 
   { path: '', redirectTo: 'index', pathMatch: 'full'},
 ];

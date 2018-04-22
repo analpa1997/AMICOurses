@@ -13,9 +13,9 @@ export class User {
   phoneNumber: number;
   interests: string;
   urlProfileImage: string;
-  student: boolean;
-  internalName: string;
-  teaching: Subject;
-  roles: string[];
+  student?: boolean;
+  internalName?: string;
+  teaching?: Subject;
+  roles?: string[];
 }
 
