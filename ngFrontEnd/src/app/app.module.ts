@@ -6,7 +6,6 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { ChartsModule } from 'ng2-charts';
 
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './course-information/header.component';
 import { FooterComponent } from './course-information/footer.component';
 import { CourseService } from './course-information/course.service';
 import { OneCourseComponent } from './course-information/one-course.component';
@@ -24,25 +23,24 @@ import { MoodleService } from './moodle/moodle.service';
 import { MoodleContentsComponent } from './moodle/moodleContents.component';
 import { AddCourseToUserComponent } from './course-information/addCourse-toUser.component';
 import { SignupComponent } from './signup/signup.component';
-import {UserService} from './user/user.service';
+import { UserService } from './user/user.service';
 import { MoodleEvaluationComponent } from './moodle/moodleEvaluation.component';
 import { MoodleProgressComponent } from './moodle/moodleProgress.component';
-
-import {NgbdCarouselBasic} from './indexPage/carousel-basic';
+import { NgbdCarouselBasic } from './indexPage/carousel-basic';
 import { SubjectListComponent } from './subjectList/subjectList.component';
 import { SubjectListService } from './subjectList/subjectList.service';
 import { FormsModule } from '@angular/forms';
-import {UserComponent} from './user/user.component';
-import {UserUpdateComponent} from './user/user-update.component';
+import { UserComponent } from './user/user.component';
+import { UserUpdateComponent } from './user/user-update.component';
 import { ErrorPage } from './error/errorPage.component';
 
 
 
-@NgModule({declarations: [AppComponent, HeaderComponent, FooterComponent, OneCourseComponent,
+@NgModule({declarations: [AppComponent, FooterComponent, OneCourseComponent,
                           SkillsComponent, SubjectsComponent, IndexPageComponent, HeaderGeneralComponent,
                           CourseIndexComponent, LoginComponent, MoodleComponent, ErrorPage, MoodleContentsComponent,
-                          AddCourseToUserComponent, SignupComponent, MoodleEvaluationComponent, MoodleProgressComponent, NgbdCarouselBasic,
-    SubjectListComponent, UserComponent, UserUpdateComponent],
+                          AddCourseToUserComponent, SignupComponent, MoodleEvaluationComponent, MoodleProgressComponent,
+                          NgbdCarouselBasic, SubjectListComponent, UserComponent, UserUpdateComponent],
   imports: [BrowserModule, routing, HttpClientModule,  HttpModule  , NgbModule.forRoot(), AngularFontAwesomeModule, ChartsModule,
     FormsModule],
   providers: [CourseService, LoginService, MoodleService, UserService, SubjectListService],

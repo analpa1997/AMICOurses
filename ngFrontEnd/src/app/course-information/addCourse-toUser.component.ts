@@ -27,13 +27,11 @@ export class AddCourseToUserComponent  implements OnInit {
     this.id = this.activatedRoute.snapshot.params['id'];
 
     this.courseService.addCourseToUser(this.id).subscribe(
-      _ => {
-        window.alert('Trying ....'),
-        this.router.navigate(['/profile', this.loginService.user.internalName]);
-      },
-          error => { window.history.back(),
-                          window.alert('You are already registered in this course');
-          }
+      _ => this.router.navigate(['users', this.loginService.user.internalName, 'profile']),
+      error => {
+        window.history.back();
+        window.alert('You are already registered in this course');
+        }
     );
   }
 

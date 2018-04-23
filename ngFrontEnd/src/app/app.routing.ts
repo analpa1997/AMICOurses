@@ -7,11 +7,11 @@ import { IndexPageComponent } from './indexPage/indexPage.component'
 import { LoginComponent } from './login/login.component';
 import { MoodleComponent } from './moodle/moodle.component';
 import { ErrorPage } from './error/errorPage.component';
-import {SignupComponent} from './signup/signup.component';
+import {  SignupComponent} from './signup/signup.component';
 import { AddCourseToUserComponent} from './course-information/addCourse-toUser.component';
 import { SubjectListComponent } from './subjectList/subjectList.component';
-import {UserComponent} from './user/user.component';
-import {UserUpdateComponent} from './user/user-update.component';
+import { UserComponent } from './user/user.component';
+import { UserUpdateComponent } from './user/user-update.component';
 
 const appRoutes = [
   { path : 'index', component : IndexPageComponent,  useAsDefault: true },
@@ -26,7 +26,6 @@ const appRoutes = [
   { path: 'oneCourse/:id/add', component: AddCourseToUserComponent},
   { path: 'users/:internalName/profile', component: UserComponent},
   { path: 'users/:internalName/profile/update', component: UserUpdateComponent},
-
   { path: '', redirectTo: 'index', pathMatch: 'full'},
 ];
 
