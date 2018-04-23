@@ -144,7 +144,7 @@ public class UsersRestController {
 		if (sessionUserComponent.isLoggedUser()) {
 			User user = repository.findByInternalName(sessionUserComponent.getLoggedUser().getInternalName());
 			if (user != null)
-				return new ResponseEntity<>(user, HttpStatus.FOUND);
+				return new ResponseEntity<>(user, HttpStatus.OK);
 			else
 				return new ResponseEntity(HttpStatus.NOT_FOUND);
 		} else
@@ -160,7 +160,7 @@ public class UsersRestController {
 
 		User user = repository.findByInternalName(userInternalName);
 		if (user != null)
-			return new ResponseEntity<>(user, HttpStatus.FOUND);
+			return new ResponseEntity<>(user, HttpStatus.OK);
 		else
 			return new ResponseEntity(HttpStatus.NOT_FOUND);
 	}
@@ -173,7 +173,7 @@ public class UsersRestController {
 		if (user != null) {
 			for (Course c : user.getInscribedCourses())
 				if (c.getCourseID() == courseID)
-					return new ResponseEntity<>(user, HttpStatus.FOUND);
+					return new ResponseEntity<>(user, HttpStatus.OK);
 			return new ResponseEntity(HttpStatus.NOT_FOUND);
 		} else
 			return new ResponseEntity(HttpStatus.NOT_FOUND);

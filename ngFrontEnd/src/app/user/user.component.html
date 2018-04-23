@@ -1,62 +1,63 @@
 <body id="page-top">
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
-  <a class = "nav-link mt-5" id = "main-page-link" href="/">AMICOURSES</a>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+    <a class="nav-link mt-5" id="main-page-link" href="/">AMICOURSES</a>
 
-  <a class="navbar-brand js-scroll-trigger" href="page-top">
-    <span class="d-block d-lg-none">Start Bootstrap</span>
-    <span class="d-none d-lg-block">
-                    <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="/profileimg/{{user.internalName}}" alt="profileImg">
-                </span>
-  </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarResponsive">
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <a class="nav-link js-scroll-trigger" href="about">About</a>
-      </li>
-      <!--<li class="nav-item">
+    <a class="navbar-brand js-scroll-trigger" href="page-top">
+      <span class="d-block d-lg-none">Start Bootstrap</span>
+      <span class="d-none d-lg-block">
+        <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="/profileimg/{{user?.internalName}}" alt="profileImg">
+      </span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="navbarResponsive" aria-controls="navbarResponsive"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="about">About</a>
+        </li>
+        <!--<li class="nav-item">
 <a class="nav-link js-scroll-trigger" href="experience">Experience</a>
 </li>-->
-      <li class="nav-item">
-        <a class="nav-link js-scroll-trigger" href="inscribed-courses">Inscribed courses</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link js-scroll-trigger" href="completed-courses">Completed Courses</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link js-scroll-trigger" href="skills">Skills</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link js-scroll-trigger" href="interests">Interests</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link js-scroll-trigger" href="/logOut">Log Out</a>
-      </li>
-    </ul>
-  </div>
-</nav>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="inscribed-courses">Inscribed courses</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="completed-courses">Completed Courses</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="skills">Skills</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="interests">Interests</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="/logOut">Log Out</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 
-<div class="container-fluid p-0">
-  <div class="row">
-    <div class="col-lg-10 col-md-12 mx-auto">
-      <section class="resume-section p-3 p-lg-5 d-flex d-column" id="about">
-        <div class="my-auto">
-          <h1 class="mb-0">{{user.userFirstName}}
-            <span class="text-primary">{{user.userLastName}}</span>
-          </h1>
-          <h3 id = "name">{{user.username}}</h3>
-          <div class="subheading mb-5">{{user.userAddress}}
-            <a href="mailto:name@email.com">{{user.userMail}}</a>
+  <div class="container-fluid p-0">
+    <div class="row">
+      <div class="col-lg-10 col-md-12 mx-auto">
+        <section class="resume-section p-3 p-lg-5 d-flex d-column" id="about">
+          <div class="my-auto">
+            <h1 class="mb-0">{{user?.userFirstName}}
+              <span class="text-primary">{{user?.userLastName}}</span>
+            </h1>
+            <h3 id="name">{{user?.username}}</h3>
+            <div class="subheading mb-5">{{user?.userAddress}}
+              <a href="mailto:name@email.com">{{user?.userMail}}</a>
+            </div>
+            <p class="mb-5">{{user?.phoneNumber}}</p>
+            
+            <a *ngIf="loginService?.user?.userID==user?.userID" [routerLink]="['/users/'+internalName+'/profile/update']" class="border p-2" id="btn-edit-profile">Edit Profile</a>
+           
           </div>
-          <p class="mb-5">{{user.phoneNumber}}</p>
-          {{isTheProfileUser}}
-          <a [routerLink]="['/users/'+internalName+'/profile/update']" class = "border p-2" id = "btn-edit-profile">Edit Profile</a>
-          {{isTheProfileUser}}
-        </div>
-      </section>
-
+        </section>
+        <!--  
       <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="inscribed-courses">
         <div class="my-auto">
           <h2 class="mb-5">Inscribed Courses:</h2>
@@ -64,13 +65,13 @@
             {{inscribedCourses}}
             <li class = "list-group-item" *ngFor="let course of courses">
               <!-- Course -->
-              <div class="row align-items-center">
+        <!-- <div class="row align-items-center">
                 <!-- Image -->
-                <a href="/course-overview/{{course.internalName}}" class = "col-xs-0 col-sm-3 col-lg-2">
+        <!-- <a href="/course-overview/{{course.internalName}}" class = "col-xs-0 col-sm-3 col-lg-2">
                   <img  class="course-img img-fluid rounded-circle" src="/courses/img/{{course.courseID}}" alt="Course Photo" >
                 </a>
                 <!-- Text -->
-                <div class="offset-1 offset-md-0 col-lg-8 col-md-8 col-sm-10 col-10 ">
+        <!-- <div class="offset-1 offset-md-0 col-lg-8 col-md-8 col-sm-10 col-10 ">
                   <div class="p-3">
                     <p class="course-name ">{{course.name}}</p>
                     <p class = "course-text">{{course.courseDescription}}</p>
@@ -96,13 +97,13 @@
             {{completedCourses}}
             <li class = "list-group-item" *ngFor="let course of courses">
               <!-- Course -->
-              <div class="row align-items-center">
-                <!-- Image -->
-                <a class = "col-0 col-sm-3 col-lg-2">
+        <<!-- div class="row align-items-center">
+          <!-- Image -->
+          <!-- <a class = "col-0 col-sm-3 col-lg-2">
                   <img  class="course-img img-fluid rounded-circle" src="/courses/img/{{course.courseID}}" alt="Course Photo" >
                 </a>
                 <!-- Text -->
-                <div class="offset-1 offset-md-0 col-lg-7 col-md-7 col-sm-10 col-10 ">
+          <!--  <div class="offset-1 offset-md-0 col-lg-7 col-md-7 col-sm-10 col-10 ">
                   <div class="p-3">
                     <p class="course-name ">{{course.name}}</p>
                     <p class = "course-text">{{course.courseDescription}}</p>
@@ -146,7 +147,8 @@
         </div>
       </section>
 
+    -->
+      </div>
     </div>
   </div>
-</div>
 </body>
