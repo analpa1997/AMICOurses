@@ -15,8 +15,9 @@ export class UserComponent implements OnInit {
   internalName: string;
   private user: User;
   isTheProfileUser: boolean;
+  public loginService: LoginService
   constructor(private router: Router, private activatedRoute: ActivatedRoute, public service: UserService,
-              public loginService: LoginService) {
+              ) {
 
     /*const userInternalName = activatedRoute.snapshot.params['userInternalName'];
     service.getUser(userInternalName).subscribe(

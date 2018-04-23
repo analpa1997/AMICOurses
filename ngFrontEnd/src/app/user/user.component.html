@@ -52,7 +52,7 @@
           </div>
           <p class="mb-5">{{user.phoneNumber}}</p>
           {{isTheProfileUser}}
-          <a [routerLink]="['/users/profile/update']" class = "border p-2" id = "btn-edit-profile">Edit Profile</a>
+          <a [routerLink]="['/users/'+internalName+'/profile/update']" class = "border p-2" id = "btn-edit-profile">Edit Profile</a>
           {{isTheProfileUser}}
         </div>
       </section>
