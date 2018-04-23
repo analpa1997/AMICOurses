@@ -598,7 +598,7 @@ public class MoodleRestController {
 
 					}
 				}
-				response.sendError(404);
+				
 			}
 		} else {
 			response.sendError(401);
