@@ -14,7 +14,9 @@ public class MyWebMvcConfig {
             @Override
             public void addViewControllers(ViewControllerRegistry registry) {
                registry.addViewController("/new").setViewName("forward:/new/index.html");
-               registry.addViewController("/login").setViewName("forward:/new/index.html");
+               registry.addViewController("/new/").setViewName("forward:/new/index.html");
+               registry.addViewController("/new/login").setViewName("forward:/new/index.html");
+               registry.addViewController("/new/signup").setViewName("forward:/new/index.html");
             }
         };
     }
