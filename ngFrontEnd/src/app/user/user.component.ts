@@ -13,7 +13,7 @@ import {Course} from '../model/course.model';
 
 export class UserComponent implements OnInit {
   internalName: string;
-  private user: User;
+  user: User;
   constructor(private router: Router, private activatedRoute: ActivatedRoute, public service: UserService, private loginService : LoginService) {
     this.internalName = this.activatedRoute.snapshot.params['internalName'];
   }
@@ -29,13 +29,13 @@ export class UserComponent implements OnInit {
   }
 
   updateUser() {
-    this.router.navigate(['/user/update', this.user.userID]);
+    this.router.navigate(['/user/' + this.user.internalName + '/update', this.user.userID]);
   }
 
   ngOnInit() {
     console.log(this.internalName);
-      this.service.getUser(this.internalName).subscribe(user => this.user = user,
+      this.service.getUser(this.internalName).subscribe(user => {this.user = user, console.log(this.user); },
         error => console.log(error));
-    
+
   }
 }

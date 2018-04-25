@@ -56,6 +56,7 @@ public class UserService {
 		User u = userRepository.findByInternalName(userInternalName);
 
 		if (u != null) {
+			System.out.println(user.getUserFirstName());
 			String username = user.getUsername();
 			String password = user.getPassword();
 			String userMail = user.getUserMail();
@@ -64,7 +65,7 @@ public class UserService {
 			String userAddress = user.getUserAddress();
 			String city = user.getCity();
 			String country = user.getCountry();
-			Integer phoneNumber = (Integer) user.getPhoneNumber();
+			String phoneNumber =  user.getPhoneNumber();
 			String interests = user.getInterests();
 			String urlProfileImage = user.getUrlProfileImage();
 
@@ -107,7 +108,7 @@ public class UserService {
 
 			if (phoneNumber != null)
 				if (phoneNumber.toString().length() == LENGTHPHONE)
-					u.setPhoneNumber((int) phoneNumber);
+					u.setPhoneNumber(phoneNumber);
 
 			if (interests != null)
 				if (interests.length() < MAXLENGTHINTERESTS)
@@ -117,6 +118,7 @@ public class UserService {
 				if (urlProfileImage.length() < MAXLENGTHURL)
 					u.setUrlProfileImage(urlProfileImage);
 
+			u = userRepository.save(u);
 			return u;
 
 		}
