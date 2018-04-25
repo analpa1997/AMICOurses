@@ -88,7 +88,7 @@ public class UsersRestController {
 		user.setUserAddress("");
 		user.setCity("");
 		user.setCountry("");
-		user.setPhoneNumber(00000000);
+		user.setPhoneNumber("00000000");
 		user.setInterests("");
 		user.setRoles(new ArrayList<>(Arrays.asList("ROLE_USER")));
 
@@ -108,6 +108,7 @@ public class UsersRestController {
 				User updatedUser = userService.updateUser(userInternalName, user);
 
 				if (updatedUser != null) {
+					System.out.println(updatedUser);
 					return new ResponseEntity<>(updatedUser, HttpStatus.OK);
 				} else {
 					return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -154,7 +155,7 @@ public class UsersRestController {
 	// ********************** FIND ********************
 
 	// Find user by internalName
-	@JsonView(User.BasicUser.class)
+	@JsonView(myProfile.class)
 	@RequestMapping(value = "/api/users/{userInternalName}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	public User findUser(@PathVariable String userInternalName) {

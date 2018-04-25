@@ -68,7 +68,7 @@ public class User {
 	private String country;
 
 	@JsonView(ExtendedUser.class)
-	private int phoneNumber;
+	private String phoneNumber;
 
 	@JsonView(ExtendedUser.class)
 	@Column(length = 1500)
@@ -115,7 +115,7 @@ public class User {
 		userAddress = "";
 		city = "";
 		country = "";
-		phoneNumber = 00000000;
+		phoneNumber = "00000000";
 		interests = "";
 		roles = new ArrayList<>(Arrays.asList("ROLE_USER"));
 	}
@@ -174,7 +174,7 @@ public class User {
 		return password;
 	}
 
-	public int getPhoneNumber() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
@@ -246,7 +246,7 @@ public class User {
 		this.password = password;
 	}
 
-	public void setPhoneNumber(int phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 

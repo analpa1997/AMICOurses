@@ -10,7 +10,7 @@ export class User {
   userAddress: String;
   city: string;
   country: String;
-  phoneNumber: number;
+  phoneNumber: string;
   interests: string;
   urlProfileImage: string;
   student?: boolean;

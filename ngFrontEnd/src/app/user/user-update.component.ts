@@ -23,14 +23,14 @@ export class UserUpdateComponent implements OnInit {
   }
 
   save(event: any, firstName: string, lastName: string, username: string, mail: string, password: string, country: string, city: string,
-       address: string, phone: number, url: string, interests: string) {
+       address: string, phone: string, url: string, interests: string) {
     let updateUser: User;
     updateUser = <User>{username: username, password: password, userMail: mail, userFirstName: firstName, userLastName: lastName,
-      country: country, city: city, userAddress: address, phoneNumber: phone, urlProfileImage: url, interests: interests};
+      country: country, city: city, userAddress: address, phoneNumber: phone, urlProfileImage: url, interests: interests, internalName : this.user.internalName};
     this.service.updateUser(updateUser).subscribe(
       user => {
         this.user = user,
-          console.log(this.user),
+        console.log(this.user),
         this.router.navigate(['users/' + this.user.internalName + '/profile']); },
           error => console.error('Error updating user: ' + error)
     );

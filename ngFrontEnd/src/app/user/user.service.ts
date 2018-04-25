@@ -56,7 +56,7 @@ export class UserService {
       'Content-Type': 'application/json',
       'X-Requested-With': 'XMLHttpRequest'
     });
-    const internal = this.login.user.internalName;
+    const internal = user.internalName;
     const options = new RequestOptions({ withCredentials: true, headers });
 
     return this.http.put(URL + '/' + internal, body, options)
