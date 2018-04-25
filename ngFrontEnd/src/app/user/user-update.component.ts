@@ -8,16 +8,16 @@ import { LoginService } from '../login/login.service';
   styleUrls : ['../../assets/css/profile-update.css'],
   templateUrl: './user-update.component.html'
 })
-export class UserUpdateComponent implements OnInit{
+export class UserUpdateComponent implements OnInit {
 
   userUpdated: boolean;
   internalName: string;
   user: User;
-  private service: UserService;
-  private router: Router;
-  private activatedRoute: ActivatedRoute;
   private loginService: LoginService;
 
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private service: UserService) {
+    this.internalName = this.activatedRoute.snapshot.params['internalName'];
+  }
   cancel() {
     window.history.back();
   }
@@ -30,14 +30,12 @@ export class UserUpdateComponent implements OnInit{
     this.service.updateUser(updateUser).subscribe(
       user => {
         this.user = user,
-        this.router.navigate(['users/profile']); },
+          console.log(this.user),
+        this.router.navigate(['users/' + this.user.internalName + '/profile']); },
           error => console.error('Error updating user: ' + error)
     );
-    window.history.back();
   }
   ngOnInit() {
-    this.internalName = this.activatedRoute.snapshot.params['internalName'];
-    console.log(this.internalName);
     this.service.getUser(this.internalName).subscribe(user => this.user = user,
       error => console.log(error));
   }

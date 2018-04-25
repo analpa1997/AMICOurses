@@ -156,13 +156,14 @@ public class UsersRestController {
 	// Find user by internalName
 	@JsonView(User.BasicUser.class)
 	@RequestMapping(value = "/api/users/{userInternalName}", method = RequestMethod.GET)
-	public ResponseEntity<User> findUser(@PathVariable String userInternalName) {
+	@ResponseStatus(HttpStatus.OK)
+	public User findUser(@PathVariable String userInternalName) {
 
 		User user = repository.findByInternalName(userInternalName);
 		if (user != null)
-			return new ResponseEntity<>(user, HttpStatus.OK);
+			return user;
 		else
-			return new ResponseEntity(HttpStatus.NOT_FOUND);
+			return null;
 	}
 
 	// ********************** FIND IN COURSE ********************

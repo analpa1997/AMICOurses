@@ -56,6 +56,7 @@ public class UserService {
 		User u = userRepository.findByInternalName(userInternalName);
 
 		if (u != null) {
+			System.out.println(user.getUserFirstName());
 			String username = user.getUsername();
 			String password = user.getPassword();
 			String userMail = user.getUserMail();

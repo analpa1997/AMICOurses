@@ -1,51 +1,52 @@
 <header-general-component></header-general-component>
-
+<div class="mt-5 &nbsp"></div>
+<br>
 <section>
   <div class = "container-fluid mb-5 px-5">
-    <form action="/profile/{{userInternalName}}/updated" method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data">
       <div class="form-group row">
         <label class = "col-lg-1 " for="name-input">Name: </label>
-        <input #firstName class = "col-lg-4" type="text" class="form-control" id="name-input"  placeholder="Enter your name" name='userFirstName' value='{{loginService.user.userFirstName}}'>
+        <input #firstName class = "col-lg-4" type="text" class="form-control" id="name-input"  placeholder="Enter your name" name='userFirstName' value='{{user?.userFirstName}}'>
         <label class = "col-lg-1 " for="surname-input">Surname: </label>
-        <input #lastName class = "col-lg-4" type="text" class="form-control" id="surname-input" placeholder="Enter your surname" name='userLastName' value='{{loginService.user.userLastName}}'>
+        <input #lastName class = "col-lg-4" type="text" class="form-control" id="surname-input" placeholder="Enter your surname" name='userLastName' value='{{user?.userLastName}}'>
       </div>
       <div class="form-group row">
         <label class = "col-lg-1 " for="username-input">Username: </label>
-        <input #username class = "col col-lg-4" type="text" class="form-control" id="username-input" placeholder="Enter your username" name='username' value='{{loginService.user.username}}'>
+        <input #username class = "col col-lg-4" type="text" class="form-control" id="username-input" placeholder="Enter your username" name='username' value='{{user?.username}}'>
         <label class = "col-lg-1 " for="email-input">Email: </label>
-        <input #mail class = "col col-lg-4" type="email" class="form-control" id="email-input" placeholder="Enter email" name='userMail' value='{{loginService.user.userMail}}'>
+        <input #mail class = "col col-lg-4" type="email" class="form-control" id="email-input" placeholder="Enter email" name='userMail' value='{{user?.userMail}}'>
       </div>
 
       <div class="form-group row">
         <label class = "col-lg-10 " for="password-input">Password:</label>
-        <input #password class = "col col-lg-10" type="password" class="form-control" id="password-input" placeholder="Enter your password" value='{{loginService.user.password}}'>
+        <input #password class = "col col-lg-10" type="password" class="form-control" id="password-input" placeholder="Enter your password" value='{{user?.password}}'>
         <label class = "col-lg-10 " for="repeat-password-input">Repeat Password:</label>
-        <input class = "col col-lg-10" type="password" class="form-control" id="repeat-password-input" placeholder="Repeat your password" name='password' value='{{loginService.user.password}}'>
+        <input class = "col col-lg-10" type="password" class="form-control" id="repeat-password-input" placeholder="Repeat your password" name='password' value='{{user?.password}}'>
       </div>
 
       <div class="form-group row">
         <label class = "col-lg-1 " for="country-input">Country: </label>
-        <input  #country class = "col col-lg-1" type="text" class="form-control" id="country-input" placeholder="Country" name='country' value='{{loginService.user.country}}'>
+        <input  #country class = "col col-lg-1" type="text" class="form-control" id="country-input" placeholder="Country" name='country' value='{{user?.country}}'>
         <label class = "col-lg-1 " for="city-input">City: </label>
-        <input #city class = "col col-lg-1" type="text" class="form-control" id="city-input"  placeholder="City" name='city' value='{{loginService.user.city}}'>
+        <input #city class = "col col-lg-1" type="text" class="form-control" id="city-input"  placeholder="City" name='city' value='{{user?.city}}'>
         <label class = "col-lg-1 " for="direction-input">Direction: </label>
-        <input #address class = "col col-lg-5" type="text" class="form-control" id="direction-input"  placeholder="Direction" name='userAddress' value='{{loginService.user.userAddress}}'>
+        <input #address class = "col col-lg-5" type="text" class="form-control" id="direction-input"  placeholder="Direction" name='userAddress' value='{{user?.userAddress}}'>
       </div>
 
       <div class="form-group row">
         <label class = "col-lg-1 " for="phone-input">Phone: </label>
-        <input #phone class = "col col-lg-2" type="text" class="form-control" id="phone-input"  placeholder="Phone" name='phoneNumber' value='{{loginService.user.phoneNumber}}'>
+        <input #phone class = "col col-lg-2" type="text" class="form-control" id="phone-input"  placeholder="Phone" name='phoneNumber' value='{{user?.phoneNumber}}'>
         <label class = "col-lg-2 " for="photo-input">Profile Photo:</label>
-        <input #url type="file" class="form-control-file col-lg" id="photo-input" name='profileImage' value='{{loginService.user.urlProfileImage}}'>
+        <input #url type="file" class="form-control-file col-lg" id="photo-input" name='profileImage' value='{{user?.urlProfileImage}}'>
       </div>
 
       <div class="form-group">
         <label for="interests-input">Interests:</label>
-        <textarea #interests class="form-control col-lg-10" id="interests-input" rows="3" name='interests'>{{loginService.user.interests}}</textarea>
+        <textarea #interests class="form-control col-lg-10" id="interests-input" rows="3" name='interests'>{{user?.interests}}</textarea>
       </div>
       <div class = "row border-top pt-2">
         <button type="submit" (click)="save($event, firstName.value, lastName.value, username.value, mail.value, password.value, country.value, city.value, address.value, phone.value, url.value, interests.value)" class="offset-2 offset-lg-4 btn form-btn">Submit</button>
-        <a class = "offset-3 offset-lg-2 btn form-btn" href = "/profile/{{loginService.user.internalName}}">Cancel</a>
+        <button class = "offset-3 offset-lg-2 btn form-btn" (click)="cancel()">Cancel</button>
       </div>
 
     </form>
