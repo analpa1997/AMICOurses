@@ -203,10 +203,35 @@ We created a Maven project and we imported in pom.xml all the dependencies we ne
 ## Docker
 To deploy the application in docker it is necessary:
 
-Create the image of the web application - from the docker directory execute create_image.
+Create the image of the web application - from the docker directory execute create_image.bat
 
-Optionally the image can be uploaded to docker hub. To upload the image to docker hub - from the docker directory run plublish_image
+Optionally the image can be uploaded to docker hub. To upload the image to docker hub - from the docker directory run plublish_image.bat
 
 Once the image is generated, from the docker directory, using docker-compose up, the containers are displayed. the application is available when "Tomcat started on port" appears
 
-to stop docker-compose using docker-compose stop from the docker directory
+to stop docker-compose using docker-compose stop from the docker directory.
+
+## Phase V
+
+## Docker
+Docker Community Edition (CE) for windows required 
+Docker containers require the windows local drives to be shared
+
+The create_image.ps1 (powershell script):
+ 1. builds the angular client files and copy them to the server 
+ 2. generates the jar files
+ 3. generates the docker image
+ 
+The publish_image.ps1 (powershell script) uploads the docker image to the docker hub
+The docker-compose.yml file creates the MySQL and the application containers
+
+The create_image.bat file execute the create_image.ps1 script in a windows CMD screen
+
+To start the application:
+1. open a CDM windows
+2. go to docker directory and execute:
+2.1. .\create_image.bat
+2.2. docker-compose up
+
+To stop the application execute in docker directory docker-compose stop 
+

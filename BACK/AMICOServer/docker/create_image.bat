@@ -1,0 +1,1 @@
+powershell.exe -noexit "& .\create_image.ps1"
