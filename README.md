@@ -222,7 +222,7 @@ The create_image.ps1 (powershell script):
  2. generates the jar files
  3. generates the docker image
  
-The publish_image.ps1 (powershell script) uploads the docker image to the docker hub
+The publish_image.bat  uploads the docker image to the docker hub
 The docker-compose.yml file creates the MySQL and the application containers
 
 The create_image.bat file execute the create_image.ps1 script in a windows CMD screen

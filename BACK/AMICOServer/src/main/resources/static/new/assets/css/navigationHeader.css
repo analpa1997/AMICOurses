@@ -1,0 +1,94 @@
+#mainNav{
+    position:absolute;
+    border-bottom:1px solid #e9ecef;
+    background-color:rgba(20, 50, 80, 0.7);
+    font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
+    z-index: 1500;
+}
+
+#mainNav .navbar-brand{
+    font-weight:800;color:#343a40
+}
+
+#mainNav .navbar-toggler{
+    font-size:12px;
+    font-weight:800;
+    padding:13px;
+    text-transform:uppercase;
+    color:#343a40}
+#mainNav .navbar-nav>li.nav-item>a{
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:1px;
+    text-transform:uppercase
+}
+
+@media only screen and (min-width:992px){
+    #mainNav{
+        border-bottom:1px solid transparent;
+        /*background:0 0*/
+    }
+
+    #mainNav .navbar-brand{
+        padding:10px 20px;
+        color:#fff
+    }
+    
+    #mainNav .navbar-brand:focus, #mainNav .navbar-brand:hover{
+        color:rgba(255,255,255,.8)
+    }
+    
+    #mainNav .navbar-nav>li.nav-item>a{
+        padding:10px 20px;color:#fff
+    }
+    
+    #mainNav .navbar-nav>li.nav-item>a:focus, #mainNav .navbar-nav>li.nav-item>a:hover{
+        color:rgba(255,255,255,.8)}
+}
+
+@media only screen and (min-width:992px){
+    #mainNav{
+        -webkit-transition:background-color .2s;
+        -moz-transition:background-color .2s;
+        transition:background-color .2s;
+        -webkit-transform:translate3d(0,0,0);
+        -moz-transform:translate3d(0,0,0);
+        -ms-transform:translate3d(0,0,0);
+        -o-transform:translate3d(0,0,0);
+        transform:translate3d(0,0,0);
+        -webkit-backface-visibility:hidden
+    }
+    
+    #mainNav.is-fixed{
+        position:fixed;
+        top:-67px;
+        -webkit-transition:-webkit-transform .2s;
+        -moz-transition:-moz-transform .2s;
+        transition:transform .2s;
+        border-bottom:1px solid #fff;
+    }
+    
+    #mainNav.is-fixed .navbar-brand{
+        color:#212529
+    }
+    
+    #mainNav.is-fixed .navbar-brand:focus, #mainNav.is-fixed .navbar-brand:hover{
+        color:#0085a1
+    }
+    
+    #mainNav.is-fixed .navbar-nav>li.nav-item>a{
+        color:#212529
+    }
+    
+    #mainNav.is-fixed .navbar-nav>li.nav-item>a:focus, #mainNav.is-fixed .navbar-nav>li.nav-item>a:hover{
+        color:#0085a1
+    }
+    
+    #mainNav.is-visible{
+        -webkit-transform:translate3d(0,100%,0);
+        -moz-transform:translate3d(0,100%,0);
+        -ms-transform:translate3d(0,100%,0);
+        -o-transform:translate3d(0,100%,0);
+        transform:translate3d(0,100%,0)
+    }
+}
