@@ -34,8 +34,9 @@ public class Course {
 
 	public interface UserInformation {
 	}
-	
-	public interface ExtendedCourse {}
+
+	public interface ExtendedCourse {
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -73,7 +74,7 @@ public class Course {
 	@JsonView(ExtendedCourse.class)
 	@OneToMany(mappedBy = "course")
 	private List<Subject> subjects = new ArrayList<>();
-	@JsonIgnore
+	@JsonView(BasicCourse.class)
 	@OneToMany(mappedBy = "course")
 	private List<Skill> skills = new ArrayList<>();
 

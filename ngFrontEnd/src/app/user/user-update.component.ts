@@ -30,13 +30,14 @@ export class UserUpdateComponent implements OnInit {
     this.service.updateUser(updateUser).subscribe(
       user => {
         this.user = user,
-        console.log(this.user),
+
         this.router.navigate(['users/' + this.user.internalName + '/profile']); },
           error => console.error('Error updating user: ' + error)
     );
   }
   ngOnInit() {
-    this.service.getUser(this.internalName).subscribe(user => this.user = user,
+    this.service.getUser(this.internalName).subscribe(user => {this.user = user,
+    console.log(user); },
       error => console.log(error));
   }
 }

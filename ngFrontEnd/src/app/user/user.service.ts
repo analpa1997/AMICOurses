@@ -36,15 +36,25 @@ export class UserService {
         .map(response => response.json())
         .catch(error => this.handleError(error));
   }
+  uploadImage(internalName: string, file: File) {
+    let reqUrl;
+    const internal = internalName;
+    const formData = new FormData();
+    formData.append('profileImage', file);
+    reqUrl = URL + '/img/' + internal;
+      return this.http.put(reqUrl, formData, { withCredentials: true });
+
+  }
 
   removeUser(user: User) {
 
     const headers = new Headers({
       'X-Requested-With': 'XMLHttpRequest'
     });
+    const internal = user.internalName;
     const options = new RequestOptions({ withCredentials: true, headers });
 
-    return this.http.delete(URL + user.userID, options)
+    return this.http.delete(URL + '/' + internal, options)
       .map(rensponse => undefined)
       .catch(error => this.handleError(error));
   }

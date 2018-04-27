@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.course.Course;
+import com.example.demo.skill.Skill;
 import com.example.demo.user.SessionUserComponent;
 import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
@@ -136,7 +137,7 @@ public class UsersRestController {
 	}
 
 	// My profile
-	interface myProfile extends User.BasicUser, User.ExtendedUser, Course.BasicCourse {
+	interface myProfile extends User.BasicUser, User.ExtendedUser, Course.BasicCourse, Skill.BasicSkill {
 	}
 
 	@JsonView(myProfile.class)

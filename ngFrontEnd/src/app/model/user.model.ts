@@ -1,4 +1,5 @@
 import {Subject} from './subject.model';
+import {Course} from './course.model';
 
 export class User {
   userID?: number;
@@ -17,5 +18,7 @@ export class User {
   internalName?: string;
   teaching?: Subject;
   roles?: string[];
+  currentCourses?: Course[];
+  completedCourses?: Course[];
 }
 
