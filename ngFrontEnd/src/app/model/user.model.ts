@@ -13,7 +13,7 @@ export class User {
   country: String;
   phoneNumber: string;
   interests: string;
-  urlProfileImage: string;
+  urlProfileImage?: string;
   student?: boolean;
   internalName?: string;
   teaching?: Subject;

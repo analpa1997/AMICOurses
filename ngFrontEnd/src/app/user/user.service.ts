@@ -42,8 +42,12 @@ export class UserService {
     const formData = new FormData();
     formData.append('profileImage', file);
     reqUrl = URL + '/img/' + internal;
-      return this.http.put(reqUrl, formData, { withCredentials: true });
-
+      return this.http.put<User>(reqUrl, formData, { withCredentials: true });
+  }
+  getImageProfile(internal: string) {
+    return this.http.get(URL + '/img/' + internal, { withCredentials: true })
+      .map(response => response.json())
+      .catch(error => this.handleError(error));
   }
 
   removeUser(user: User) {

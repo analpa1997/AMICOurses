@@ -226,7 +226,7 @@ public class UsersRestController {
 	/* Post a profile photo */
 	@JsonView(User.BasicUser.class)
 	@RequestMapping(value = "/api/users/img/{userInternalName}", method = RequestMethod.PUT)
-	public ResponseEntity<User> uploadProfilePhoto(User userUpdated, @PathVariable String userInternalName,
+	public ResponseEntity<User> uploadProfilePhoto(@PathVariable String userInternalName,
 			@RequestParam("profileImage") MultipartFile file) {
 
 		User user = repository.findByInternalName(userInternalName);

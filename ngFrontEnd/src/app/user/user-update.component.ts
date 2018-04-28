@@ -23,14 +23,19 @@ export class UserUpdateComponent implements OnInit {
   }
 
   save(event: any, firstName: string, lastName: string, username: string, mail: string, password: string, country: string, city: string,
-       address: string, phone: string, url: string, interests: string) {
+       address: string, phone: string, profileImage: any, interests: string) {
     let updateUser: User;
     updateUser = <User>{username: username, password: password, userMail: mail, userFirstName: firstName, userLastName: lastName,
-      country: country, city: city, userAddress: address, phoneNumber: phone, urlProfileImage: url, interests: interests, internalName : this.user.internalName};
+      country: country, city: city, userAddress: address, phoneNumber: phone, interests: interests, internalName : this.user.internalName};
+    if (profileImage != null) {
+      this.service.uploadImage(this.user.internalName, profileImage).subscribe(
+        user => this.user = <User>user,
+        error => console.error('Error updating user image: ' + error)
+      );
+    }
     this.service.updateUser(updateUser).subscribe(
       user => {
         this.user = user,
-
         this.router.navigate(['users/' + this.user.internalName + '/profile']); },
           error => console.error('Error updating user: ' + error)
     );
