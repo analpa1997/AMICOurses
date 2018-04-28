@@ -5,7 +5,7 @@
     <a class="navbar-brand js-scroll-trigger" href="page-top">
       <span class="d-block d-lg-none">Start Bootstrap</span>
       <span class="d-none d-lg-block">
-        <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src={{image}} alt="profileImg">
+        <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src='{{URL}}/profileimg/{{user?.internalName}}' alt="profileImg">
       </span>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="navbarResponsive" aria-controls="navbarResponsive"
@@ -62,7 +62,7 @@
           <h2 class="mb-5">Inscribed Courses:</h2>
           <ul class = "list-group">
             <!-- inscribedCourses -->
-            <li class = "list-group-item" *ngFor="let course of user.currentCourses">
+            <li class = "list-group-item" *ngFor="let course of user?.currentCourses">
               <!-- Course -->
         <div class="row align-items-center">
                 <!-- Image -->
@@ -72,12 +72,12 @@
                 <!-- Text -->
         <div class="offset-1 offset-md-0 col-lg-8 col-md-8 col-sm-10 col-10 ">
                   <div class="p-3">
-                    <p class="course-name ">{{course.name}}</p>
-                    <p class = "course-text">{{course.courseDescription}}</p>
+                    <p class="course-name ">{{course?.name}}</p>
+                    <p class = "course-text">{{course?.courseDescription}}</p>
                   </div>
                 </div>
                 <div *ngIf="loginService?.user?.userID==user?.userID" class = 'col-2 offset-5  offset-lg-0 col-lg-2 col-sm-2 mb-1'>
-                  <a [routerLink]="['/course-overview', course.internalName]" class = 'btn btn-primary px-3 ' role = 'button'>Go</a>
+                  <a [routerLink]="['/course-overview', course?.internalName]" class = 'btn btn-primary px-3 ' role = 'button'>Go</a>
                 </div>
               </div>
             </li>
@@ -86,18 +86,18 @@
 
         </div>
       </section>
-      <section *ngIf="user.student" class="resume-section p-3 p-lg-5 d-flex flex-column" id="completed-courses">
+      <section *ngIf="user?.student" class="resume-section p-3 p-lg-5 d-flex flex-column" id="completed-courses">
         <div class="my-auto">
           <h2 class="mb-5">Completed Courses</h2>
 
           <ul class = "list-group">
             <!-- completedCourses -->
-            <li class = "list-group-item" *ngFor="let course of user.completedCourses">
+            <li class = "list-group-item" *ngFor="let course of user?.completedCourses">
               <!-- Course -->
         <div class="row align-items-center">
           <!-- Image -->
            <a class = "col-0 col-sm-3 col-lg-2">
-                  <img  class="course-img img-fluid rounded-circle" src="../../../assets/img/courses/{{course.courseID}}/course-{{course.courseID}}.jpg" alt="Course Photo" >
+                  <img  class="course-img img-fluid rounded-circle" src="../../../assets/img/courses/{{course?.courseID}}/course-{{course?.courseID}}.jpg" alt="Course Photo" >
                 </a>
                 <!-- Text -->
           <div class="offset-1 offset-md-0 col-lg-7 col-md-7 col-sm-10 col-10 ">
@@ -122,11 +122,11 @@
         <div class="my-auto">
           <h2 class="mb-5">Skills</h2>
           <!-- completedCourses -->
-          <div *ngFor="let course of user.completedCourses">
+          <div *ngFor="let course of user?.completedCourses">
           <div class="subheading mb-3">{{course?.name}}</div>
 
           <ul class="fa-ul mb-0">
-            <li *ngFor="let skill of course.skills">
+            <li *ngFor="let skill of course?.skills">
               <i class="fa-li fa fa-check"></i>
               {{skill?.skillName}}</li>
             <li>

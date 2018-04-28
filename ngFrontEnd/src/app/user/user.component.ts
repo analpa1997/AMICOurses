@@ -4,6 +4,7 @@ import { UserService } from './user.service';
 import { LoginService } from '../login/login.service';
 import {User} from '../model/user.model';
 import {Course} from '../model/course.model';
+import { environment } from '../../environments/environment';
 
 @Component({
   templateUrl: './user.component.html',
@@ -15,8 +16,11 @@ export class UserComponent implements OnInit {
   internalName: string;
   user: User;
   image: File;
+
+  private URL;
   constructor(private router: Router, private activatedRoute: ActivatedRoute, public service: UserService, private loginService : LoginService) {
     this.internalName = this.activatedRoute.snapshot.params['internalName'];
+    this.URL = environment.URL;
   }
 
   removeUser() {
