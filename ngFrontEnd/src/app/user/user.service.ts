@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 import {User} from '../model/user.model';
 import { LoginService } from '../login/login.service';
+import { HttpClient } from '@angular/common/http';
 
 
 
@@ -11,7 +12,7 @@ const URL = 'https://localhost:8443/api/users';
 @Injectable()
 export class UserService {
 
-  constructor(private http: Http, private login: LoginService) { }
+  constructor(private http: Http, private newHttp: HttpClient, private login: LoginService) { }
 
   getUsers() {
     return this.http.get(URL, { withCredentials: true })
@@ -42,7 +43,7 @@ export class UserService {
     const formData = new FormData();
     formData.append('profileImage', file);
     reqUrl = URL + '/img/' + internal;
-      return this.http.put<User>(reqUrl, formData, { withCredentials: true });
+      return this.newHttp.put<User>(reqUrl, formData, { withCredentials: true });
   }
   getImageProfile(internal: string) {
     return this.http.get(URL + '/img/' + internal, { withCredentials: true })

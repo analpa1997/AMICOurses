@@ -27,8 +27,8 @@ export class UserUpdateComponent implements OnInit {
     let updateUser: User;
     updateUser = <User>{username: username, password: password, userMail: mail, userFirstName: firstName, userLastName: lastName,
       country: country, city: city, userAddress: address, phoneNumber: phone, interests: interests, internalName : this.user.internalName};
-    if (profileImage != null) {
-      this.service.uploadImage(this.user.internalName, profileImage).subscribe(
+    if (profileImage.files[0] != null) {
+      this.service.uploadImage(this.user.internalName, profileImage.files[0]).subscribe(
         user => this.user = <User>user,
         error => console.error('Error updating user image: ' + error)
       );
