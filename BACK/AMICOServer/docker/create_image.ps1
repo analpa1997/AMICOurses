@@ -8,7 +8,7 @@ docker run -it --rm --name amicourses_ng -v ${ngFE_dir}:/otp/amicourses -w /otp/
 
 #Move angular files to amicoServer
 rm ${amicourses_dir}\src\main\resources\static\new\* -Recurse
-cp ${ngFE_dir}\dist\*  -Recurse ${amicourses_dir}\src\main\resources\static\new
+cp ${ngFE_dir}\dist\*  -Recurse ${amicourses_dir}\src\main\resources\static\new -Force
 
 #Create jar amicourses
 docker run -it --rm --name amicourses -v ${amicourses_dir}:/usr/src/mymaven -w /usr/src/mymaven maven mvn clean package 
