@@ -3,14 +3,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from '../model/course.model';
 import { CourseService } from '../course-information/course.service';
 import { environment } from '../../environments/environment';
+import { LoginService } from '../login/login.service';
 
 
 @Component({
   templateUrl: './indexPage.component.html',
   styleUrls : ['../../assets/css/style.css']
 })
-
-
 
 export class IndexPageComponent implements OnInit {
 
@@ -28,7 +27,8 @@ export class IndexPageComponent implements OnInit {
   URL: string;
   emptyContent: boolean;
 
-  constructor(private router: Router, private courseService: CourseService, activatedRoute: ActivatedRoute) {
+  constructor(private router: Router, private loginService: LoginService, private courseService: CourseService,
+              activatedRoute: ActivatedRoute) {
     this.URL = environment.URL;
   }
 
