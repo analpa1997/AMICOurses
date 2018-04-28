@@ -103,7 +103,7 @@ public class UsersRestController {
 	@RequestMapping(value = "/api/users/{userInternalName}", method = RequestMethod.PUT)
 	public ResponseEntity<User> updateUser(@PathVariable String userInternalName, @RequestBody User user) {
 		if (sessionUserComponent.isLoggedUser()) {
-			if (userInternalName.equals(sessionUserComponent.getLoggedUser().getInternalName())) {
+			if (user.equals(sessionUserComponent.getLoggedUser())) {
 				/* I can only modify the data of the logged user */
 
 				User updatedUser = userService.updateUser(userInternalName, user);

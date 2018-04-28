@@ -44,4 +44,14 @@ export class UserComponent implements OnInit {
         error => console.log(error));
 
   }
+
+  logOut() {
+    this.loginService.logOut().subscribe(
+      response => { 
+        this.router.navigate(['']);
+      },
+      error => console.log('Error when trying to log out: ' + error)
+    );
+  }
+
 }
