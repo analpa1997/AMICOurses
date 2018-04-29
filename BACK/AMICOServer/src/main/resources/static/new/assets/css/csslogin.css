@@ -1,0 +1,123 @@
+
+body{
+    background: linear-gradient(0deg, #ff6d00 0, #ee0979 100%);
+}
+.login-block {
+    background: #DE6262;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #FFB88C, #DE6262);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #FFB88C, #DE6262);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    float: left;
+    width: 100%;
+    padding: 5%;
+}
+
+.banner-sec {
+    background-size: cover;
+    min-height: 500px;
+    border-radius: 0 10px 10px 0;
+    padding: 0;
+}
+
+.container.login{
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 15px 20px 0px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+}
+
+.carousel-inner {
+    border-radius: 0 10px 10px 0;
+}
+
+.carousel-caption {
+    text-align: left;
+    left: 5%;
+}
+
+.login-sec {
+    padding: 0px 30px;
+    position: relative;
+}
+
+.login-sec .copy-text {
+    width: 80%;
+    bottom: 20px;
+    font-size: 13px;
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.login-sec .copy-text i {
+    color: #FEB58A;
+}
+
+.login-sec .copy-text a {
+    color: #E36262;
+}
+
+h3 {
+    margin-bottom: 30px;
+    font-weight: 800;
+    font-size: 30px;
+    color: #DE6262;
+}
+
+h3:after {
+    content: " ";
+    width: 100px;
+    height: 5px;
+    background: #FEB58A;
+    display: block;
+    margin-top: 20px;
+    border-radius: 3px;
+    margin-left: auto;
+    margin-right: auto
+}
+
+.btn-login {
+    background: #DE6262;
+    color: #fff;
+    font-weight: 600;
+}
+
+.btn-login:hover {
+    background: rgba(222, 98, 96, 0.8);
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+}
+
+.banner-text {
+    padding: 20px;
+}
+
+.banner-text h2 {
+    font-weight: 800;
+    font-size: 30px;
+    color: #DE6262;
+}
+
+.banner-text h2:after {
+    content: " ";
+    width: 100px;
+    height: 5px;
+    background-color: #FEB58A;
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    border-radius: 3px;
+}
+
+.banner-text p {
+    color:#DE6262;
+    font-weight: 600;
+    
+}
+
+#picture {
+    border-radius: 10px;
+    position: relative;
+    
+}
