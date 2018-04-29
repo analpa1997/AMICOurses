@@ -18,10 +18,10 @@ export class ErrorPage {
   error: string;
   message : string [];
 
-  constructor(private router: Router, private courseService: CourseService, activatedRoute: ActivatedRoute) {
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
     this.error = "404";
     this.message = ["", ""];
-    this.error = (activatedRoute.snapshot.params['error']);
+    this.error = (activatedRoute.snapshot.params['errorCode']);
     console.log(this.error);
     switch (this.error) {
       case "401": {

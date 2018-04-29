@@ -38,6 +38,11 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loginService.isLoggedFunc().subscribe (
+      res => {}, 
+      error => this.loginService.errorHandler(error),
+    );
+    
     this.service.getImageProfile(this.internalName).subscribe(photo => this.image = photo,
       error => console.log(error));
     this.service.getUser(this.internalName).subscribe(user => {this.user = user, console.log(this.user); },

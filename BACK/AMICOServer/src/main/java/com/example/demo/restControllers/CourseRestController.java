@@ -39,7 +39,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 @RequestMapping(value = "/api/courses")
 public class CourseRestController {
 
-	interface CourseBasicInformation extends Course.BasicCourse , SkillBasicInformation {
+	interface CourseBasicInformation extends Course.BasicCourse  {
 	}
 
 	interface CourseDetail extends Course.BasicCourse, Course.UserInformation, User.BasicUser {
