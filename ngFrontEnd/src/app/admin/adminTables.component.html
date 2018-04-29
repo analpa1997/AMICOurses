@@ -73,16 +73,16 @@
                   <tbody>
                   <tr *ngFor="let teacher of teachers">
                     <td>
-                      <div class="img-container"><img class="rounded-circle" src="{{imageURL}}/users/img"></div>
+                      <div class="img-container"><img class="rounded-circle"  src='{{imageURL}}/profileimg/{{teacher?.internalName}}' alt="profileImg"></div>
                     </td>
-                    <td>{{teacher.username}}</td>
-                    <td>{{teacher.userFirstName}}</td>
-                    <td>{{teacher.userLastName}}</td>
-                    <td>{{teacher.userMail}}</td>
-                    <td>{{teacher.country}}</td>
-                    <td>{{teacher.city}}</td>
-                    <td>{{teacher.userAddress}}</td>
-                    <td>{{teacher.phoneNumber}}</td>
+                    <td>{{teacher?.username}}</td>
+                    <td>{{teacher?.userFirstName}}</td>
+                    <td>{{teacher?.userLastName}}</td>
+                    <td>{{teacher?.userMail}}</td>
+                    <td>{{teacher?.country}}</td>
+                    <td>{{teacher?.city}}</td>
+                    <td>{{teacher?.userAddress}}</td>
+                    <td>{{teacher?.phoneNumber}}</td>
                     <td><a class = "btn btn-secondary" (click)="deleteTeacher(teacher.internalName)">Delete</a></td>
                   </tr>
                   </tbody>
