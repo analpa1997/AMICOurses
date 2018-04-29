@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component, OnInit, AfterViewInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from '../login/login.service';
 
@@ -11,10 +11,19 @@ import { LoginService } from '../login/login.service';
 
 
 
-export class AdminHeaderComponent {
+export class AdminHeaderComponent implements AfterViewInit {
+
 
   constructor(private loginService : LoginService, private router: Router){
   }
+
+  
+  ngAfterViewInit(): void {
+    if (!this.loginService.isAdmin) {
+      this.router.navigate(['/error', '401']); //Forbidden
+    }
+  }
+
 
   logOut() {
     this.loginService.logOut().subscribe(
