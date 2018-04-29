@@ -19,7 +19,14 @@ export class AdminTablesComponent implements OnInit {
   courses: Course[];
   teachers: User[];
   page: number;
+  totalElements: number;
+  pageSize: number;
+  pageElements: number;
   imageURL: string;
+  pageTeacher: number;
+  totalElementsTeacher: number;
+  pageSizeTeacher: number;
+  pageElementsTeacher: number;
 
   constructor(private router: Router, private courseService: CourseService, private userService: UserService) {
     this.imageURL = environment.URL;
@@ -27,21 +34,39 @@ export class AdminTablesComponent implements OnInit {
 
   ngOnInit() {
     this.page = 0;
+    this.pageSize = 10;
     this.courseService.getCourses(this.page, '', 'all', 'courseID').subscribe(
-      courses => this.courses = courses['content'],
+      courses => {
+        this.courses = courses['content'];
+        this.pageElements = courses['content'].length;
+        this.totalElements = courses['totalElements'];
+      },
       error => console.log(error)
     );
-    this.userService.getTeachers(this.page).subscribe(
-      teachrs => this.teachers = teachrs['content'],
+    this.pageSizeTeacher = 10;
+    this.pageTeacher = 0;
+    this.userService.getTeachers(this.pageTeacher).subscribe(
+      teachrs => {
+        this.teachers = teachrs['content'];
+        this.pageElementsTeacher = teachrs['content'].length;
+        this.totalElementsTeacher = teachrs['totalElements'];
+      },
       error => console.log(error)
 
     );
   }
 
   updateTeacherPage(newPage: number) {
-    this.page = newPage;
-    this.userService.getTeachers(this.page).subscribe(
-      teachrs => this.teachers = teachrs['content'],
+    this.pageTeacher = newPage;
+    if(this.pageTeacher != 0) {
+      newPage -= 1;
+    }
+    this.userService.getTeachers(newPage).subscribe(
+      teachrs => {
+        this.teachers = teachrs['content'];
+        console.log(teachrs['content']);
+        this.pageElementsTeacher = teachrs['content'].length;
+      },
       error => console.log(error)
 
     );
@@ -49,8 +74,14 @@ export class AdminTablesComponent implements OnInit {
 
   updateCoursePage(newPage: number) {
     this.page = newPage;
-    this.courseService.getCourses(this.page, '', 'all', 'courseID').subscribe(
-      courses => this.courses = courses['content'],
+    if(this.page != 0) {
+      newPage -= 1;
+    }
+    this.courseService.getCourses(newPage, '', 'all', 'courseID').subscribe(
+      courses => {
+        this.courses = courses['content']
+        this.pageElements = courses['content'].length;
+      },
       error => console.log(error)
     );
   }
