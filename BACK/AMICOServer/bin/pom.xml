@@ -42,16 +42,17 @@
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		
-		<!--  <dependency>
+		<!--
+	    <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.45</version>
-        </dependency>-->
+        </dependency> -->
+        
         <dependency>
- <groupId>com.h2database</groupId>
- <artifactId>h2</artifactId>
- </dependency>
+ 			<groupId>com.h2database</groupId>
+ 			<artifactId>h2</artifactId>
+ 		</dependency> 
 	    <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -86,80 +87,6 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			
-			<!-- docker maven plugin -->
-			<plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>1.0.0</version>
-                <configuration>
-                    <dockerDirectory>${project.basedir}/docker</dockerDirectory>
-                    <imageName>mesteban96/${project.name}</imageName>
-                    <imageTags>
-                        <imageTag>${project.version}</imageTag>
-                    </imageTags>
-                   <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
-                   <!-- copy image to the container root dir -->
-                    <resources>
-                        <resource>
-                            <targetPath>/</targetPath>
-                            <directory>${project.build.directory}</directory>
-                            <include>${project.build.finalName}.jar</include>
-                        </resource>
-                    </resources>
-                </configuration>
-            </plugin>
-           
-           <!-- Copy jar to docker dir -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.0.1</version>
-                <executions>
-                    <execution>
-                        <id>copy-packaged-jar</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>${project.groupId}</groupId>
-                                    <artifactId>${project.artifactId}</artifactId>
-                                    <version>${project.version}</version>
-                                    <type>${project.packaging}</type>
-                                </artifactItem>
-                            </artifactItems>
-                            <outputDirectory>./docker</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-             
-             <!-- Copy files to docker/files -->
-             <plugin>
-        			<artifactId>maven-resources-plugin</artifactId>
-        			<version>3.0.1</version>
-        			<executions>
-	          		<execution>
-            			<id>copy-resources</id>    				
-            			<phase>validate</phase>
-            			<goals>
-              			<goal>copy-resources</goal>
-            			</goals>
-            			<configuration>
-              			<outputDirectory>${project.basedir}/docker/files</outputDirectory>
-              			<resources>          
-                				<resource>
-                  				<directory>${project.basedir}/files</directory>
-                  				<filtering>true</filtering>
-                				</resource>
-              			</resources>              
-            			</configuration>            
-          			</execution>
-        			</executions>
-      			</plugin> 
        
 		</plugins>
 	</build>

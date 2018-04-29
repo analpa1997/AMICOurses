@@ -17,7 +17,7 @@ services:
 
   amicourses:
     container_name: amicoursesWEB
-    image: mesteban96/amicoweb
+    image: mesteban96/amico_angular_spring
     depends_on:
       mysql:
         condition: service_healthy
