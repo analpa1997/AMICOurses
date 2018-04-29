@@ -37,7 +37,7 @@
                       <td contenteditable="true"><label size = "2"> {{course.startDateString}}</label></td>
                       <td contenteditable="true"><label size = "30">{{course.endDateString}}</label></td>
                       <td contenteditable="true"><input type = "text" #newDescription size = "50" value = "{{course.courseDescription}}" name = "newDescription"></td>
-                      <td><a class = "btn btn-primary" [routerLink] = "['/admin/course-overview',course.internalName]">Enter</a> </td>
+                      <td><a class = "btn btn-primary" [routerLink] = "['/course-overview',course.internalName]">Enter</a> </td>
                       <td> <button type = "button" (click)="modifyCourse(newName.value, newLanguage.value, newType.value, newDescription.value, course)" name = "btnSave" >Save</button> </td>
                       <td> <button type = "button" (click)="deleteCourse(course.internalName)" name = "btnDelete">Delete</button> </td>
                   </tr>

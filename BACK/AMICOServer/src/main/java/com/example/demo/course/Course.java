@@ -241,8 +241,10 @@ public class Course {
 	}
 
 	public void setName(String name) {
-		this.name = name;
-		internalName = name.replaceAll(" ", "-").toLowerCase();
+		if (name != null && !name.isEmpty()) {
+			this.name = name;
+			internalName = name.replaceAll(" ", "-").toLowerCase();
+		}
 	}
 
 	public void setNumberOfUsers(int numberOfUsers) {

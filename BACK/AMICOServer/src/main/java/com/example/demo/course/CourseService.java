@@ -159,8 +159,14 @@ public class CourseService {
 
 	public Course editCourse(Course newCourse) {
 		Course courseAux = courseRepository.getOne(newCourse.getCourseID());
-		if (courseAux != null)
-			courseAux = newCourse;
+		if (courseAux != null) {
+			courseAux.setName(newCourse.getName());
+			courseAux.setCourseDescription(newCourse.getCourseDescription());
+			courseAux.setCourseLanguage(newCourse.getCourseLanguage());
+			courseAux.setType(newCourse.getType());
+			courseAux.setStartDateString(courseAux.getStartDateString());
+			courseAux.setEndDate(courseAux.getEndDate());
+		}
 		courseRepository.save(courseAux);
 		return courseAux;
 	}

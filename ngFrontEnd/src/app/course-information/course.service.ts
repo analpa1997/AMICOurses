@@ -55,7 +55,15 @@ export class CourseService {
   }
 
   createCourse(course: Course){
-    return this.http.post(URL, course, { withCredentials: true });
+    return this.http.post<Course>(URL, course, { withCredentials: true });
+  }
+
+  uploadImage(courseID: number, file: File) {
+    let reqUrl;
+    const formData = new FormData();
+    formData.append('courseImage', file);
+    reqUrl = URL + 'img/' + courseID;
+      return this.http.put<Course>(reqUrl, formData, { withCredentials: true });
   }
 
 

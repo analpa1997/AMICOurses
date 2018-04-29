@@ -24,7 +24,7 @@ const appRoutes = [
   { path: 'oneCourse/:id/skills', component: SkillsComponent },
   { path: 'oneCourse/:id/subjects', component: SubjectsComponent},
   { path: 'moodle/:courseName/:subjectName', component: MoodleComponent},
-  { path: 'admin/course-overview/:courseName', component : SubjectListComponent},
+  { path: 'course-overview/:courseName', component : SubjectListComponent},
   { path: 'error/:error', component: ErrorPage},
   { path: 'signup', component: SignupComponent},
   { path: 'oneCourse/:id/add', component: AddCourseToUserComponent},

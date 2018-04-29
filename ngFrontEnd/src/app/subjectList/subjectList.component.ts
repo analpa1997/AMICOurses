@@ -47,6 +47,16 @@ export class SubjectListComponent implements OnInit {
     this.subjectListService.getCourse(this.courseName).subscribe(
       res => {
         this.course = res;
+        let isInscribed = false;
+        this.course.inscribedUsers.forEach (user => {
+          if (user.userID == this.loginService.user.userID){
+            isInscribed = true;
+          }
+        });
+        if (!isInscribed) {
+          this.router.navigate(['/error', '401']); //Forbidden
+        } 
+        
         if (!this.loginService.isStudent && !this.loginService.isAdmin) {
           let subjects = [];
           this.course.subjects.forEach(subject => {
