@@ -3,11 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from '../model/course.model';
 import { CourseService } from '../course-information/course.service';
 import { environment } from '../../environments/environment';
-<<<<<<< HEAD
-import {LoginService} from '../login/login.service';
-=======
 import { LoginService } from '../login/login.service';
->>>>>>> 7d888dbf37a3197b9a2dd6a7d58d2c1ecb37c982
+
 
 
 @Component({
@@ -31,12 +28,9 @@ export class IndexPageComponent implements OnInit {
   URL: string;
   emptyContent: boolean;
 
-<<<<<<< HEAD
+
   constructor(private router: Router,  private loginService: LoginService, private courseService: CourseService, activatedRoute: ActivatedRoute) {
-=======
-  constructor(private router: Router, private loginService: LoginService, private courseService: CourseService,
-              activatedRoute: ActivatedRoute) {
->>>>>>> 7d888dbf37a3197b9a2dd6a7d58d2c1ecb37c982
+
     this.URL = environment.URL;
   }
 
