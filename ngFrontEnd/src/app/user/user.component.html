@@ -1,8 +1,8 @@
 <body id="page-top">
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
-    <a class="nav-link mt-5" id="main-page-link" href="./">AMICOURSES</a>
+    <a class="nav-link mt-5" id="main-page-link" [routerLink]="['/index']">AMICOURSES</a>
 
-    <a class="navbar-brand js-scroll-trigger" href="page-top">
+    <a class="navbar-brand js-scroll-trigger" >
       <span class="d-block d-lg-none">Start Bootstrap</span>
       <span class="d-none d-lg-block">
         <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src='{{URL}}/profileimg/{{user?.internalName}}' alt="profileImg">
@@ -15,22 +15,22 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="about">About</a>
+          <a class="nav-link js-scroll-trigger">About</a>
         </li>
         <!--<li class="nav-item">
 <a class="nav-link js-scroll-trigger" href="experience">Experience</a>
 </li>-->
         <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="inscribed-courses">Inscribed courses</a>
+          <a class="nav-link js-scroll-trigger" >Inscribed courses</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="completed-courses">Completed Courses</a>
+          <a class="nav-link js-scroll-trigger" >Completed Courses</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="skills">Skills</a>
+          <a class="nav-link js-scroll-trigger" >Skills</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="interests">Interests</a>
+          <a class="nav-link js-scroll-trigger">Interests</a>
         </li>
         <li class="nav-item">
           <a class="nav-link btn" (click)="logOut()">Log Out</a>
@@ -66,7 +66,7 @@
               <!-- Course -->
         <div class="row align-items-center">
                 <!-- Image -->
-         <a href="/course-overview/{{course.internalName}}" class = "col-xs-0 col-sm-3 col-lg-2">
+         <a [routerLink]="['/course-overview', course?.internalName]" class = "col-xs-0 col-sm-3 col-lg-2">
                   <!-- <img  class="course-img img-fluid rounded-circle" src="../../../assets/img/courses/{{course.courseID}}/course-{{course.courseID}}.jpg" alt="Course Photo" > -->
            <img class="course-img img-fluid rounded-circle" src="{{imageURL}}/courses/img/{{course.courseID}}" alt=" Course photo">
                 </a>
