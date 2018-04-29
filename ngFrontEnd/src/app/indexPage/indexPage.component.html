@@ -8,8 +8,7 @@
             <h2 class="masthead-subheading mb-0">through our amazing courses</h2>
             <a *ngIf="!loginService.isLogged" [routerLink]="['/login']" class="btn btn-primary btn-xl rounded-pill mt-5">Get Started !</a>
             <a *ngIf="loginService.isAdmin" [routerLink]="['/admin']" class="btn btn-primary btn-xl rounded-pill mt-5">GO TO ADMIN PAGE </a>
-            <a *ngIf="loginService.isStudent" [routerLink]="['/users',loginService.user.internalName,'profile']" class="btn btn-primary btn-xl rounded-pill mt-5">Go to my Profile</a>
-            <a *ngIf="loginService.isLogged && !loginService.isStudent && !loginService.isAdmin" [routerLink]="['/users',loginService.user.internalName,'profile']" class="btn btn-primary btn-xl rounded-pill mt-5">Go to my Profile</a>
+            <a *ngIf="loginService.isLogged && !loginService.isAdmin" [routerLink]="['/users',loginService.user.internalName,'profile']" class="btn btn-primary btn-xl rounded-pill mt-5">Go to my Profile</a>
 
             <!--<a href="{{linkGetStarted}}" class="btn btn-primary btn-xl rounded-pill mt-5">Get Started !</a>-->
         </div>
