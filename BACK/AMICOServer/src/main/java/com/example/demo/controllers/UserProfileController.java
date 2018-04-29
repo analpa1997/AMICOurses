@@ -151,7 +151,7 @@ public class UserProfileController {
 
 		Path image = FILES_FOLDER.resolve(user.getUrlProfileImage());
 
-		if (!Files.exists(image)) {
+		if (!Files.exists(image) || user.getUrlProfileImage().equals("null")) {
 			image = Paths.get(System.getProperty("user.dir"), "files/image/users/default/default.jpg");
 		}
 

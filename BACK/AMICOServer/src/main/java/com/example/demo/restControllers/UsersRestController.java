@@ -84,8 +84,14 @@ public class UsersRestController {
 
 		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 		user.setUrlProfileImage("null");
-		user.setUserFirstName("");
-		user.setUserLastName("");
+		if (user.getUserFirstName() == null || user.getUserFirstName().isEmpty()) {
+			user.setUserFirstName("");
+		}
+		
+		if (user.getUserLastName() == null || user.getUserLastName().isEmpty()) {
+			user.setUserLastName("");
+		}
+		
 		user.setUserAddress("");
 		user.setCity("");
 		user.setCountry("");
