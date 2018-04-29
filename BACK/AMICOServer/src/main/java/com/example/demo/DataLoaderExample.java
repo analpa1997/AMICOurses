@@ -225,12 +225,12 @@ public class DataLoaderExample {
 		subjects.get(4).getTeachers().add(users.get(51));
 
 		subjects.get(0).getTeachers().add(users.get(52));
-		subjects.get(0).getTeachers().add(users.get(53));
+		//subjects.get(0).getTeachers().add(users.get(53));
 		subjects.get(1).getTeachers().add(users.get(52));
 
 		users.get(51).getTeaching().add(subjects.get(0));
 		users.get(52).getTeaching().add(subjects.get(0));
-		users.get(53).getTeaching().add(subjects.get(0));
+		//users.get(53).getTeaching().add(subjects.get(0));
 		users.get(51).getTeaching().add(subjects.get(1));
 		users.get(52).getTeaching().add(subjects.get(1));
 		users.get(51).getTeaching().add(subjects.get(2));
