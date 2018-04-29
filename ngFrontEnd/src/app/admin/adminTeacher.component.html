@@ -1,0 +1,31 @@
+<admin-header-component></admin-header-component>
+<div id="teacher">
+  <h2 class="text-center">Add Teacher</h2>
+  <div class="row">
+    <div class="offset-3 col-xs-6 col-sm-6 col-md-6 ">
+        <div class="form-group">
+          <label class="col-lg-1" for="name-input">Name: </label>
+          <input class="form-control" type="text" id="name-input" #name placeholder="Enter name" name = "newName">
+        </div>
+        <div class="form-group">
+          <label class="col-lg-1 " for="surname-input">Surname: </label>
+          <input class="form-control" type="text" id="surname-input" #surname placeholder="Enter surname" name = "newSecondName">
+        </div>
+        <div class="form-group">
+          <label class="col-lg-1 " for="username-input">Username: </label>
+          <input class="form-control" type="text" id="username-input" #username placeholder="Enter username" name = "newUsername">
+        </div>
+        <div class="form-group">
+          <label class="col-lg-1 " for="email-input">Email: </label>
+          <input class="form-control" type="email" id="email-input" #email placeholder="Enter email" name = "newUserMail">
+        </div>
+        <div class="form-group">
+          <label class="col-lg-1 " for="email-input">Password: </label>
+          <input class="form-control" type="password" id="password-input" #pass placeholder="Enter passsword" name = "newPassword">
+        </div>
+        <div class="row">
+          <button button type="button" (click)="submitForm(name.value, surname.value, username.value, email.value, pass.value)" class="offset-6 btn form-btn">Submit</button>
+        </div>
+    </div>
+  </div>
+</div>

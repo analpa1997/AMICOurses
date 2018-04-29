@@ -39,7 +39,7 @@
         </div>
         <div class="form-group row">
         <label class = "col-lg-2 " for="photo-input">Profile Photo:</label>
-        <input #url type="file" class="form-control-file col-lg" id="photo-input" name='profileImage' value='{{user?.urlProfileImage}}'>
+        <input #profileImage type="file" class="form-control-file col-lg" id="photo-input" name="profileImage" value='{{user?.urlProfileImage}}'>
       </div>
 
       <div class="form-group">
@@ -47,7 +47,7 @@
         <textarea #interests class="form-control col-lg-10" id="interests-input" rows="3" name='interests'>{{user?.interests}}</textarea>
       </div>
       <div class = "row border-top pt-2">
-        <button type="submit" (click)="save($event, firstName.value, lastName.value, username.value, mail.value, password.value, country.value, city.value, address.value, phone.value, url.value, interests.value)" class="offset-2 offset-lg-4 btn form-btn">Submit</button>
+        <button type="submit" (click)="save($event, firstName.value, lastName.value, username.value, mail.value, password.value, country.value, city.value, address.value, phone.value, profileImage, interests.value)" class="offset-2 offset-lg-4 btn form-btn">Submit</button>
         <button class = "offset-3 offset-lg-2 btn form-btn" (click)="cancel()">Cancel</button>
       </div>
 

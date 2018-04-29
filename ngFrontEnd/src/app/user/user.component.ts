@@ -4,6 +4,7 @@ import { UserService } from './user.service';
 import { LoginService } from '../login/login.service';
 import {User} from '../model/user.model';
 import {Course} from '../model/course.model';
+import { environment } from '../../environments/environment';
 
 @Component({
   templateUrl: './user.component.html',
@@ -14,8 +15,12 @@ import {Course} from '../model/course.model';
 export class UserComponent implements OnInit {
   internalName: string;
   user: User;
+  image: File;
+
+  private URL;
   constructor(private router: Router, private activatedRoute: ActivatedRoute, public service: UserService, private loginService : LoginService) {
     this.internalName = this.activatedRoute.snapshot.params['internalName'];
+    this.URL = environment.URL;
   }
 
   removeUser() {
@@ -33,9 +38,20 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.internalName);
-      this.service.getUser(this.internalName).subscribe(user => {this.user = user, console.log(this.user); },
+    this.service.getImageProfile(this.internalName).subscribe(photo => this.image = photo,
+      error => console.log(error));
+    this.service.getUser(this.internalName).subscribe(user => {this.user = user, console.log(this.user); },
         error => console.log(error));
 
   }
+
+  logOut() {
+    this.loginService.logOut().subscribe(
+      response => { 
+        this.router.navigate(['']);
+      },
+      error => console.log('Error when trying to log out: ' + error)
+    );
+  }
+
 }

@@ -12,6 +12,10 @@ import { AddCourseToUserComponent} from './course-information/addCourse-toUser.c
 import { SubjectListComponent } from './subjectList/subjectList.component';
 import { UserComponent } from './user/user.component';
 import { UserUpdateComponent } from './user/user-update.component';
+import {AdminTablesComponent} from './admin/adminTables.component';
+import {AdminTeacherComponent} from './admin/adminTeacher.component';
+import {AdminCourseComponent} from './admin/adminCourse.component';
+
 
 const appRoutes = [
   { path : 'index', component : IndexPageComponent,  useAsDefault: true },
@@ -20,13 +24,16 @@ const appRoutes = [
   { path: 'oneCourse/:id/skills', component: SkillsComponent },
   { path: 'oneCourse/:id/subjects', component: SubjectsComponent},
   { path: 'moodle/:courseName/:subjectName', component: MoodleComponent},
-  { path: 'course-overview/:courseName', component : SubjectListComponent},
+  { path: 'admin/course-overview/:courseName', component : SubjectListComponent},
   { path: 'error/:error', component: ErrorPage},
   { path: 'signup', component: SignupComponent},
   { path: 'oneCourse/:id/add', component: AddCourseToUserComponent},
   { path: 'users/:internalName/profile', component: UserComponent},
   { path: 'users/:internalName/profile/update', component: UserUpdateComponent},
   { path: '', redirectTo: 'index', pathMatch: 'full'},
+  { path: 'admin', component: AdminTablesComponent},
+  { path: 'admin/addTeacher', component: AdminTeacherComponent},
+  { path: 'admin/addCourse', component: AdminCourseComponent},
 ];
 
 export const routing = RouterModule.forRoot(appRoutes);

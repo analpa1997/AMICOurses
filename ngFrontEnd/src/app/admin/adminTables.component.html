@@ -1,0 +1,97 @@
+<admin-header-component></admin-header-component>
+<div class="content-wrapper">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div id="tables">
+          <!-------- TABLES -------->
+          <!--- COURSES TABLE --->
+          <div class="card mb-3">
+            <div class="card-header">
+              <i class="fa fa-table"></i> Courses's Table</div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable1" width="100%" cellspacing="0">
+                  <thead>
+                  <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Language</th>
+                    <th>Type</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Description</th>
+                    <th>Enter </th>
+                    <th>Save </th>
+                    <th>Delete</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let course of courses">
+                      <td >
+                        <div class="img-container"><img class="rounded-circle" src="{{imageURL}}/courses/img/{{course.courseID}}"></div>
+                      </td>
+                      <td contenteditable="true"><input type = "text" #newName size = "20"value = "{{course.name}}" name = "newName"> </td>
+                      <td contenteditable="true"><input type = "text" #newLanguage size = "10" value = "{{course.courseLanguage}}" name = "newLanguage"> </td>
+                      <td contenteditable="true"><input type = "text" #newType size = "20"value = "{{course.type}}" name = "newType"> </td>
+                      <td contenteditable="true"><label size = "2"> {{course.startDateString}}</label></td>
+                      <td contenteditable="true"><label size = "30">{{course.endDateString}}</label></td>
+                      <td contenteditable="true"><input type = "text" #newDescription size = "50" value = "{{course.courseDescription}}" name = "newDescription"></td>
+                      <td><a class = "btn btn-primary" [routerLink] = "['/admin/course-overview',course.internalName]">Enter</a> </td>
+                      <td> <button type = "button" (click)="modifyCourse(newName.value, newLanguage.value, newType.value, newDescription.value, course)" name = "btnSave" >Save</button> </td>
+                      <td> <button type = "button" (click)="deleteCourse(course.internalName)" name = "btnDelete">Delete</button> </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!--- TEACHERS TABLE --->
+          <div class="card mb-3">
+            <div class="card-header">
+              <i class="fa fa-table"></i> Teachers's Table</div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable2" width="100%" cellspacing="0">
+                  <thead>
+                  <tr>
+                    <th>Image</th>
+                    <th>Username</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Mail</th>
+                    <th>Country</th>
+                    <th>City</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                    <th>Delete </th>
+
+                  </tr>
+                  </thead>
+
+                  <tbody>
+                  <tr *ngFor="let teacher of teachers">
+                    <td>
+                      <div class="img-container"><img class="rounded-circle" src="{{imageURL}}/users/img"></div>
+                    </td>
+                    <td>{{teacher.username}}</td>
+                    <td>{{teacher.userFirstName}}</td>
+                    <td>{{teacher.userLastName}}</td>
+                    <td>{{teacher.userMail}}</td>
+                    <td>{{teacher.country}}</td>
+                    <td>{{teacher.city}}</td>
+                    <td>{{teacher.userAddress}}</td>
+                    <td>{{teacher.phoneNumber}}</td>
+                    <td><a class = "btn btn-secondary" (click)="deleteTeacher(teacher.internalName)">Delete</a></td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

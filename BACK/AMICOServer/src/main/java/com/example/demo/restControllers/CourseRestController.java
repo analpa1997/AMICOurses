@@ -90,7 +90,7 @@ public class CourseRestController {
 				course = courseRepository.findByInternalName(internalName);
 			else
 				course = courseRepository.getOne(courseID);
-			user = sessionUserComponent.getLoggedUser();
+			user = userRepository.findByUserID(sessionUserComponent.getLoggedUser().getUserID());
 
 			if (!user.isStudent()) {
 				message = "Users who aren't students cannot be registered into a course";

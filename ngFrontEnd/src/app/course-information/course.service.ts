@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import {Skill} from '../model/skill.model';
 import {Subject} from '../model/subject.model';
 import { Observable } from 'rxjs/Observable';
+import {Studyitem} from '../model/studyitem.model';
 
 const URL = 'https://localhost:8443/api/courses/';
 
@@ -43,6 +44,20 @@ export class CourseService {
 
     return this.http.get(reqUrl, { withCredentials: true })
   }
+
+  deleteCourse(internalName: string) {
+    let reqUrl = URL + 'name/' + internalName+'/';
+    return this.http.delete(reqUrl, {withCredentials: true});
+  }
+
+  modifyCourse(course: Course) {
+    return this.http.put(URL, course, { withCredentials: true });
+  }
+
+  createCourse(course: Course){
+    return this.http.post(URL, course, { withCredentials: true });
+  }
+
 
   private handleError(error: any) {
     console.error(error);

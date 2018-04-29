@@ -1,0 +1,39 @@
+<admin-header-component></admin-header-component>
+<div id="course">
+  <h2 class="text-center">Add Course</h2>
+  <div class="row">
+    <div class="offset-3 col-xs-6 col-sm-6 col-md-6">
+        <div class="form-group">
+          <label for="name-input">Name: </label>
+          <input class="form-control" type="text" #name id="name-input" placeholder="Enter name" name = "newName">
+
+          <label for="startdate-input">Start Date:</label>
+          <input class="form-control" type="date" #dateStart id="startdate-input"  name = "startDate">
+
+          <label for="finaldate-input">Final Date:</label>
+          <input class="form-control" type="date" #dateEnd id="finaldate-input" name = "endDate">
+          <label> Language: </label>
+          <input class = "form-control" type = "text" #language name = "newLanguage" placeholder = "Enter the language">
+          <label> Type: </label>
+          <input class = "form-control" type = "text" #type name = "newType" placeholder = "Enter the type">
+          <label> Skill 1: </label>
+          <input class = "form-control" type = "text" #skill1 name = "newSkill1" placeholder = "Enter Skill 1">
+          <label> Skill 2: </label>
+          <input class = "form-control" type = "text" #skill2 name = "newSkill2" placeholder = "Enter Skill 2 (optional)">
+          <label> Skill 2: </label>
+          <input class = "form-control" type = "text" #skill3 name = "newSkill3" placeholder = "Enter Skill 3 (optional)">
+          <label class = "mt-4">Photo: </label>
+          <input class = "mb-4" type = "file" #photo name = "courseImage">
+          <label for="description-input">Description: </label>
+          <textarea class="form-control" id="description-input" #description name = "newDescription">Description</textarea>
+          <div class="row">
+            <button type="button" (click)="submitForm(name.value, dateStart.value, dateEnd.value, language.value, type.value,
+                                                skill1.value, skill2.value, skill3.value, description.value)" class="offset-6 btn form-btn">Submit</button>
+          </div>
+          <!-- Subjets--->
+
+        </div>
+
+    </div>
+  </div>
+</div>

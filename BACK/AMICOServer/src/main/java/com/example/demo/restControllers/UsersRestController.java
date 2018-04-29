@@ -103,7 +103,7 @@ public class UsersRestController {
 	@RequestMapping(value = "/api/users/{userInternalName}", method = RequestMethod.PUT)
 	public ResponseEntity<User> updateUser(@PathVariable String userInternalName, @RequestBody User user) {
 		if (sessionUserComponent.isLoggedUser()) {
-			if (userInternalName.equals(sessionUserComponent.getLoggedUser().getInternalName())) {
+			if (user.equals(sessionUserComponent.getLoggedUser())) {
 				/* I can only modify the data of the logged user */
 
 				User updatedUser = userService.updateUser(userInternalName, user);
@@ -226,7 +226,7 @@ public class UsersRestController {
 	/* Post a profile photo */
 	@JsonView(User.BasicUser.class)
 	@RequestMapping(value = "/api/users/img/{userInternalName}", method = RequestMethod.PUT)
-	public ResponseEntity<User> uploadProfilePhoto(User userUpdated, @PathVariable String userInternalName,
+	public ResponseEntity<User> uploadProfilePhoto(@PathVariable String userInternalName,
 			@RequestParam("profileImage") MultipartFile file) {
 
 		User user = repository.findByInternalName(userInternalName);

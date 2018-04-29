@@ -828,7 +828,7 @@ var SubjectsComponent = /** @class */ (function () {
 /***/ "./src/app/error/errorPage.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<header-general-component></header-general-component>\r\n\r\n<section>\r\n\t\t<div class=\"container-fluid \">\r\n\t\t\t<div class=\"row\">\r\n\t\t\t\t<!-- Contents -->\r\n\t\t\t\t<div class=\"col-md-12 col-12\" id=\"contents-tab\">\r\n\t\t\t\t\t<h1>{{message[0]}}</h1>\r\n\t\t\t\t\t<div class=\"main-wthree\">\r\n\t\t\t\t\t\t<h2> {{error}}</h2>\r\n\t\t\t\t\t\t<p>\r\n\t\t\t\t\t\t\t<span class=\"sub-agileinfo\">Sorry! </span>\r\n\t\t\t\t\t\t\t{{message[1]}}\r\n\t\t\t\t\t\t</p>\r\n\t\t\t\t\t\t<!--form-->\r\n\t\t\t\t\t\t<div class=\"newsletter\">\r\n\t\t\t\t\t\t\t<button [routerLink]=\"['']\" class=\"btn btn-login\">Go\r\n\t\t\t\t\t\t\t\tto the main page</button>\r\n\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t<!--//form-->\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<!--//mian-content-->\r\n\t\t\t\t\t<!-- copyright -->\r\n\t\t\t\t\t<div class=\"copyright-w3-agile\">\r\n\t\t\t\t\t\t<p>\r\n\t\t\t\t\t\t\t© 2018 AMICO<a href=\"./index.html\" target=\"_blank\">urses</a>\r\n\t\t\t\t\t\t</p>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<!-- //copyright -->\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</section>\r\n"
+module.exports = "<header-general-component></header-general-component>\r\n\r\n<section>\r\n\t\t<div class=\"container-fluid \">\r\n\t\t\t<div class=\"row\">\r\n\t\t\t\t<!-- Contents -->\r\n\t\t\t\t<div class=\"col-md-12 col-12\" id=\"contents-tab\">\r\n\t\t\t\t\t<h1>{{message[0]}}</h1>\r\n\t\t\t\t\t<div class=\"main-wthree\">\r\n\t\t\t\t\t\t<h2> {{error}}</h2>\r\n\t\t\t\t\t\t<p>\r\n\t\t\t\t\t\t\t<span class=\"sub-agileinfo\">Sorry! </span>\r\n\t\t\t\t\t\t\t{{message[1]}}\r\n\t\t\t\t\t\t</p>\r\n\t\t\t\t\t\t<!--form-->\r\n\t\t\t\t\t\t<div class=\"newsletter\">\r\n\t\t\t\t\t\t\t<button [routerLink]=\"['']\" class=\"btn btn-login\">Go\r\n\t\t\t\t\t\t\t\tto the main page</button>\r\n\t\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t\t<!--//form-->\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<!--//mian-content-->\r\n\t\t\t\t\t<!-- copyright -->\r\n\t\t\t\t\t<div class=\"copyright-w3-agile\">\r\n\t\t\t\t\t\t<p>\r\n\t\t\t\t\t\t\t© 2018 AMICO<a href=\"./\" target=\"_blank\">urses</a>\r\n\t\t\t\t\t\t</p>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<!-- //copyright -->\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</section>\r\n"
 
 /***/ }),
 
@@ -1054,7 +1054,7 @@ var CourseIndexComponent = /** @class */ (function () {
 /***/ "./src/app/indexPage/indexPage.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<script src=\"carousel-basic.ts\"></script>\r\n<header-general-component></header-general-component>\r\n\r\n<header class=\"masthead text-center text-white\">\r\n    <div class=\"masthead-content\">\r\n        <div class=\"container\">\r\n            <h1 class=\"masthead-heading mb-0\">The best way to learn</h1>\r\n            <h2 class=\"masthead-subheading mb-0\">through our amazing courses</h2>\r\n            <a href=\"{{linkGetStarted}}\" class=\"btn btn-primary btn-xl rounded-pill mt-5\">Get Started !</a>\r\n        </div>\r\n    </div>\r\n    <div class=\"bg-circle-1 bg-circle\"></div>\r\n    <div class=\"bg-circle-2 bg-circle\"></div>\r\n    <div class=\"bg-circle-3 bg-circle\"></div>\r\n    <div class=\"bg-circle-4 bg-circle\"></div>\r\n</header>\r\n\r\n\r\n<div class=\"container\">\r\n        <div class=\"row\">\r\n            <div class=\"col-lg-12 col-md-12 col-sm-12 col-12 text-center\">\r\n                <div class=\"mt-3 &nbsp\"></div>\r\n                <h1 class=\"h3 mx-auto\">Check some of our courses</h1>\r\n            </div>\r\n            <div class=\"col-lg-6 col-md-6 col-sm-12 col-12 text-center\">\r\n                <button class=\"btn btn-primary btn-xl rounded-pill mt-5\" id=\"newbtn\" (click)=\"byNewest();\">Newest</button>\r\n            </div>\r\n            <div class=\"col-lg-6 col-md-6 col-sm-12 col-12 text-center\">\r\n                <button class=\"btn btn-primary btn-xl rounded-pill mt-5\" id=\"trendbtn\" (click)=\"byTrend();\">Trending</button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n<div class=\"container\">\r\n    <div class=\"row\">\r\n        <div class=\"col-lg-6 col-md-6 col-sm-12 col-12\">\r\n            <div class=\"mt-3 &nbsp\"></div>\r\n            <nav class=\"navbar navbar-light bg-faded p-2 \">\r\n                <span class=\"col-md-6 col-sm-12 col-12 \">\r\n                    <input class=\"form-control mr-sm-2\" type=\"text\" placeholder=\"Name of the course\" id=\"textSearch\" [(ngModel)]=\"selectedName\">\r\n                </span>\r\n                <span class=\"col-md-6 col-sm-12 col-12 text-center\">\r\n                    <button class=\"btn btn-primary btn-xl rounded-pill\" id=\"searchbtn\" (click)=\"byNameLike();\">Search</button>\r\n                </span>\r\n            </nav>\r\n        </div>\r\n        <div class=\"col-lg-6 col-md-6 col-sm-12 col-12  text-center\">\r\n            <div class=\"mt-4 &nbsp\"></div>\r\n            <div class=\"row\">\r\n                <span class=\"col-md-6 col-sm-12 col-12 \">\r\n                    <span class=\"dropdown\">\r\n                        <form class=\"form-inline\" >\r\n                            <label class=\"mr-sm-2\" for=\"inlineFormCustomSelect\">Type of the course</label>\r\n                            <select [(ngModel)]=\"selectedType\" class=\"custom-select mb-2 mr-sm-2 mb-sm-0\" id=\"selectedType\"  [ngModelOptions]=\"{standalone: true}\" >\r\n                              <option  [ngValue]=\"\">all\r\n                              <option  *ngFor=\"let type of allTypes\" [ngValue]=\"type.valueOf()\">{{type}}\r\n                            </select>\r\n                        </form>\r\n                    </span>\r\n                </span>\r\n                <span class=\"col-md-6 col-sm-12 col-12 text-center \">\r\n                    <button class=\"btn btn-primary btn-xl rounded-pill\" id=\"typebtn\" (click)=\"byType();\">Course Type</button>\r\n                </span>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n\r\n<div class=\"container\">\r\n    <div class=\"row\" id=\"allCourses\">\r\n        <div class=\"col-lg-6 col-md-6 col-sm-12 col-12\" *ngFor=\"let course of courses\">\r\n\r\n            <course-index-component [course]=course> </course-index-component>\r\n\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n\r\n<section>\r\n  <div class=\"container text-center\">\r\n    <button class=\"btn btn-primary col-lg-12 my-sm-0 disabled\" id=\"btnMoreCourses\" (click)=\"showMoreCourses();\"\r\n            *ngIf=\"emptyContent\">No courses found\r\n    </button>\r\n    <button class=\"btn btn-primary col-lg-12 my-sm-0 disabled\" id=\"btnMoreCourses\" (click)=\"showMoreCourses();\"\r\n            *ngIf=\"lastPage\">No more courses\r\n    </button>\r\n    <button class=\"btn btn-primary col-lg-12 my-sm-0 \" id=\"btnMoreCourses\" (click)=\"showMoreCourses();\"\r\n            *ngIf=\"!lastPage\">View more courses\r\n    </button>\r\n    <div class=\"mt-5 &nbsp\"></div>\r\n\r\n    <!-- Carousel, entities who collaborate in the courses -->\r\n\r\n    <ngbd-carousel-basic>[images]=images</ngbd-carousel-basic>\r\n  </div>\r\n\r\n\r\n\r\n\r\n</section>\r\n\r\n\r\n\r\n\r\n\r\n<div class=\"container\"><br></div>\r\n<!-- Footer -->\r\n<footer class=\"py-5 bg-black \">\r\n    <div class=\"container \">\r\n        <p class=\"m-0 text-center text-white small \">Copyright &copy; Your Website 2018</p>\r\n    </div>\r\n    <!-- /.container -->\r\n</footer>\r\n"
+module.exports = "<script src=\"carousel-basic.ts\"></script>\r\n<header-general-component></header-general-component>\r\n\r\n<header class=\"masthead text-center text-white\">\r\n    <div class=\"masthead-content\">\r\n        <div class=\"container\">\r\n            <h1 class=\"masthead-heading mb-0\">The best way to learn</h1>\r\n            <h2 class=\"masthead-subheading mb-0\">through our amazing courses</h2>\r\n            <!--<a href=\"{{linkGetStarted}}\" class=\"btn btn-primary btn-xl rounded-pill mt-5\">Get Started !</a>-->\r\n            <a *ngIf=\"!loginService.isLogged\"class=\"nav-link\" [routerLink]=\"['/login']\" class=\"btn btn-primary btn-xl rounded-pill mt-5\">Get Started !</a>\r\n            <a *ngIf=\"loginService.isLogged\" class=\"nav-link\" [routerLink]=\"['/users',loginService.user.internalName,'profile']\" class=\"btn btn-primary btn-xl rounded-pill mt-5\" > Go to My Profile</a>\r\n\r\n        </div>\r\n    </div>\r\n    <div class=\"bg-circle-1 bg-circle\"></div>\r\n    <div class=\"bg-circle-2 bg-circle\"></div>\r\n    <div class=\"bg-circle-3 bg-circle\"></div>\r\n    <div class=\"bg-circle-4 bg-circle\"></div>\r\n</header>\r\n\r\n\r\n<div class=\"container\">\r\n        <div class=\"row\">\r\n            <div class=\"col-lg-12 col-md-12 col-sm-12 col-12 text-center\">\r\n                <div class=\"mt-3 &nbsp\"></div>\r\n                <h1 class=\"h3 mx-auto\">Check some of our courses</h1>\r\n            </div>\r\n            <div class=\"col-lg-6 col-md-6 col-sm-12 col-12 text-center\">\r\n                <button class=\"btn btn-primary btn-xl rounded-pill mt-5\" id=\"newbtn\" (click)=\"byNewest();\">Newest</button>\r\n            </div>\r\n            <div class=\"col-lg-6 col-md-6 col-sm-12 col-12 text-center\">\r\n                <button class=\"btn btn-primary btn-xl rounded-pill mt-5\" id=\"trendbtn\" (click)=\"byTrend();\">Trending</button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n\r\n<div class=\"container\">\r\n    <div class=\"row\">\r\n        <div class=\"col-lg-6 col-md-6 col-sm-12 col-12\">\r\n            <div class=\"mt-3 &nbsp\"></div>\r\n            <nav class=\"navbar navbar-light bg-faded p-2 \">\r\n                <span class=\"col-md-6 col-sm-12 col-12 \">\r\n                    <input class=\"form-control mr-sm-2\" type=\"text\" placeholder=\"Name of the course\" id=\"textSearch\" [(ngModel)]=\"selectedName\">\r\n                </span>\r\n                <span class=\"col-md-6 col-sm-12 col-12 text-center\">\r\n                    <button class=\"btn btn-primary btn-xl rounded-pill\" id=\"searchbtn\" (click)=\"byNameLike();\">Search</button>\r\n                </span>\r\n            </nav>\r\n        </div>\r\n        <div class=\"col-lg-6 col-md-6 col-sm-12 col-12  text-center\">\r\n            <div class=\"mt-4 &nbsp\"></div>\r\n            <div class=\"row\">\r\n                <span class=\"col-md-6 col-sm-12 col-12 \">\r\n                    <span class=\"dropdown\">\r\n                        <form class=\"form-inline\" >\r\n                            <label class=\"mr-sm-2\" for=\"inlineFormCustomSelect\">Type of the course</label>\r\n                            <select [(ngModel)]=\"selectedType\" class=\"custom-select mb-2 mr-sm-2 mb-sm-0\" id=\"selectedType\"  [ngModelOptions]=\"{standalone: true}\" >\r\n                              <option  [ngValue]=\"\">all\r\n                              <option  *ngFor=\"let type of allTypes\" [ngValue]=\"type.valueOf()\">{{type}}\r\n                            </select>\r\n                        </form>\r\n                    </span>\r\n                </span>\r\n                <span class=\"col-md-6 col-sm-12 col-12 text-center \">\r\n                    <button class=\"btn btn-primary btn-xl rounded-pill\" id=\"typebtn\" (click)=\"byType();\">Course Type</button>\r\n                </span>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n\r\n<div class=\"container\">\r\n    <div class=\"row\" id=\"allCourses\">\r\n        <div class=\"col-lg-6 col-md-6 col-sm-12 col-12\" *ngFor=\"let course of courses\">\r\n\r\n            <course-index-component [course]=course> </course-index-component>\r\n\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n\r\n<section>\r\n  <div class=\"container text-center\">\r\n    <button class=\"btn btn-primary col-lg-12 my-sm-0 disabled\" id=\"btnMoreCourses\" (click)=\"showMoreCourses();\"\r\n            *ngIf=\"emptyContent\">No courses found\r\n    </button>\r\n    <button class=\"btn btn-primary col-lg-12 my-sm-0 disabled\" id=\"btnMoreCourses\" (click)=\"showMoreCourses();\"\r\n            *ngIf=\"lastPage\">No more courses\r\n    </button>\r\n    <button class=\"btn btn-primary col-lg-12 my-sm-0 \" id=\"btnMoreCourses\" (click)=\"showMoreCourses();\"\r\n            *ngIf=\"!lastPage\">View more courses\r\n    </button>\r\n    <div class=\"mt-5 &nbsp\"></div>\r\n\r\n    <!-- Carousel, entities who collaborate in the courses -->\r\n\r\n    <ngbd-carousel-basic>[images]=images</ngbd-carousel-basic>\r\n  </div>\r\n\r\n\r\n\r\n\r\n</section>\r\n\r\n\r\n\r\n\r\n\r\n<div class=\"container\"><br></div>\r\n<!-- Footer -->\r\n<footer class=\"py-5 bg-black \">\r\n    <div class=\"container \">\r\n        <p class=\"m-0 text-center text-white small \">Copyright &copy; Your Website 2018</p>\r\n    </div>\r\n    <!-- /.container -->\r\n</footer>\r\n"
 
 /***/ }),
 
@@ -1067,6 +1067,7 @@ module.exports = "<script src=\"carousel-basic.ts\"></script>\r\n<header-general
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__course_information_course_service__ = __webpack_require__("./src/app/course-information/course.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__login_login_service__ = __webpack_require__("./src/app/login/login.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1080,9 +1081,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var IndexPageComponent = /** @class */ (function () {
-    function IndexPageComponent(router, courseService, activatedRoute) {
+    function IndexPageComponent(router, loginService, courseService, activatedRoute) {
         this.router = router;
+        this.loginService = loginService;
         this.courseService = courseService;
         this.URL = __WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].URL;
     }
@@ -1170,7 +1173,8 @@ var IndexPageComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/indexPage/indexPage.component.html"),
             styles: [__webpack_require__("./src/assets/css/style.css")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */], __WEBPACK_IMPORTED_MODULE_2__course_information_course_service__["a" /* CourseService */], __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */], __WEBPACK_IMPORTED_MODULE_4__login_login_service__["a" /* LoginService */], __WEBPACK_IMPORTED_MODULE_2__course_information_course_service__["a" /* CourseService */],
+            __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]])
     ], IndexPageComponent);
     return IndexPageComponent;
 }());
@@ -2072,7 +2076,7 @@ var SignupComponent = /** @class */ (function () {
             var newUser = void 0;
             var internalName = username.replace(' ', '-').toLowerCase();
             newUser = { username: username, password: pass, userMail: mail, student: true, internalName: internalName };
-            this.service.newUser(newUser).subscribe(function (user) { return _this._router.navigate(['/index']); }, function (error) { return console.error('Error creating new user: ' + error); });
+            this.service.newUser(newUser).subscribe(function (user) { return _this._router.navigate(['/login']); }, function (error) { return console.error('Error creating new user: ' + error); });
         }
     };
     SignupComponent.prototype.check = function (username, mail, pass, Rpass) {
@@ -2358,7 +2362,7 @@ var SubjectListService = /** @class */ (function () {
 /***/ "./src/app/user/user-update.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<header-general-component></header-general-component>\r\n<div class=\"mt-5 &nbsp\"></div>\r\n<br>\r\n<section>\r\n  <div class = \"container-fluid mb-5 px-5\">\r\n    <form method=\"post\" enctype=\"multipart/form-data\">\r\n      <div class=\"form-group row\">\r\n        <label class = \"col-lg-1 \" for=\"name-input\">Name: </label>\r\n        <input #firstName class = \"col-lg-4\" type=\"text\" class=\"form-control\" id=\"name-input\"  placeholder=\"Enter your name\" name='userFirstName' value='{{user?.userFirstName}}'>\r\n        <label class = \"col-lg-1 \" for=\"surname-input\">Surname: </label>\r\n        <input #lastName class = \"col-lg-4\" type=\"text\" class=\"form-control\" id=\"surname-input\" placeholder=\"Enter your surname\" name='userLastName' value='{{user?.userLastName}}'>\r\n      </div>\r\n      <div class=\"form-group row\">\r\n        <label class = \"col-lg-1 \" for=\"username-input\">Username: </label>\r\n        <input #username class = \"col col-lg-4\" type=\"text\" class=\"form-control\" id=\"username-input\" placeholder=\"Enter your username\" name='username' value='{{user?.username}}'>\r\n        <label class = \"col-lg-1 \" for=\"email-input\">Email: </label>\r\n        <input #mail class = \"col col-lg-4\" type=\"email\" class=\"form-control\" id=\"email-input\" placeholder=\"Enter email\" name='userMail' value='{{user?.userMail}}'>\r\n      </div>\r\n\r\n      <div class=\"form-group row\">\r\n        <label class = \"col-lg-10 \" for=\"password-input\">Password:</label>\r\n        <input #password class = \"col col-lg-10\" type=\"password\" class=\"form-control\" id=\"password-input\" placeholder=\"Enter a new password\">\r\n        <label class = \"col-lg-10 \" for=\"repeat-password-input\">Repeat Password:</label>\r\n        <input class = \"col col-lg-10\" type=\"password\" class=\"form-control\" id=\"repeat-password-input\" placeholder=\"Repeat the new password\" name='password'>\r\n      </div>\r\n\r\n      <div class=\"form-group row\">\r\n        <label class = \"col-lg-1 \" for=\"country-input\">Country: </label>\r\n        <input  #country class = \"col col-lg-1\" type=\"text\" class=\"form-control\" id=\"country-input\" placeholder=\"Country\" name='country' value='{{user?.country}}'>\r\n        <label class = \"col-lg-1 \" for=\"city-input\">City: </label>\r\n        <input #city class = \"col col-lg-1\" type=\"text\" class=\"form-control\" id=\"city-input\"  placeholder=\"City\" name='city' value='{{user?.city}}'>\r\n        <label class = \"col-lg-1 \" for=\"direction-input\">Direction: </label>\r\n        <input #address class = \"col col-lg-5\" type=\"text\" class=\"form-control\" id=\"direction-input\"  placeholder=\"Direction\" name='userAddress' value='{{user?.userAddress}}'>\r\n      </div>\r\n\r\n      <div class=\"form-group row\">\r\n        <label class = \"col-lg-1 \" for=\"phone-input\">Phone: </label>\r\n        <input #phone class = \"col col-lg-2\" type=\"text\" class=\"form-control\" id=\"phone-input\"  placeholder=\"Phone\" name='phoneNumber' value='{{user?.phoneNumber}}'>\r\n        </div>\r\n        <div class=\"form-group row\">\r\n        <label class = \"col-lg-2 \" for=\"photo-input\">Profile Photo:</label>\r\n        <input #url type=\"file\" class=\"form-control-file col-lg\" id=\"photo-input\" name='profileImage' value='{{user?.urlProfileImage}}'>\r\n      </div>\r\n\r\n      <div class=\"form-group\">\r\n        <label for=\"interests-input\">Interests:</label>\r\n        <textarea #interests class=\"form-control col-lg-10\" id=\"interests-input\" rows=\"3\" name='interests'>{{user?.interests}}</textarea>\r\n      </div>\r\n      <div class = \"row border-top pt-2\">\r\n        <button type=\"submit\" (click)=\"save($event, firstName.value, lastName.value, username.value, mail.value, password.value, country.value, city.value, address.value, phone.value, url.value, interests.value)\" class=\"offset-2 offset-lg-4 btn form-btn\">Submit</button>\r\n        <button class = \"offset-3 offset-lg-2 btn form-btn\" (click)=\"cancel()\">Cancel</button>\r\n      </div>\r\n\r\n    </form>\r\n  </div>\r\n\r\n</section>\r\n"
+module.exports = "<header-general-component></header-general-component>\r\n<div class=\"mt-5 &nbsp\"></div>\r\n<br>\r\n<section>\r\n  <div class = \"container-fluid mb-5 px-5\">\r\n    <form method=\"post\" enctype=\"multipart/form-data\">\r\n      <div class=\"form-group row\">\r\n        <label class = \"col-lg-1 \" for=\"name-input\">Name: </label>\r\n        <input #firstName class = \"col-lg-4\" type=\"text\" class=\"form-control\" id=\"name-input\"  placeholder=\"Enter your name\" name='userFirstName' value='{{user?.userFirstName}}'>\r\n        <label class = \"col-lg-1 \" for=\"surname-input\">Surname: </label>\r\n        <input #lastName class = \"col-lg-4\" type=\"text\" class=\"form-control\" id=\"surname-input\" placeholder=\"Enter your surname\" name='userLastName' value='{{user?.userLastName}}'>\r\n      </div>\r\n      <div class=\"form-group row\">\r\n        <label class = \"col-lg-1 \" for=\"username-input\">Username: </label>\r\n        <input #username class = \"col col-lg-4\" type=\"text\" class=\"form-control\" id=\"username-input\" placeholder=\"Enter your username\" name='username' value='{{user?.username}}'>\r\n        <label class = \"col-lg-1 \" for=\"email-input\">Email: </label>\r\n        <input #mail class = \"col col-lg-4\" type=\"email\" class=\"form-control\" id=\"email-input\" placeholder=\"Enter email\" name='userMail' value='{{user?.userMail}}'>\r\n      </div>\r\n\r\n      <div class=\"form-group row\">\r\n        <label class = \"col-lg-10 \" for=\"password-input\">Password:</label>\r\n        <input #password class = \"col col-lg-10\" type=\"password\" class=\"form-control\" id=\"password-input\" placeholder=\"Enter a new password\">\r\n        <label class = \"col-lg-10 \" for=\"repeat-password-input\">Repeat Password:</label>\r\n        <input class = \"col col-lg-10\" type=\"password\" class=\"form-control\" id=\"repeat-password-input\" placeholder=\"Repeat the new password\" name='password'>\r\n      </div>\r\n\r\n      <div class=\"form-group row\">\r\n        <label class = \"col-lg-1 \" for=\"country-input\">Country: </label>\r\n        <input  #country class = \"col col-lg-1\" type=\"text\" class=\"form-control\" id=\"country-input\" placeholder=\"Country\" name='country' value='{{user?.country}}'>\r\n        <label class = \"col-lg-1 \" for=\"city-input\">City: </label>\r\n        <input #city class = \"col col-lg-1\" type=\"text\" class=\"form-control\" id=\"city-input\"  placeholder=\"City\" name='city' value='{{user?.city}}'>\r\n        <label class = \"col-lg-1 \" for=\"direction-input\">Direction: </label>\r\n        <input #address class = \"col col-lg-5\" type=\"text\" class=\"form-control\" id=\"direction-input\"  placeholder=\"Direction\" name='userAddress' value='{{user?.userAddress}}'>\r\n      </div>\r\n\r\n      <div class=\"form-group row\">\r\n        <label class = \"col-lg-1 \" for=\"phone-input\">Phone: </label>\r\n        <input #phone class = \"col col-lg-2\" type=\"text\" class=\"form-control\" id=\"phone-input\"  placeholder=\"Phone\" name='phoneNumber' value='{{user?.phoneNumber}}'>\r\n        </div>\r\n        <div class=\"form-group row\">\r\n        <label class = \"col-lg-2 \" for=\"photo-input\">Profile Photo:</label>\r\n        <input #profileImage type=\"file\" class=\"form-control-file col-lg\" id=\"photo-input\" name=\"profileImage\" value='{{user?.urlProfileImage}}'>\r\n      </div>\r\n\r\n      <div class=\"form-group\">\r\n        <label for=\"interests-input\">Interests:</label>\r\n        <textarea #interests class=\"form-control col-lg-10\" id=\"interests-input\" rows=\"3\" name='interests'>{{user?.interests}}</textarea>\r\n      </div>\r\n      <div class = \"row border-top pt-2\">\r\n        <button type=\"submit\" (click)=\"save($event, firstName.value, lastName.value, username.value, mail.value, password.value, country.value, city.value, address.value, phone.value, profileImage, interests.value)\" class=\"offset-2 offset-lg-4 btn form-btn\">Submit</button>\r\n        <button class = \"offset-3 offset-lg-2 btn form-btn\" (click)=\"cancel()\">Cancel</button>\r\n      </div>\r\n\r\n    </form>\r\n  </div>\r\n\r\n</section>\r\n"
 
 /***/ }),
 
@@ -2367,74 +2371,6 @@ module.exports = "<header-general-component></header-general-component>\r\n<div 
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserUpdateComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__user_service__ = __webpack_require__("./src/app/user/user.service.ts");
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-var UserUpdateComponent = /** @class */ (function () {
-    function UserUpdateComponent(router, activatedRoute, service) {
-        this.router = router;
-        this.activatedRoute = activatedRoute;
-        this.service = service;
-        this.internalName = this.activatedRoute.snapshot.params['internalName'];
-    }
-    UserUpdateComponent.prototype.cancel = function () {
-        window.history.back();
-    };
-    UserUpdateComponent.prototype.save = function (event, firstName, lastName, username, mail, password, country, city, address, phone, url, interests) {
-        var _this = this;
-        var updateUser;
-        updateUser = { username: username, password: password, userMail: mail, userFirstName: firstName, userLastName: lastName,
-            country: country, city: city, userAddress: address, phoneNumber: phone, urlProfileImage: url, interests: interests, internalName: this.user.internalName };
-        this.service.updateUser(updateUser).subscribe(function (user) {
-            _this.user = user,
-                _this.router.navigate(['users/' + _this.user.internalName + '/profile']);
-        }, function (error) { return console.error('Error updating user: ' + error); });
-    };
-    UserUpdateComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.service.getUser(this.internalName).subscribe(function (user) {
-            _this.user = user,
-                console.log(user);
-        }, function (error) { return console.log(error); });
-    };
-    UserUpdateComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            styles: [__webpack_require__("./src/assets/css/profile-update.css")],
-            template: __webpack_require__("./src/app/user/user-update.component.html")
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */], __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */], __WEBPACK_IMPORTED_MODULE_2__user_service__["a" /* UserService */]])
-    ], UserUpdateComponent);
-    return UserUpdateComponent;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/user/user.component.html":
-/***/ (function(module, exports) {
-
-module.exports = "<body id=\"page-top\">\r\n  <nav class=\"navbar navbar-expand-lg navbar-dark bg-primary fixed-top\" id=\"sideNav\">\r\n    <a class=\"nav-link mt-5\" id=\"main-page-link\" href=\"./\">AMICOURSES</a>\r\n\r\n    <a class=\"navbar-brand js-scroll-trigger\" href=\"page-top\">\r\n      <span class=\"d-block d-lg-none\">Start Bootstrap</span>\r\n      <span class=\"d-none d-lg-block\">\r\n        <img class=\"img-fluid img-profile rounded-circle mx-auto mb-2\" src=\"../../../assets/img/users/amico.jpg\" alt=\"profileImg\">\r\n      </span>\r\n    </a>\r\n    <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"navbarResponsive\" aria-controls=\"navbarResponsive\"\r\n      aria-expanded=\"false\" aria-label=\"Toggle navigation\">\r\n      <span class=\"navbar-toggler-icon\"></span>\r\n    </button>\r\n    <div class=\"collapse navbar-collapse\" id=\"navbarResponsive\">\r\n      <ul class=\"navbar-nav ml-auto\">\r\n        <li class=\"nav-item\">\r\n          <a class=\"nav-link js-scroll-trigger\" href=\"about\">About</a>\r\n        </li>\r\n        <!--<li class=\"nav-item\">\r\n<a class=\"nav-link js-scroll-trigger\" href=\"experience\">Experience</a>\r\n</li>-->\r\n        <li class=\"nav-item\">\r\n          <a class=\"nav-link js-scroll-trigger\" href=\"inscribed-courses\">Inscribed courses</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n          <a class=\"nav-link js-scroll-trigger\" href=\"completed-courses\">Completed Courses</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n          <a class=\"nav-link js-scroll-trigger\" href=\"skills\">Skills</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n          <a class=\"nav-link js-scroll-trigger\" href=\"interests\">Interests</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n          <a class=\"nav-link js-scroll-trigger\" href=\"./logOut\">Log Out</a>\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </nav>\r\n\r\n  <div class=\"container-fluid p-0\">\r\n    <div class=\"row\">\r\n      <div class=\"col-lg-10 col-md-12 mx-auto\">\r\n        <section class=\"resume-section p-3 p-lg-5 d-flex d-column\" id=\"about\">\r\n          <div class=\"my-auto\">\r\n            <h1 class=\"mb-0\">{{user?.userFirstName}}\r\n              <span class=\"text-primary\">{{user?.userLastName}}</span>\r\n            </h1>\r\n            <h3 id=\"name\">{{user?.username}}</h3>\r\n            <div class=\"subheading mb-5\">{{user?.userAddress}}\r\n              <a href=\"mailto:name@email.com\">{{user?.userMail}}</a>\r\n            </div>\r\n            <p class=\"mb-5\">{{user?.phoneNumber}}</p>\r\n\r\n            <a *ngIf=\"loginService?.user?.userID==user?.userID\" [routerLink]=\"['/users/'+internalName+'/profile/update']\" class=\"border p-2\" id=\"btn-edit-profile\">Edit Profile</a>\r\n\r\n          </div>\r\n        </section>\r\n      <section class=\"resume-section p-3 p-lg-5 d-flex flex-column\" id=\"inscribed-courses\">\r\n        <div class=\"my-auto\">\r\n          <h2 class=\"mb-5\">Inscribed Courses:</h2>\r\n          <ul class = \"list-group\">\r\n            <!-- inscribedCourses -->\r\n            <li class = \"list-group-item\" *ngFor=\"let course of user.currentCourses\">\r\n              <!-- Course -->\r\n        <div class=\"row align-items-center\">\r\n                <!-- Image -->\r\n         <a href=\"/course-overview/{{course.internalName}}\" class = \"col-xs-0 col-sm-3 col-lg-2\">\r\n                  <img  class=\"course-img img-fluid rounded-circle\" src=\"../../../assets/img/courses/{{course.courseID}}/course-{{course.courseID}}.jpg\" alt=\"Course Photo\" >\r\n                </a>\r\n                <!-- Text -->\r\n        <div class=\"offset-1 offset-md-0 col-lg-8 col-md-8 col-sm-10 col-10 \">\r\n                  <div class=\"p-3\">\r\n                    <p class=\"course-name \">{{course.name}}</p>\r\n                    <p class = \"course-text\">{{course.courseDescription}}</p>\r\n                  </div>\r\n                </div>\r\n                <div *ngIf=\"loginService?.user?.userID==user?.userID\" class = 'col-2 offset-5  offset-lg-0 col-lg-2 col-sm-2 mb-1'>\r\n                  <a [routerLink]=\"['/course-overview', course.internalName]\" class = 'btn btn-primary px-3 ' role = 'button'>Go</a>\r\n                </div>\r\n              </div>\r\n            </li>\r\n            <!-- inscribedCourses -->\r\n          </ul>\r\n\r\n        </div>\r\n      </section>\r\n      <section *ngIf=\"user.student\" class=\"resume-section p-3 p-lg-5 d-flex flex-column\" id=\"completed-courses\">\r\n        <div class=\"my-auto\">\r\n          <h2 class=\"mb-5\">Completed Courses</h2>\r\n\r\n          <ul class = \"list-group\">\r\n            <!-- completedCourses -->\r\n            <li class = \"list-group-item\" *ngFor=\"let course of user.completedCourses\">\r\n              <!-- Course -->\r\n        <div class=\"row align-items-center\">\r\n          <!-- Image -->\r\n           <a class = \"col-0 col-sm-3 col-lg-2\">\r\n                  <img  class=\"course-img img-fluid rounded-circle\" src=\"../../../assets/img/courses/{{course.courseID}}/course-{{course.courseID}}.jpg\" alt=\"Course Photo\" >\r\n                </a>\r\n                <!-- Text -->\r\n          <div class=\"offset-1 offset-md-0 col-lg-7 col-md-7 col-sm-10 col-10 \">\r\n                  <div class=\"p-3\">\r\n                    <p class=\"course-name \">{{course?.name}}</p>\r\n                    <p class = \"course-text\">{{course?.courseDescription}}</p>\r\n                  </div>\r\n                </div>\r\n\r\n                <div *ngIf=\"loginService?.user?.userID==user?.userID\" class = 'col-2 offset-5  offset-lg-0 col-lg-2 col-sm-2 mb-1'>\r\n                  <a [routerLink]=\"['/profile/', internalName, '/certificate/', user.internalName-user.userID]\" class = 'btn btn-primary fa fa-file-pdf' role = 'button'> Certificate</a>\r\n                </div>\r\n\r\n              </div>\r\n            </li>\r\n            <!-- completedCourses -->\r\n          </ul>\r\n        </div>\r\n      </section>\r\n\r\n      <section class=\"resume-section p-3 p-lg-5 d-flex flex-column\" id=\"skills\">\r\n        <div class=\"my-auto\">\r\n          <h2 class=\"mb-5\">Skills</h2>\r\n          <!-- completedCourses -->\r\n          <div *ngFor=\"let course of user.completedCourses\">\r\n          <div class=\"subheading mb-3\">{{course?.name}}</div>\r\n\r\n          <ul class=\"fa-ul mb-0\">\r\n            <li *ngFor=\"let skill of course.skills\">\r\n              <i class=\"fa-li fa fa-check\"></i>\r\n              {{skill?.skillName}}</li>\r\n            <li>\r\n          </ul>\r\n          </div>\r\n          <!-- completedCourses -->\r\n        </div>\r\n\r\n      </section>\r\n\r\n      <section class=\"resume-section p-3 p-lg-5 d-flex flex-column\" id=\"interests\">\r\n        <div class=\"my-auto\">\r\n          <h2 class=\"mb-5\">Interests</h2>\r\n          <p>{{user?.interests}}</p>\r\n        </div>\r\n      </section>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</body>\r\n"
-
-/***/ }),
-
-/***/ "./src/app/user/user.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__user_service__ = __webpack_require__("./src/app/user/user.service.ts");
@@ -2452,6 +2388,90 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+var UserUpdateComponent = /** @class */ (function () {
+    function UserUpdateComponent(router, activatedRoute, service, loginService) {
+        this.router = router;
+        this.activatedRoute = activatedRoute;
+        this.service = service;
+        this.loginService = loginService;
+        this.internalName = this.activatedRoute.snapshot.params['internalName'];
+    }
+    UserUpdateComponent.prototype.cancel = function () {
+        window.history.back();
+    };
+    UserUpdateComponent.prototype.save = function (event, firstName, lastName, username, mail, password, country, city, address, phone, profileImage, interests) {
+        var _this = this;
+        var updateUser;
+        updateUser = {
+            userID: this.user.userID, username: username, password: password, userMail: mail, userFirstName: firstName, userLastName: lastName,
+            country: country, city: city, userAddress: address, phoneNumber: phone, interests: interests, internalName: this.user.internalName
+        };
+        this.service.updateUser(updateUser).subscribe(function (user) {
+            _this.user = user;
+            _this.loginService.user = user;
+            if (profileImage.files[0] != null) {
+                _this.service.uploadImage(_this.user.internalName, profileImage.files[0]).subscribe(function (user) {
+                    _this.user = user;
+                    _this.router.navigate(['users/', _this.user.internalName, 'profile']);
+                }, function (error) { return console.error('Error updating user image: ' + error); });
+            }
+            else {
+                _this.router.navigate(['users/', _this.user.internalName, 'profile']);
+            }
+        }, function (error) { return console.error('Error updating user: ' + error); });
+    };
+    UserUpdateComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.service.getUser(this.internalName).subscribe(function (user) {
+            _this.user = user,
+                console.log(user);
+        }, function (error) { return console.log(error); });
+    };
+    UserUpdateComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            styles: [__webpack_require__("./src/assets/css/profile-update.css")],
+            template: __webpack_require__("./src/app/user/user-update.component.html")
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */], __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */], __WEBPACK_IMPORTED_MODULE_2__user_service__["a" /* UserService */], __WEBPACK_IMPORTED_MODULE_3__login_login_service__["a" /* LoginService */]])
+    ], UserUpdateComponent);
+    return UserUpdateComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/user/user.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<body id=\"page-top\">\r\n  <nav class=\"navbar navbar-expand-lg navbar-dark bg-primary fixed-top\" id=\"sideNav\">\r\n    <a class=\"nav-link mt-5\" id=\"main-page-link\" href=\"./\">AMICOURSES</a>\r\n\r\n    <a class=\"navbar-brand js-scroll-trigger\" href=\"page-top\">\r\n      <span class=\"d-block d-lg-none\">Start Bootstrap</span>\r\n      <span class=\"d-none d-lg-block\">\r\n        <img class=\"img-fluid img-profile rounded-circle mx-auto mb-2\" src='{{URL}}/profileimg/{{user?.internalName}}' alt=\"profileImg\">\r\n      </span>\r\n    </a>\r\n    <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"navbarResponsive\" aria-controls=\"navbarResponsive\"\r\n      aria-expanded=\"false\" aria-label=\"Toggle navigation\">\r\n      <span class=\"navbar-toggler-icon\"></span>\r\n    </button>\r\n    <div class=\"collapse navbar-collapse\" id=\"navbarResponsive\">\r\n      <ul class=\"navbar-nav ml-auto\">\r\n        <li class=\"nav-item\">\r\n          <a class=\"nav-link js-scroll-trigger\" href=\"about\">About</a>\r\n        </li>\r\n        <!--<li class=\"nav-item\">\r\n<a class=\"nav-link js-scroll-trigger\" href=\"experience\">Experience</a>\r\n</li>-->\r\n        <li class=\"nav-item\">\r\n          <a class=\"nav-link js-scroll-trigger\" href=\"inscribed-courses\">Inscribed courses</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n          <a class=\"nav-link js-scroll-trigger\" href=\"completed-courses\">Completed Courses</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n          <a class=\"nav-link js-scroll-trigger\" href=\"skills\">Skills</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n          <a class=\"nav-link js-scroll-trigger\" href=\"interests\">Interests</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n          <a class=\"nav-link btn\" (click)=\"logOut()\">Log Out</a>\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </nav>\r\n\r\n  <div class=\"container-fluid p-0\">\r\n    <div class=\"row\">\r\n      <div class=\"col-lg-10 col-md-12 mx-auto\">\r\n        <section class=\"resume-section p-3 p-lg-5 d-flex d-column\" id=\"about\">\r\n          <div class=\"my-auto\">\r\n            <h1 class=\"mb-0\">{{user?.userFirstName}}\r\n              <span class=\"text-primary\">{{user?.userLastName}}</span>\r\n            </h1>\r\n            <h3 id=\"name\">{{user?.username}}</h3>\r\n            <div class=\"subheading mb-5\">{{user?.userAddress}}\r\n              <a href=\"mailto:name@email.com\">{{user?.userMail}}</a>\r\n            </div>\r\n            <p class=\"mb-5\">{{user?.phoneNumber}}</p>\r\n\r\n            <a *ngIf=\"loginService?.user?.userID==user?.userID\" [routerLink]=\"['/users/'+internalName+'/profile/update']\" class=\"border p-2\" id=\"btn-edit-profile\">Edit Profile</a>\r\n\r\n          </div>\r\n        </section>\r\n      <section class=\"resume-section p-3 p-lg-5 d-flex flex-column\" id=\"inscribed-courses\">\r\n        <div class=\"my-auto\">\r\n          <h2 class=\"mb-5\">Inscribed Courses:</h2>\r\n          <ul class = \"list-group\">\r\n            <!-- inscribedCourses -->\r\n            <li class = \"list-group-item\" *ngFor=\"let course of user?.currentCourses\">\r\n              <!-- Course -->\r\n        <div class=\"row align-items-center\">\r\n                <!-- Image -->\r\n         <a href=\"/course-overview/{{course.internalName}}\" class = \"col-xs-0 col-sm-3 col-lg-2\">\r\n                  <img  class=\"course-img img-fluid rounded-circle\" src=\"../../../assets/img/courses/{{course.courseID}}/course-{{course.courseID}}.jpg\" alt=\"Course Photo\" >\r\n                </a>\r\n                <!-- Text -->\r\n        <div class=\"offset-1 offset-md-0 col-lg-8 col-md-8 col-sm-10 col-10 \">\r\n                  <div class=\"p-3\">\r\n                    <p class=\"course-name \">{{course?.name}}</p>\r\n                    <p class = \"course-text\">{{course?.courseDescription}}</p>\r\n                  </div>\r\n                </div>\r\n                <div *ngIf=\"loginService?.user?.userID==user?.userID\" class = 'col-2 offset-5  offset-lg-0 col-lg-2 col-sm-2 mb-1'>\r\n                  <a [routerLink]=\"['/course-overview', course?.internalName]\" class = 'btn btn-primary px-3 ' role = 'button'>Go</a>\r\n                </div>\r\n              </div>\r\n            </li>\r\n            <!-- inscribedCourses -->\r\n          </ul>\r\n\r\n        </div>\r\n      </section>\r\n      <section *ngIf=\"user?.student\" class=\"resume-section p-3 p-lg-5 d-flex flex-column\" id=\"completed-courses\">\r\n        <div class=\"my-auto\">\r\n          <h2 class=\"mb-5\">Completed Courses</h2>\r\n\r\n          <ul class = \"list-group\">\r\n            <!-- completedCourses -->\r\n            <li class = \"list-group-item\" *ngFor=\"let course of user?.completedCourses\">\r\n              <!-- Course -->\r\n        <div class=\"row align-items-center\">\r\n          <!-- Image -->\r\n           <a class = \"col-0 col-sm-3 col-lg-2\">\r\n                  <img  class=\"course-img img-fluid rounded-circle\" src=\"../../../assets/img/courses/{{course?.courseID}}/course-{{course?.courseID}}.jpg\" alt=\"Course Photo\" >\r\n                </a>\r\n                <!-- Text -->\r\n          <div class=\"offset-1 offset-md-0 col-lg-7 col-md-7 col-sm-10 col-10 \">\r\n                  <div class=\"p-3\">\r\n                    <p class=\"course-name \">{{course?.name}}</p>\r\n                    <p class = \"course-text\">{{course?.courseDescription}}</p>\r\n                  </div>\r\n                </div>\r\n\r\n                <div *ngIf=\"loginService?.user?.userID==user?.userID\" class = 'col-2 offset-5  offset-lg-0 col-lg-2 col-sm-2 mb-1'>\r\n                  <a [routerLink]=\"['/profile/', internalName, '/certificate/', user.internalName-user.userID]\" class = 'btn btn-primary fa fa-file-pdf' role = 'button'> Certificate</a>\r\n                </div>\r\n\r\n              </div>\r\n            </li>\r\n            <!-- completedCourses -->\r\n          </ul>\r\n        </div>\r\n      </section>\r\n\r\n      <section class=\"resume-section p-3 p-lg-5 d-flex flex-column\" id=\"skills\">\r\n        <div class=\"my-auto\">\r\n          <h2 class=\"mb-5\">Skills</h2>\r\n          <!-- completedCourses -->\r\n          <div *ngFor=\"let course of user?.completedCourses\">\r\n          <div class=\"subheading mb-3\">{{course?.name}}</div>\r\n\r\n          <ul class=\"fa-ul mb-0\">\r\n            <li *ngFor=\"let skill of course?.skills\">\r\n              <i class=\"fa-li fa fa-check\"></i>\r\n              {{skill?.skillName}}</li>\r\n            <li>\r\n          </ul>\r\n          </div>\r\n          <!-- completedCourses -->\r\n        </div>\r\n\r\n      </section>\r\n\r\n      <section class=\"resume-section p-3 p-lg-5 d-flex flex-column\" id=\"interests\">\r\n        <div class=\"my-auto\">\r\n          <h2 class=\"mb-5\">Interests</h2>\r\n          <p>{{user?.interests}}</p>\r\n        </div>\r\n      </section>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</body>\r\n"
+
+/***/ }),
+
+/***/ "./src/app/user/user.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__user_service__ = __webpack_require__("./src/app/user/user.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__login_login_service__ = __webpack_require__("./src/app/login/login.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
 var UserComponent = /** @class */ (function () {
     function UserComponent(router, activatedRoute, service, loginService) {
         this.router = router;
@@ -2459,6 +2479,7 @@ var UserComponent = /** @class */ (function () {
         this.service = service;
         this.loginService = loginService;
         this.internalName = this.activatedRoute.snapshot.params['internalName'];
+        this.URL = __WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].URL;
     }
     UserComponent.prototype.removeUser = function () {
         var _this = this;
@@ -2472,8 +2493,14 @@ var UserComponent = /** @class */ (function () {
     };
     UserComponent.prototype.ngOnInit = function () {
         var _this = this;
-        console.log(this.internalName);
+        this.service.getImageProfile(this.internalName).subscribe(function (photo) { return _this.image = photo; }, function (error) { return console.log(error); });
         this.service.getUser(this.internalName).subscribe(function (user) { _this.user = user, console.log(_this.user); }, function (error) { return console.log(error); });
+    };
+    UserComponent.prototype.logOut = function () {
+        var _this = this;
+        this.loginService.logOut().subscribe(function (response) {
+            _this.router.navigate(['']);
+        }, function (error) { return console.log('Error when trying to log out: ' + error); });
     };
     UserComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
@@ -2499,6 +2526,7 @@ var UserComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__ = __webpack_require__("./node_modules/rxjs/_esm5/Observable.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__ = __webpack_require__("./node_modules/rxjs/_esm5/Rx.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__login_login_service__ = __webpack_require__("./src/app/login/login.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_common_http__ = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2513,10 +2541,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var URL = 'https://localhost:8443/api/users';
 var UserService = /** @class */ (function () {
-    function UserService(http, login) {
+    function UserService(http, newHttp, login) {
         this.http = http;
+        this.newHttp = newHttp;
         this.login = login;
     }
     UserService.prototype.getUsers = function () {
@@ -2549,7 +2579,13 @@ var UserService = /** @class */ (function () {
         var formData = new FormData();
         formData.append('profileImage', file);
         reqUrl = URL + '/img/' + internal;
-        return this.http.put(reqUrl, formData, { withCredentials: true });
+        return this.newHttp.put(reqUrl, formData, { withCredentials: true });
+    };
+    UserService.prototype.getImageProfile = function (internal) {
+        var _this = this;
+        return this.http.get(URL + '/img/' + internal, { withCredentials: true })
+            .map(function (response) { return response.json(); })
+            .catch(function (error) { return _this.handleError(error); });
     };
     UserService.prototype.removeUser = function (user) {
         var _this = this;
@@ -2606,7 +2642,7 @@ var UserService = /** @class */ (function () {
     };
     UserService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_4__login_login_service__["a" /* LoginService */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_5__angular_common_http__["a" /* HttpClient */], __WEBPACK_IMPORTED_MODULE_4__login_login_service__["a" /* LoginService */]])
     ], UserService);
     return UserService;
 }());

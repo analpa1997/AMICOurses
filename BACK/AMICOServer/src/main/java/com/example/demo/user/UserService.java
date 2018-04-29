@@ -69,12 +69,12 @@ public class UserService {
 			String interests = user.getInterests();
 			String urlProfileImage = user.getUrlProfileImage();
 
-			if (username != null)
+			if (username != null && !username.isEmpty()) 
 				if (correctName(username) && (userRepository.findByUsername(username) == null)) {
 					u.setUsername(username);
 					u.setInternalName(username.replaceAll(" ", "-").toLowerCase());
 				}
-			if (password != null)
+			if (password != null && !password.isEmpty())
 				u.setPassword(password);
 
 			/*

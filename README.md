@@ -218,7 +218,7 @@ Docker Community Edition (CE) for windows required
 Docker containers require the windows local drives to be shared
 
 The create_image.ps1 (powershell script):
- 1. builds the angular client files and copy them to the server 
+ 1. builds the angular client files and publish them to the HTTP erver 
  2. generates the jar files
  3. generates the docker image
  

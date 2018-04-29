@@ -25,6 +25,11 @@ export class SubjectListService {
     return this.http.get<Subject>(reqUrl, { withCredentials: true })
   }
 
+  getAllSubjects(courseName: string, page = 0) {
+    const reqUrl = URL +'subjects/' + courseName + '/' + 'subjects/all?page=' + page;
+    return this.http.get(reqUrl, { withCredentials: true })
+  }
+
   getCourse(courseName: string){
     const reqUrl = URL + "courses/name/" + courseName + "/full";
     return this.http.get<Course>(reqUrl, { withCredentials: true });

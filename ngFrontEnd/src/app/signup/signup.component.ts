@@ -43,7 +43,7 @@ export class SignupComponent {
       const internalName = username.replace(' ', '-').toLowerCase();
       newUser = <User>{username: username, password: pass, userMail: mail, student: true, internalName: internalName};
       this.service.newUser(newUser).subscribe(
-        user => this._router.navigate(['/index']),
+        user => this._router.navigate(['/login']),
         error => console.error('Error creating new user: ' + error)
       );
     }
