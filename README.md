@@ -2,7 +2,7 @@
 
 ## VIDEO
 
-![Video](https://img.youtube.com/vi/n3VcUXmk8y8/0.jpg)](https://www.youtube.com/watch?v=n3VcUXmk8y8&feature=youtu.be)
+[![Video](https://img.youtube.com/vi/n3VcUXmk8y8/0.jpg)](https://www.youtube.com/watch?v=n3VcUXmk8y8&feature=youtu.be)
 
 ## Phase I
 
