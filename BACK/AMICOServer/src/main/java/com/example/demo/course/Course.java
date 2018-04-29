@@ -23,10 +23,12 @@ import com.example.demo.skill.Skill;
 import com.example.demo.subject.Subject;
 import com.example.demo.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
 @Table(name = "Courses")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Course {
 
 	public interface BasicCourse {

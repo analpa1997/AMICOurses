@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit} from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from '../login/login.service';
 
@@ -6,7 +6,7 @@ import { LoginService } from '../login/login.service';
 @Component({
   selector: 'admin-header-component',
   templateUrl: './adminHeader.component.html',
-  styleUrls : ['../../assets/css/sb-admin.css']
+  styleUrls: ['../../assets/css/sb-admin.css']
 })
 
 
@@ -14,14 +14,16 @@ import { LoginService } from '../login/login.service';
 export class AdminHeaderComponent implements AfterViewInit {
 
 
-  constructor(private loginService : LoginService, private router: Router){
+  constructor(private loginService: LoginService, private  router:  Router) {
   }
 
-  
+
   ngAfterViewInit(): void {
-    if (!this.loginService.isAdmin) {
-      this.router.navigate(['/error', '401']); //Forbidden
-    }
+    this.loginService.isLoggedFunc().subscribe(
+      user => { },
+      error => this.loginService.errorHandler(error),
+    );
+
   }
 
 

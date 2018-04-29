@@ -38,6 +38,17 @@ export class LoginService {
         );
     }
 
+    isLoggedFunc() {
+
+        const headers = new Headers({
+            'X-Requested-With': 'XMLHttpRequest'
+        });
+
+        const options = new RequestOptions({ withCredentials: true, headers });
+
+        return this.http.get(URL + '/logIn', options);
+    }
+
     private processLogInResponse(response) {
         this.isLogged = true;
         this.user = response.json();
