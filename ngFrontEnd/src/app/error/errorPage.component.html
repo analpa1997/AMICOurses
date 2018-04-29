@@ -9,12 +9,12 @@
 					<div class="main-wthree">
 						<h2> {{error}}</h2>
 						<p>
-							<span class="sub-agileinfo">Sorry! </span>
+							<span class="sub-agileinfo">Sorry :(! </span>
 							{{message[1]}}
 						</p>
 						<!--form-->
 						<div class="newsletter">
-							<button [routerLink]="['']" class="btn btn-login">Go
+							<button [routerLink]="['/index']" class="btn btn-login">Go
 								to the main page</button>
 						</div>
 
@@ -24,7 +24,7 @@
 					<!-- copyright -->
 					<div class="copyright-w3-agile">
 						<p>
-							© 2018 AMICO<a href="./" target="_blank">urses</a>
+							© 2018 AMICO<a [routerLink]="['/index']" target="_blank">urses</a>
 						</p>
 					</div>
 					<!-- //copyright -->
