@@ -217,7 +217,7 @@ to stop docker-compose using docker-compose stop from the docker directory.
 
 ## Phase V
 
-## Docker
+### Docker
 Docker Community Edition (CE) for windows required 
 Docker containers require the windows local drives to be shared
 
@@ -238,4 +238,10 @@ To start the application:
 2.2. docker-compose up
 
 To stop the application execute in docker directory docker-compose stop 
+
+### Component Diagram
+
+![Component Diagram Phase V](https://raw.githubusercontent.com/analpa1997/AMICOurses/master/Readme%20ScreenShots/Component%20Diagram%20Phase%205.png)
+
+
 
